@@ -1,7 +1,15 @@
 "use client";
 import { useEffect, useState } from "react";
 import { api, Loading, Notice } from "./ui";
-export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
+export function VehicleManifestPanel({
+  user,
+  Form,
+  expanded = false,
+}: {
+  user: any;
+  Form: any;
+  expanded?: boolean;
+}) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [tick, setTick] = useState(0);
@@ -26,7 +34,7 @@ export function VehicleManifestPanel({ user, Form }: { user: any; Form: any }) {
       { name: "reason", label: "Reason" },
     ];
   return (
-    <details className="panel">
+    <details className="panel" open={expanded || undefined}>
       <summary>Vehicle product manifests and returns</summary>
       <p>
         Branch stock remains inclusive of vehicle custody. Only independently

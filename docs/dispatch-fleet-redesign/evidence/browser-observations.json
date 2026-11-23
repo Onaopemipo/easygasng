@@ -1,0 +1,84 @@
+{
+  "dateLocal": "2026-11-24",
+  "environment": "Actual Next.js application and existing API/service on loopback3131 with an isolated disposable PGlite database; synthetic QA only. Not a mocked screenshot or hosted demo acceptance.",
+  "script": "scripts/preview-dispatch-fleet.ts",
+  "browserRole": "owner; other six roles covered by actual component/backend tests, not claimed as browser sessions",
+  "cases": [
+    {
+      "id": "FLEETUI-V01",
+      "result": "PASS",
+      "observation": "Actual isolated Next.js owner deep link opens Fleet & stock / Fleet & trips with records first; no registration form until requested."
+    },
+    {
+      "id": "FLEETUI-V02",
+      "result": "PASS",
+      "observation": "Trip pagination shows1–10 and11–15 of15; search/no-match/Clear filters and Vehicles tab work. Repeated labels retain distinct references."
+    },
+    {
+      "id": "FLEETUI-V03",
+      "result": "PASS",
+      "observation": "Wrong password leaves synthetic vehicle name and12.5kg intact, clears password and displays Password verification failed. Correct retry closes dialog and vehicle count3→4; new row12.5kg, product capacityNot configured, suitabilityNot verified."
+    },
+    {
+      "id": "FLEETUI-V04",
+      "result": "PASS",
+      "observation": "Trip detail retains15km odometer,0km GPS,1.8L estimated usage separately from10L/₦11000 actual purchase and SYNTHETIC-FUEL-001 receipt; no live position claim."
+    },
+    {
+      "id": "FLEETUI-V05",
+      "result": "PASS",
+      "observation": "390×844 phone registration uses one column, sticky heading and reachable password/save above demo notice after internal scroll."
+    },
+    {
+      "id": "FLEETUI-V06",
+      "result": "PASS",
+      "observation": "Phone dark mode no-match/clear and scoped scrolling checked. Initial document width747px corrected to375px within390px viewport; table content833px scrolls within341px panel."
+    },
+    {
+      "id": "FLEETUI-V07",
+      "result": "PASS",
+      "observation": "820×1180 tablet dark registration shows two columns, current password, close and final action with no banner overlap."
+    },
+    {
+      "id": "FLEETUI-V08",
+      "result": "PASS",
+      "observation": "Shift+Tab from close reaches final save; Tab returns to close. Escape prompts for edited draft; Keep editing preserves SYNTHETIC KEEP DRAFT. Discard closes and focuses Register vehicle."
+    },
+    {
+      "id": "FLEETUI-V09",
+      "result": "PASS",
+      "observation": "All four purpose tabs open existing workflows. Manifest issue/payload forms, LPG history/release-required notice and route-planning automatic-assignment-disabled notice retained."
+    },
+    {
+      "id": "FLEETUI-V10",
+      "result": "PASS",
+      "observation": "Overview shortcuts open manifests, LPG custody and fleet tabs through explicit target state. Renamed fuel shortcut accurately describes records accessible to dispatch staff."
+    }
+  ],
+  "totals": {
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "excluded": 0
+  },
+  "repairsDuringAcceptance": [
+    "Reserved demo-notice clearance in vehicle/trip dialogs",
+    "Scoped wide fleet table overflow so mobile document stays within viewport",
+    "Replaced old accordion-text shortcut lookup with explicit operation tab targets",
+    "Renamed read-oriented overview shortcuts to avoid implying ungranted fuel/stock write authority"
+  ],
+  "limits": [
+    "Local browser desktop,390px phone and820px tablet frames only; no physical-device or screen-reader certification",
+    "No real money, gas movement, live GPS, qualification renewal or custody mutation",
+    "No deployment or new mobile binary; original production NO-GO and all unrelated gates retained"
+  ],
+  "screenshots": [
+    "desktop-trips.png",
+    "desktop-vehicles.png",
+    "desktop-registration.jpg",
+    "desktop-trip-detail.jpg",
+    "phone-registration-password.jpg",
+    "phone-dark-records.jpg",
+    "tablet-dark-registration.jpg"
+  ]
+}

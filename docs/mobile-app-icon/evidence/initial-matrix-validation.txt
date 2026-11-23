@@ -1,0 +1,31 @@
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (418.784125ms)
+✔ RTM customer phase retains all 65 IDs, all 15 routes and every CD acceptance gate (2.00775ms)
+✔ PR-01: release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions (0.925208ms)
+✔ PR-SCHEMA-01: release checks cover every shipped SQL migration (0.281416ms)
+✔ PR-02: readiness rejects missing migrations, absent/stale worker and future heartbeat (1041.119834ms)
+✔ PR-DEMO-STATUS: only the configured hosted client demo can use schema-only readiness (0.276584ms)
+✔ PR-07: signed native configuration refuses local API origins and unconfirmed identifiers (317.698958ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 6
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1915.041167
+
+✖ failing tests:
+
+test at tests/customer-traceability.test.ts:1:241
+✖ RTM-01–07: every phase matrix has unique requirements, actual implementation and executed evidence, security negatives, gates and honest coverage (418.784125ms)
+  AssertionError [ERR_ASSERTION]: APPICON-R02: PR-07 has no executed evidence
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/customer-traceability.test.ts:66:18)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: '==',
+    diff: 'simple'
+  }

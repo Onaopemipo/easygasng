@@ -47,11 +47,13 @@ export default function DispatchCentre({ user }: { user: any }) {
     [reason, setReason] = useState(""),
     [selected, setSelected] = useState(""),
     [working, setWorking] = useState(false);
+  const [operationsView, setOperationsView] = useState("fleet");
   const [candidateLoading, setCandidateLoading] = useState(false);
   const [assignmentError, setAssignmentError] = useState("");
   useEffect(() => {
     const openFleet = () => {
       if (window.location.hash === "#driver-fleet") {
+        setOperationsView("fleet");
         setView("operations");
         setCandidate(null);
       }
@@ -319,15 +321,9 @@ export default function DispatchCentre({ user }: { user: any }) {
     );
   }
   function operations(label: string) {
+    setOperationsView(label === "Vehicle product" ? "manifests" : label === "Bulk LPG" ? "lpg" : "fleet");
     setView("operations");
-    requestAnimationFrame(() => {
-      const root = document.getElementById("dispatch-operations");
-      root?.scrollIntoView({ behavior: "smooth" });
-      const details = Array.from(root?.querySelectorAll("details") ?? []).find(
-        (d) => d.querySelector("summary")?.textContent?.includes(label),
-      );
-      if (details) details.open = true;
-    });
+    requestAnimationFrame(() => document.getElementById("dispatch-operations")?.scrollIntoView({ behavior: "smooth" }));
   }
   const cards = [
     {
@@ -383,7 +379,7 @@ export default function DispatchCentre({ user }: { user: any }) {
             stock
           </p>
         </div>
-        <div className="dc-heading-controls">
+        {view === "centre" && <div className="dc-heading-controls">
           <span className="dc-contact" aria-live="polite">
             <span className={error || !data ? "dc-dot stale" : "dc-dot"} />
             {busy ? (
@@ -391,13 +387,13 @@ export default function DispatchCentre({ user }: { user: any }) {
             ) : error ? (
               "Updates unavailable"
             ) : data ? (
-              "Polling updates"
+              "Auto-refresh on"
             ) : (
               "Waiting for update"
             )}
             <small>
               {data
-                ? "Last checked " +
+                ? "Updated " +
                   new Date(data.observedAt).toLocaleTimeString("en-NG", {
                     timeZone: "Africa/Lagos",
                   })
@@ -424,12 +420,43 @@ export default function DispatchCentre({ user }: { user: any }) {
             <RefreshCw size={19} />
           </button>
         </div>
+        }
       </header>
       {error && <Notice type="error" message={error} />}
       {!data ? (
         (!error || busy) && <Loading page label="Loading dispatch records" />
       ) : (
         <>
+      <div className="dc-workspace-tabs">
+        <button
+          aria-pressed={view === "centre"}
+          className={view === "centre" ? "active" : ""}
+          onClick={() => {
+            setView("centre");
+            refresh();
+          }}
+        >
+          Dispatch overview
+        </button>
+        <button
+          aria-pressed={view === "operations"}
+          className={view === "operations" ? "active" : ""}
+          onClick={() => setView("operations")}
+        >
+          Fleet &amp; stock
+        </button>
+        <button
+          aria-pressed={view === "history"}
+          className={view === "history" ? "active" : ""}
+          onClick={() => {
+            setFocusedOrderId("");
+            setView("history");
+          }}
+        >
+          Order tracking
+        </button>
+      </div>
+      {view === "centre" && <>
       <div className="dc-kpis">
         {cards.map((c) => (
           <button
@@ -473,35 +500,10 @@ export default function DispatchCentre({ user }: { user: any }) {
       {data?.kpis.ready === null && (
         <Notice type="error" message={data.readinessNote} />
       )}
-      <div className="dc-workspace-tabs">
-        <button
-          className={view === "centre" ? "active" : ""}
-          onClick={() => {
-            setView("centre");
-            refresh();
-          }}
-        >
-          Dispatch overview
-        </button>
-        <button
-          className={view === "operations" ? "active" : ""}
-          onClick={() => setView("operations")}
-        >
-          Manifests, LPG, trips &amp; returns
-        </button>
-        <button
-          className={view === "history" ? "active" : ""}
-          onClick={() => {
-            setFocusedOrderId("");
-            setView("history");
-          }}
-        >
-          Order tracking &amp; actions
-        </button>
-      </div>
+      </>}
       {view === "operations" ? (
         <section id="dispatch-operations">
-          <OperationsExtensions section="deliveries" user={user} />
+          <OperationsExtensions section="deliveries" user={user} initialView={operationsView} />
         </section>
       ) : view === "history" ? (
         <DispatchTracking user={user} orderId={focusedOrderId} />
@@ -1025,22 +1027,22 @@ export default function DispatchCentre({ user }: { user: any }) {
               <div>
                 {[
                   {
-                    label: "Create Vehicle Manifest",
+                    label: "Vehicle manifests",
                     icon: Truck,
                     open: "Vehicle product",
                   },
                   {
-                    label: "Record Gas Loading",
+                    label: "LPG loading",
                     icon: ClipboardList,
                     open: "Bulk LPG",
                   },
                   {
-                    label: "Log Fuel Purchase",
+                    label: "Trips & fuel records",
                     icon: Fuel,
                     open: "Driver trips",
                   },
                   {
-                    label: "Record Returns & Reconciliation",
+                    label: "Returns & reconciliation",
                     icon: ArrowLeftRight,
                     open: "Bulk LPG",
                   },

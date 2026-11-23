@@ -1,0 +1,318 @@
+{
+  "phase": "Dispatch Centre and fleet workspace redesign",
+  "date": "2026-11-24",
+  "productionDecision": "NO-GO and original DDI/native/provider/physical/import/retain-all holds preserved",
+  "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+  "requirements": [
+    {
+      "id": "FLEETUI-01",
+      "requirement": "Compact dispatch navigation and task-based operational tabs",
+      "implementationFiles": [
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/operations-completion.tsx"
+      ],
+      "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/live-rider-tracking.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "FLEETUI-NAV",
+        "FLEETUI-V01",
+        "FLEETUI-V09",
+        "FLEETUI-V10"
+      ],
+      "negativeTests": [
+        "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
+      ],
+      "evidence": [
+        "docs/dispatch-fleet-redesign/evidence/focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.json",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.txt",
+        "docs/dispatch-fleet-redesign/reviewed-source-changes.json",
+        "docs/dispatch-fleet-redesign/evidence/typecheck.txt",
+        "docs/dispatch-fleet-redesign/evidence/build.txt",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+      ],
+      "acceptanceGate": "FLEETUI-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
+      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "priority": "P1",
+      "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+      "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
+      "route": [
+        "/admin/deliveries",
+        "/admin/deliveries#driver-fleet"
+      ],
+      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+    },
+    {
+      "id": "FLEETUI-02",
+      "requirement": "Searchable paginated trip and vehicle records with honest location/fuel detail",
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx"
+      ],
+      "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/live-rider-tracking.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "FLEETUI-RECORDS",
+        "FLEETUI-FAILURE",
+        "FLEETUI-V02",
+        "FLEETUI-V04"
+      ],
+      "negativeTests": [
+        "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
+      ],
+      "evidence": [
+        "docs/dispatch-fleet-redesign/evidence/focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.json",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.txt",
+        "docs/dispatch-fleet-redesign/reviewed-source-changes.json",
+        "docs/dispatch-fleet-redesign/evidence/typecheck.txt",
+        "docs/dispatch-fleet-redesign/evidence/build.txt",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+      ],
+      "acceptanceGate": "FLEETUI-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
+      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "priority": "P1",
+      "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+      "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
+      "route": [
+        "/admin/deliveries",
+        "/admin/deliveries#driver-fleet"
+      ],
+      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+    },
+    {
+      "id": "FLEETUI-03",
+      "requirement": "Focused registration and driver trip dialogs with preserved verification and failure recovery",
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx"
+      ],
+      "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/live-rider-tracking.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "FVERIFY-INITIAL",
+        "FVERIFY-RECOVER",
+        "FVERIFY-EXPIRY",
+        "FVERIFY-SINGLE",
+        "FVERIFY-AUTH",
+        "FLEETUI-FUEL",
+        "FLEETUI-UNITS",
+        "FLEETUI-V03",
+        "FLEETUI-V08"
+      ],
+      "negativeTests": [
+        "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
+      ],
+      "evidence": [
+        "docs/dispatch-fleet-redesign/evidence/focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.json",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.txt",
+        "docs/dispatch-fleet-redesign/reviewed-source-changes.json",
+        "docs/dispatch-fleet-redesign/evidence/typecheck.txt",
+        "docs/dispatch-fleet-redesign/evidence/build.txt",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+      ],
+      "acceptanceGate": "FLEETUI-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
+      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "priority": "P1",
+      "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+      "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
+      "route": [
+        "/admin/deliveries",
+        "/admin/deliveries#driver-fleet"
+      ],
+      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+    },
+    {
+      "id": "FLEETUI-04",
+      "requirement": "Responsive accessible light/dark layout and role/exception acceptance",
+      "implementationFiles": [
+        "apps/web/app/globals.css",
+        "apps/web/components/fleet-workspace.tsx"
+      ],
+      "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/live-rider-tracking.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "FLEETUI-ROLES",
+        "SVERIFY-ROLES",
+        "LRT-T007",
+        "FLEETUI-V05",
+        "FLEETUI-V06",
+        "FLEETUI-V07"
+      ],
+      "negativeTests": [
+        "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
+      ],
+      "evidence": [
+        "docs/dispatch-fleet-redesign/evidence/focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.json",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.txt",
+        "docs/dispatch-fleet-redesign/reviewed-source-changes.json",
+        "docs/dispatch-fleet-redesign/evidence/typecheck.txt",
+        "docs/dispatch-fleet-redesign/evidence/build.txt",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+      ],
+      "acceptanceGate": "FLEETUI-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
+      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "priority": "P1",
+      "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+      "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
+      "route": [
+        "/admin/deliveries",
+        "/admin/deliveries#driver-fleet"
+      ],
+      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+    },
+    {
+      "id": "FLEETUI-05",
+      "requirement": "Manual and traceability evidence preserve existing controls and scope",
+      "implementationFiles": [
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/traceability/dispatch-fleet-redesign-rtm.json"
+      ],
+      "dataSource": "Existing dispatch.centre, fleet.summary, manifest.summary, bulk.summary and dispatch.board APIs; server-scoped authoritative records",
+      "securityControl": "Owner-only recent-password registration; branch and role reads, driver-owned trip actions, idempotent writes, independent custody/safety approval and honest GPS freshness preserved",
+      "testFiles": [
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts",
+        "tests/sensitive-action-security.test.ts",
+        "tests/live-rider-tracking.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "FLEETUI-SOURCE"
+      ],
+      "negativeTests": [
+        "Wrong/expired verification, revoked/wrong role, stale/failed reads, duplicate submission, modal dismissal and no matching rows"
+      ],
+      "evidence": [
+        "docs/dispatch-fleet-redesign/evidence/focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.json",
+        "docs/dispatch-fleet-redesign/evidence/browser-observations.txt",
+        "docs/dispatch-fleet-redesign/reviewed-source-changes.json",
+        "docs/dispatch-fleet-redesign/evidence/typecheck.txt",
+        "docs/dispatch-fleet-redesign/evidence/build.txt",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/dispatch-fleet-redesign/evidence/final-focused.txt",
+        "docs/dispatch-fleet-redesign/evidence/verification-summary.json"
+      ],
+      "acceptanceGate": "FLEETUI-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local redesign implemented and exercised with existing APIs, roles, verification and honest GPS/fuel evidence. No hosted release or broader production acceptance inferred.",
+      "outstandingWork": "No remaining work in this bounded local UI scope. Client-demo deployment/hosted readback, physical browsers and assistive-technology coverage remain separate and unclaimed.",
+      "priority": "P1",
+      "scope": "User screenshots: web Dispatch Centre operations navigation, vehicle registration, trip/fuel/GPS records. No mobile binary, business-policy change or hosted deployment implied.",
+      "uiReference": "User-supplied web Dispatch Centre screenshots,23November2026; local actual application proof in browser observations",
+      "route": [
+        "/admin/deliveries",
+        "/admin/deliveries#driver-fleet"
+      ],
+      "testResult": "PASS — final25/25component/backend/security/source/traceability checks; ten manual actual-browser cases; web types/build pass. Initial broad source-proof assertion corrected and rerun;29environment skips retained."
+    }
+  ],
+  "gates": [
+    {
+      "id": "FLEETUI-G01",
+      "description": "Compact dispatch navigation and task-based operational tabs",
+      "status": "PASS",
+      "reason": "Executed focused tests and actual local responsive/keyboard observations; existing full-system gates preserved."
+    },
+    {
+      "id": "FLEETUI-G02",
+      "description": "Searchable paginated trip and vehicle records with honest location/fuel detail",
+      "status": "PASS",
+      "reason": "Executed focused tests and actual local responsive/keyboard observations; existing full-system gates preserved."
+    },
+    {
+      "id": "FLEETUI-G03",
+      "description": "Focused registration and driver trip dialogs with preserved verification and failure recovery",
+      "status": "PASS",
+      "reason": "Executed focused tests and actual local responsive/keyboard observations; existing full-system gates preserved."
+    },
+    {
+      "id": "FLEETUI-G04",
+      "description": "Responsive accessible light/dark layout and role/exception acceptance",
+      "status": "PASS",
+      "reason": "Executed focused tests and actual local responsive/keyboard observations; existing full-system gates preserved."
+    },
+    {
+      "id": "FLEETUI-G05",
+      "description": "Manual and traceability evidence preserve existing controls and scope",
+      "status": "PASS",
+      "reason": "Executed focused tests and actual local responsive/keyboard observations; existing full-system gates preserved."
+    }
+  ],
+  "coverage": {
+    "total": 5,
+    "verified": 5,
+    "partial": 0,
+    "blocked": 0,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-23",
+      "change": "Registered all five scoped requirements before implementation. Existing fleet/driver/password/branch authority and historical source proofs must be retained."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Completed bounded local redesign; ten actual browser observations and27focused passes/one independent PostgreSQL concurrency skip. All seven roles exercised in component/backend tests. Original source baselines retained through narrow explicit web-only continuation; no server/native change or hosted deployment. Final regression/config checks recorded separately."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Final25/25focused/current source and RTM checks pass, web types/build pass. Initial full1226tests:1196passed,1historical CSS-proof mapping assertion,29environment skips. Corrected exact four-file mapping and re-executed failing case in final25; initial log retained, no full-suite green or skipped-concurrency acceptance claimed. Restored only test-regenerated unrelated fixtures."
+    }
+  ],
+  "verification": {
+    "summary": "docs/dispatch-fleet-redesign/evidence/verification-summary.json",
+    "initialFullTests": 1226,
+    "initialFullPassed": 1196,
+    "initialFullFailed": 1,
+    "initialFullSkipped": 29,
+    "initialFailureResolvedBy": "Final25/25rerun includes PBR21-ARTIFACTS and all changed fleet tests; full suite not rerun or claimed green",
+    "excluded": 0
+  }
+}

@@ -105,3 +105,9 @@ Open **TestFlight → EasyGas Energy Solutions → Update** using the existing a
 Build3 includes the approved mobile design and loading, keyboard, orientation and payment-return source repairs. It supports iPhone and iPad and uses the existing client-demo API with synthetic data. Use Paystack TEST details only. Android remains at the earlier store build2.
 
 Follow the saved [What to Test notes](../ios-testflight-refresh-20261123/WHAT-TO-TEST.md), especially installed return-to-app, session continuity and background recovery. Upload/Testing status does not verify those device actions. Full feature, physical-device, permissions, screen-reader and production gates remain open. [Release evidence](../ios-testflight-refresh-20261123/README.md).
+
+## Approved launcher icon — 24 November 2026
+
+The approved new launcher icon is an orange flame with a white centre on deep green. Its exact image is applied to the shared mobile source asset, used by the unified app and local driver/technician shells. The in-app transparent EasyGas wordmark is unchanged.
+
+Installed TestFlight0.1.0(3) and Androidstore0.1.0(2) retain the icons packaged into those releases. The new launcher icon becomes available after a new native release is built and installed; there was no new build/upload in this icon-only step. [Verification and pending installed-appearance gate](../traceability/mobile-app-icon-rtm.md).

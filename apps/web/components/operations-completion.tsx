@@ -2,6 +2,7 @@
 import { FieldCaption } from "./field-caption";
 import { FormInput } from "./password-input";
 import LPGLoadIssue from "./lpg-load-issue";
+import { FleetWorkspace } from "./fleet-workspace";
 import { VehicleManifestPanel } from "./vehicle-manifest-panel";
 import React, { useEffect, useRef, useState, type FormEvent } from "react";
 import { api, Notice, money } from "./ui";
@@ -31,7 +32,9 @@ export function OperationForm({
   const [error, setError] = useState(""),
     [result, setResult] = useState<any>(null),
     [busy, setBusy] = useState(false);
-  const [needsVerification, setNeedsVerification] = useState(requireVerification);
+  const [dirty, setDirty] = useState(false);
+  const [needsVerification, setNeedsVerification] =
+    useState(requireVerification);
   const verificationInput = useRef<HTMLInputElement | null>(null);
   const inFlight = useRef(false);
   const pending = useRef<{ fingerprint: string; key: string } | null>(null);
@@ -89,10 +92,23 @@ export function OperationForm({
     }
   }
   return (
-    <form className="panel stack product-form" onSubmit={submit}>
+    <form
+      className="panel stack product-form"
+      onSubmit={submit}
+      onChange={() => {
+        setDirty(true);
+        setResult(null);
+      }}
+      data-unsaved={dirty && !result ? "true" : undefined}
+      data-submit-pending={busy ? "true" : undefined}
+    >
       <h3>{title}</h3>
       {fields.map((f) => (
-        <label key={f.name} data-field-type={f.type ?? "text"}>
+        <label
+          hidden={f.type === "hidden"}
+          key={f.name}
+          data-field-type={f.type ?? "text"}
+        >
           {f.type !== "hidden" && (
             <FieldCaption required={f.type !== "checkbox" && !f.optional}>
               {f.label}
@@ -101,6 +117,7 @@ export function OperationForm({
           {f.options ? (
             <select
               name={f.name}
+              disabled={busy}
               defaultValue={typeof f.value === "boolean" ? undefined : f.value}
               required={!f.optional}
             >
@@ -113,6 +130,7 @@ export function OperationForm({
           ) : (
             <FormInput
               name={f.name}
+              disabled={busy}
               type={f.type === "csv" ? "text" : (f.type ?? "text")}
               defaultChecked={
                 f.type === "checkbox" ? Boolean(f.value) : undefined
@@ -164,201 +182,24 @@ export function OperationForm({
   );
 }
 export function FleetPanel({ user }: { user: any }) {
-  const [fleetOpen, setFleetOpen] = useState(false);
-  const fleetRef = useRef<HTMLDetailsElement | null>(null);
-  useEffect(() => {
-    const reveal = () => {
-      if (window.location.hash !== "#driver-fleet") return;
-      setFleetOpen(true);
-      requestAnimationFrame(() =>
-        fleetRef.current?.scrollIntoView({ block: "start" }),
-      );
-    };
-    reveal();
-    window.addEventListener("hashchange", reveal);
-    return () => window.removeEventListener("hashchange", reveal);
-  }, []);
-  const [data, setData] = useState<any>(null),
-    [error, setError] = useState(""),
-    [version, setVersion] = useState(0);
-  useEffect(() => {
-    api("fleet.summary")
-      .then(setData)
-      .catch((e) => setError(e.message));
-  }, [version]);
-  const refresh = () => setVersion((v) => v + 1);
   return (
-    <details
-      className="panel"
-      id="driver-fleet"
-      ref={fleetRef}
-      open={fleetOpen}
-      onToggle={(e) => setFleetOpen(e.currentTarget.open)}
-    >
-      <summary>Driver trips, vehicle and fuel records</summary>
-      {error && <Notice type="error" message={error} />}
-      <p>
-        GPS records show observed locations only. Fuel purchases and estimated
-        usage are reported separately.
-      </p>
-      {user.role === "owner" && (
-        <OperationForm
-          title="Register vehicle"
-          action="fleet.vehicle.create"
-          requireVerification
-          onDone={refresh}
-          fields={[
-            {
-              name: "branchId",
-              label: "Branch ID",
-              value: user.branch_id ?? "lagos",
-            },
-            { name: "label", label: "Vehicle registration / label" },
-            {
-              name: "physicalCapacityGrams",
-              label: "Approved physical product payload capacity (grams)",
-              type: "number",
-              optional: true,
-            },
-            {
-              name: "estimatedLitresPer100km",
-              label: "Measured estimated fuel use (litres per100km)",
-              type: "number",
-              optional: true,
-            },
-            {
-              name: "capacityGrams",
-              label: "Approved gas capacity (grams)",
-              type: "number",
-            },
-            {
-              name: "lpgSuitable",
-              label: "Verified suitable for LPG transport",
-              type: "checkbox",
-            },
-          ]}
-        />
-      )}
-      {user.role === "driver" && data && (
-        <>
-          <OperationForm
-            title="Start duty trip"
-            action="trip.start"
-            onDone={refresh}
-            fields={[
-              {
-                name: "vehicleId",
-                label: "Vehicle",
-                options: data.vehicles
-                  .filter((v: any) => v.active)
-                  .map((v: any) => ({ value: v.id, label: v.label })),
-              },
-              {
-                name: "startOdometer",
-                label: "Start odometer (km)",
-                type: "number",
-              },
-              {
-                name: "locationConsent",
-                label: "Allow location capture during this active trip",
-                type: "checkbox",
-              },
-            ]}
-          />
-          {data.trips
-            .filter((t: any) => !t.ended_at)
-            .map((t: any) => (
-              <section key={t.id}>
-                <p>Active trip: {t.id}</p>
-                <TripInputs trip={t} onDone={refresh} />
-              </section>
-            ))}
-        </>
-      )}
-      {data?.trips.map((t: any) => (
-        <article className="panel" key={t.id}>
-          <h3>{t.label}</h3>
-          <p>
-            {t.ended_at ? "Ended" : "Active"} ·{" "}
-            {t.connectivity.replaceAll("_", " ")}
-          </p>
-          <p>
-            GPS status:{" "}
-            {t.location?.status?.replaceAll("_", " ") ?? "unavailable"}. This is
-            not a live position.
-          </p>
-          {t.location?.lastKnown && (
-            <p>
-              Last recorded:{" "}
-              {new Date(t.location.lastKnown.recordedAt).toLocaleString(
-                "en-NG",
-                { timeZone: "Africa/Lagos" },
-              )}{" "}
-              (Lagos) · {t.location.lastKnown.lat}, {t.location.lastKnown.lng} ·
-              accuracy ±{t.location.lastKnown.accuracy} m ·{" "}
-              {t.location.lastKnown.ageSeconds} seconds old
-              {t.location.lastKnown.delayedUpload
-                ? " · uploaded after an offline delay"
-                : ""}
-              . Received:{" "}
-              {new Date(t.location.lastKnown.receivedAt).toLocaleString(
-                "en-NG",
-                { timeZone: "Africa/Lagos" },
-              )}
-              .
-            </p>
-          )}
-          {!!t.location?.history?.length && (
-            <details>
-              <summary>
-                Recorded GPS history ({t.location.history.length}
-                {t.location.historyTruncated
-                  ? " most recent points"
-                  : " points"}
-                )
-              </summary>
-              <p>
-                Observations only; gaps are not interpolated and uploads are not
-                live positions.
-              </p>
-              <ol>
-                {t.location.history.map((p: any, i: number) => (
-                  <li key={i}>
-                    {new Date(p.recordedAt).toLocaleString("en-NG", {
-                      timeZone: "Africa/Lagos",
-                    })}{" "}
-                    (Lagos) · {p.lat}, {p.lng} · ±{p.accuracy} m
-                  </li>
-                ))}
-              </ol>
-            </details>
-          )}
-          <p>
-            Odometer: {t.metrics.odometerKm ?? "Not ended"} km · GPS observed:{" "}
-            {t.metrics.gpsObservedKm} km · Gaps: {t.metrics.gaps} · Rejected
-            points: {t.metrics.rejected}
-          </p>
-          <p>
-            Estimated litres:{" "}
-            {t.metrics.estimatedLitres ?? "No approved estimate rate"}
-          </p>
-          {t.fuelPurchases.map((p: any, i: number) => (
-            <p key={i}>
-              {p.litres} litres purchased · {money(p.costKobo)} · {p.receipt}
-            </p>
-          ))}
-        </article>
-      ))}
-    </details>
+    <FleetWorkspace user={user} Form={OperationForm} TripActions={TripInputs} />
   );
 }
 function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
   const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const fuelInFlight = useRef(false);
+  const [dirty, setDirty] = useState(false);
   const pendingFuel = useRef<{ fingerprint: string; request: any } | null>(
     null,
   );
   async function fuel(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (fuelInFlight.current) return;
+    fuelInFlight.current = true;
+    setBusy(true);
+    setError("");
     const fd = new FormData(e.currentTarget);
     try {
       const fingerprint = JSON.stringify([
@@ -395,15 +236,25 @@ function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
       onDone();
     } catch (e: any) {
       setError(e.message);
+    } finally {
+      fuelInFlight.current = false;
+      setBusy(false);
     }
   }
   return (
     <>
-      <form className="panel stack" onSubmit={fuel}>
+      <form
+        className="panel stack"
+        onSubmit={fuel}
+        onChange={() => setDirty(true)}
+        data-unsaved={dirty ? "true" : undefined}
+        data-submit-pending={busy ? "true" : undefined}
+      >
         <h3>Fuel purchase</h3>
         <label>
           <FieldCaption required={true}>Litres</FieldCaption>
           <FormInput
+            disabled={busy}
             type="number"
             name="litres"
             step="0.01"
@@ -413,13 +264,22 @@ function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
         </label>
         <label>
           <FieldCaption required={true}>Cost (₦)</FieldCaption>
-          <FormInput type="number" name="cost" min="1" required />
+          <FormInput
+            type="number"
+            name="cost"
+            min="1"
+            step="0.01"
+            disabled={busy}
+            required
+          />
         </label>
         <label>
           <FieldCaption required={true}>Receipt reference</FieldCaption>
-          <FormInput name="receipt" minLength={5} required />
+          <FormInput name="receipt" minLength={5} disabled={busy} required />
         </label>
-        <button className="button">Record purchase</button>
+        <button className="button" disabled={busy}>
+          {busy ? "Saving…" : "Record purchase"}
+        </button>
         {error && <Notice type="error" message={error} />}
       </form>
       <OperationForm
@@ -427,14 +287,20 @@ function TripInputs({ trip, onDone }: { trip: any; onDone: () => void }) {
         action="trip.end"
         onDone={onDone}
         fields={[
-          { name: "tripId", label: "Trip ID", value: trip.id },
+          { name: "tripId", label: "Trip ID", value: trip.id, type: "hidden" },
           { name: "endOdometer", label: "End odometer (km)", type: "number" },
         ]}
       />
     </>
   );
 }
-export function BulkLPGPanel({ user }: { user: any }) {
+export function BulkLPGPanel({
+  user,
+  expanded = false,
+}: {
+  user: any;
+  expanded?: boolean;
+}) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [tick, setTick] = useState(0);
@@ -456,7 +322,7 @@ export function BulkLPGPanel({ user }: { user: any }) {
   const refresh = () => setTick((v) => v + 1);
   const staff = ["owner", "finance"].includes(user.role);
   return (
-    <details className="panel">
+    <details className="panel" open={expanded || undefined}>
       <summary>Bulk LPG loading, dispensing and returns</summary>
       <button type="button" className="button secondary" onClick={refresh}>
         Refresh LPG records
@@ -776,7 +642,9 @@ export function BulkLPGPanel({ user }: { user: any }) {
     </details>
   );
 }
-export function DispatchPanel() {
+export function DispatchPanel({
+  expanded = false,
+}: { expanded?: boolean } = {}) {
   const [data, setData] = useState<any>(null),
     [error, setError] = useState(""),
     [tick, setTick] = useState(0);
@@ -786,7 +654,7 @@ export function DispatchPanel() {
       .catch((e) => setError(e.message));
   }, [tick]);
   return (
-    <details className="panel">
+    <details className="panel" open={expanded || undefined}>
       <summary>Area dispatch and driver recommendations</summary>
       {error && <Notice type="error" message={error} />}
       <p>
@@ -1124,27 +992,16 @@ export function CRMPanel({ user }: { user: any }) {
 export function OperationsExtensions({
   section,
   user,
+  initialView,
 }: {
   section: string;
   user: any;
+  initialView?: string;
 }) {
   if (section === "operations" && ["owner", "finance"].includes(user.role))
     return <BulkLPGPanel user={user} />;
   if (section === "deliveries")
-    return (
-      <>
-        {["owner", "manager", "finance", "driver"].includes(user.role) && (
-          <VehicleManifestPanel user={user} Form={OperationForm} />
-        )}
-        {["owner", "manager", "finance", "driver"].includes(user.role) && (
-          <BulkLPGPanel user={user} />
-        )}
-        {["owner", "manager"].includes(user.role) && <DispatchPanel />}
-        {["owner", "manager", "finance", "driver"].includes(user.role) && (
-          <FleetPanel user={user} />
-        )}
-      </>
-    );
+    return <DeliveryOperations key={JSON.stringify([user.id, user.role, user.branch_id ?? user.branchId])} user={user} initialView={initialView} />;
   if (section === "customers" && ["owner", "manager"].includes(user.role))
     return <CRMPanel user={user} />;
   return null;
@@ -1199,5 +1056,59 @@ export function ChannelPreferences() {
           }),
         )}
     </details>
+  );
+}
+
+function DeliveryOperations({
+  user,
+  initialView = "fleet",
+}: {
+  user: any;
+  initialView?: string;
+}) {
+  const [view, setView] = useState(initialView);
+  useEffect(() => setView(initialView), [initialView]);
+  useEffect(() => {
+    const reveal = () => {
+      if (window.location.hash === "#driver-fleet") setView("fleet");
+    };
+    window.addEventListener("hashchange", reveal);
+    return () => window.removeEventListener("hashchange", reveal);
+  }, []);
+  if (!["owner", "manager", "finance", "driver"].includes(user.role))
+    return null;
+  const items = [
+    ["fleet", "Fleet & trips"],
+    ["manifests", "Product manifests"],
+    ["lpg", "LPG custody"],
+    ...(["owner", "manager"].includes(user.role)
+      ? [["planning", "Route planning"]]
+      : []),
+  ];
+  return (
+    <div className="delivery-operations">
+      <nav className="delivery-operation-tabs" aria-label="Delivery operations">
+        {items.map(([key, label]) => (
+          <button
+            key={key}
+            type="button"
+            aria-pressed={view === key}
+            onClick={() => setView(key)}
+          >
+            {label}
+          </button>
+        ))}
+      </nav>
+      {view === "fleet" && <FleetPanel user={user} />}
+      <div className="delivery-operation-content">
+        {view === "manifests" && (
+          <VehicleManifestPanel user={user} Form={OperationForm} expanded />
+        )}
+        {view === "lpg" && <BulkLPGPanel user={user} expanded />}
+        {view === "planning" && ["owner", "manager"].includes(user.role) && (
+          <DispatchPanel expanded />
+        )}
+      </div>
+    </div>
   );
 }

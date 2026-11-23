@@ -1,3 +1,4 @@
+import { reviewedFleetUiSourceHash } from "../scripts/lib/reviewed-fleet-ui-source.mjs";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -40,7 +41,7 @@ test("FVERIFY-SOURCE: narrow current proof retains committed historical source a
   );
   assert.equal(
     await reviewedAssignmentSourceHash(file, original.baseline[file]),
-    review.files[file],
+    await reviewedFleetUiSourceHash(file, review.files[file]),
   );
 });
 test("FVERIFY-AUTH: unverified/expired owners and verified nonowners cannot register; normal reauth permits one idempotent registration without raising suitability", async () => {
@@ -109,4 +110,15 @@ test("FVERIFY-AUTH: unverified/expired owners and verified nonowners cannot regi
     (e: any) => denied(e, "REAUTH_REQUIRED"),
   );
   assert.equal(await count(), before + 1);
+});
+
+test("FLEETUI-SOURCE: scoped web continuation preserves historical hashes and current implementation while native and server code stay outside its allowlist", async () => {
+  const review = JSON.parse(await readFile("docs/dispatch-fleet-redesign/reviewed-source-changes.json", "utf8"));
+  for (const [file, baseline] of Object.entries(review.baseline)) {
+    assert.equal(await reviewedFleetUiSourceHash(file, baseline), createHash("sha256").update(await readFile(file)).digest("hex"));
+    await assert.rejects(() => reviewedFleetUiSourceHash(file, "tampered"), /fleet UI historical baseline/);
+  }
+  for (const [file, hash] of Object.entries(review.newFiles)) assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), hash);
+  assert.equal(await reviewedFleetUiSourceHash("apps/mobile/App.tsx", "unchanged-native"), "unchanged-native");
+  assert.equal(await reviewedFleetUiSourceHash("apps/web/lib/driver-operations.ts", "unchanged-server"), "unchanged-server");
 });

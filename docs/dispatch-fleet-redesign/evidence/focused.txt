@@ -1,0 +1,55 @@
+✔ DASSIGN-SOURCE: historical proofs accept only the explicit six-file web continuation and reject changed baselines (663.141ms)
+✔ DASSIGN-EXACT: missing trip, inactive account, availability, unsuitable/inactive/wrong-branch vehicle and trip have distinct resolutions (1628.353292ms)
+✔ DASSIGN-NEG: readiness probes preserve business state and deny other roles and branches; final assignment rechecks changed eligibility (909.788209ms)
+✔ DASSIGN-CAPACITY: exact demand and approved limit are shown without allocating stock or ignoring extra vehicle custody (784.394292ms)
+✔ DASSIGN-UI: actual shared cards show exact blockers, responsible next steps, scoped help and disabled blocked drivers (6.125208ms)
+✔ DUPTRIP-SOURCE: reviewed trip and phone-dialog corrections retain historical and native baselines and rejects tampered incoming proof (59.083708ms)
+✔ DUPTRIP-ACTIVE: a second driver trip has an actionable409 and preserves the original trip and idempotent replay (2019.249334ms)
+﹣ DUPTRIP-CONCURRENT: independent PostgreSQL starts serialize both driver and vehicle conflicts (0.163125ms) # Disposable local PostgreSQL not explicitly enabled; PGlite is not concurrency evidence.
+✔ DUPTRIP-VEHICLE: a vehicle already on another active trip gives409 without exposing the other driver or changing custody (944.266625ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-INITIAL: actual owner vehicle form exposes current password before registration and other roles cannot register (27.628917ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-RECOVER: actual shared form preserves mounted fields and operation key across expired and incorrect verification, excludes password from mutation and commits once (14.000792ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-EXPIRY: verification rejected again during submission reopens the field, never loops automatically, and excludes verification from request mapping (2.621834ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-SINGLE: rapid repeated submit cannot dispatch a second verification or vehicle mutation (1.919959ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-RECORDS: repeated vehicle labels retain distinct trip IDs, paginate, filter and disclose all honest GPS/fuel evidence (19.271125ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-ROLES: seven roles retain owner registration, driver-only actions and denied read boundaries; active role changes clear scoped data (25.555833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-FAILURE: refresh errors keep labelled snapshot, permission denial clears it and delayed prior scope never overwrites new role (28.6175ms)
+✔ FLEETUI-UNITS: kilogram inputs map exactly to existing gram API and do not silently round sub-gram values (0.375875ms)
+Each child in a list should have a unique "key" prop.
+
+Check the render method of `OperationForm`. See https://react.dev/link/warning-keys for more information.
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-NAV: purpose tabs fetch only selected workspace, retain shortcut target and hide planning from finance/driver (20.547792ms)
+✔ FLEETUI-FUEL: driver modal prevents parallel fuel writes, preserves retry operation key and never exposes end-trip action to a manager (18.355541ms)
+✔ FVERIFY-SOURCE: narrow current proof retains committed historical source and rejects tampered incoming hashes (160.059542ms)
+✔ FVERIFY-AUTH: unverified/expired owners and verified nonowners cannot register; normal reauth permits one idempotent registration without raising suitability (2119.617042ms)
+✔ FLEETUI-SOURCE: scoped web continuation preserves historical hashes and current implementation while native and server code stay outside its allowlist (60.199375ms)
+✔ LRT-T012: invalid, future, expired and late observations cannot be published as recent (1.607875ms)
+✔ LRT-T010: scope removal and old snapshots cannot restore rider coordinates (0.492916ms)
+✔ LRT-T008: owned active stop gets committed GPS and foreign orders, revoked consent and sessions get no coordinates (2381.619209ms)
+✔ LRT-T007: fleet reads exclude foreign branches and enforce a per-user owner denial (914.18875ms)
+✔ SVERIFY-ROLES: all seven canonical roles retain recent-password, permission, branch, expiry, idempotency and throttling controls (2890.288833ms)
+✔ SVERIFY-AUDIT: retained guard inventory covers server sites and all browser transports; historical source and opaque session context remain fail closed (65.74125ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 27
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 4827.146667

@@ -1,0 +1,233 @@
+{
+  "phase": "Publish pending fleet redesign and approved mobile icon; deploy client-demo web/API",
+  "date": "2026-11-24",
+  "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+  "productionDecision": "Commercial production NO-GO and original feature/native/provider/physical/import/retain-all holds preserved",
+  "requirements": [
+    {
+      "id": "PUB24-R01",
+      "requirement": "Commit and push every pending authorised change without exposing private data",
+      "priority": "P1",
+      "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+      "uiReference": "Approved current Dispatch/fleet workspace and user-selected first-draft mobile icon",
+      "route": [
+        "https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet",
+        "GitHub codex/technician-saas-redesign"
+      ],
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/assets/app-icon.png"
+      ],
+      "dataSource": "Committed Git tree, actual Vercel upload/Ready deployment, hosted role-scoped API/browser observations and GitHub Actions",
+      "securityControl": "Dedicated demo project identity; exclude private environment/data/native build artifacts; preserve roles/branches/recent password, custody/safety, provider settings and immutable records",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PUB24-G01",
+      "status": "PARTIAL",
+      "reason": "Publication/deployment and executed hosted/CI evidence pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+    },
+    {
+      "id": "PUB24-R02",
+      "requirement": "Deploy exact committed web/shared bytes to the existing client-demo project",
+      "priority": "P1",
+      "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+      "uiReference": "Approved current Dispatch/fleet workspace and user-selected first-draft mobile icon",
+      "route": [
+        "https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet",
+        "GitHub codex/technician-saas-redesign"
+      ],
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/assets/app-icon.png"
+      ],
+      "dataSource": "Committed Git tree, actual Vercel upload/Ready deployment, hosted role-scoped API/browser observations and GitHub Actions",
+      "securityControl": "Dedicated demo project identity; exclude private environment/data/native build artifacts; preserve roles/branches/recent password, custody/safety, provider settings and immutable records",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PUB24-G02",
+      "status": "PARTIAL",
+      "reason": "Publication/deployment and executed hosted/CI evidence pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+    },
+    {
+      "id": "PUB24-R03",
+      "requirement": "Verify candidate and stable role/security/UI behaviour without business-state changes",
+      "priority": "P1",
+      "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+      "uiReference": "Approved current Dispatch/fleet workspace and user-selected first-draft mobile icon",
+      "route": [
+        "https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet",
+        "GitHub codex/technician-saas-redesign"
+      ],
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/assets/app-icon.png"
+      ],
+      "dataSource": "Committed Git tree, actual Vercel upload/Ready deployment, hosted role-scoped API/browser observations and GitHub Actions",
+      "securityControl": "Dedicated demo project identity; exclude private environment/data/native build artifacts; preserve roles/branches/recent password, custody/safety, provider settings and immutable records",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PUB24-G03",
+      "status": "PARTIAL",
+      "reason": "Publication/deployment and executed hosted/CI evidence pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+    },
+    {
+      "id": "PUB24-R04",
+      "requirement": "Verify GitHub Actions on the published application source without mobile export",
+      "priority": "P1",
+      "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+      "uiReference": "Approved current Dispatch/fleet workspace and user-selected first-draft mobile icon",
+      "route": [
+        "https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet",
+        "GitHub codex/technician-saas-redesign"
+      ],
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/assets/app-icon.png"
+      ],
+      "dataSource": "Committed Git tree, actual Vercel upload/Ready deployment, hosted role-scoped API/browser observations and GitHub Actions",
+      "securityControl": "Dedicated demo project identity; exclude private environment/data/native build artifacts; preserve roles/branches/recent password, custody/safety, provider settings and immutable records",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PUB24-G04",
+      "status": "PARTIAL",
+      "reason": "Publication/deployment and executed hosted/CI evidence pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+    },
+    {
+      "id": "PUB24-R05",
+      "requirement": "Publish release evidence and reconcile phase matrices/manuals",
+      "priority": "P1",
+      "scope": "All current authorised source/docs/tests/mobile icon changes pushed to the existing GitHub branch. Only web/shared source deployed to linked Vercel client-demo project. No mobile binary/export/install, store upload, schema/environment or production-business change.",
+      "uiReference": "Approved current Dispatch/fleet workspace and user-selected first-draft mobile icon",
+      "route": [
+        "https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet",
+        "GitHub codex/technician-saas-redesign"
+      ],
+      "implementationFiles": [
+        "apps/web/components/fleet-workspace.tsx",
+        "apps/web/components/operations-completion.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css",
+        "apps/mobile/assets/app-icon.png"
+      ],
+      "dataSource": "Committed Git tree, actual Vercel upload/Ready deployment, hosted role-scoped API/browser observations and GitHub Actions",
+      "securityControl": "Dedicated demo project identity; exclude private environment/data/native build artifacts; preserve roles/branches/recent password, custody/safety, provider settings and immutable records",
+      "testFiles": [
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-components.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Anonymous/wrong-role reads, unverified/nonowner vehicle mutation, stale/private upload exclusions and no business-state change"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PUB24-G05",
+      "status": "PARTIAL",
+      "reason": "Publication/deployment and executed hosted/CI evidence pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete source push, candidate/stable verification, CI and final evidence"
+    }
+  ],
+  "gates": [
+    {
+      "id": "PUB24-G01",
+      "description": "Commit and push every pending authorised change without exposing private data",
+      "status": "PENDING",
+      "reason": "Pending actual release verification"
+    },
+    {
+      "id": "PUB24-G02",
+      "description": "Deploy exact committed web/shared bytes to the existing client-demo project",
+      "status": "PENDING",
+      "reason": "Pending actual release verification"
+    },
+    {
+      "id": "PUB24-G03",
+      "description": "Verify candidate and stable role/security/UI behaviour without business-state changes",
+      "status": "PENDING",
+      "reason": "Pending actual release verification"
+    },
+    {
+      "id": "PUB24-G04",
+      "description": "Verify GitHub Actions on the published application source without mobile export",
+      "status": "PENDING",
+      "reason": "Pending actual release verification"
+    },
+    {
+      "id": "PUB24-G05",
+      "description": "Publish release evidence and reconcile phase matrices/manuals",
+      "status": "PENDING",
+      "reason": "Pending actual release verification"
+    }
+  ],
+  "coverage": {
+    "total": 5,
+    "verified": 0,
+    "partial": 5,
+    "blocked": 0,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered explicit push/deploy-all request. Prior stable rollback dpl_G8rxXxwGYrFWHobgnpevrLfxf68W captured. Existing pending fleet/icon matrices and untested installed-icon gate retained."
+    }
+  ]
+}

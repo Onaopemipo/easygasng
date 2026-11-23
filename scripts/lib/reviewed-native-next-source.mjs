@@ -1,3 +1,4 @@
+import { reviewedFleetUiSourceHash } from "./reviewed-fleet-ui-source.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { execFileSync } from "node:child_process";
@@ -10,7 +11,7 @@ export async function reviewedNativeNextSourceHash(file, incoming) {
       "utf8",
     ),
   );
-  if (!review.files[file]) return incoming;
+  if (!review.files[file]) return reviewedFleetUiSourceHash(file, incoming);
   assert.equal(
     incoming,
     review.baseline[file],

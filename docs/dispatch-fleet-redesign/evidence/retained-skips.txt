@@ -1,0 +1,30 @@
+Initial broad suite retains all29 environment-dependent skips; no exclusion or concurrency acceptance is inferred.
+﹣ DAN-PG01: concurrent assignment retries commit one driver notification and rolled-back writes publish none (0.287917ms) # Explicit disposable local PostgreSQL required; not concurrency evidence when skipped
+﹣ BULK-PG01: separate connections serialize duplicate vehicle loads and rollback preserves canonical reservations and custody history (0.307375ms) # Disposable PostgreSQL required
+﹣ CGP-PG: independent PostgreSQL transactions reject concurrent duplicate profiles and stale supply writes (0.33125ms) # Requires disposable local PostgreSQL.
+﹣ ROUTE-PG01: independent connections serialize destination revisions and preserve immutable history (0.296ms) # Disposable PostgreSQL required
+﹣ DOOR-PG01: independent connections serialize reservation, cash verification and metered supplement; forced abort preserves stock and custody (0.288792ms) # Disposable PostgreSQL required
+﹣ DUPTRIP-CONCURRENT: independent PostgreSQL starts serialize both driver and vehicle conflicts (0.119791ms) # Disposable local PostgreSQL not explicitly enabled; PGlite is not concurrency evidence.
+﹣ ER-PG36: real PostgreSQL duplicate workers/refund approvals, encrypted backup and isolated restore preserve committed effects (0.297042ms) # Explicitly enabled disposable local PostgreSQL is required.
+﹣ ER-PGSEC: migrated private schema works under the restricted runtime role and rejects public ledger access (0.042125ms) # Explicitly enabled disposable local PostgreSQL is required.
+﹣ ER-11: independent PostgreSQL connections cannot spend the same points across simultaneous checkouts (0.292084ms) # NOT_TESTED: an explicitly enabled disposable local PostgreSQL target is unavailable; PGlite is not independent-connection evidence.
+﹣ OPS-PG01: independent connections serialize invoice decisions, request replay and vehicle trip ownership (0.286125ms) # Disposable local PostgreSQL not enabled
+﹣ ADD-PG: concurrent addition retries post once and assignment competes on the same locked order (0.290292ms) # Disposable PostgreSQL not enabled
+﹣ TRK-17: independent PostgreSQL connections serialize final-capacity assignment and duplicate proof (1.64075ms) # NOT_TESTED: no explicitly enabled disposable local PostgreSQL; Docker daemon unavailable. PGlite is not concurrency evidence.
+﹣ OWNER-AUTO-PG: independent PostgreSQL owner submissions and repeated applications serialize one version and one authorisation (0.293833ms) # Disposable PostgreSQL not enabled
+﹣ PAY-PG-CONCURRENCY: separate connections post once; aborted posting rolls back wallet, audit and receipt (0.288292ms) # Disposable PostgreSQL not enabled
+﹣ PM-T47: independent PostgreSQL callers serialize provisional creation and invoice issuance without duplicate business effects (0.363209ms) # Disposable local PostgreSQL not enabled
+﹣ multi-connection PostgreSQL: independent approvals and duplicate activation (0.283833ms) # No explicitly enabled disposable local PostgreSQL test database.
+﹣ PR-03: encrypted PostgreSQL backup restores to an isolated empty target and rejects overwrite, tampering and wrong keys (0.30225ms) # Disposable local PostgreSQL required
+﹣ PR-04: release audit rejects privileged owners and detects missing RLS and public grants under the actual runtime role (0.042625ms) # Disposable local PostgreSQL required
+﹣ PR-08: supervised worker completes a real maintenance transaction and exits cleanly on SIGTERM (0.0385ms) # Disposable local PostgreSQL required
+﹣ POS-PG01: independent connections serialize till opening, sale replay, stock deduction and cash-up (0.284334ms) # Disposable PostgreSQL not enabled
+﹣ EO-PG: independent PostgreSQL connections serialize duplicate operations and final-slot competition (0.285791ms) # No explicitly enabled disposable local PostgreSQL server; PGlite is not multi-connection evidence.
+﹣ SINV-PG01: independent connections issue one immutable service invoice, replay one request and rollback aborted issue (0.289208ms) # Disposable PostgreSQL required
+﹣ STAFF-PRIV-PG: concurrent administrators cannot overwrite privilege revisions; committed revocation blocks an existing session (0.312334ms) # Requires an explicitly enabled isolated local PostgreSQL test database.
+﹣ SUPPORT-C05: concurrent reply and attachment retries commit one record each in PostgreSQL (0.051ms) # SKIP
+﹣ TECH-T56 independent PostgreSQL connections serialize one paid work authorisation (0.315459ms) # No explicitly enabled disposable local PostgreSQL server; PGlite is not multi-connection evidence.
+﹣ TAV-PG: independent PostgreSQL connections serialize competing availability without duplicate slots (0.294875ms) # No explicitly enabled disposable local PostgreSQL server; PGlite is not multi-connection evidence.
+﹣ TM-PG: independent PostgreSQL connections prevent duplicate/stale moderation and consent withdrawal wins publication races (0.292334ms) # No explicitly enabled disposable local PostgreSQL server; serialized PGlite does not prove multi-connection moderation.
+﹣ MANIFEST-PG01: independent connections serialize physical capacity and replay; forced abort preserves custody and canonical reservations (0.290333ms) # Disposable PostgreSQL required
+﹣ WALLET-ORDER-PG: independent cross-branch purchases cannot overdraw one wallet and concurrent retries debit once (0.122792ms) # Disposable PostgreSQL not enabled

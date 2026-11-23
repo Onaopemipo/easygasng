@@ -1,0 +1,40 @@
+{
+  "dateLocal": "2026-11-24",
+  "initialFullRun": {
+    "command": "npm test",
+    "tests": 1226,
+    "passed": 1196,
+    "failed": 1,
+    "skipped": 29,
+    "exitCode": 1,
+    "failure": "PBR21-ARTIFACTS historical style source proof had no mapping for the newly authorised fleet CSS",
+    "evidence": "initial-full-regression.txt"
+  },
+  "resolution": {
+    "change": "Added globals.css to strict four-file web continuation with the exact retained committed baseline and actual current source hash. Historical436-file manifest, source commit and all native/server assertions remain intact.",
+    "currentRerun": "node --import tsx --test tests/customer-traceability.test.ts tests/fleet-verification-components.test.ts tests/fleet-verification-security.test.ts tests/driver-assignment.test.ts tests/sensitive-action-security.test.ts tests/blocker-reconciliation-closure.test.ts",
+    "passed": 25,
+    "failed": 0,
+    "skipped": 0,
+    "evidence": "final-focused.txt",
+    "fullRunRepeated": false,
+    "note": "This current rerun includes the originally failing PBR21-ARTIFACTS case and every changed fleet component/source proof; overlapping totals are not added. No full-suite green result is claimed."
+  },
+  "browser": {
+    "passed": 10,
+    "failed": 0,
+    "evidence": "browser-observations.json"
+  },
+  "webBuild": {
+    "command": "npm run build",
+    "exitCode": 0,
+    "evidence": "build.txt"
+  },
+  "types": {
+    "command": "npm run typecheck",
+    "exitCode": 0,
+    "evidence": "typecheck.txt"
+  },
+  "productionDecision": "NO-GO unchanged; local synthetic acceptance only; no deployment/new mobile binary",
+  "testGeneratedFixtures": "Restored only the nine originally clean tracked PDF/model outputs rewritten by npm test; unrelated evidence preserved."
+}
