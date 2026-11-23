@@ -82,11 +82,11 @@ A pending, failed or expired attempt does not mean payment succeeded. Check the 
 
 ## Android phone and tablet behaviour
 
-The current-source Android preview uses Expo Go58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The older installed EasyGas app remains a separate release; these changes need a new signed release before Play Store/TestFlight installations receive them.
+The current-source Android preview uses Expo Go 58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The older installed EasyGas app remains a separate release; these changes need a new signed release before Play Store/TestFlight installations receive them.
 
 Tablets can rotate between portrait and landscape. Content fills the app window, with controls inside system safe areas. Profile forms move above the docked software keyboard. Android Back first hides the keyboard; pressing Back again closes the sheet without saving. Floating keyboards can be moved with the operating system controls.
 
-Use Account → Appearance to choose Light, Dark or System. The transparent logo remains clear in dark mode. Android phone and tablet checks include140% text scaling and gesture/threebutton navigation. Slow order reads now finish before the next polling request begins, avoiding an indefinitely replaced loader.
+Use Account → Appearance to choose Light, Dark or System. The transparent logo remains clear in dark mode. Android phone and tablet checks include140% text scaling and gesture/three-button navigation. Slow order reads now finish before the next polling request begins, avoiding an indefinitely replaced loader.
 
 ![Android focused profile form above the keyboard](../mobile-native-next/evidence/android-phone-keyboard.png)
 
@@ -95,3 +95,5 @@ Use Account → Appearance to choose Light, Dark or System. The transparent logo
 ![Verified synthetic wallet principal after Paystack return](../mobile-native-next/evidence/android-provider-wallet-credit.png)
 
 [Provider/Android acceptance](../mobile-native-next/provider-android-acceptance.json) records8bounded passes out of9cases. The remaining installed-build/custom-scheme gate is blocked by the no-new-binaries scope. Real iOS provider return, physical devices, screen readers/maximal accessibility and individual feature/device permutations remain open. The development runtime cannot accept remote push or Android background GPS on behalf of an installed release. Production remains NO-GO.
+
+Current application source `aa5a86e` passed [GitHub release validation](https://github.com/Onaopemipo/easygasng/actions/runs/45119392929): **1,219 passed, 0 failed, 0 skipped**; web/native jobs succeeded and native export was skipped. Final documentation-only evidence update changes no application source.

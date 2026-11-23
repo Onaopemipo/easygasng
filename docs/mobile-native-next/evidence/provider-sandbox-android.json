@@ -44,5 +44,31 @@
     "walletEntries": 1,
     "retry": "Check again re-verifies saved intent, does not open another checkout",
     "terminalStatus": "No terminal provider cancellation asserted; pending retained honestly"
-  }
+  },
+  "financialPostingReadback": {
+    "route": "POST finance.paystack (wallet purpose, bounded UTC window)",
+    "matchedPostingCount": 1,
+    "rows": [
+      {
+        "id": "73e1dbdf-fa4f-43fe-95a6-08a96d57a625",
+        "provider_reference": "EG.e47615a8-22c8-45bd-9860-d76a74369f7c",
+        "purpose": "wallet",
+        "branch_id": "lagos",
+        "base_kobo": "10000",
+        "customer_fee_kobo": "153",
+        "gross_kobo": "10153",
+        "actual_fee_kobo": "153",
+        "created_at": "2026-11-23T05:18:43.544Z"
+      }
+    ],
+    "reportTruncated": false,
+    "count": 1,
+    "grossCollectionsKobo": 10153,
+    "walletFundingLiabilityKobo": 10000,
+    "recoveredProcessingChargesKobo": 153,
+    "settlementStatus": "Not imported or reconciled; provider net is not bank settlement. Collections are not additional sales revenue.",
+    "scope": "Canonical wallet and provider posting verified; funding is a liability, processing fee separate. Original sales verified_payments ledger remains17rows and does not include wallet funding."
+  },
+  "providerSourceUnchangedByRepairs": "HostedPayment.tsx and web payment return unchanged from parent3b556a8; current continuation repairs only order polling,sheet keyboard behaviour and native orientation",
+  "reviewedRepairsCommit": "aa5a86e5db2f680720f3860f4663c33013c1565f"
 }
