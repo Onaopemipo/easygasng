@@ -1,0 +1,77 @@
+{
+  "environment": "Actual Next.js and existing APIs on loopback3132 with disposable synthetic PGlite; not hosted data or physical-device acceptance",
+  "cases": [
+    {
+      "id": "TPUB-V01",
+      "status": "PASS",
+      "detail": "Actual desktop draft modal centred at zero pixel vertical centre offset; explains customer submission and offers no moderator draft-publication bypass."
+    },
+    {
+      "id": "TPUB-V02",
+      "status": "PASS",
+      "detail": "Actual local owner approves submitted synthetic feedback, encounters password verification, fails an incorrect password then succeeds with the fixture password; reason survives and separate Publish testimonial action appears. Completion focus was repaired after observing BODY focus and verified on publication return."
+    },
+    {
+      "id": "TPUB-V03",
+      "status": "PASS",
+      "detail": "Actual local Publish testimonial makes the labelled synthetic review appear on the local homepage; Hide testimonial removes that exact review while another published review remains visible. No hosted feedback was published."
+    },
+    {
+      "id": "TPUB-V04",
+      "status": "PASS",
+      "detail": "Dark phone390x844 and short phone390x568: centred at zero pixel offset, actions clear demo banner, keyboard focus stays in dialog, short viewport scrolls internally. Tablet820x1180 light history retains original version and all moderation notes."
+    }
+  ],
+  "geometry": [
+    {
+      "case": "desktop-draft",
+      "width": 1280,
+      "height": 720,
+      "centreOffsetY": 0,
+      "dialogBottom": 574.8984375,
+      "noticeTop": 674
+    },
+    {
+      "case": "desktop-dark-approved",
+      "width": 1280,
+      "height": 720,
+      "centreOffsetY": 0,
+      "dialogBottom": 582.3984375,
+      "noticeTop": 674,
+      "focusInDialog": true,
+      "bodyOverflow": false
+    },
+    {
+      "case": "phone-dark-approved",
+      "width": 390,
+      "height": 844,
+      "centreOffsetY": 0,
+      "dialogBottom": 701.296875,
+      "noticeTop": 774,
+      "focusInDialog": true,
+      "bodyOverflow": false
+    },
+    {
+      "case": "short-phone-actions",
+      "width": 390,
+      "height": 568,
+      "centreOffsetY": 0,
+      "dialogBottom": 444,
+      "noticeTop": 498,
+      "actionBottom": 428.09375,
+      "internalScroll": true,
+      "focusInDialog": true
+    },
+    {
+      "case": "tablet-light-history",
+      "width": 820,
+      "height": 1180,
+      "centreOffsetY": 0,
+      "dialogBottom": 863.015625,
+      "noticeTop": 1134,
+      "bodyOverflow": false
+    }
+  ],
+  "hostedContentPublished": false,
+  "limitations": "Phone/tablet browser breakpoints, not physical devices or screen-reader testing; consent and customer submission remain canonical server prerequisites."
+}

@@ -1,0 +1,212 @@
+{
+  "phase": "Testimonial modal and publication guidance",
+  "date": "2026-11-24",
+  "productionDecision": "Existing NO-GO and native/provider/physical/import/retain-all holds preserved",
+  "requirements": [
+    {
+      "id": "TPUB-R01",
+      "requirement": "Centre testimonial review, filter and moderation dialogs and keep long content/actions above the demo notice",
+      "priority": "P1",
+      "scope": "Web testimonials presentation and publication guidance; preserve canonical moderation/consent/version/recent-verification rules and all prior production holds",
+      "uiReference": "24 November 2026 user screenshot: top-aligned review modal showing a draft without publishing guidance",
+      "route": [
+        "/admin/testimonials",
+        "/account-settings?section=reviews#testimonials"
+      ],
+      "implementationFiles": [
+        "apps/web/app/product-ui.css",
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Existing testimonial.detail/manage/mine and testimonial.transition APIs; current customer version and state remain authoritative",
+      "securityControl": "Only customer submits draft; only owner moderates; consent, current-version approval, recent password, eligibility and revision checks remain; no hosted content publication",
+      "testFiles": [
+        "tests/testimonial-publishing-ui.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [
+        "TPUB-V01",
+        "TPUB-V04"
+      ],
+      "negativeTests": [
+        "Draft publication, missing consent, wrong role, withdrawn/changed version, stale revision and failed reads/saves"
+      ],
+      "evidence": [
+        "docs/testimonial-publishing/evidence/focused.txt",
+        "docs/testimonial-publishing/evidence/browser-local.txt",
+        "docs/testimonial-publishing/evidence/browser-local.json",
+        "docs/testimonial-publishing/evidence/typecheck.txt",
+        "docs/testimonial-publishing/evidence/build.txt",
+        "docs/testimonial-publishing/reviewed-source-changes.json",
+        "docs/user-manual/testimonials.md"
+      ],
+      "acceptanceGate": "TPUB-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
+      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+    },
+    {
+      "id": "TPUB-R02",
+      "requirement": "Explain private drafts and make separate approval/publication actions discoverable without bypassing customer submission or consent",
+      "priority": "P1",
+      "scope": "Web testimonials presentation and publication guidance; preserve canonical moderation/consent/version/recent-verification rules and all prior production holds",
+      "uiReference": "24 November 2026 user screenshot: top-aligned review modal showing a draft without publishing guidance",
+      "route": [
+        "/admin/testimonials",
+        "/account-settings?section=reviews#testimonials"
+      ],
+      "implementationFiles": [
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Existing testimonial.detail/manage/mine and testimonial.transition APIs; current customer version and state remain authoritative",
+      "securityControl": "Only customer submits draft; only owner moderates; consent, current-version approval, recent password, eligibility and revision checks remain; no hosted content publication",
+      "testFiles": [
+        "tests/testimonial-publishing-ui.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [
+        "TPUB-DRAFT",
+        "TPUB-JOURNEY",
+        "TPUB-CUSTOMER",
+        "TPUB-V02",
+        "TPUB-V03"
+      ],
+      "negativeTests": [
+        "Draft publication, missing consent, wrong role, withdrawn/changed version, stale revision and failed reads/saves"
+      ],
+      "evidence": [
+        "docs/testimonial-publishing/evidence/focused.txt",
+        "docs/testimonial-publishing/evidence/browser-local.txt",
+        "docs/testimonial-publishing/evidence/browser-local.json",
+        "docs/testimonial-publishing/evidence/typecheck.txt",
+        "docs/testimonial-publishing/evidence/build.txt",
+        "docs/testimonial-publishing/reviewed-source-changes.json",
+        "docs/user-manual/testimonials.md"
+      ],
+      "acceptanceGate": "TPUB-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
+      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+    },
+    {
+      "id": "TPUB-R03",
+      "requirement": "Verify publication permissions, states, failures and responsive UI, and update the manual and traceability",
+      "priority": "P1",
+      "scope": "Web testimonials presentation and publication guidance; preserve canonical moderation/consent/version/recent-verification rules and all prior production holds",
+      "uiReference": "24 November 2026 user screenshot: top-aligned review modal showing a draft without publishing guidance",
+      "route": [
+        "/admin/testimonials",
+        "/account-settings?section=reviews#testimonials"
+      ],
+      "implementationFiles": [
+        "apps/web/components/testimonials.tsx"
+      ],
+      "dataSource": "Existing testimonial.detail/manage/mine and testimonial.transition APIs; current customer version and state remain authoritative",
+      "securityControl": "Only customer submits draft; only owner moderates; consent, current-version approval, recent password, eligibility and revision checks remain; no hosted content publication",
+      "testFiles": [
+        "tests/testimonial-publishing-ui.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [
+        "TPUB-RECOVERY",
+        "TPUB-SOURCE",
+        "TM-01",
+        "TM-02"
+      ],
+      "negativeTests": [
+        "Draft publication, missing consent, wrong role, withdrawn/changed version, stale revision and failed reads/saves"
+      ],
+      "evidence": [
+        "docs/testimonial-publishing/evidence/focused.txt",
+        "docs/testimonial-publishing/evidence/browser-local.txt",
+        "docs/testimonial-publishing/evidence/browser-local.json",
+        "docs/testimonial-publishing/evidence/typecheck.txt",
+        "docs/testimonial-publishing/evidence/build.txt",
+        "docs/testimonial-publishing/reviewed-source-changes.json",
+        "docs/user-manual/testimonials.md"
+      ],
+      "acceptanceGate": "TPUB-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
+      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+    },
+    {
+      "id": "TPUB-R04",
+      "requirement": "Publish the tested web repair to the existing client demo without publishing customer content or creating mobile binaries",
+      "priority": "P1",
+      "scope": "Web testimonials presentation and publication guidance; preserve canonical moderation/consent/version/recent-verification rules and all prior production holds",
+      "uiReference": "24 November 2026 user screenshot: top-aligned review modal showing a draft without publishing guidance",
+      "route": [
+        "/admin/testimonials",
+        "/account-settings?section=reviews#testimonials"
+      ],
+      "implementationFiles": [
+        "apps/web/components/testimonials.tsx",
+        "apps/web/app/product-ui.css"
+      ],
+      "dataSource": "Existing testimonial.detail/manage/mine and testimonial.transition APIs; current customer version and state remain authoritative",
+      "securityControl": "Only customer submits draft; only owner moderates; consent, current-version approval, recent password, eligibility and revision checks remain; no hosted content publication",
+      "testFiles": [
+        "tests/testimonial-publishing-ui.test.ts",
+        "tests/testimonials.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Draft publication, missing consent, wrong role, withdrawn/changed version, stale revision and failed reads/saves"
+      ],
+      "evidence": [],
+      "acceptanceGate": "TPUB-G04",
+      "status": "PARTIAL",
+      "reason": "Investigation found demo-notice top alignment, private draft state and post-approval dialog closure",
+      "testResult": "PENDING",
+      "outstandingWork": "Implement, test, verify responsive UI, document and publish web-only repair"
+    }
+  ],
+  "gates": [
+    {
+      "id": "TPUB-G01",
+      "description": "Centre testimonial review, filter and moderation dialogs and keep long content/actions above the demo notice",
+      "status": "PASS",
+      "reason": "Executed local evidence mapped to stable requirement; broader gates preserved"
+    },
+    {
+      "id": "TPUB-G02",
+      "description": "Explain private drafts and make separate approval/publication actions discoverable without bypassing customer submission or consent",
+      "status": "PASS",
+      "reason": "Executed local evidence mapped to stable requirement; broader gates preserved"
+    },
+    {
+      "id": "TPUB-G03",
+      "description": "Verify publication permissions, states, failures and responsive UI, and update the manual and traceability",
+      "status": "PASS",
+      "reason": "Executed local evidence mapped to stable requirement; broader gates preserved"
+    },
+    {
+      "id": "TPUB-G04",
+      "description": "Publish the tested web repair to the existing client demo without publishing customer content or creating mobile binaries",
+      "status": "PENDING",
+      "reason": "Execution pending"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "verified": 3,
+    "partial": 1,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered centred testimonial dialogs and explicit publication journey; no permission to publish an existing customer draft inferred."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Centred scoped dialogs, state-specific guidance, approval-to-publication continuation and error/focus/pending recovery locally verified. Existing customer-only submission and server controls preserved; hosted publication pending."
+    }
+  ],
+  "verification": {
+    "matrixValidation": "docs/testimonial-publishing/evidence/traceability.txt"
+  }
+}

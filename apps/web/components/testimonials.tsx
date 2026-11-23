@@ -264,6 +264,7 @@ export function CustomerTestimonials({
                   <p>{r.body}</p>
                 )}
                 <p>Public name: {r.display_name}</p>
+                {r.status === "DRAFT" && <p>Saved privately. Choose Submit for review when you are ready for moderation.</p>}
                 {r.latest_reason &&
                   ["REJECTED", "CHANGES_REQUESTED", "HIDDEN"].includes(
                     r.status,
@@ -509,6 +510,9 @@ export function CustomerTestimonials({
 }
 export function TestimonialManagement() {
   const [rows, setRows] = useState<any[]>([]),
+    [success, setSuccess] = useState(""),
+    [detailError, setDetailError] = useState(""),
+    [decisionError, setDecisionError] = useState(""),
     [metrics, setMetrics] = useState<any>(null),
     [detail, setDetail] = useState<any>(null),
     [detailId, setDetailId] = useState<string | null>(null),
@@ -529,7 +533,15 @@ export function TestimonialManagement() {
     [page, setPage] = useState(0),
     [busy, setBusy] = useState(false);
   const generation = useRef(0),
-    detailGeneration = useRef(0);
+    detailGeneration = useRef(0),
+    moderationPending = useRef(false);
+  useEffect(() => {
+    // Reopening after password verification must not leave keyboard focus on the page behind the dialog.
+    if (!detailId || decision || busy || detailLoading) return;
+    document.querySelector<HTMLButtonElement>(
+      '.testimonial-dialog [aria-label="Close dialog"]',
+    )?.focus();
+  }, [detailId, decision, busy, detailLoading]);
   function filters() {
     const q = new URLSearchParams({ sort });
     if (search.trim()) q.set("q", search.trim());
@@ -610,9 +622,11 @@ export function TestimonialManagement() {
       setError(e.message);
     }
   }
-  async function showDetail(id: string) {
+  async function showDetail(id: string, message = "") {
     const current = ++detailGeneration.current;
     setError("");
+    setDetailError("");
+    setSuccess(message);
     setDetail(null);
     setDetailId(id);
     setDetailLoading(true);
@@ -623,7 +637,7 @@ export function TestimonialManagement() {
       );
       if (current === detailGeneration.current) setDetail(result);
     } catch (e: any) {
-      if (current === detailGeneration.current) setError(e.message);
+      if (current === detailGeneration.current) setDetailError(e.message);
     } finally {
       if (current === detailGeneration.current) setDetailLoading(false);
     }
@@ -632,18 +646,24 @@ export function TestimonialManagement() {
     detailGeneration.current++;
     setDetailId(null);
     setDetail(null);
+    setDetailError("");
+    setSuccess("");
   }
   function moderate(row: any, next: string) {
-    setError("");
+    if (moderationPending.current) return;
+    setSuccess("");
+    setDecisionError("");
     setDecision({ row, next });
   }
   async function confirmModeration(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (moderationPending.current || !decision) return;
+    moderationPending.current = true;
     const fd = new FormData(e.currentTarget),
       reason = String(fd.get("category")) + ": " + String(fd.get("reason"));
     const { row, next } = decision;
     setBusy(true);
-    setError("");
+    setDecisionError("");
     try {
       await api("testimonial.transition", {
         id: row.id,
@@ -652,11 +672,16 @@ export function TestimonialManagement() {
         reason,
       });
       setDecision(null);
-      closeDetail();
-      await load();
+      const message = next === "APPROVED"
+        ? "Approved. Choose Publish testimonial to make this feedback public."
+        : next === "PUBLISHED" ? "Testimonial published."
+        : next === "HIDDEN" ? "Testimonial hidden from the website."
+        : "Review decision saved.";
+      await Promise.all([load(), showDetail(row.id, message)]);
     } catch (e: any) {
-      setError(e.message);
+      setDecisionError(e.message);
     } finally {
+      moderationPending.current = false;
       setBusy(false);
     }
   }
@@ -931,7 +956,7 @@ export function TestimonialManagement() {
       </WorkspaceDialog>
       {filterDialog && (
         <Modal
-          className="compact-dialog"
+          className="compact-dialog testimonial-dialog"
           title="Feedback filters"
           onClose={() => setFilterDialog(false)}
         >
@@ -1001,8 +1026,9 @@ export function TestimonialManagement() {
       )}
       {decision && (
         <Modal
-          className="compact-dialog"
+          className="compact-dialog testimonial-dialog"
           title={commands[decision.next]}
+          busy={busy}
           onClose={() => setDecision(null)}
         >
           <p>
@@ -1014,6 +1040,7 @@ export function TestimonialManagement() {
             <form
               className="workflow-form product-form"
               onSubmit={confirmModeration}
+              data-submit-pending={busy ? "true" : undefined}
             >
               <label>
                 <FieldCaption required={true}>Review category</FieldCaption>
@@ -1039,7 +1066,7 @@ export function TestimonialManagement() {
                   maxLength={900}
                 />
               </label>
-              {error && <Notice message={error} />}
+              {decisionError && <Notice message={decisionError} />}
               <button className="button" disabled={busy}>
                 {commands[decision.next]}
               </button>
@@ -1049,11 +1076,14 @@ export function TestimonialManagement() {
       )}
       {detailId && !decision && (
         <Modal
-          className="compact-dialog"
+          className="compact-dialog testimonial-dialog"
           title="Review customer feedback"
+          busy={busy}
           onClose={closeDetail}
         >
-          {error && <Notice type="error" message={error} />}
+          {(detailError || error) && <Notice type="error" message={detailError || error} />}
+          {!detailLoading && detailError && <button className="button secondary" onClick={() => void showDetail(detailId)}>Retry feedback details</button>}
+          {success && <Notice type="success" message={success} />}
           {detailLoading ? (
             <EasyGasLoader
               size="sm"
@@ -1085,25 +1115,49 @@ export function TestimonialManagement() {
                     <blockquote className="growth-message">
                       {currentRow.body}
                     </blockquote>
+                    <section className="testimonial-publication" aria-label="Publication status">
+                      <h3>{currentRow.status === "DRAFT" ? "Awaiting customer submission"
+                        : currentRow.status === "PENDING_REVIEW" ? "Ready for moderation"
+                        : currentRow.status === "APPROVED" ? "Ready to publish"
+                        : currentRow.status === "PUBLISHED" ? "Published on the website"
+                        : currentRow.status === "HIDDEN" ? "Hidden from the website"
+                        : currentRow.status === "CHANGES_REQUESTED" ? "Awaiting customer changes"
+                        : currentRow.status === "WITHDRAWN" ? "Customer withdrew consent" : "Review closed"}</h3>
+                      <p>{currentRow.status === "DRAFT"
+                        ? "This is a private draft. The customer must open Account → Your reviews and choose Submit for review. You can then approve it and publish it here. Consent alone does not submit a draft."
+                        : currentRow.status === "PENDING_REVIEW"
+                        ? "Check the original feedback and consent, then choose Approve testimonial. Approval keeps it private; Publish testimonial is the next separate step."
+                        : currentRow.status === "APPROVED"
+                        ? "This version is approved but is not public yet. Choose Publish testimonial and confirm the publication reason."
+                        : currentRow.status === "PUBLISHED"
+                        ? "This feedback is published. Choose Hide testimonial to remove it from public display."
+                        : currentRow.status === "HIDDEN"
+                        ? "This feedback is not publicly displayed. You can publish it again if its approved version and customer consent are still current."
+                        : currentRow.status === "CHANGES_REQUESTED"
+                        ? "The customer must edit their feedback and submit it for review again."
+                        : currentRow.status === "WITHDRAWN"
+                        ? "This feedback cannot be published after the customer withdraws consent."
+                        : "Rejected feedback cannot be published."}</p>
+                      {!currentRow.consent && <Notice message="Publication consent is not granted. Approval and publication are unavailable." />}
+                    </section>
                     <div className="compact-actions">
                       {actions[currentRow.status]?.map((next) => (
                         <button
-                          className="button secondary"
-                          disabled={busy}
+                          className={["APPROVED", "PUBLISHED"].includes(next) ? "button" : "button secondary"}
+                          disabled={busy || (["APPROVED", "PUBLISHED"].includes(next) && !currentRow.consent)}
                           key={next}
                           onClick={() => moderate(currentRow, next)}
                         >
                           {next === "APPROVED"
-                            ? "Approve"
+                            ? "Approve testimonial"
                             : next === "PUBLISHED"
-                              ? "Publish"
+                              ? "Publish testimonial"
                               : next === "HIDDEN"
-                                ? "Hide"
+                                ? "Hide testimonial"
                                 : next === "CHANGES_REQUESTED" ? "Request changes" : "Reject"}
                         </button>
                       ))}
                     </div>
-                    <p>Approval does not publish this testimonial.</p>
                   </>
                 ) : (
                   <>

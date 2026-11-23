@@ -1,0 +1,60 @@
+✘ [ERROR] No matching export in "../../../../../var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-feedback-ui-5dS0dM/ui.tsx" for import "Empty"
+
+    apps/web/components/engagement-records.tsx:3:9:
+      3 │ import { Empty } from "./ui";
+        ╵          ~~~~~
+
+node:internal/test_runner/harness:124
+      throw err;
+      ^
+
+Error: Build failed with 1 error:
+apps/web/components/engagement-records.tsx:3:9: ERROR: No matching export in "../../../../../var/folders/2t/mc_d3z7s3bx0y492lvtwjv1h0000gn/T/easygas-feedback-ui-5dS0dM/ui.tsx" for import "Empty"
+    at failureErrorWithLog (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:1467:15)
+    at /Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:926:25
+    at runOnEndCallbacks (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:1307:45)
+    at buildResponseToResult (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:924:7)
+    at /Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:951:16
+    at responseCallbacks.<computed> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:603:9)
+    at handleIncomingPacket (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:658:12)
+    at Socket.readFromStdout (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/esbuild/lib/main.js:581:7)
+    at Socket.emit (node:events:514:28)
+    at addChunk (node:internal/streams/readable:568:12) {
+  errors: [Getter/Setter],
+  warnings: [Getter/Setter]
+}
+
+Node.js v24.21.0
+✖ tests/testimonial-publishing-ui.test.ts (221.781167ms)
+✔ TM-01: eligible purchase saves a private draft; publication requires separate approval (1333.519584ms)
+✔ TM-02: ineligible, duplicate, ownership, consent and unsafe input are rejected (1039.270583ms)
+✔ TM-15: stale moderation cannot publish or overwrite a newer customer version (1005.774875ms)
+✔ TM-09: withdrawing published consent immediately removes public feedback and cannot be reversed by a moderator (915.645458ms)
+EasyGas incident diagnostic {
+  reference: '629e9490-3b9c-4d4e-b61a-520e5b951dbd',
+  action: 'testimonial.transition'
+}
+✔ TM-16: notification failure rolls back the entire transition and safe retry produces one event (940.387417ms)
+✔ TM-11: photos remain private until separately consented and moderated; withdrawal revokes public image access (922.862958ms)
+✔ TM-RUNTIME: the restricted server can run publication, browser roles cannot read records, and history cannot be changed (868.924583ms)
+✔ HP-CONTENT: editorial and testimonial policy changes reuse independent approvals and reject unsafe content (963.684084ms)
+✔ TM-MEDIA-HTTP: upload requires photo consent; public image responses are never cached and withdrawal revokes anonymous reads (981.748792ms)
+✔ HP-DATA: homepage reads published products with backend prices and active services through a bounded read model (909.665291ms)
+✔ TM-MANAGEMENT: owner searches and paginates all matches, exports filtered rows, and lower roles are denied (903.67775ms)
+✔ TM-WITHDRAW-STALE: customer consent revocation wins over a stale screen and retries have one effect (894.655916ms)
+✔ TM-EXPORT: existing identity-verified account export includes only owned testimonial versions and consent history (995.730375ms)
+✔ TM-ENTRY: completed-transaction links select only an eligible owned transaction and prioritize an existing submission (889.647875ms)
+ℹ tests 15
+ℹ suites 0
+ℹ pass 14
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 14174.333959
+
+✖ failing tests:
+
+test at tests/testimonial-publishing-ui.test.ts:1:1
+✖ tests/testimonial-publishing-ui.test.ts (221.781167ms)
+  'test failed'

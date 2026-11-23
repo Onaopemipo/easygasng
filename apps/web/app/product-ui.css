@@ -573,3 +573,19 @@ body:has(.client-demo-notice) :is(.co-dialog,.compact-dialog) .modal {max-height
 @media(max-width:600px) {
   body:has(.client-demo-notice) :is(.co-dialog,.compact-dialog) .modal {max-height:calc(100dvh - 152px);}
 }
+
+/* Testimonial dialogs stay centred, including when the persistent demo notice is present. */
+.modal-backdrop.testimonial-dialog,
+body:has(.client-demo-notice) .compact-dialog.testimonial-dialog {align-items:center;padding:24px;}
+.testimonial-dialog .modal {overscroll-behavior:contain;scrollbar-gutter:stable;}
+body:has(.client-demo-notice) .compact-dialog.testimonial-dialog .modal {max-height:calc(100dvh - 168px);}
+.testimonial-dialog .testimonial-publication {padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--raised);margin:16px 0;}
+.testimonial-dialog .testimonial-publication h3 {margin:0 0 8px;}
+.testimonial-dialog .testimonial-publication p {margin:0;line-height:1.6;}
+@media(max-width:600px) {
+ .modal-backdrop.testimonial-dialog,
+ body:has(.client-demo-notice) .compact-dialog.testimonial-dialog {padding:12px;}
+ body:has(.client-demo-notice) .compact-dialog.testimonial-dialog .modal {max-height:calc(100dvh - 248px);}
+ .testimonial-dialog .compact-actions {display:flex;flex-wrap:wrap;gap:8px;}
+ .testimonial-dialog .compact-actions .button {flex:1 1 100%;}
+}
