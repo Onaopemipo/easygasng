@@ -1,0 +1,238 @@
+{
+  "phase": "Product manifest workspace redesign",
+  "date": "2026-11-24",
+  "scope": "Web Product manifests page: separate payload review and measured-stock issue workflows; preserve existing API, custody and security contracts. No hosted rollout or native build inferred.",
+  "productionDecision": "Existing NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "priority": "P1",
+      "scope": "Web Product manifests page: separate payload review and measured-stock issue workflows; preserve existing API, custody and security contracts. No hosted rollout or native build inferred.",
+      "uiReference": "User screenshot of adjoining payload request and physical stock forms,24November2026",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role/branch scoped manifest.summary response and existing governed manifest/payload mutations",
+      "securityControl": "Owner/finance stock controls, driver-only receipt/return, recent-password verification, exact version/IDs, independent approvals and authoritative backend validation retained",
+      "testFiles": [
+        "tests/vehicle-manifest-workspace.test.ts",
+        "tests/vehicle-products-http.test.ts",
+        "tests/vehicle-products.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [
+        "MANUI-TASKS",
+        "MANUI-V01",
+        "MANUI-V02"
+      ],
+      "negativeTests": [
+        "Wrong-role actions, missing trip/product prerequisites, denied/delayed scoped reads, failed saves and retained version context"
+      ],
+      "evidence": [
+        "docs/manifest-workspace/evidence/focused.txt",
+        "docs/manifest-workspace/evidence/browser-observations.txt",
+        "docs/manifest-workspace/evidence/browser-observations.json",
+        "docs/manifest-workspace/evidence/typecheck.txt",
+        "docs/manifest-workspace/evidence/build.txt",
+        "docs/manifest-workspace/reviewed-source-changes.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local workspace redesign exercised through real components, existing HTTP/backend controls and actual synthetic browser layouts; no production or hosted rollout claim.",
+      "testResult": "PASS —25 focused checks,0failures/skips;5 browser observations, types/build and matrix validation pass.",
+      "outstandingWork": "No remaining bounded local redesign work. Hosted rollout, physical devices, screen readers and original production/native/provider/import/retention gates remain separate.",
+      "id": "MANUI-01",
+      "requirement": "Separate payload review and stock issue into one focused form at a time",
+      "acceptanceGate": "MANUI-G01"
+    },
+    {
+      "priority": "P1",
+      "scope": "Web Product manifests page: separate payload review and measured-stock issue workflows; preserve existing API, custody and security contracts. No hosted rollout or native build inferred.",
+      "uiReference": "User screenshot of adjoining payload request and physical stock forms,24November2026",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role/branch scoped manifest.summary response and existing governed manifest/payload mutations",
+      "securityControl": "Owner/finance stock controls, driver-only receipt/return, recent-password verification, exact version/IDs, independent approvals and authoritative backend validation retained",
+      "testFiles": [
+        "tests/vehicle-manifest-workspace.test.ts",
+        "tests/vehicle-products-http.test.ts",
+        "tests/vehicle-products.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [
+        "MANUI-RECORDS",
+        "MANUI-ROLES",
+        "MANUI-V03"
+      ],
+      "negativeTests": [
+        "Wrong-role actions, missing trip/product prerequisites, denied/delayed scoped reads, failed saves and retained version context"
+      ],
+      "evidence": [
+        "docs/manifest-workspace/evidence/focused.txt",
+        "docs/manifest-workspace/evidence/browser-observations.txt",
+        "docs/manifest-workspace/evidence/browser-observations.json",
+        "docs/manifest-workspace/evidence/typecheck.txt",
+        "docs/manifest-workspace/evidence/build.txt",
+        "docs/manifest-workspace/reviewed-source-changes.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local workspace redesign exercised through real components, existing HTTP/backend controls and actual synthetic browser layouts; no production or hosted rollout claim.",
+      "testResult": "PASS —25 focused checks,0failures/skips;5 browser observations, types/build and matrix validation pass.",
+      "outstandingWork": "No remaining bounded local redesign work. Hosted rollout, physical devices, screen readers and original production/native/provider/import/retention gates remain separate.",
+      "id": "MANUI-02",
+      "requirement": "Provide a readable records-first manifest workspace and prerequisite states",
+      "acceptanceGate": "MANUI-G02"
+    },
+    {
+      "priority": "P1",
+      "scope": "Web Product manifests page: separate payload review and measured-stock issue workflows; preserve existing API, custody and security contracts. No hosted rollout or native build inferred.",
+      "uiReference": "User screenshot of adjoining payload request and physical stock forms,24November2026",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role/branch scoped manifest.summary response and existing governed manifest/payload mutations",
+      "securityControl": "Owner/finance stock controls, driver-only receipt/return, recent-password verification, exact version/IDs, independent approvals and authoritative backend validation retained",
+      "testFiles": [
+        "tests/vehicle-manifest-workspace.test.ts",
+        "tests/vehicle-products-http.test.ts",
+        "tests/vehicle-products.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [
+        "MANUI-SCOPE",
+        "MANUI-VERIFY",
+        "MANIFEST-HTTP01",
+        "MANIFEST-01",
+        "MANIFEST-02",
+        "MANIFEST-03"
+      ],
+      "negativeTests": [
+        "Wrong-role actions, missing trip/product prerequisites, denied/delayed scoped reads, failed saves and retained version context"
+      ],
+      "evidence": [
+        "docs/manifest-workspace/evidence/focused.txt",
+        "docs/manifest-workspace/evidence/browser-observations.txt",
+        "docs/manifest-workspace/evidence/browser-observations.json",
+        "docs/manifest-workspace/evidence/typecheck.txt",
+        "docs/manifest-workspace/evidence/build.txt",
+        "docs/manifest-workspace/reviewed-source-changes.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local workspace redesign exercised through real components, existing HTTP/backend controls and actual synthetic browser layouts; no production or hosted rollout claim.",
+      "testResult": "PASS —25 focused checks,0failures/skips;5 browser observations, types/build and matrix validation pass.",
+      "outstandingWork": "No remaining bounded local redesign work. Hosted rollout, physical devices, screen readers and original production/native/provider/import/retention gates remain separate.",
+      "id": "MANUI-03",
+      "requirement": "Preserve role, password, custody/version and failure-recovery controls",
+      "acceptanceGate": "MANUI-G03"
+    },
+    {
+      "priority": "P1",
+      "scope": "Web Product manifests page: separate payload review and measured-stock issue workflows; preserve existing API, custody and security contracts. No hosted rollout or native build inferred.",
+      "uiReference": "User screenshot of adjoining payload request and physical stock forms,24November2026",
+      "route": [
+        "/admin/deliveries#driver-fleet"
+      ],
+      "implementationFiles": [
+        "apps/web/components/vehicle-manifest-panel.tsx",
+        "apps/web/app/globals.css"
+      ],
+      "dataSource": "Existing role/branch scoped manifest.summary response and existing governed manifest/payload mutations",
+      "securityControl": "Owner/finance stock controls, driver-only receipt/return, recent-password verification, exact version/IDs, independent approvals and authoritative backend validation retained",
+      "testFiles": [
+        "tests/vehicle-manifest-workspace.test.ts",
+        "tests/vehicle-products-http.test.ts",
+        "tests/vehicle-products.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/fleet-verification-security.test.ts"
+      ],
+      "testIds": [
+        "MANUI-V04",
+        "MANUI-V05",
+        "FLEETUI-SOURCE"
+      ],
+      "negativeTests": [
+        "Wrong-role actions, missing trip/product prerequisites, denied/delayed scoped reads, failed saves and retained version context"
+      ],
+      "evidence": [
+        "docs/manifest-workspace/evidence/focused.txt",
+        "docs/manifest-workspace/evidence/browser-observations.txt",
+        "docs/manifest-workspace/evidence/browser-observations.json",
+        "docs/manifest-workspace/evidence/typecheck.txt",
+        "docs/manifest-workspace/evidence/build.txt",
+        "docs/manifest-workspace/reviewed-source-changes.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded local workspace redesign exercised through real components, existing HTTP/backend controls and actual synthetic browser layouts; no production or hosted rollout claim.",
+      "testResult": "PASS —25 focused checks,0failures/skips;5 browser observations, types/build and matrix validation pass.",
+      "outstandingWork": "No remaining bounded local redesign work. Hosted rollout, physical devices, screen readers and original production/native/provider/import/retention gates remain separate.",
+      "id": "MANUI-04",
+      "requirement": "Verify responsive light/dark presentation and update manual/traceability",
+      "acceptanceGate": "MANUI-G04"
+    }
+  ],
+  "gates": [
+    {
+      "id": "MANUI-G01",
+      "description": "Separate payload review and stock issue into one focused form at a time",
+      "status": "PASS",
+      "reason": "Executed evidence mapped to stable requirement; broader acceptance gates unchanged"
+    },
+    {
+      "id": "MANUI-G02",
+      "description": "Provide a readable records-first manifest workspace and prerequisite states",
+      "status": "PASS",
+      "reason": "Executed evidence mapped to stable requirement; broader acceptance gates unchanged"
+    },
+    {
+      "id": "MANUI-G03",
+      "description": "Preserve role, password, custody/version and failure-recovery controls",
+      "status": "PASS",
+      "reason": "Executed evidence mapped to stable requirement; broader acceptance gates unchanged"
+    },
+    {
+      "id": "MANUI-G04",
+      "description": "Verify responsive light/dark presentation and update manual/traceability",
+      "status": "PASS",
+      "reason": "Executed evidence mapped to stable requirement; broader acceptance gates unchanged"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "verified": 4,
+    "partial": 0,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered screenshot request for separate payload and stock issue forms; no backend policy or native build authorised by this phase."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Records-first page and focused stock/payload/record dialogs locally verified. Explicit password fields, unique active-trip vehicles and in-stock product choices; API/server/native source unchanged. Old heading assertion updated to approved heading plus no-inline-form check; initial failed output retained."
+    }
+  ],
+  "verification": {
+    "phaseMatrixValidation": "docs/manifest-workspace/evidence/traceability.txt",
+    "initialMatrixFailure": "docs/manifest-workspace/evidence/initial-traceability.txt",
+    "resolvedReason": "Removed circular reference from a requirement to its own currently running validator output. Actual feature/component/browser evidence remains mapped; validator itself runs separately."
+  }
+}

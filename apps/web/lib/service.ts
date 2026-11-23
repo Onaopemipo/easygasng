@@ -1,3 +1,4 @@
+import { hydrateOrderRecords } from "./order-records";
 import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
 import { availableEmptyCylinderPredicate } from "./cylinder-allocation";
 import { customerRiderLocation } from "./customer-rider-location";
@@ -843,80 +844,7 @@ export async function dispatch(
             params,
           )
         ).rows;
-        for (const o of orders) {
-          if (
-            !staff &&
-            !["delivered", "cancelled"].includes(o.status) &&
-            o.delivery_code_expires_at &&
-            new Date(o.delivery_code_expires_at).getTime() > Date.now()
-          ) {
-            const code = await one(
-              tx,
-              "SELECT body FROM notifications WHERE user_id=$1 AND related_id=$2 AND title='Delivery confirmation code' ORDER BY created_at DESC LIMIT 1",
-              [user.id, o.id],
-            );
-            o.confirmation_code = code?.body.match(/\b\d{6}\b/)?.[0];
-          }
-          o.gas_lines = (
-            await tx.query("SELECT * FROM order_gas_lines WHERE order_id=$1", [
-              o.id,
-            ])
-          ).rows;
-          o.attempt = await one(
-            tx,
-            "SELECT id,state,driver_id,assignment_version,picked_up_at,arrived_at,completed_at FROM delivery_attempts WHERE order_id=$1 ORDER BY assignment_version DESC LIMIT 1",
-            [o.id],
-          );
-          o.driver = o.driver_id
-            ? await one(tx, "SELECT name FROM users WHERE id=$1", [o.driver_id])
-            : null;
-          o.last_update =
-            (
-              await one(
-                tx,
-                "SELECT max(created_at) at FROM order_events WHERE order_id=$1",
-                [o.id],
-              )
-            )?.at ?? o.created_at;
-          o.gps = !staff && o.status === "out_for_delivery"
-            ? await customerRiderLocation(tx, user.id, o.id)
-            : unavailableRiderLocation;
-          if (user.role === "driver" && ["assigned", "out_for_delivery"].includes(o.status)) {
-            o.assignment_response_open = o.attempt?.state === "assigned" &&
-              Boolean(o.delivery_code_expires_at && new Date(o.delivery_code_expires_at).getTime() > Date.now());
-            o.destination = await one(tx,
-              `SELECT latitude,longitude FROM dispatch_destinations
-               WHERE order_id=$1 AND branch_id=$2 AND address_hash=$3
-                 AND revision=(SELECT max(revision) FROM dispatch_destinations WHERE order_id=$1)`,
-              [o.id, o.branch_id, digest(canonicalRequest(o.address))],
-            );
-          }
-          if (staff) {
-            o.manifest = await deliveryManifest(tx, o.id);
-            o.delivery_evidence = o.attempt
-              ? (
-                  await tx.query(
-                    "SELECT kind,detail,created_at FROM delivery_evidence WHERE attempt_id=$1 ORDER BY created_at",
-                    [o.attempt.id],
-                  )
-                ).rows
-              : [];
-          }
-          delete o.delivery_code_hash;
-          delete o.delivery_code_expires_at;
-          o.items = (
-            await tx.query("SELECT * FROM order_items WHERE order_id=$1", [
-              o.id,
-            ])
-          ).rows;
-          o.events = (
-            await tx.query(
-              "SELECT status,note,created_at,version,previous_status FROM order_events WHERE order_id=$1 ORDER BY created_at",
-              [o.id],
-            )
-          ).rows;
-        }
-        return orders;
+        return hydrateOrderRecords(tx, user, orders, staff);
       }
       if (action === "tracking.drivers") {
         allow(user, ["owner", "manager"]);

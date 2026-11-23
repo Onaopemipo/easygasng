@@ -1,0 +1,77 @@
+{
+  "environment": "Actual Next.js and existing APIs; isolated disposable PGlite with40ms injected per DB query. Not hosted performance.",
+  "cases": [
+    {
+      "id": "LOAD-UI-TIMEOUT",
+      "status": "PASS",
+      "detail": "Actual Next.js Orders page with deliberately stalled GET: loader replaced by Loading took too long and Try again after the20second shared deadline; no automatic repeat."
+    },
+    {
+      "id": "LOAD-UI-RETRY",
+      "status": "PASS",
+      "detail": "Unstalled test server, explicit Try again restores25actual synthetic orders. Observed completed Orders reads557ms/1123ms with40ms injected per database query; synthetic timing only."
+    },
+    {
+      "id": "LOAD-UI-DETAILS",
+      "status": "PASS",
+      "detail": "Order overview, Gas Hose item and placed-history timeline display; staff lookup deferred until Details opened. No mutation submitted."
+    },
+    {
+      "id": "LOAD-UI-FLEET",
+      "status": "PASS",
+      "detail": "Fleet and Product manifests render scoped records; measured synthetic manifest313ms/610ms. Reloaded Fleet request tail contains no redundant Orders call."
+    }
+  ],
+  "isolatedFleetRequests": [
+    {
+      "path": "/api/dispatch.centre",
+      "status": 200,
+      "ms": 355
+    },
+    {
+      "path": "/api/navigation",
+      "status": 200,
+      "ms": 949
+    },
+    {
+      "path": "/api/fleet.summary",
+      "status": 200,
+      "ms": 846
+    },
+    {
+      "path": "/api/fleet.summary",
+      "status": 200,
+      "ms": 1098
+    },
+    {
+      "path": "/api/navigation",
+      "status": 200,
+      "ms": 608
+    },
+    {
+      "path": "/api/admin.dashboard",
+      "status": 200,
+      "ms": 1380
+    },
+    {
+      "path": "/api/business.snapshot",
+      "status": 200,
+      "ms": 1200
+    },
+    {
+      "path": "/api/approvals",
+      "status": 200,
+      "ms": 1499
+    },
+    {
+      "path": "/api/navigation",
+      "status": 200,
+      "ms": 600
+    },
+    {
+      "path": "/api/dispatch.centre",
+      "status": 200,
+      "ms": 947
+    }
+  ]
+}

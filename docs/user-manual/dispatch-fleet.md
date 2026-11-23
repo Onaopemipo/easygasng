@@ -48,3 +48,29 @@ Phone forms use one column and an internally scrolling dialog. The password and 
 ![Phone password and save action](../dispatch-fleet-redesign/evidence/phone-registration-password.jpg)
 
 The redesign is deployed to the [client demo](https://easygas-client-demo.vercel.app/admin/deliveries#driver-fleet), verified24November2026 (Brisbane). Hosted API checks cover all seven roles, anonymous access and denied registration; isolated Safari checks cover owner navigation, registration/password fields, search recovery and dark trip detail. [Release evidence](../releases/20261124/README.md). No hosted vehicle/trip/financial/stock mutation was needed. Phone/tablet layouts retain their preceding local browser evidence; a new hosted phone/tablet or screen-reader acceptance pass is not claimed. Existing production NO-GO remains.
+
+## Product manifests: issue stock and review capacity
+
+Open **Deliveries → Fleet & stock → Product manifests**. The page shows active trips, units on vehicles, returns needing review and searchable manifest records. These counts cover the records returned in your authorised scope. The latest 100 manifests are displayed ten at a time; earlier records are outside this view.
+
+Choose **Issue stock** to open one focused loading form. Select the active trip and an in-stock catalogue product, enter the units and measured packed weight in grams, and provide cylinder IDs where required, inspection evidence and a reason. Confirm your current password before saving. Stock becomes eligible for delivery only after the existing independent receipt and safety checks pass.
+
+Choose **Request payload review** in the separate **Vehicle payload capacity** card to request a certified product-capacity change. Only vehicles on active trips appear in this summary; each vehicle is listed once. Enter capacity in grams, the measurement/certificate evidence, review reason and current password. The current capacity remains in force until the required approval completes. If no active trip exists, follow **View fleet & trips** and arrange a suitable branch trip first.
+
+Only owner and finance roles see these two actions. Managers can inspect scoped records. Drivers retain their permitted receipt and return actions on their own records; production drivers continue to use the separate delivery-only workspace. No role gains new permissions through this redesign.
+
+**View details** shows the exact manifest reference, serials and custody history in Lagos time. Eligible records expose **Receive return**, driver receipt/declaration or finance discrepancy review as separate dialogs. Manifest identity and version are attached automatically. Independent counting, current qualifications, stock limits and owner/finance review remain mandatory where required.
+
+A failed password or save keeps the entered stock details. Closing an edited dialog asks whether to keep editing or discard changes, and a pending save cannot be dismissed or repeated. Phone dialogs scroll internally, with the heading and close action at the top. The password and save action remain above the client-demo notice when scrolled into view.
+
+This continuation is locally verified with synthetic data; see the [manifest workspace matrix](../traceability/manifest-workspace-rtm.md). It has not yet been deployed. Existing production NO-GO remains.
+
+## Loading delays and retry
+
+Orders, Fleet & trips and Product manifests now load related records in batches while retaining their existing role and branch scope. The full order details remain available from the order list.
+
+Web API reads stop waiting after 20 seconds if the response or its body stalls. The Orders records panel then shows **Loading took too long. Please try again.** Choose **Try again** to request fresh records. Reads that fail elsewhere show an error; use that page's refresh/retry control or reload the page. A timeout does not sign you out or change your permissions. An expired session still returns you to sign-in.
+
+Moving away cancels the shared admin records read, and a delayed response from an earlier identity cannot restore its records. There is no automatic retry of a stock, order, payment or other write. If a save has an uncertain result, use its existing recovery/status workflow before repeating it.
+
+This loading repair is verified locally; [timings, tests and rollout status](../loading-performance/README.md). The current client-demo measurement before rollout remains approximately20seconds for24orders; local benchmark timings are not hosted response-time guarantees.

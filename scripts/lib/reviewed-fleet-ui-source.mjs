@@ -33,5 +33,18 @@ export async function reviewedFleetUiSourceHash(file, incoming) {
     incoming,
     file + " retained committed source",
   );
+  return reviewedManifestUiSourceHash(file, review.files[file]);
+}
+
+/** The subsequent user-approved manifest layout preserves the first fleet proof verbatim. */
+async function reviewedManifestUiSourceHash(file, incoming) {
+  const review = JSON.parse(await readFile("docs/manifest-workspace/reviewed-source-changes.json", "utf8"));
+  assert.deepEqual(Object.keys(review.files).sort(), [
+    "apps/web/app/globals.css",
+    "apps/web/components/vehicle-manifest-panel.tsx",
+  ]);
+  if (!review.files[file]) return incoming;
+  assert.equal(incoming, review.baseline[file], file + " manifest UI historical baseline");
+  assert.equal(createHash("sha256").update(execFileSync("git", ["show", review.baseCommit + ":" + file], { maxBuffer: 32 * 1024 * 1024 })).digest("hex"), incoming, file + " retained published fleet source");
   return review.files[file];
 }

@@ -9756,3 +9756,47 @@ body:has(.client-demo-notice) .fleet-dialog .modal { max-height: calc(100dvh - 1
 }
 /* Keep wide record tables inside their own scroller at narrow breakpoints. */
 .workspace-shell:has(.fleet-workspace) .admin-main { overflow-x: clip; }
+
+/* Product custody: records first, one focused action at a time. */
+.manifest-workspace { min-width: 0; padding-top: 8px; }
+.manifest-workspace .fleet-heading h2 { margin: 4px 0 7px; font-size: 24px; letter-spacing: -.025em; }
+.manifest-workspace .fleet-heading p { margin: 0; color: var(--muted); font-size: 14px; }
+.manifest-guidance { display: flex; align-items: flex-start; gap: 10px; margin: 22px 0; color: var(--muted); }
+.manifest-guidance svg { flex-shrink: 0; color: var(--primary); margin-top: 2px; }
+.manifest-guidance p { margin: 0; font-size: 13px; line-height: 1.6; }
+.manifest-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-bottom: 24px; }
+.manifest-overview > div { display: flex; flex-direction: column; gap: 9px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 18px 20px; }
+.manifest-overview span { font-size: 13px; color: var(--muted); }
+.manifest-overview strong { font-size: 26px; line-height: 1.1; font-weight: 650; }
+.manifest-capacity { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 18px 20px; margin: 0 0 24px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; }
+.manifest-capacity h3 { margin: 0 0 5px; font-size: 15px; }
+.manifest-capacity p { margin: 0; max-width: 70ch; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.manifest-capacity .button { flex-shrink: 0; min-height: 44px; font-size: 13px; }
+.manifest-prerequisite { border: 1px solid var(--border); border-radius: 10px; padding: 16px 20px; margin-bottom: 24px; font-size: 14px; }
+.manifest-prerequisite p { margin: 6px 0 0; color: var(--muted); }
+.manifest-record-heading { padding: 18px 20px 0; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.manifest-record-heading h3 { margin: 0; font-size: 16px; }
+.manifest-record-heading h3 span { margin-left: 8px; color: var(--muted); font-size: 13px; }
+.manifest-record-heading p { margin: 0; color: var(--muted); font-size: 12px; }
+.manifest-workspace .fleet-table-scroll { overflow-x: auto; max-width: 100%; }
+.manifest-table { min-width: 760px; }
+.manifest-table td { vertical-align: top; }
+.manifest-table small { display: block; color: var(--muted); font-size: 12px; line-height: 1.7; margin-top: 5px; }
+.manifest-record-actions .fleet-text-button { display: block; padding: 8px 0; text-align: left; }
+.manifest-dialog .product-form > label[data-field-type="csv"], .manifest-dialog .product-form > label[data-field-type="text"] { grid-column: 1 / -1; }
+.manifest-dialog .product-form select { width: 100%; min-width: 0; }
+.manifest-dialog .product-form > label { overflow-wrap: anywhere; }
+.manifest-workspace button:focus-visible { outline: 3px solid var(--ring, #087a43); outline-offset: 3px; }
+.workspace-shell:has(.manifest-workspace) .admin-main { overflow-x: clip; }
+@media (max-width: 700px) {
+  .manifest-overview { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .manifest-overview > div { flex-direction: row; align-items: center; justify-content: space-between; padding: 16px; }
+  .manifest-capacity { align-items: stretch; flex-direction: column; gap: 14px; padding: 16px; }
+  .manifest-capacity .button { width: 100%; }
+  .manifest-record-heading { align-items: flex-start; flex-direction: column; gap: 6px; padding: 16px 14px 0; }
+  .manifest-dialog .product-form > label { grid-column: 1 / -1; }
+}
+.manifest-workspace table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.manifest-workspace th { background: var(--raised, #f5f8f6); color: var(--muted); font-size: 12px; font-weight: 550; }
+.manifest-workspace th, .manifest-workspace td { padding: 13px 20px; border-bottom: 1px solid var(--border); text-align: left; }
+.manifest-workspace td strong { display: block; font-weight: 600; max-width: 250px; overflow-wrap: anywhere; }

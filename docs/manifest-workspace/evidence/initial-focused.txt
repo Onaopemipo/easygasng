@@ -1,0 +1,78 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-INITIAL: actual owner vehicle form exposes current password before registration and other roles cannot register (23.668667ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-RECOVER: actual shared form preserves mounted fields and operation key across expired and incorrect verification, excludes password from mutation and commits once (10.686459ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-EXPIRY: verification rejected again during submission reopens the field, never loops automatically, and excludes verification from request mapping (1.525083ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FVERIFY-SINGLE: rapid repeated submit cannot dispatch a second verification or vehicle mutation (1.174833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-RECORDS: repeated vehicle labels retain distinct trip IDs, paginate, filter and disclose all honest GPS/fuel evidence (13.462667ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-ROLES: seven roles retain owner registration, driver-only actions and denied read boundaries; active role changes clear scoped data (19.6735ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ FLEETUI-FAILURE: refresh errors keep labelled snapshot, permission denial clears it and delayed prior scope never overwrites new role (19.925ms)
+✔ FLEETUI-UNITS: kilogram inputs map exactly to existing gram API and do not silently round sub-gram values (0.285792ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ FLEETUI-NAV: purpose tabs fetch only selected workspace, retain shortcut target and hide planning from finance/driver (4.297583ms)
+✔ FLEETUI-FUEL: driver modal prevents parallel fuel writes, preserves retry operation key and never exposes end-trip action to a manager (14.775ms)
+✔ FVERIFY-SOURCE: narrow current proof retains committed historical source and rejects tampered incoming hashes (105.060375ms)
+✔ FVERIFY-AUTH: unverified/expired owners and verified nonowners cannot register; normal reauth permits one idempotent registration without raising suitability (1126.876833ms)
+✔ FLEETUI-SOURCE: scoped web continuation preserves historical hashes and current implementation while native and server code stay outside its allowlist (93.30475ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-TASKS: records first, separate dialogs, unique vehicles, password verification and successful refresh (38.988167ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-RECORDS: latest100 label, ten-row pagination, no-match recovery and preserved hidden version context (16.80375ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-ROLES: seven role boundaries, driver receipt/return and missing-trip/product prerequisites (24.919708ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-SCOPE: denied and delayed responses remove data/actions on identity change; failed refresh labels last snapshot (18.929917ms)
+✔ MANUI-VERIFY: actual issue form clears password, retains draft and operation key after failed mutation, and commits once (36.31675ms)
+✔ MANIFEST-HTTP01: actual handlers allow scoped driver receipt but reject customer access and restricted-driver stock issue (1071.09825ms)
+✔ MANIFEST-01: qualified issue, independent exact receipt and measured capacity protect canonical branch inventory (1071.176625ms)
+✔ MANIFEST-02: loss/quarantine remains held until exact independent owner and finance recovery; no fabricated cost (858.757542ms)
+✔ MANIFEST-03: inactive-driver custody needs exact independent recovery approval even when all stock is found (844.677959ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 21
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7262.665667
+
+✖ failing tests:
+
+test at tests/fleet-verification-components.test.ts:1:13583
+✖ FLEETUI-NAV: purpose tabs fetch only selected workspace, retain shortcut target and hide planning from finance/driver (4.297583ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /Vehicle product manifests/. Input:
+
+  'Fleet & trips Product manifests LPG custody Route planning VEHICLE STOCK Product manifests Track stock from loading to receipt and return.      Refresh        Issue stock   Vehicle stock remains part of branch stock. Independent receipt, measured capacity and serial checks still apply. Active trips 13 Units on vehicles 0 Returns needing review 0 Vehicle payload capacity Changing a certified limit? Request a separate safety review. Vehicles on active trips are listed here. Request payload review No published physical products are available in your scope. Check branch inventory before issuing stock. Manifest records  0 Latest 100 manifests · Lagos time Search manifests          No product manifests yet Issued stock and its receipt history will appear here. 0 records ← Page  1  of  1 →'
+
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/fleet-verification-components.test.ts:601:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 'Fleet & trips Product manifests LPG custody Route planning VEHICLE STOCK Product manifests Track stock from loading to receipt and return.      Refresh        Issue stock   Vehicle stock remains part of branch stock. Independent receipt, measured capacity and serial checks still apply. Active trips 13 Units on vehicles 0 Returns needing review 0 Vehicle payload capacity Changing a certified limit? Request a separate safety review. Vehicles on active trips are listed here. Request payload review No published physical products are available in your scope. Check branch inventory before issuing stock. Manifest records  0 Latest 100 manifests · Lagos time Search manifests          No product manifests yet Issued stock and its receipt history will appear here. 0 records ← Page  1  of  1 →',
+    expected: /Vehicle product manifests/,
+    operator: 'match',
+    diff: 'simple'
+  }

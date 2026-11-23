@@ -1,4 +1,5 @@
 "use client";
+import { withReadDeadline } from "./read-deadline";
 import {
   confirmAction,
   appDialogActive,
@@ -352,51 +353,56 @@ async function requestApi(
   notify = true,
   verificationContext?: string,
 ) {
-  const response = await fetch(
-    `/api/${action}`,
-    body === undefined
-      ? {
-          cache: "no-store",
-          signal: options?.signal,
-          ...(verificationContext
-            ? {
-                headers: {
-                  "X-Easygas-Verification-Context": verificationContext,
-                },
-              }
-            : {}),
-        }
-      : {
-          method: "POST",
-          signal: options?.signal,
-          headers: {
-            "Content-Type": "application/json",
+  const perform = async (signal?: AbortSignal) => {
+    const response = await fetch(
+      `/api/${action}`,
+      body === undefined
+        ? {
+            cache: "no-store",
+            signal,
             ...(verificationContext
-              ? { "X-Easygas-Verification-Context": verificationContext }
+              ? {
+                  headers: {
+                    "X-Easygas-Verification-Context": verificationContext,
+                  },
+                }
               : {}),
+          }
+        : {
+            method: "POST",
+            signal,
+            headers: {
+              "Content-Type": "application/json",
+              ...(verificationContext
+                ? { "X-Easygas-Verification-Context": verificationContext }
+                : {}),
+            },
+            body,
           },
-          body,
-        },
-  );
-  const result = await response.json();
-  if (
-    response.status === 401 &&
-    !["me", "login", "register"].includes(action.split("?")[0])
-  ) {
-    window.dispatchEvent(new Event("easygas:unauthenticated"));
-    const path = window.location.pathname;
-    if (path.startsWith("/admin")) window.location.assign("/login");
-  }
-  if (!response.ok)
-    throw Object.assign(
-      new Error(friendlyMessage(result.error ?? "Something went wrong.")),
-      {
-        status: response.status,
-        code: result.code,
-        verificationContext: result.verificationContext,
-      },
     );
-  if (body !== undefined && notify)
-    window.dispatchEvent(new Event("easygas:committed"));
-  return result;
+    const result = await response.json();
+    if (
+      response.status === 401 &&
+      !["me", "login", "register"].includes(action.split("?")[0])
+    ) {
+      window.dispatchEvent(new Event("easygas:unauthenticated"));
+      const path = window.location.pathname;
+      if (path.startsWith("/admin")) window.location.assign("/login");
+    }
+    if (!response.ok)
+      throw Object.assign(
+        new Error(friendlyMessage(result.error ?? "Something went wrong.")),
+        {
+          status: response.status,
+          code: result.code,
+          verificationContext: result.verificationContext,
+        },
+      );
+    if (body !== undefined && notify)
+      window.dispatchEvent(new Event("easygas:committed"));
+    return result;
+  };
+  return body === undefined
+    ? withReadDeadline(perform, options?.signal)
+    : perform(options?.signal);
 }

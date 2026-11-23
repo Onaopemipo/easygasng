@@ -1,0 +1,197 @@
+{
+  "phase": "Loading performance repair",
+  "date": "2026-11-24",
+  "productionDecision": "Original NO-GO and native/provider/physical/import/retain-all holds remain",
+  "requirements": [
+    {
+      "id": "LOAD-R01",
+      "requirement": "Eliminate repeated per-record order/fleet/manifest read round trips while preserving full contracts",
+      "priority": "P1",
+      "scope": "Web API/read performance and shared client read loading; preserve pending manifest redesign and prior production NO-GO. No native build or automatic mutation replay.",
+      "uiReference": "User screenshot of indefinitely loading Admin Orders on24November2026",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/read-deadline.ts",
+        "apps/web/components/use-records-data.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-records.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/vehicle-products.ts"
+      ],
+      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
+      "testFiles": [
+        "tests/order-loading-performance.test.ts",
+        "tests/read-loading-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
+      ],
+      "evidence": [],
+      "acceptanceGate": "LOAD-G01",
+      "status": "PARTIAL",
+      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+    },
+    {
+      "id": "LOAD-R02",
+      "requirement": "Bound shared GET loading and provide safe scoped cancellation and explicit retry",
+      "priority": "P1",
+      "scope": "Web API/read performance and shared client read loading; preserve pending manifest redesign and prior production NO-GO. No native build or automatic mutation replay.",
+      "uiReference": "User screenshot of indefinitely loading Admin Orders on24November2026",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/read-deadline.ts",
+        "apps/web/components/use-records-data.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-records.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/vehicle-products.ts"
+      ],
+      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
+      "testFiles": [
+        "tests/order-loading-performance.test.ts",
+        "tests/read-loading-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
+      ],
+      "evidence": [],
+      "acceptanceGate": "LOAD-G02",
+      "status": "PARTIAL",
+      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+    },
+    {
+      "id": "LOAD-R03",
+      "requirement": "Verify timing, roles, failure cases and traceability without weakening existing production gates",
+      "priority": "P1",
+      "scope": "Web API/read performance and shared client read loading; preserve pending manifest redesign and prior production NO-GO. No native build or automatic mutation replay.",
+      "uiReference": "User screenshot of indefinitely loading Admin Orders on24November2026",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/read-deadline.ts",
+        "apps/web/components/use-records-data.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-records.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/vehicle-products.ts"
+      ],
+      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
+      "testFiles": [
+        "tests/order-loading-performance.test.ts",
+        "tests/read-loading-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
+      ],
+      "evidence": [],
+      "acceptanceGate": "LOAD-G03",
+      "status": "PARTIAL",
+      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
+      "testResult": "PENDING",
+      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+    },
+    {
+      "id": "LOAD-R04",
+      "requirement": "Publish and verify the web/API repair on the existing client demo, including hosted after timings",
+      "priority": "P1",
+      "scope": "Web API/read performance and shared client read loading; preserve pending manifest redesign and prior production NO-GO. No native build or automatic mutation replay.",
+      "uiReference": "User screenshot of indefinitely loading Admin Orders on24November2026",
+      "route": [
+        "/admin/orders",
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/admin.tsx",
+        "apps/web/components/ui.tsx",
+        "apps/web/components/read-deadline.ts",
+        "apps/web/components/use-records-data.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/order-records.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/vehicle-products.ts"
+      ],
+      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
+      "testFiles": [
+        "tests/order-loading-performance.test.ts",
+        "tests/read-loading-recovery.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
+      ],
+      "evidence": [],
+      "acceptanceGate": "LOAD-G04",
+      "status": "PARTIAL",
+      "reason": "Prior client-demo push/deploy authorisation retained; exact-source publication and hosted after measurements pending",
+      "testResult": "PENDING",
+      "outstandingWork": "Commit/push exact source; Ready candidate, promote, verify scoped reads and timings; record current CI and release evidence"
+    }
+  ],
+  "gates": [
+    {
+      "id": "LOAD-G01",
+      "description": "Eliminate repeated per-record order/fleet/manifest read round trips while preserving full contracts",
+      "status": "PENDING",
+      "reason": "Executed acceptance in progress"
+    },
+    {
+      "id": "LOAD-G02",
+      "description": "Bound shared GET loading and provide safe scoped cancellation and explicit retry",
+      "status": "PENDING",
+      "reason": "Executed acceptance in progress"
+    },
+    {
+      "id": "LOAD-G03",
+      "description": "Verify timing, roles, failure cases and traceability without weakening existing production gates",
+      "status": "PENDING",
+      "reason": "Executed acceptance in progress"
+    },
+    {
+      "id": "LOAD-G04",
+      "description": "Publish and verify the web/API repair on the existing client demo, including hosted after timings",
+      "status": "PENDING",
+      "reason": "Prior client-demo push/deploy authorisation retained; exact-source publication and hosted after measurements pending"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "verified": 0,
+    "partial": 4,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered Orders and shared loading investigation. Two live demo owner reads returned24orders in20.365/20.603seconds; repeated sequential child queries identified. Pending manifest redesign preserved."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Retained earlier explicit client-demo web/API publication authority; add LOAD-R04 rather than silently treating local benchmarks as hosted performance. Pending manifest redesign will ship with this repair; no mobile binary."
+    }
+  ]
+}

@@ -64,20 +64,23 @@ export async function vehicleProducts(
         ],
       )
     ).rows;
-    for (const l of loads) {
-      l.serials = (
-        await tx.query(
-          "SELECT s.*,c.serial FROM vehicle_product_serials s JOIN cylinders c ON c.id=s.cylinder_id WHERE s.load_id=$1 ORDER BY c.serial",
-          [l.id],
-        )
-      ).rows;
-      l.events = (
-        await tx.query(
-          "SELECT kind,detail,created_at FROM vehicle_product_events WHERE load_id=$1 ORDER BY created_at,id",
-          [l.id],
-        )
-      ).rows;
+    const ids = loads.map(l => l.id);
+    const serials = ids.length ? (await tx.query(
+      "SELECT s.*,c.serial FROM vehicle_product_serials s JOIN cylinders c ON c.id=s.cylinder_id WHERE s.load_id=ANY($1::text[]) ORDER BY c.serial", [ids],
+    )).rows : [];
+    const events = ids.length ? (await tx.query(
+      "SELECT load_id,kind,detail,created_at FROM vehicle_product_events WHERE load_id=ANY($1::text[]) ORDER BY created_at,id", [ids],
+    )).rows : [];
+    const serialsByLoad = new Map<string, any[]>(), eventsByLoad = new Map<string, any[]>();
+    for (const row of serials) {
+      const list = serialsByLoad.get(row.load_id) ?? [];
+      list.push(row); serialsByLoad.set(row.load_id,list);
     }
+    for (const {load_id,...event} of events) {
+      const list = eventsByLoad.get(load_id) ?? [];
+      list.push(event); eventsByLoad.set(load_id,list);
+    }
+    for (const l of loads) { l.serials=serialsByLoad.get(l.id) ?? [];l.events=eventsByLoad.get(l.id) ?? []; }
     return {
       loads,
       products:

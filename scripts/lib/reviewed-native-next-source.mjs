@@ -1,3 +1,4 @@
+import { reviewedLoadingSourceHash } from "./reviewed-loading-source.mjs";
 import { reviewedFleetUiSourceHash } from "./reviewed-fleet-ui-source.mjs";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -11,7 +12,7 @@ export async function reviewedNativeNextSourceHash(file, incoming) {
       "utf8",
     ),
   );
-  if (!review.files[file]) return reviewedFleetUiSourceHash(file, incoming);
+  if (!review.files[file]) return reviewedLoadingSourceHash(file, await reviewedFleetUiSourceHash(file, incoming));
   assert.equal(
     incoming,
     review.baseline[file],
@@ -28,5 +29,5 @@ export async function reviewedNativeNextSourceHash(file, incoming) {
     incoming,
     file + " committed native next baseline",
   );
-  return review.files[file];
+  return reviewedLoadingSourceHash(file, review.files[file]);
 }

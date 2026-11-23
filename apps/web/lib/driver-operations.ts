@@ -176,13 +176,18 @@ export async function driverOperations(
         ],
       )
     ).rows;
+    const events = trips.length ? (await tx.query(
+      "SELECT * FROM trip_events WHERE trip_id=ANY($1::text[]) ORDER BY sequence",
+      [trips.map(t => t.id)],
+    )).rows : [];
+    const eventsByTrip = new Map<string, any[]>();
+    for (const event of events) {
+      const list = eventsByTrip.get(event.trip_id) ?? [];
+      list.push(event);
+      eventsByTrip.set(event.trip_id, list);
+    }
     for (const t of trips) {
-      const e = (
-        await tx.query(
-          "SELECT * FROM trip_events WHERE trip_id=$1 ORDER BY sequence",
-          [t.id],
-        )
-      ).rows;
+      const e = eventsByTrip.get(t.id) ?? [];
       t.nextSequence =
         e.reduce((n, e) => Math.max(n, Number(e.sequence)), 0) + 1;
       const gps = e

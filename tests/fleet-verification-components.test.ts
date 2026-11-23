@@ -598,7 +598,8 @@ test("FLEETUI-NAV: purpose tabs fetch only selected workspace, retain shortcut t
       );
     });
     assert.deepEqual(calls, ["manifest.summary"]);
-    assert.match(content(tree.toJSON()), /Vehicle product manifests/);
+    assert.match(content(tree.toJSON()), /Product manifests/);
+    assert.equal(tree.root.findAllByType("form").length, 0);
     await act(async () => pick("Fleet & trips").props.onClick());
     assert.equal(calls.at(-1), "fleet.summary");
     await act(async () => pick("LPG custody").props.onClick());

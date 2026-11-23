@@ -1,4 +1,5 @@
 "use client";
+import { useRecordsData as useData } from "./use-records-data";
 import { approvalStatusLabel } from "../../../packages/business-rules/src/approval-progress";
 import { FieldCaption } from "./field-caption";
 import DriverExperience from "./driver-experience";
@@ -393,6 +394,7 @@ export default function Admin({
             <ProductCatalogue user={user} />
           ) : (
             <Records
+              key={JSON.stringify([section, user.id, user.role, user.branch_id ?? user.branchId])}
               section={section}
               refresh={refresh}
               user={user}
@@ -428,30 +430,6 @@ export default function Admin({
     </div>
     </WorkspaceAccess.Provider>
   );
-}
-function useData(action: string | null, refresh = 0) {
-  const [data, setData] = useState<any>(null),
-    [error, setError] = useState("");
-  useEffect(() => {
-    let active = true;
-    setData(null);
-    setError("");
-    if (!action) {
-      setData([]);
-      return;
-    }
-    api(action)
-      .then((d) => {
-        if (active) setData(d);
-      })
-      .catch((e) => {
-        if (active) setError(e.message);
-      });
-    return () => {
-      active = false;
-    };
-  }, [action, refresh]);
-  return { data, error };
 }
 function VerifyForm({ onDone }: { onDone: () => void }) {
   const [error, setError] = useState(""),
@@ -1883,27 +1861,30 @@ function Records({
     section === "reports"
       ? "finance"
       : section === "deliveries"
-        ? "orders"
+        ? null
         : section;
-  const { data, error } = useData(action, refresh),
-    staff = useData(
-      ["owner", "manager"].includes(user.role) ? "staff" : null,
-      refresh,
-    ),
+  const scope = JSON.stringify([user.id, user.role, user.branch_id ?? user.branchId]);
+  const { data, error, retry } = useData(action, refresh, scope),
     [query, setQuery] = useState(""),
     [selected, setSelected] = useState<any>(null),
     [message, setMessage] = useState("");
+  const staff = useData(
+    selected && ["owner", "manager"].includes(user.role) ? "staff" : null,
+    refresh,
+    scope,
+  );
   const params = useSearchParams();
   const targetOrder = params.get("orderId");
   useEffect(() => setMessage(""), [selected?.id]);
   useEffect(() => {
     let live = true;
+    const controller = new AbortController();
     if (section === "orders" && targetOrder) {
       if (!/^[a-f0-9-]{36}$/i.test(targetOrder)) {
         setMessage("Invalid order link.");
         return;
       }
-      api("orders?id=" + encodeURIComponent(targetOrder))
+      api("orders?id=" + encodeURIComponent(targetOrder), undefined, {signal: controller.signal})
         .then((rows) => {
           if (live) {
             setSelected(rows[0] ?? null);
@@ -1917,8 +1898,9 @@ function Records({
     }
     return () => {
       live = false;
+      controller.abort();
     };
-  }, [section, targetOrder, user.id]);
+  }, [section, targetOrder, scope]);
   if (section === "deliveries")
     return ["owner", "manager"].includes(user.role) ? (
       <DispatchCentre user={user} />
@@ -2044,9 +2026,9 @@ function Records({
           </div>
         </div>
         {error ? (
-          <Notice type="error" message={error} />
+          <div className="stack"><Notice type="error" message={error} /><button type="button" className="button secondary" onClick={retry}>Try again</button></div>
         ) : !rows ? (
-          <Loading />
+          <Loading label={section === "orders" ? "Loading orders" : "Loading records"} />
         ) : !rows.length ? (
           <Empty
             icon={

@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { execFileSync } from "node:child_process";
+import { reviewedLoadingSourceHash } from "../scripts/lib/reviewed-loading-source.mjs";
 import { reviewedNativeNextSourceHash } from "../scripts/lib/reviewed-native-next-source.mjs";
 const json = async (p: string) => JSON.parse(await fs.readFile(p, "utf8"));
 test("NXT-TRACEABILITY: all approved requirements, gates and 300 stable feature leaves retain actual sources and honest acceptance limits", async () => {
@@ -57,12 +58,13 @@ test("NXT-NATIVE-BOUNDARY: committed baselines and exact reviewed native changes
       )
       .digest("hex");
     assert.equal(base, review.baseline[file]);
-    assert.equal(await reviewedNativeNextSourceHash(file, base), hash);
+    const currentHash = await reviewedLoadingSourceHash(file, hash);
+    assert.equal(await reviewedNativeNextSourceHash(file, base), currentHash);
     assert.equal(
       createHash("sha256")
         .update(await fs.readFile(file))
         .digest("hex"),
-      hash,
+      currentHash,
     );
     await assert.rejects(
       () => reviewedNativeNextSourceHash(file, "tampered"),
