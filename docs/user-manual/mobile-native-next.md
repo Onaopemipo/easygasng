@@ -70,7 +70,7 @@ The customer profile sheet keeps the input and Continue button above the softwar
 
 ![Current native tablet Home](../mobile-native-next/evidence/native-home-tablet.png)
 
-The recorded wallet test used disposable local synthetic data. It verifies continuity through sign-in and the correct tracking destination; it does not verify a real provider payment or physical delivery. Text size6 was checked, while maximal accessibility sizes, VoiceOver, Android runtime, physical devices and every feature/device combination remain open. Store-installed apps still require a separately authorised new release to receive this design.
+The recorded wallet test used disposable local synthetic data. It verifies continuity through sign-in and the correct tracking destination; it does not verify a real provider payment or physical delivery. Text size6 was checked, while maximal accessibility sizes, VoiceOver, Android runtime, physical devices and every feature/device combination remain open. The new iOS TestFlight0.1.0(3) now includes this design; Android store build2 remains older.
 
 ## Returning from sandbox payment
 
@@ -82,7 +82,7 @@ A pending, failed or expired attempt does not mean payment succeeded. Check the 
 
 ## Android phone and tablet behaviour
 
-The current-source Android preview uses Expo Go 58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The older installed EasyGas app remains a separate release; these changes need a new signed release before Play Store/TestFlight installations receive them.
+The current-source Android preview uses Expo Go 58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The Android store build2 remains older and needs a separately authorised signed Android release. The latest iOS TestFlight build3 includes these changes.
 
 Tablets can rotate between portrait and landscape. Content fills the app window, with controls inside system safe areas. Profile forms move above the docked software keyboard. Android Back first hides the keyboard; pressing Back again closes the sheet without saving. Floating keyboards can be moved with the operating system controls.
 
@@ -94,6 +94,14 @@ Use Account → Appearance to choose Light, Dark or System. The transparent logo
 
 ![Verified synthetic wallet principal after Paystack return](../mobile-native-next/evidence/android-provider-wallet-credit.png)
 
-[Provider/Android acceptance](../mobile-native-next/provider-android-acceptance.json) records8bounded passes out of9cases. The remaining installed-build/custom-scheme gate is blocked by the no-new-binaries scope. Real iOS provider return, physical devices, screen readers/maximal accessibility and individual feature/device permutations remain open. The development runtime cannot accept remote push or Android background GPS on behalf of an installed release. Production remains NO-GO.
+[Provider/Android acceptance](../mobile-native-next/provider-android-acceptance.json) records8bounded passes out of9cases. The remaining installed-build/custom-scheme gate retains untested installed iOS handling and the older Android store binary. The subsequent iOS-only build authorisation does not itself verify those behaviours. Real iOS provider return, physical devices, screen readers/maximal accessibility and individual feature/device permutations remain open. The development runtime cannot accept remote push or Android background GPS on behalf of an installed release. Production remains NO-GO.
 
 Current application source `aa5a86e` passed [GitHub release validation](https://github.com/Onaopemipo/easygasng/actions/runs/45119392929): **1,219 passed, 0 failed, 0 skipped**; web/native jobs succeeded and native export was skipped. Final documentation-only evidence update changes no application source.
+
+## Update to iOS TestFlight 0.1.0 (3)
+
+Open **TestFlight → EasyGas Energy Solutions → Update** using the existing approved internal Apple account. Confirm version **0.1.0 (3)**. The build is available to the same two internal testers in EasyGas Internal QA; if the invitation has not been accepted, accept the existing TestFlight invitation first.
+
+Build3 includes the approved mobile design and loading, keyboard, orientation and payment-return source repairs. It supports iPhone and iPad and uses the existing client-demo API with synthetic data. Use Paystack TEST details only. Android remains at the earlier store build2.
+
+Follow the saved [What to Test notes](../ios-testflight-refresh-20261123/WHAT-TO-TEST.md), especially installed return-to-app, session continuity and background recovery. Upload/Testing status does not verify those device actions. Full feature, physical-device, permissions, screen-reader and production gates remain open. [Release evidence](../ios-testflight-refresh-20261123/README.md).

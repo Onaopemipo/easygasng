@@ -299,7 +299,7 @@
       "status": "PARTIAL",
       "reason": "Actual Paystack TEST checkout completed from the current Android customer app. Native browser callback needed no web sign-in; returning with retained app session verified the intent and credited10000kobo once. Repeated verify stayed paid with one ledger entry. Actual decline reconciled failed; separately abandoned checkout stayed pending without another credit. API/adapter foreign,expired,duplicate and uncertain-response tests pass.",
       "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
-      "outstandingWork": "Current-source installed easygas:// handling, iOS real provider return, physical/store distribution acceptance and production provider approval remain separate. No new mobile binaries authorised."
+      "outstandingWork": "Signed iOS3 distribution is now verified separately in STORE23; current-source installed easygas:// handling, real iOS provider return, physical/lifecycle acceptance and production provider approval remain untested/open. Android store binary remains older build2; no new Android binary authorised."
     },
     {
       "id": "NXT-R05",
@@ -729,7 +729,7 @@
       "id": "NXT-G04",
       "description": "Real provider payment, return and recovery",
       "status": "PENDING",
-      "reason": "Actual Paystack TEST checkout completed from the current Android customer app. Native browser callback needed no web sign-in; returning with retained app session verified the intent and credited10000kobo once. Repeated verify stayed paid with one ledger entry. Actual decline reconciled failed; separately abandoned checkout stayed pending without another credit. API/adapter foreign,expired,duplicate and uncertain-response tests pass. Outstanding: Current-source installed easygas:// handling, iOS real provider return, physical/store distribution acceptance and production provider approval remain separate. No new mobile binaries authorised."
+      "reason": "Actual Paystack TEST checkout completed from the current Android customer app. Native browser callback needed no web sign-in; returning with retained app session verified the intent and credited10000kobo once. Repeated verify stayed paid with one ledger entry. Actual decline reconciled failed; separately abandoned checkout stayed pending without another credit. API/adapter foreign,expired,duplicate and uncertain-response tests pass. Outstanding: Signed iOS3 distribution is now verified separately in STORE23; current-source installed easygas:// handling, real iOS provider return, physical/lifecycle acceptance and production provider approval remain untested/open. Android store binary remains older build2; no new Android binary authorised."
     },
     {
       "id": "NXT-G05",
@@ -816,6 +816,10 @@
     {
       "date": "2026-11-23",
       "change": "Current repair source aa5a86e passed GitHub run45119392929:1219tests,0failures,0skips, web/native success, native export skipped. Independent finance.paystack read-back confirms one wallet posting with principal/fee separated. Final follow-up is documentation/evidence only; matrix validation2/2passes. No denominator or production hold changed."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "New user-authorised iOS-only build3 now Testing in TestFlight; STORE23 distribution gates verified separately. Earlier no-build restriction superseded for iOS only; NXT-PA09 retains installed-scheme/real-iOS-return/lifecycle acceptance as untested and older Android build2 constraint. No native feature/gate denominators or broader NO-GO holds removed."
     }
   ],
   "executedResults": {

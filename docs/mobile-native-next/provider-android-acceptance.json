@@ -1,7 +1,7 @@
 {
   "date": "2026-11-23",
   "sourceCommit": "3b556a80d75bdeadadfe7b7fa03b6abf0faed1dd",
-  "productionDecision": "NO-GO; no new signed binary, export, install of EasyGas binary or store upload authorised in this phase",
+  "productionDecision": "NO-GO retained. Original Android/provider preview phase had no build authorisation; later iOS-only TestFlight refresh is separately authorised and complete. No new Android binary in this continuation.",
   "requirements": [
     "NXT-R01",
     "NXT-R02",
@@ -91,7 +91,12 @@
       "id": "NXT-PA09",
       "case": "Current-source installed custom-scheme return and store release acceptance",
       "status": "BLOCKED",
-      "reason": "No new signed mobile binaries authorised. Existing installed EasyGas APK predates approved redesign; cannot count it as current source. Expo Go foreground recovery does not certify current store custom-scheme handling."
+      "reason": "iOS-only authorisation superseded the earlier no-build restriction: current-source signed iOS3 is now Testing in TestFlight. Installed iOS custom-scheme return/lifecycle and real iOS provider acceptance remain UNTESTED, not accepted from upload or static scheme checks. Android installed app remains build2 and predates the redesign; no new Android build authorised.",
+      "evidence": [
+        "docs/ios-testflight-refresh-20261123/README.md",
+        "docs/ios-testflight-refresh-20261123/artifact-verification.json",
+        "docs/ios-testflight-refresh-20261123/store-acceptance.md"
+      ]
     }
   ],
   "boundedResults": {
@@ -100,5 +105,8 @@
     "blocked": 1,
     "excluded": 0
   },
-  "reviewedRepairsCommit": "aa5a86e5db2f680720f3860f4663c33013c1565f"
+  "reviewedRepairsCommit": "aa5a86e5db2f680720f3860f4663c33013c1565f",
+  "scopeChanges": [
+    "New user request authorised only a signed iOS refresh; uploaded build3 is Testing. PA09 remains in the nine-case denominator for untested installed iOS behaviour and the unchanged older Android store binary."
+  ]
 }
