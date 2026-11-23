@@ -59,6 +59,7 @@ export function NativeForm({
   submitLabel,
   reviewLabel,
   feedbackResetKey,
+  collapsedFields = [],
 }: {
   api: API;
   action: string;
@@ -76,7 +77,9 @@ export function NativeForm({
   submitLabel?: string;
   reviewLabel?: string;
   feedbackResetKey?: number;
+  collapsedFields?: string[];
 }) {
+  const [showOptionalDetails, setShowOptionalDetails] = useState(false);
   const [values, setValues] = useState<Record<string, any>>(() =>
       Object.fromEntries(
         fields.map((f) => [
@@ -156,9 +159,10 @@ export function NativeForm({
   return (
     <View style={s.card}>
       <Text style={s.heading}>{title}</Text>
+      {!reviewed && collapsedFields.length > 0 && <Pressable accessibilityRole="button" accessibilityState={{ expanded: showOptionalDetails }} onPress={() => setShowOptionalDetails(v => !v)} style={{ minHeight: 48, justifyContent: "center" }}><Text>{showOptionalDetails ? "Hide delivery instructions" : "Add delivery instructions (optional)"}</Text></Pressable>}
       {!reviewed &&
         fields
-          .filter((f) => f.type !== "hidden")
+          .filter((f) => f.type !== "hidden" && (showOptionalDetails || !collapsedFields.includes(f.name)))
           .map((f) => {
             const required = f.required ?? f.type !== "checkbox";
             return (

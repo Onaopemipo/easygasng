@@ -1,4 +1,5 @@
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
+import { ScreenTransition } from "./ScreenTransition";
 import BrandLogo from "./BrandLogo";
 import {NativeEntryScreen,NativePublicPolicies,NativeServiceInfo} from './NativeEntry';
 import {nativeEntryLink,type NativeEntry} from '../../packages/business-rules/src/native-entry-links';
@@ -27,7 +28,7 @@ import TechnicianWorkspace from "./TechnicianWorkspace";
 import TechnicianSignIn from "./TechnicianSignIn";
 import DriverWorkspace from "./DriverWorkspace";
 import DriverSignIn from "./DriverSignIn";
-import { ScreenTitleContext } from "./CustomerUI";
+import { RemoteReadScope, ScreenTitleContext } from "./CustomerUI";
 import { customerMobileLink } from "../../packages/business-rules/src/customer-mobile";
 import CustomerWallet from "./CustomerWallet";
 import TrackingSummary from "./TrackingSummary";
@@ -210,6 +211,8 @@ export default function App() {
   }
   const accountRef = useRef<string | null>(null);
   accountRef.current = user?.id ?? null;
+  const sessionRef = useRef<string | null>(token);
+  sessionRef.current = token;
   const orderFilterRef = useRef(orderFilter);
   orderFilterRef.current = orderFilter;
   const lastScreen = useRef(screen);
@@ -289,7 +292,7 @@ export default function App() {
     });
     const body = await response.json();
     if (!response.ok) {
-      if (response.status === 401 && session) {
+      if (response.status === 401 && session && sessionRef.current === session) {
         await SecureStore.deleteItemAsync("easygas.session");
         setToken(null);
         setUser(null);
@@ -301,7 +304,7 @@ export default function App() {
         code: body.code,
       });
     }
-    if (body.signedOut) {
+    if (body.signedOut && sessionRef.current === session) {
       await SecureStore.deleteItemAsync("easygas.session");
       setToken(null);
       setUser(null);
@@ -775,6 +778,7 @@ export default function App() {
     appearance: "Appearance",
   };
   return (
+    <RemoteReadScope scope={`${user?.id ?? "guest"}:${token ?? "anonymous"}`}>
     <ScreenCanvas style={[s.app, { backgroundColor: colors.background }]}>
       {initialLinkResolved && introductionAudience(user ? (user.role ?? "unknown") : token ? "unverified" : null) !== "excluded" && (
         <Onboarding key={user?.id ?? "guest"} request={intro} automatic={canAutoShowIntroduction({
@@ -873,6 +877,7 @@ export default function App() {
       <ScreenTitleContext.Provider
         value={customerView ? (headerTitle[screen] ?? null) : null}
       >
+        <ScreenTransition identity={screen}>
         <ScrollView
           ref={scrollRef}
           contentContainerStyle={[
@@ -2034,6 +2039,7 @@ export default function App() {
             </>
           )}
         </ScrollView>
+        </ScreenTransition>
       </ScreenTitleContext.Provider>
       <View style={s.bottomNav}>
         {(user?.role === "owner" ? [["Home", "home"], ["Operations", "owner-operations"], ["Approvals", "owner-approvals"], ["Reports", "owner-reports"], ["More", "more"]] : user?.role === "manager" ? [["Home", "home"], ["Dispatch", "branch-dispatch"], ["Customers", "sales-customers"], ["POS", "retail-pos"], ["Account", "more"]] : driver || (user && !["customer", "commercial"].includes(user.role))
@@ -2102,6 +2108,7 @@ export default function App() {
         ))}
       </View>
     </ScreenCanvas>
+    </RemoteReadScope>
   );
 }
 const s = StyleSheet.create({

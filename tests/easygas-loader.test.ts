@@ -53,5 +53,5 @@ vm.runInNewContext(feedbackSource,{module:feedbackModule,exports:feedbackModule.
  throw Error("Unexpected feedback dependency "+name);
 }});
 test("LDR-FEEDBACK-ERROR: failures outrank pending flags and keep retry without a loader",()=>{const html=renderToStaticMarkup(React.createElement(feedbackModule.exports.Feedback,{loading:true,error:"Permission denied",retry:()=>{}}));assert.match(html,/Permission denied/);assert.match(html,/Try again/);assert.doesNotMatch(html,/progressbar|<svg/);});
-test("LDR-FEEDBACK-LOADING: one native accessible progress target",()=>{const html=renderToStaticMarkup(React.createElement(feedbackModule.exports.Feedback,{loading:true}));assert.equal([...html.matchAll(/accessibilityRole="progressbar"/g)].length,1);assert.match(html,/Loading customer information/);});
+test("LDR-FEEDBACK-LOADING: initial reads reserve content without flashing a progress target",()=>{const html=renderToStaticMarkup(React.createElement(feedbackModule.exports.Feedback,{loading:true}));assert.equal([...html.matchAll(/accessibilityRole="progressbar"/g)].length,0);});
 test("LDR-FEEDBACK-EMPTY: empty state is not described as loading",()=>{const html=renderToStaticMarkup(React.createElement(feedbackModule.exports.Feedback,{empty:"No assigned jobs"}));assert.match(html,/No assigned jobs/);assert.doesNotMatch(html,/progressbar|<svg/);});

@@ -92,13 +92,13 @@ export function CheckoutWalletBalance({
       {payments.data && selected === "wallet" && (
         <Copy>{walletPaymentHint(payments.data.balanceKobo, amountKobo)}</Copy>
       )}
-      <Button
+      {!!payments.error && <Button
         label={
           payments.error ? "Retry payment choices" : "Refresh wallet balance"
         }
         secondary
         onPress={payments.refresh}
-      />
+      />}
     </>
   );
 }

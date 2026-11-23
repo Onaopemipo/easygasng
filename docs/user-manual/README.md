@@ -56,3 +56,5 @@ Sensitive actions: [current password verification and recovery](sensitive-action
 ## Native edge-to-edge display
 
 The [native display guide](native-edge-to-edge.md) covers the full-window canvas, role navigation and modal behavior. It includes actual current-source iOS development-preview screenshots and explicitly retains physical-device and authenticated-role visual acceptance limits. No new binary or web deployment is implied.
+
+New mobile experience (23 November): [private prototype walkthrough](mobile-experience-redesign.md), including the short refill journey, payment recovery, role workspaces, loading and verification limits. This is a separate design review; installed store build2 has not changed.

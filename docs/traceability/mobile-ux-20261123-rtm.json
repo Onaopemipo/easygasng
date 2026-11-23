@@ -1,0 +1,403 @@
+{
+  "phase": "Mobile experience redesign \u2014 23 November 2026",
+  "productionDecision": "NO-GO preserved; no new native binaries requested in this redesign phase",
+  "requirements": [
+    {
+      "id": "MOBUX23-R01",
+      "requirement": "Audit all roles and feature families",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "docs/mobile-ux-20261123/README.md",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json",
+        "docs/mobile-ux-20261123/feature-coverage.json"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-COVERAGE"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "All 58 native modules inventoried; canonical 36/300 scope retained; screenshot and source audit completed. Runtime limits explicitly separated.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "None for bounded source audit; individual runtime acceptance is tracked by R06."
+    },
+    {
+      "id": "MOBUX23-R02",
+      "requirement": "Consistent loading, cached reads and motion",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "apps/mobile/CustomerUI.tsx",
+        "apps/mobile/EasyGasLoader.tsx",
+        "apps/mobile/CustomerHome.tsx",
+        "apps/mobile/ScreenTransition.tsx",
+        "apps/mobile/App.tsx"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-CACHE",
+        "MOBUX23-SKELETON"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G02",
+      "status": "PARTIAL",
+      "reason": "Cache identity and delayed loading verified in mounted native components; full installed-device/role rendering remains open.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Install a future signed build; check all roles, real network/keyboard, large text and reduced motion on physical devices."
+    },
+    {
+      "id": "MOBUX23-R03",
+      "requirement": "Short customer checkout with one primary action",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "apps/mobile/GasOrder.tsx",
+        "apps/mobile/Workflows.tsx",
+        "apps/mobile/CheckoutPayments.tsx",
+        "prototypes/easygas-mobile-next/main.tsx"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-CHECKOUT",
+        "MOBUX23-VALIDATION"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G03",
+      "status": "PARTIAL",
+      "reason": "New prototype checkout verified locally and hosted; targeted native simplification implemented, complete new visual flow not yet adopted in native.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Adopt the new three-step component/navigation design throughout the actual native app, then test all signed-device payment options."
+    },
+    {
+      "id": "MOBUX23-R04",
+      "requirement": "Session-safe native payment return and recovery",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "apps/mobile/HostedPayment.tsx",
+        "apps/mobile/App.tsx",
+        "apps/web/components/hosted-payment.tsx"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-NATIVE-RETURN",
+        "MOBUX23-WEB-RETURN",
+        "MOBUX23-PAYMENT"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G04",
+      "status": "PARTIAL",
+      "reason": "Browser native callback and mounted native auto-verification pass tests; hosted website callback and physical provider/app return remain separate acceptance.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Deploy client-demo callback correction; verify signed-device Paystack return with fresh/expired sessions and actual provider results."
+    },
+    {
+      "id": "MOBUX23-R05",
+      "requirement": "New interactive mobile prototype for every role",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "prototypes/easygas-mobile-next/main.tsx",
+        "prototypes/easygas-mobile-next/style.css",
+        "prototypes/easygas-mobile-next/experience.ts"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-COVERAGE",
+        "MOBUX23-MONEY"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "New role-aware mobile prototype published and exercised for eight personas with existing canonical feature scope retained. Individual controls remain open.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Individual feature usability and full native adoption remain in R03/R06; no native completion is claimed."
+    },
+    {
+      "id": "MOBUX23-R06",
+      "requirement": "Role, layout and exception acceptance",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "docs/mobile-ux-20261123/feature-coverage.json"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-VALIDATION",
+        "MOBUX23-PAYMENT",
+        "MOBUX23-COVERAGE"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G06",
+      "status": "PARTIAL",
+      "reason": "Representative customer and staff flows, negative cases and responsive browser checks pass; all 300 individual features and signed-device exceptions are not certified.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Execute individual action/read acceptance for all 300 features, all roles and device/provider exception cases. Environmental PostgreSQL tests remain unverified in this run."
+    },
+    {
+      "id": "MOBUX23-R07",
+      "requirement": "Publish a private mobile review",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "prototypes/easygas-mobile-next/.openai/hosting.json",
+        "scripts/stage-mobile-next.mjs"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-TRACEABILITY"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G07",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Owner-only source-backed publication succeeded and actual hosted phone/customer/role/finance walkthroughs passed.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "None for this private publication; preserve existing audience and original prototype."
+    },
+    {
+      "id": "MOBUX23-R08",
+      "requirement": "Update manual and traceability without dropping scope",
+      "priority": "P1",
+      "scope": "Native app audit/targeted fixes and a separate synthetic mobile prototype; preserve all original 300 features and 117 screen entries, production NO-GO and store build2 history",
+      "uiReference": "Eight user-supplied phone screenshots dated23November2026",
+      "route": [
+        "native app",
+        "private mobile prototype"
+      ],
+      "implementationFiles": [
+        "docs/user-manual/mobile-experience-redesign.md",
+        "docs/traceability/README.md",
+        "docs/mobile-ux-20261123/README.md"
+      ],
+      "dataSource": "Actual native source, existing canonical 36-family/300-feature catalogue, synthetic workflow domain and executed observations",
+      "securityControl": "No bearer tokens in browser URLs; owner/role/branch/recent-password/payment/safety controls retained; isolated synthetic prototype; no live provider effects",
+      "testFiles": [
+        "tests/mobile-ux-20261123.test.ts",
+        "tests/mobile-ux-traceability.test.ts"
+      ],
+      "testIds": [
+        "MOBUX23-TRACEABILITY"
+      ],
+      "negativeTests": [
+        "Offline, expired session, declined/pending payment, role denial, duplicate submit, reduced motion"
+      ],
+      "evidence": [
+        "docs/mobile-ux-20261123/evidence/focused-tests.txt",
+        "docs/mobile-ux-20261123/evidence/browser-checks.json",
+        "docs/mobile-ux-20261123/evidence/private-deployment.json",
+        "docs/mobile-ux-20261123/evidence/native-inventory.json"
+      ],
+      "acceptanceGate": "MOBUX23-G08",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Customized audit/manual/coverage and stable requirements/gates updated, with prior history and production holds retained.",
+      "testResult": "PASS_BOUNDED; remaining native/individual/provider scope retained",
+      "outstandingWork": "Maintain manual/matrix through native adoption; production NO-GO and prior incomplete gates remain unchanged."
+    }
+  ],
+  "gates": [
+    {
+      "id": "MOBUX23-G01",
+      "status": "PASS",
+      "description": "Audit all roles and feature families",
+      "reason": "All 58 native modules inventoried; canonical 36/300 scope retained; screenshot and source audit completed. Runtime limits explicitly separated."
+    },
+    {
+      "id": "MOBUX23-G02",
+      "status": "PARTIAL",
+      "description": "Consistent loading, cached reads and motion",
+      "reason": "Cache identity and delayed loading verified in mounted native components; full installed-device/role rendering remains open."
+    },
+    {
+      "id": "MOBUX23-G03",
+      "status": "PARTIAL",
+      "description": "Short customer checkout with one primary action",
+      "reason": "New prototype checkout verified locally and hosted; targeted native simplification implemented, complete new visual flow not yet adopted in native."
+    },
+    {
+      "id": "MOBUX23-G04",
+      "status": "PARTIAL",
+      "description": "Session-safe native payment return and recovery",
+      "reason": "Browser native callback and mounted native auto-verification pass tests; hosted website callback and physical provider/app return remain separate acceptance."
+    },
+    {
+      "id": "MOBUX23-G05",
+      "status": "PASS",
+      "description": "New interactive mobile prototype for every role",
+      "reason": "New role-aware mobile prototype published and exercised for eight personas with existing canonical feature scope retained. Individual controls remain open."
+    },
+    {
+      "id": "MOBUX23-G06",
+      "status": "PARTIAL",
+      "description": "Role, layout and exception acceptance",
+      "reason": "Representative customer and staff flows, negative cases and responsive browser checks pass; all 300 individual features and signed-device exceptions are not certified."
+    },
+    {
+      "id": "MOBUX23-G07",
+      "status": "PASS",
+      "description": "Publish a private mobile review",
+      "reason": "Owner-only source-backed publication succeeded and actual hosted phone/customer/role/finance walkthroughs passed."
+    },
+    {
+      "id": "MOBUX23-G08",
+      "status": "PASS",
+      "description": "Update manual and traceability without dropping scope",
+      "reason": "Customized audit/manual/coverage and stable requirements/gates updated, with prior history and production holds retained."
+    }
+  ],
+  "coverage": {
+    "total": 8,
+    "verified": 4,
+    "partial": 4,
+    "blocked": 0,
+    "notImplemented": 0,
+    "excluded": 0,
+    "implementation": "8/8 bounded audit/design/source/doc areas addressed; full native redesign remains partial",
+    "verification": "4/8 verified complete; 4/8 partial; all retained",
+    "criticalRequirements": "P1 requirements remain 8/8 denominator; no production acceptance inferred",
+    "routes": "36/36 families represented; route or visit is not individual acceptance",
+    "gates": "4/8 pass; 4/8 partial",
+    "individualFeatureAcceptance": "300/300 retained; no blanket individual acceptance claimed"
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-23",
+      "change": "User requested whole-app audit, new mobile interactive prototype and cleanup of loaders/navigation/checkout/payment continuity. Prior prototype and signed store builds remain preserved; no features removed from coverage."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Published a separate private prototype; fixed customer loading/checkout/session-return source issues, guest prototype balance, tablet frame height and finance destination. Existing original manifests, screenshots, signed build2 and production holds retained. Five stale regression assertions now follow the explicit current source chain/delayed loading contract; no historical baseline removed."
+    }
+  ],
+  "featureDenominator": 300,
+  "familyDenominator": 36,
+  "historicalScreenDenominator": 117
+}

@@ -142,6 +142,7 @@ export function EasyGasLoader({
       }
       testID={testID}
       style={[
+        styles.center,
         variant !== "inline" && styles.section,
         variant === "fullscreen" && {
           flex: 1,
@@ -248,6 +249,7 @@ export function EasyGasLoader({
   );
 }
 const styles = StyleSheet.create({
+  center: { alignItems: "center", justifyContent: "center", alignSelf: "stretch" },
   fill: { position: "absolute", top: 0, left: 0, right: 0, bottom: 0 },
   section: {
     alignItems: "center",

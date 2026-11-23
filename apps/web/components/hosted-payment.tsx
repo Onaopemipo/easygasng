@@ -465,10 +465,12 @@ export function PaymentReturn() {
     [result, setResult] = useState<{ status: string; purpose: string } | null>(null),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
-    [stay, setStay] = useState(false);
+    [stay, setStay] = useState(false),
+    [nativeReturn, setNativeReturn] = useState(false);
   useEffect(() => {
     const query = new URLSearchParams(location.search);
     const v = query.get("intent");
+    setNativeReturn(query.get("client") === "native");
     setStay(query.get("client") === "native");
     if (v && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v)) setIntent(v);
     else setError("Open the original payment return link.");
@@ -485,8 +487,8 @@ export function PaymentReturn() {
     }
   }
   useEffect(() => {
-    if (intent) void check();
-  }, [intent]);
+    if (intent && !nativeReturn) void check();
+  }, [intent, nativeReturn]);
   const paid = result?.status === "paid";
   const destination = paymentDestination(paid ? result.purpose : "");
   useEffect(() => {
@@ -495,6 +497,14 @@ export function PaymentReturn() {
     return () => window.clearTimeout(timer);
   }, [paid, stay, destination.href]);
 
+  if (nativeReturn && intent) return (
+    <main className="container page payment-return">
+      <h1>Continue in EasyGas</h1>
+      <p>Your payment attempt is saved. Return to the app to check its status securely using your signed-in account.</p>
+      <a className="button" href={"easygas://payment?intentId=" + encodeURIComponent(intent)}>Return to EasyGas app</a>
+      <p className="muted">If the app does not open, reopen EasyGas. Do not pay again while verification is pending.</p>
+    </main>
+  );
   return (
     <main className="container page payment-return">
       <h1>Payment verification</h1>

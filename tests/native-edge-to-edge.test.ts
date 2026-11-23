@@ -190,8 +190,10 @@ test('EDGE-SOURCE-PROOF: reviewed source continuation rejects a mismatched prior
   const {createHash}=await import('node:crypto');
   const review=JSON.parse(await fs.readFile('docs/edge-to-edge/reviewed-source-changes.json','utf8'));
   const visual=JSON.parse(await fs.readFile('docs/edge-to-edge/visual-acceptance/reviewed-source-changes.json','utf8'));
+  const ux=JSON.parse(await fs.readFile('docs/mobile-ux-20261123/reviewed-source-changes.json','utf8'));
+  const {reviewedNativeUxSourceHash}=await import('../scripts/lib/reviewed-native-ux-source.mjs');
   assert.deepEqual(Object.keys(review.files).sort(),nativeEdgeFiles);
-  for(const file of nativeEdgeFiles){assert.equal(await reviewedNativeEdgeSourceHash(file,review.baseline[file]),visual.files[file]??review.files[file]);assert.equal(createHash('sha256').update(await fs.readFile(file)).digest('hex'),visual.files[file]??review.files[file]);}
+  for(const file of nativeEdgeFiles){assert.equal(await reviewedNativeEdgeSourceHash(file,review.baseline[file]),await reviewedNativeUxSourceHash(file,visual.files[file]??review.files[file]));assert.equal(createHash('sha256').update(await fs.readFile(file)).digest('hex'),ux.files[file]??visual.files[file]??review.files[file]);}
   await assert.rejects(()=>reviewedNativeEdgeSourceHash(nativeEdgeFiles[0],'tampered'),/historical baseline/);
   assert.equal(await reviewedNativeEdgeSourceHash('apps/web/unchanged.tsx','retained'),'retained');
   assert.equal(createHash('sha256').update(await fs.readFile('apps/mobile/ScreenCanvas.tsx')).digest('hex'),visual.files['apps/mobile/ScreenCanvas.tsx']??review.newFiles['apps/mobile/ScreenCanvas.tsx']);

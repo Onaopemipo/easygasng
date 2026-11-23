@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { View, Switch, Linking } from "react-native";
+import { View, Switch, Linking, AppState } from "react-native";
 import { randomUUID } from "expo-crypto";
 import * as SecureStore from "expo-secure-store";
 import {
@@ -21,13 +21,16 @@ export function NativePaymentReturn({
   intentId: string | null;
   onDone?: () => void;
 }) {
-  const [state, setState] = useState("Not verified"),
+  const alive = useRef(true), checking = useRef(false);
+  const [state, setState] = useState("Checking your payment…"),
     [busy, setBusy] = useState(false);
   async function check() {
-    if (!intentId) return;
+    if (!intentId || checking.current) return;
+    checking.current = true;
     setBusy(true);
     try {
       const r = await api("payments/paystack/verify", { intentId });
+      if (!alive.current) return;
       setState(
         r.status === "paid"
           ? "Sandbox payment verified. Only the requested principal was posted."
@@ -35,21 +38,27 @@ export function NativePaymentReturn({
       );
       if (r.status === "paid") onDone?.();
     } catch (e: any) {
-      setState(e.message);
+      if (alive.current) setState(e.message);
     } finally {
-      setBusy(false);
+      checking.current = false;
+      if (alive.current) setBusy(false);
     }
   }
+  useEffect(() => {
+    alive.current = true;
+    void check();
+    const listener = AppState.addEventListener("change", value => { if (value === "active") void check(); });
+    return () => { alive.current = false; listener.remove(); };
+  }, [intentId]);
   return (
     <Card>
-      <Title>Verify Payment</Title>
+      <Title>Payment status</Title>
       <Copy>
-        A browser return is not proof of payment. Verification requires an
-        online connection and your current account.
+        We confirm the result securely with the payment provider. Your order stays saved while we check.
       </Copy>
       <Copy>{state}</Copy>
       <Button
-        label="Check payment status"
+        label={busy ? "Checking payment…" : "Check again"}
         disabled={busy || !intentId}
         onPress={check}
       />
@@ -199,7 +208,7 @@ export function NativeHostedPayment({
                   value={accepted}
                   onValueChange={setAccepted}
                 />
-                <Copy>I accept the disclosed total and processing charge.</Copy>
+                <View style={{ flex: 1, minWidth: 0 }}><Copy>I accept the total and processing charge shown above.</Copy></View>
               </View>
               <Button
                 label="Continue to Paystack sandbox"

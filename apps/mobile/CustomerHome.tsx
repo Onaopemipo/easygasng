@@ -138,14 +138,12 @@ export default function CustomerHome({
       </View>
       {user && (
         <Feedback
-          loading={indicators.loading}
           error={indicators.error}
           retry={indicators.reload}
         />
       )}
       {user && (
         <Feedback
-          loading={refill.loading}
           error={refill.error}
           retry={refill.reload}
         />

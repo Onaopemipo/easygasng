@@ -1,6 +1,6 @@
 import { friendlyMessage } from "../../packages/business-rules/src/friendly-message";
 import { EasyGasLoader } from "./EasyGasLoader";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useRef } from "react";
 import { customerReadAction } from "../../packages/business-rules/src/customer-mobile";
 import React, { useEffect, useState } from "react";
 import { View, Pressable } from "react-native";
@@ -8,6 +8,14 @@ import { Ionicons } from "@expo/vector-icons";
 import { Text } from "./typography";
 import { useTheme } from "./theme";
 export type CustomerAPI = (action: string, data?: any) => Promise<any>;
+type ReadStore = Map<string, { data: any; at: number }>;
+const ReadContext = createContext<ReadStore | null>(null);
+/** Private reads never survive an account/session change. Re-entry revalidates in place. */
+export function RemoteReadScope({ scope, children }: { scope: string; children: React.ReactNode }) {
+  const store = useRef({ scope, entries: new Map() as ReadStore });
+  if (store.current.scope !== scope) store.current = { scope, entries: new Map() };
+  return <ReadContext.Provider value={store.current.entries}>{children}</ReadContext.Provider>;
+}
 export function useRemote(
   api: CustomerAPI,
   action: string,
@@ -16,7 +24,10 @@ export function useRemote(
 ) {
   const fingerprint = JSON.stringify(input ?? {});
   const request = enabled ? customerReadAction(action, JSON.parse(fingerprint)) : null;
-  const [result, setResult] = useState<{ request: string; data: any; error: string }>();
+  const cache = useContext(ReadContext);
+  const cached = request ? cache?.get(request) : undefined;
+  const fresh = cached && Date.now() - cached.at < 30000 ? cached : undefined;
+  const [result, setResult] = useState<{ request: string; data: any; error: string; store: ReadStore | null } | undefined>(() => request && fresh ? { request, data: fresh.data, error: "", store: cache } : undefined);
   const [version, reload] = useState(0);
   useEffect(() => {
     if (!request) {
@@ -24,19 +35,20 @@ export function useRemote(
       return;
     }
     let live = true;
-    setResult(previous => previous?.request === request && !previous.error ? previous : undefined);
+    const prior = cache?.get(request);
+    setResult(previous => previous?.store === cache && previous?.request === request && !previous.error ? previous : prior && Date.now() - prior.at < 30000 ? { request, data: prior.data, error: "", store: cache } : undefined);
     api(request)
       .then(data => {
-        if (live) setResult({ request, data, error: "" });
+        if (live) { cache?.set(request, { data, at: Date.now() }); setResult({ request, data, error: "", store: cache }); }
       })
       .catch(() => {
-        if (live) setResult({ request, data: null, error: "Could not load this information. Please try again." });
+        if (live) setResult({ request, data: null, error: "Could not load this information. Please try again.", store: cache });
       });
     return () => {
       live = false;
     };
-  }, [request, version]);
-  const current = result?.request === request ? result : undefined;
+  }, [request, version, cache]);
+  const current = result?.store === cache && result?.request === request ? result : undefined;
   return {
     data: current?.data ?? null,
     error: current?.error ?? "",
@@ -151,12 +163,24 @@ export function Feedback({
   empty?: string;
 }) {
   const { colors } = useTheme();
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    setShow(false);
+    if (!loading) return;
+    const timer = setTimeout(() => setShow(true), 180);
+    return () => clearTimeout(timer);
+  }, [loading]);
+  if (loading && !error && !show) return null;
   if (loading && !error)
     return (
       <View
-        style={{ padding: 20 }}
+        accessibilityRole="progressbar"
+        accessibilityLabel="Loading customer information"
+        accessibilityState={{ busy: true }}
+        style={{ padding: 16, gap: 10, alignSelf: "stretch" }}
       >
-        <EasyGasLoader accessibilityLabel="Loading customer information" />
+        <View style={{ height: 12, width: "62%", borderRadius: 6, backgroundColor: colors.skeleton }} />
+        <View style={{ height: 12, width: "88%", borderRadius: 6, backgroundColor: colors.skeleton }} />
       </View>
     );
   if (error)

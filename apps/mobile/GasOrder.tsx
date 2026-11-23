@@ -257,6 +257,7 @@ export default function GasOrder({
         style={[
           s.card,
           { backgroundColor: colors.surface, borderColor: colors.border },
+          quote && { display: "none" },
         ]}
       >
         <View style={s.row}>
@@ -624,7 +625,8 @@ export default function GasOrder({
       </View>
       {quote && user && (
         <CustomerCard>
-          <CustomerTitle>Review and confirm</CustomerTitle>
+          <CustomerTitle>Delivery & payment</CustomerTitle>
+          <CustomerCopy>{lines.map(l => `${l.kg} kg refill`).join(" · ")} · {money(quote.subtotalKobo + quote.deliveryKobo + quote.physicalSubtotalKobo)}</CustomerCopy>
           <CustomerCopy>
             {street} · {selectedArea?.name}
           </CustomerCopy>
@@ -692,7 +694,9 @@ export default function GasOrder({
             return result;
           }}
           action="checkout"
-          title={`Accept total ${money(quote.subtotalKobo + quote.deliveryKobo + quote.physicalSubtotalKobo)} and confirm`}
+          title="Confirm your delivery"
+          submitLabel={`Confirm order · ${money(quote.subtotalKobo + quote.deliveryKobo + quote.physicalSubtotalKobo)}`}
+          collapsedFields={["address.building", "address.landmark", "address.directions"]}
           fields={[
             {
               name: "address.locationId",
@@ -751,7 +755,7 @@ export default function GasOrder({
           onDone={() => {}}
         />
       )}
-      {button(
+      {!quote && button(
         showGuide ? "Hide cylinder size guide" : "Cylinder size guide",
         () => setShowGuide(!showGuide),
       )}

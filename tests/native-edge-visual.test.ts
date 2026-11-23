@@ -151,16 +151,17 @@ test("EDGE-VISUAL-PROOF: additive visual changes retain canvas and committed bas
       "utf8",
     ),
   );
+  const { reviewedNativeUxSourceHash } = await import('../scripts/lib/reviewed-native-ux-source.mjs');
   for (const [file, incoming] of Object.entries(review.baseline)) {
     assert.equal(
       await reviewedNativeEdgeVisualSourceHash(file, incoming),
-      review.files[file],
+      await reviewedNativeUxSourceHash(file, review.files[file]),
     );
     assert.equal(
       createHash("sha256")
         .update(await fs.readFile(file))
         .digest("hex"),
-      review.files[file],
+      await reviewedNativeUxSourceHash(file, review.files[file]),
     );
     await assert.rejects(
       () => reviewedNativeEdgeVisualSourceHash(file, "tampered"),
