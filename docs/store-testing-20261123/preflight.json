@@ -35,7 +35,7 @@
     "identifierVerification": "Existing user-authorized com.easygasng.customer source identity, authenticated Expo project owner, Google Play availability and new dedicated signing key; store ownership/registration is verified independently before upload."
   },
   "apple": {
-    "status": "UPLOAD_AND_PROCESSING_FINISHED_COMPLIANCE_PENDING",
+    "status": "TESTFLIGHT_INTERNAL_TESTING",
     "codeStored": false,
     "localSigningIdentity": "Apple Development only; not distribution signing evidence",
     "credentialClientIssue": "Original EAS CLI 27.4.1/Node26 auth failed after retry; retrying current official CLI 27.11 on Node24.",
@@ -54,7 +54,14 @@
     "distributionCertificateId": "9RUGM4ZYRA",
     "iosCloudBuildAttempt": "FINISHED; actual signed device IPA verified",
     "storeEntry": "Created EasyGas Energy Solutions, ASC app ID 6838122026, exact bundle com.easygasng.customer; user completed browser sign-in",
-    "encryptionCompliance": "Actual Apple TestFlight Missing Compliance prompt. Prepared published third-party encryption beyond Apple OS / no France distribution proposal; user approval requested, NOT SAVED. Existing queue encryption retained."
+    "encryptionCompliance": "User explicitly approved published third-party encryption beyond Apple OS and no France distribution/testing; declaration saved, Missing Compliance cleared.",
+    "testerSource": "Same two existing internal testers as AfriMarket Team (Expo), as explicitly requested by user",
+    "testGroup": "EasyGas Internal QA",
+    "testGroupId": "2ee5b345-71af-4aa0-85d4-816ce27dbb58",
+    "testers": 2,
+    "automaticFutureBuildDistribution": false,
+    "testFlightBuildStatus": "Testing; expires in 90 days",
+    "testInstructions": "What to Test saved and verified"
   },
   "android": {
     "expoSigningCredentials": "Configured new dedicated EAS-managed JKS: EasyGas store testing 20261123",
@@ -65,8 +72,12 @@
     "signingCertificateSha256": "6D:53:47:3E:14:02:45:8F:FD:97:43:33:77:65:4B:B5:79:EA:2A:FC:63:BD:95:D0:A3:57:58:C2:C2:B9:AA:CD",
     "buildProgress": "FINISHED; actual signed AAB verified, versionCode2; uploaded to internal testing track",
     "internalTrackId": "4701444205316057539",
-    "releaseStatus": "Available to internal testers; versionCode2; released 23Nov2026; no testers selected so track summary inactive",
-    "testingUrl": "https://play.google.com/apps/internaltest/4701444205316057539"
+    "releaseStatus": "Available to internal testers; internal track Active; versionCode2",
+    "testingUrl": "https://play.google.com/apps/internaltest/4701444205316057539",
+    "testerSource": "Same Pilot Testers list selected in AfriMarket internal testing, as explicitly requested by user",
+    "selectedTesterList": "Pilot Testers",
+    "eligibleListMembers": 48,
+    "otherListsSelected": false
   },
   "buildsCreated": [
     {
@@ -104,7 +115,7 @@
       "buildId": "1c0441d6-cf78-485d-b56b-47e817093e3a",
       "dashboard": "https://expo.dev/accounts/onaopemipo/projects/easygas-energy/submissions/59b9df06-c5a5-446c-8128-31a26c22d11e",
       "appleBuildId": "a3a7f07c-29ea-4de7-a1ea-63f4b8d189df",
-      "appleProcessingState": "Completed in UI; build visible as Missing Compliance"
+      "appleProcessingState": "Completed; compliance cleared; internal group Testing"
     }
   ],
   "productionDecision": "NO-GO and original native/provider/physical/import/retain-all holds preserved"

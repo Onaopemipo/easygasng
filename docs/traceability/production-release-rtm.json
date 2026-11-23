@@ -259,9 +259,9 @@
       "dataSource": "Expo SDK58 supported patch dependency set and explicit HTTPS/identifier ownership guards",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
       "status": "PARTIAL",
-      "reason": "Signed Android AAB and iPhone/iPad IPA version0.1.0/build2 from sourceb7a53c9 have verified signatures/package/version/API. Google internal release published; Apple upload/processing completed with compliance pending. Commercial device/lifecycle acceptance remains incomplete.",
+      "reason": "Signed Android AAB and iPhone/iPad IPA version0.1.0/build2 from sourceb7a53c9 verified. Google internal track Active with matching AfriMarket tester list; Apple TestFlight internal build Testing after approved compliance and matching two testers. Commercial device/lifecycle acceptance remains incomplete.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "Finish STORE23 tester access/compliance for approved demo test builds, then physical-device/lifecycle/offline acceptance for the chosen revision. Commercial production remains NO-GO.",
+      "outstandingWork": "Complete physical-device/lifecycle/offline and full-role acceptance for this signed revision. Beta-store distribution is accepted under STORE23-R01\u201306; commercial production remains NO-GO.",
       "implementationFiles": [
         "apps/mobile/app.config.js",
         "apps/mobile/app.json",
@@ -291,7 +291,9 @@
         "docs/blocker-reconciliation/README.md",
         "docs/store-testing-20261123/artifact-verification.json",
         "docs/store-testing-20261123/artifact-verification.txt",
-        "docs/traceability/store-testing-20261123-rtm.json"
+        "docs/traceability/store-testing-20261123-rtm.json",
+        "docs/store-testing-20261123/store-acceptance.md",
+        "docs/store-testing-20261123/store-acceptance.txt"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -539,6 +541,10 @@
     {
       "date": "2026-11-23",
       "change": "PR-R08 advanced for authorised signed test binaries with six actual artifact checks, Google internal upload and Apple upload/processing. Scope remains PARTIAL: compliance/testers and physical/lifecycle/full production acceptance are not implied."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "STORE23-R01\u201306 accepted for signed demo beta distribution: Google Active and Apple Testing with owner-approved compliance and AfriMarket tester membership. PR-R08 remains PARTIAL for physical/lifecycle/full production acceptance."
     }
   ]
 }

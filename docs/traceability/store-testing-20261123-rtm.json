@@ -144,9 +144,12 @@
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
       "testFiles": [
         "tests/production-release.test.ts",
-        "tests/customer-traceability.test.ts"
+        "tests/customer-traceability.test.ts",
+        "docs/store-testing-20261123/store-acceptance.md"
       ],
-      "testIds": [],
+      "testIds": [
+        "STORE23-U01"
+      ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
       ],
@@ -154,13 +157,15 @@
         "docs/store-testing-20261123/preflight.json",
         "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
         "docs/store-testing-20261123/artifact-verification.json",
-        "docs/store-testing-20261123/artifact-verification.txt"
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/store-testing-20261123/store-acceptance.md",
+        "docs/store-testing-20261123/store-acceptance.txt"
       ],
       "acceptanceGate": "STORE23-G04",
-      "status": "PARTIAL",
-      "reason": "Google Play accepted and published version0.1.0/code2 to the internal track; release readback says Available to internal testers. Track remains inactive with no email list selected.",
-      "testResult": "PASS_UPLOAD_AND_INTERNAL_RELEASE; NOT_TESTED_TESTER_INSTALL",
-      "outstandingWork": "Configure only user-specified Google tester accounts and verify track access; tester emails requested. No production rollout."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
+      "testResult": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
+      "outstandingWork": "None for bounded internal distribution; tester opt-in/install and device acceptance are separate."
     },
     {
       "id": "STORE23-R05",
@@ -179,9 +184,12 @@
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
       "testFiles": [
         "tests/production-release.test.ts",
-        "tests/customer-traceability.test.ts"
+        "tests/customer-traceability.test.ts",
+        "docs/store-testing-20261123/store-acceptance.md"
       ],
-      "testIds": [],
+      "testIds": [
+        "STORE23-U02"
+      ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
       ],
@@ -189,13 +197,15 @@
         "docs/store-testing-20261123/preflight.json",
         "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
         "docs/store-testing-20261123/artifact-verification.json",
-        "docs/store-testing-20261123/artifact-verification.txt"
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/store-testing-20261123/store-acceptance.md",
+        "docs/store-testing-20261123/store-acceptance.txt"
       ],
       "acceptanceGate": "STORE23-G05",
-      "status": "BLOCKED",
-      "reason": "Exact iOS upload succeeded and Apple finished processing build2. TestFlight shows Missing Compliance. Prepared declaration is awaiting user approval; tester accounts also requested.",
-      "testResult": "PASS_UPLOAD_AND_PROCESSING; BLOCKED_COMPLIANCE_AND_TESTER_ACCESS",
-      "outstandingWork": "User approval for prepared third-party encryption/no-France declaration or owner-reviewed alternative; then save compliance, configure authorised testers and verify Ready to Test/Testing status."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved.",
+      "testResult": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved.",
+      "outstandingWork": "None for bounded TestFlight internal distribution; tester install/launch and full native acceptance remain separate."
     },
     {
       "id": "STORE23-R06",
@@ -216,9 +226,15 @@
       "testFiles": [
         "tests/production-release.test.ts",
         "tests/customer-traceability.test.ts",
-        "scripts/verify-store-artifacts-20261123.py"
+        "scripts/verify-store-artifacts-20261123.py",
+        "docs/store-testing-20261123/store-acceptance.md"
       ],
-      "testIds": [],
+      "testIds": [
+        "STORE23-A01",
+        "STORE23-I01",
+        "STORE23-U01",
+        "STORE23-U02"
+      ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
       ],
@@ -226,13 +242,15 @@
         "docs/store-testing-20261123/preflight.json",
         "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
         "docs/store-testing-20261123/artifact-verification.json",
-        "docs/store-testing-20261123/artifact-verification.txt"
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/store-testing-20261123/store-acceptance.md",
+        "docs/store-testing-20261123/store-acceptance.txt"
       ],
       "acceptanceGate": "STORE23-G06",
-      "status": "PARTIAL",
-      "reason": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted",
-      "testResult": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted",
-      "outstandingWork": "Finish store status evidence and tester access, record remaining limits."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved.",
+      "testResult": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved.",
+      "outstandingWork": "None for this evidence gate; original physical/provider/lifecycle/commercial acceptance remains open in its original matrices."
     }
   ],
   "gates": [
@@ -257,27 +275,27 @@
     {
       "id": "STORE23-G04",
       "description": "Upload Android build and verify Google Play internal testing",
-      "status": "PENDING",
-      "reason": "Google Play accepted and published version0.1.0/code2 to the internal track; release readback says Available to internal testers. Track remains inactive with no email list selected."
+      "status": "PASS",
+      "reason": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved."
     },
     {
       "id": "STORE23-G05",
       "description": "Upload iOS build and verify TestFlight processing",
-      "status": "PENDING",
-      "reason": "Exact iOS upload succeeded and Apple finished processing build2. TestFlight shows Missing Compliance. Prepared declaration is awaiting user approval; tester accounts also requested."
+      "status": "PASS",
+      "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
     },
     {
       "id": "STORE23-G06",
       "description": "Record artifact and hosted testing evidence while preserving original release holds",
-      "status": "PENDING",
-      "reason": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted"
+      "status": "PASS",
+      "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
     }
   ],
   "coverage": {
     "total": 6,
-    "verified": 3,
-    "partial": 2,
-    "blocked": 1,
+    "verified": 6,
+    "partial": 0,
+    "blocked": 0,
     "notImplemented": 0,
     "excluded": 0
   },
@@ -301,6 +319,10 @@
     {
       "date": "2026-11-23",
       "change": "Google internal release published and read back Available to internal testers, with zero selected testers. Apple processing completed; actual Missing Compliance prompt prepared for published third-party encryption beyond Apple OS/no-France distribution. Awaiting action-time user approval and exact Google/Apple tester emails; no compliance declaration saved or unrelated tester list reused."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "User approved actual Apple encryption/no-France declaration and explicitly requested reuse of AfriMarket testing accounts. Saved compliance; matched AfriMarket Pilot Testers(48) on Google and two existing internal testers on Apple. Google track Active and Apple build Testing; beta notes Saved. STORE23-R01\u201306 bounded store distribution accepted, while prior production/physical/provider/300-feature native gates remain unchanged."
     }
   ]
 }
