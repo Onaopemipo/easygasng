@@ -259,9 +259,9 @@
       "dataSource": "Expo SDK58 supported patch dependency set and explicit HTTPS/identifier ownership guards",
       "securityControl": "Restricted server roles, approved origin/TLS, immutable finance/custody, independent business authority, owner-only recent-password retries; OFF activation flags",
       "status": "PARTIAL",
-      "reason": "Native exports/builds and representative simulator/API acceptance exist. Latest recorded native CI type/dependency/audit checks pass with no new export. Earlier moderate-advisory counts are historical.",
+      "reason": "Signed Android AAB and iPhone/iPad IPA version0.1.0/build2 from sourceb7a53c9 have verified signatures/package/version/API. Google internal release published; Apple upload/processing completed with compliance pending. Commercial device/lifecycle acceptance remains incomplete.",
       "testResult": "NOT_TESTED or partial \u2014 see executed evidence and outstanding work; no completed release claim.",
-      "outstandingWork": "Fresh audit of chosen production revision and signed iOS/Android physical-device/lifecycle/offline/distribution acceptance. No new mobile binaries authorised in this phase.",
+      "outstandingWork": "Finish STORE23 tester access/compliance for approved demo test builds, then physical-device/lifecycle/offline acceptance for the chosen revision. Commercial production remains NO-GO.",
       "implementationFiles": [
         "apps/mobile/app.config.js",
         "apps/mobile/app.json",
@@ -288,7 +288,10 @@
         "docs/audits/production-completion-evidence/native-ios-simulator-build-final.txt",
         "docs/audits/production-completion-evidence/ios-simulator-guard.png",
         "docs/deployment/20261121-web-api-publication/evidence/ci-test-summary.json",
-        "docs/blocker-reconciliation/README.md"
+        "docs/blocker-reconciliation/README.md",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt",
+        "docs/traceability/store-testing-20261123-rtm.json"
       ],
       "negativeTests": [
         "release configuration fails closed for missing origin, insecure TLS, QA builds and unreviewed revisions"
@@ -528,6 +531,14 @@
     {
       "date": "2026-11-21",
       "change": "Reconciled PR-R10 and PR-G01/02/03 against executed later CI/demo/UI evidence; preserved all 14 requirement IDs, four gates and commercial NO-GO."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "User now explicitly authorises fresh signed Android/iOS binaries and Google Play internal testing/TestFlight uploads, scoped by STORE23-R01\u201306. Approved existing hosted demo API after live-domain investigation. This supersedes prior no-new-binary deferral for test distribution only; commercial production and physical/provider/import/retain-all gates remain open."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "PR-R08 advanced for authorised signed test binaries with six actual artifact checks, Google internal upload and Apple upload/processing. Scope remains PARTIAL: compliance/testers and physical/lifecycle/full production acceptance are not implied."
     }
   ]
 }

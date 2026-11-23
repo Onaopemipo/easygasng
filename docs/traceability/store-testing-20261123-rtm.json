@@ -1,0 +1,306 @@
+{
+  "phase": "Signed native test-store distribution",
+  "date": "2026-11-23",
+  "productionDecision": "Existing production NO-GO and unrelated native/provider/physical/import/retain-all holds preserved",
+  "scopeChanges": [
+    "User explicitly authorised new Android/iOS test binaries and test-store uploads, superseding earlier no-new-mobile-binary instruction only within this phase.",
+    "User first selected live backend, then approved existing website backend after discovery showed only hosted synthetic demo API is configured."
+  ],
+  "requirements": [
+    {
+      "id": "STORE23-R01",
+      "requirement": "Verify source, approved API and build configuration",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "apps/mobile/eas.json",
+        "apps/mobile/app.config.js",
+        "apps/mobile/app.json"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "PR-07"
+      ],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API",
+      "testResult": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API",
+      "outstandingWork": "None for this bounded configuration gate; physical/live readiness separate."
+    },
+    {
+      "id": "STORE23-R02",
+      "requirement": "Produce a signed Android app bundle for internal testing",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "apps/mobile/eas.json"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts",
+        "scripts/verify-store-artifacts-20261123.py"
+      ],
+      "testIds": [
+        "STORE23-A01",
+        "STORE23-A02",
+        "STORE23-A03"
+      ],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified",
+      "testResult": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified",
+      "outstandingWork": "None for artifact generation; Play tester availability remains R04."
+    },
+    {
+      "id": "STORE23-R03",
+      "requirement": "Produce a signed device iOS archive for TestFlight",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "apps/mobile/eas.json",
+        "apps/mobile/app.json"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts",
+        "scripts/verify-store-artifacts-20261123.py"
+      ],
+      "testIds": [
+        "STORE23-I01",
+        "STORE23-I02",
+        "STORE23-I03"
+      ],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified",
+      "testResult": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified",
+      "outstandingWork": "None for artifact generation; TestFlight processing/compliance/tester availability remains R05."
+    },
+    {
+      "id": "STORE23-R04",
+      "requirement": "Upload Android build and verify Google Play internal testing",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "apps/mobile/eas.json"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G04",
+      "status": "PARTIAL",
+      "reason": "Google Play accepted and published version0.1.0/code2 to the internal track; release readback says Available to internal testers. Track remains inactive with no email list selected.",
+      "testResult": "PASS_UPLOAD_AND_INTERNAL_RELEASE; NOT_TESTED_TESTER_INSTALL",
+      "outstandingWork": "Configure only user-specified Google tester accounts and verify track access; tester emails requested. No production rollout."
+    },
+    {
+      "id": "STORE23-R05",
+      "requirement": "Upload iOS build and verify TestFlight processing",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "apps/mobile/eas.json"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G05",
+      "status": "BLOCKED",
+      "reason": "Exact iOS upload succeeded and Apple finished processing build2. TestFlight shows Missing Compliance. Prepared declaration is awaiting user approval; tester accounts also requested.",
+      "testResult": "PASS_UPLOAD_AND_PROCESSING; BLOCKED_COMPLIANCE_AND_TESTER_ACCESS",
+      "outstandingWork": "User approval for prepared third-party encryption/no-France declaration or owner-reviewed alternative; then save compliance, configure authorised testers and verify Ready to Test/Testing status."
+    },
+    {
+      "id": "STORE23-R06",
+      "requirement": "Record artifact and hosted testing evidence while preserving original release holds",
+      "priority": "P1",
+      "scope": "Unified native app; Google Play internal testing and Apple TestFlight only; approved existing hosted demo API. No commercial release.",
+      "uiReference": "Existing approved EasyGas native role layouts and edge-to-edge source",
+      "route": [
+        "Android store build/internal track",
+        "iOS store build/TestFlight"
+      ],
+      "implementationFiles": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/WHAT-TO-TEST.md"
+      ],
+      "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
+      "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
+      "testFiles": [
+        "tests/production-release.test.ts",
+        "tests/customer-traceability.test.ts",
+        "scripts/verify-store-artifacts-20261123.py"
+      ],
+      "testIds": [],
+      "negativeTests": [
+        "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
+      ],
+      "evidence": [
+        "docs/store-testing-20261123/preflight.json",
+        "docs/store-testing-20261123/configuration-and-traceability-tests.txt",
+        "docs/store-testing-20261123/artifact-verification.json",
+        "docs/store-testing-20261123/artifact-verification.txt"
+      ],
+      "acceptanceGate": "STORE23-G06",
+      "status": "PARTIAL",
+      "reason": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted",
+      "testResult": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted",
+      "outstandingWork": "Finish store status evidence and tester access, record remaining limits."
+    }
+  ],
+  "gates": [
+    {
+      "id": "STORE23-G01",
+      "description": "Verify source, approved API and build configuration",
+      "status": "PASS",
+      "reason": "PASS \u2014 configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API"
+    },
+    {
+      "id": "STORE23-G02",
+      "description": "Produce a signed Android app bundle for internal testing",
+      "status": "PASS",
+      "reason": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified"
+    },
+    {
+      "id": "STORE23-G03",
+      "description": "Produce a signed device iOS archive for TestFlight",
+      "status": "PASS",
+      "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
+    },
+    {
+      "id": "STORE23-G04",
+      "description": "Upload Android build and verify Google Play internal testing",
+      "status": "PENDING",
+      "reason": "Google Play accepted and published version0.1.0/code2 to the internal track; release readback says Available to internal testers. Track remains inactive with no email list selected."
+    },
+    {
+      "id": "STORE23-G05",
+      "description": "Upload iOS build and verify TestFlight processing",
+      "status": "PENDING",
+      "reason": "Exact iOS upload succeeded and Apple finished processing build2. TestFlight shows Missing Compliance. Prepared declaration is awaiting user approval; tester accounts also requested."
+    },
+    {
+      "id": "STORE23-G06",
+      "description": "Record artifact and hosted testing evidence while preserving original release holds",
+      "status": "PENDING",
+      "reason": "Actual artifact hashes/config/signatures/upload IDs recorded; store availability not yet accepted"
+    }
+  ],
+  "coverage": {
+    "total": 6,
+    "verified": 3,
+    "partial": 2,
+    "blocked": 1,
+    "notImplemented": 0,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-23",
+      "change": "Registered explicit Android/iOS build and test-store request; investigated runtime/signing/store prerequisites, recorded backend discovery and user-approved API selection. No build or upload yet; all six requirements retained."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Configured project-scoped approved API and identifier guard values, created dedicated Android signing key, queued first Android STORE build with versionCode2. Google Play EasyGas form prepared with package available; legal attestation confirmation pending. Apple device MFA unavailable and CLI auth errors; existing store key path under investigation. No upload/public release yet."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Resolved Apple MFA/CLI authentication blocker using existing authorised team App Store Connect API key through official EAS supported authentication. Registered exact bundle ID, reused matching valid distribution certificate, created active App Store provisioning profile. No existing certificate revoked, new API key or access grant created. Signed iOS build being started."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Both exact sourceb7a53c9 signed builds FINISHED. Six actual artifact checks passed. User approved Google declarations and completed Apple browser login; both app records created. Android uploaded through authenticated Console; exact iOS build submitted with FINISHED EAS result and Apple PROCESSING readback. No commercial production rollout; tester accounts requested."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Google internal release published and read back Available to internal testers, with zero selected testers. Apple processing completed; actual Missing Compliance prompt prepared for published third-party encryption beyond Apple OS/no-France distribution. Awaiting action-time user approval and exact Google/Apple tester emails; no compliance declaration saved or unrelated tester list reused."
+    }
+  ]
+}
