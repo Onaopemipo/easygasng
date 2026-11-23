@@ -90,7 +90,7 @@ export function NativeForm({
   const [formOpen, setFormOpen] = useState(false),
     focusedForm = useContext(FocusedFormContext);
   const focusedAction =
-    /^(account\.(update|password|session)|address\.|privacy\.|schedule\.|cylinder\.|order\.|trip\.|bulk\.|manifest\.|fleet\.|dispatch\.|delivery\.|doorstep\.|service\.material\.|booking\.(assessment|transition|report|quote|work|completion|cash|safety|cancel|reschedule|feedback|refund|settlement|wallet|acknowledge))/.test(
+    /^(account\.(update|password|session|verification|verify)|preferences\.|reauth$|address\.|privacy\.|schedule\.|cylinder\.|order\.|trip\.|bulk\.|manifest\.|fleet\.|dispatch\.|delivery\.|doorstep\.|service\.material\.|booking\.(assessment|transition|report|quote|work|completion|cash|safety|cancel|reschedule|feedback|refund|settlement|wallet|acknowledge))/.test(
       action,
     );
   const { colors } = useTheme(),
@@ -175,8 +175,8 @@ export function NativeForm({
     };
   }, []);
   const form = (
-    <View style={s.card}>
-      {sheetTitle !== title && (
+    <View style={focusedForm || focusedAction ? { gap: 16 } : s.card}>
+      {sheetTitle !== title && !(focusedAction && !focusedForm) && (
         <Text
           style={[
             s.heading,
@@ -638,7 +638,7 @@ export default function Workflows({
             <NativeForm
               api={api}
               action="account.verification.send"
-              title="Queue verification email"
+              title="Send verification email"
               fields={[]}
             />
             <NativeForm

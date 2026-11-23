@@ -1,0 +1,173 @@
+{
+  "date": "2026-11-23",
+  "scope": "Bounded actual iOS26.5 phone observations using normal Expo index.ts and disposable real API fixture. Not individual acceptance of300features, all role/device combinations, provider or physical fulfilment.",
+  "reviewManifest": "docs/mobile-native-next/reviewed-source-changes.json",
+  "reviewManifestSha256": "187ef518fecafa7e38d5c0642e40e4c284aa7322c2847ca507ccdd796081d6fc",
+  "observations": [
+    {
+      "id": "NXT-D01",
+      "requirements": [
+        "NXT-R02",
+        "NXT-R03"
+      ],
+      "role": "customer",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Guest refill -> delivery -> user-assisted calendar -> sign-in -> retained recipient/phone/address/area/date/window -> authenticated review",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-review-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D02",
+      "requirements": [
+        "NXT-R03",
+        "NXT-R05"
+      ],
+      "role": "customer",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Selected wallet, confirmed one synthetic order, then Track your order opened the same reference with Verified payment and Placed delivery",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-tracking-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D03",
+      "requirements": [
+        "NXT-R03",
+        "NXT-R04"
+      ],
+      "role": "customer",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Canonical local API read-back: one order,1580000kobo,6000grams,wallet46870000kobo; no physical fulfilment",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-checkout-readback.json"
+      ]
+    },
+    {
+      "id": "NXT-D04",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R02"
+      ],
+      "role": "customer",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Actual dark Home inspected with transparent white logo, stable bottom navigation and current wallet; original System appearance restored",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-home-dark-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D05",
+      "requirements": [
+        "NXT-R02",
+        "NXT-R09"
+      ],
+      "role": "public",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Sign-out cleared private Home balance/order; updated guest Account offers one Sign in action and three public settings rows; Sign in opens native auth",
+      "evidence": [
+        "docs/mobile-native-next/evidence/api-requests.json"
+      ]
+    },
+    {
+      "id": "NXT-D06",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R02"
+      ],
+      "role": "customer",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Profile sheet reopened after keyboard repair: input and Continue visible above actual software keyboard, no duplicate heading/card; closing submits nothing",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png"
+      ]
+    },
+    {
+      "id": "NXT-D07",
+      "requirements": [
+        "NXT-R06"
+      ],
+      "role": "owner",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Business owner Overview and Inventory Overview/Actions tabs loaded actual scoped records",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-owner-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D08",
+      "requirements": [
+        "NXT-R06",
+        "NXT-R09"
+      ],
+      "role": "owner",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Inventory Verify identity sheet exposes current-password field; wrong password shows verification failure, correct password returns to workspace with Identity verified",
+      "evidence": [
+        "docs/mobile-native-next/evidence/api-requests.json"
+      ]
+    },
+    {
+      "id": "NXT-D09",
+      "requirements": [
+        "NXT-R06"
+      ],
+      "role": "manager",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Service manager Overview and permitted workspace shortcuts rendered actual scoped orders",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-manager-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D10",
+      "requirements": [
+        "NXT-R06"
+      ],
+      "role": "finance",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Inventory & finance Overview and Financial reconciliation/Documents loaded actual records in shared native workspace",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-finance-phone.png"
+      ]
+    }
+  ],
+  "limitations": [
+    "Calendar day/window selected by user before sign-in continuation; automation did not select the day.",
+    "Device Hub temporarily switched to SmartInvoice and an older EasyGas iPad preview; neither counted as current-source acceptance.",
+    "Text-size slider automation timed out; larger-text check remains open.",
+    "Remaining commercial, driver, technician and current-source tablet checks still pending at this checkpoint."
+  ],
+  "defects": [
+    {
+      "id": "NXT-DEF-ACCOUNT",
+      "status": "FIXED_RECHECKED",
+      "implementation": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/AccountHub.tsx",
+        "apps/mobile/Workflows.tsx"
+      ],
+      "detail": "Guest Account fell through to legacy long menu; preferences/verification remained inline. Public Account now uses approved signed-out design and action fields open focused sheets."
+    },
+    {
+      "id": "NXT-DEF-KEYBOARD",
+      "status": "FIXED_RECHECKED",
+      "implementation": [
+        "apps/mobile/ContextSheet.tsx"
+      ],
+      "detail": "Keyboard sheet double compensation hid fields. KeyboardAvoidingView now owns compensation; nested ScrollView automatic keyboard insets disabled and sheet/scroll can shrink. Reopen/focus retest shows input and Continue above keyboard.",
+      "before": "docs/mobile-native-next/evidence/native-profile-keyboard-phone.png",
+      "after": "docs/mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png"
+    }
+  ]
+}

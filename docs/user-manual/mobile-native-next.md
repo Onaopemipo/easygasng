@@ -51,3 +51,11 @@ The current design is visible in the development simulator. Store-installed vers
 ![Current native Home](../mobile-native-next/evidence/native-home-phone.png)
 
 The supporting web/API changes are deployed to the [client demo](https://easygas-client-demo.vercel.app). Seven-role access and exception probes passed on both the candidate and stable demo. Successful hosted physical-product checkout still needs eligible stock; the current zero-stock catalogue correctly blocks that purchase. No hosted test order or real payment was created during these read-only checks.
+
+## Account and keyboard checks
+
+When signed out, Account shows one **Sign in** action plus Appearance, Policies & terms, and About & delivery. Signing out removes private balances and orders from Home.
+
+Profile, email verification, communication preferences and privacy password checks open focused sheets. Open one action, enter the fields, then continue. Closing a sheet does not submit it. In the verified phone layout, the software keyboard leaves the active input and Continue button visible.
+
+The actual phone journey from guest delivery details through sign-in, synthetic wallet payment and the correct order tracking is recorded in [device observations](../mobile-native-next/device-observations.json). Payment verification does not mark delivery complete.

@@ -3,6 +3,8 @@ import { View, Pressable } from "react-native";
 import { useRemote, Feedback } from "./CustomerUI";
 import { useTheme } from "./theme";
 import {
+  NextEmpty,
+  NextButton,
   NextText,
   NextRow,
   NextList,
@@ -109,6 +111,42 @@ export default function AccountHub({
           Sign out
         </NextText>
       </Pressable>
+    </View>
+  );
+}
+
+/** Public account entry mirrors the approved signed-out design, without private menus. */
+export function GuestNextAccount({
+  navigate,
+}: {
+  navigate: (screen: string) => void;
+}) {
+  return (
+    <View style={{ gap: 22 }}>
+      <NextEmpty
+        title="Your EasyGas account"
+        detail="Your orders, saved addresses and wallet stay with your account."
+        action={
+          <NextButton label="Sign in" onPress={() => navigate("login")} />
+        }
+      />
+      <NextList>
+        <NextRow
+          icon="moon"
+          title="Appearance"
+          onPress={() => navigate("appearance")}
+        />
+        <NextRow
+          icon="shield-check"
+          title="Policies & terms"
+          onPress={() => navigate("public-policies")}
+        />
+        <NextRow
+          icon="map-pin"
+          title="About & delivery"
+          onPress={() => navigate("public-info")}
+        />
+      </NextList>
     </View>
   );
 }

@@ -73,7 +73,8 @@ export function ContextSheet({
             <ScreenTitleContext.Provider value={title}>
               <ScrollView
                 keyboardShouldPersistTaps="handled"
-                automaticallyAdjustKeyboardInsets
+                automaticallyAdjustKeyboardInsets={false}
+                style={{ flexShrink: 1 }}
                 contentContainerStyle={{ paddingVertical: 12, gap: 16 }}
               >
                 <ScreenTransition identity={title} fill={false}>
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
   overlay: { flex: 1, justifyContent: "flex-end" },
   sheet: {
     maxHeight: "88%",
+    flexShrink: 1,
     borderTopLeftRadius: 28,
     borderTopRightRadius: 28,
     padding: 24,

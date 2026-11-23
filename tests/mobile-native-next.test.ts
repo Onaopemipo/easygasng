@@ -25,7 +25,7 @@ after(() => fs.rm(tmp, { recursive: true, force: true }));
 await build({
   stdin: {
     contents:
-      "export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as CombinedCheckout} from './apps/mobile/CombinedCheckout';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
+      "export {GuestNextAccount} from './apps/mobile/AccountHub';export {NativeForm} from './apps/mobile/Workflows';export * from './apps/mobile/HostedPayment';export * from './apps/mobile/CustomerCheckoutDraft';export * from './apps/mobile/MobileNextUI';export * from './apps/mobile/FinanceOverview';export * from './apps/mobile/MobileNextCatalogue';export * from './apps/mobile/MobileNextWorkspaces';export * from './apps/mobile/MobileNextFieldWork';export {default as CustomerHome} from './apps/mobile/CustomerHome';export {default as CombinedCheckout} from './apps/mobile/CombinedCheckout';export {default as GasOrder} from './apps/mobile/GasOrder';export * as host from './tests/helpers/mobile-next-hosts';",
     resolveDir: process.cwd(),
     loader: "tsx",
   },
@@ -987,4 +987,87 @@ test("NXT-GUEST-RESUME: sign-in retains entered delivery details without a guest
     if (t) await act(async () => t.unmount());
     await f.db.close?.();
   }
+});
+
+test("NXT-ACCOUNT-SHEETS: preferences and sensitive verification stay in focused forms; closing preserves entries and cannot submit", async () => {
+  const writes: any[] = [];
+  const api = async (action: string, input: any) => {
+    writes.push({ action, input });
+    return { message: "Verified fixture response" };
+  };
+  for (const sample of [
+    {
+      action: "preferences.save",
+      title: "Communication preferences",
+      fields: [
+        {
+          name: "quietStart",
+          label: "Quiet start hour",
+          type: "number",
+          value: 21,
+        },
+      ],
+    },
+    {
+      action: "reauth",
+      title: "Verify password for privacy request",
+      fields: [{ name: "password", label: "Password", type: "password" }],
+    },
+    {
+      action: "account.verify",
+      title: "Verify email token",
+      fields: [{ name: "token", label: "Secure email token" }],
+    },
+    {
+      action: "account.verification.send",
+      title: "Send verification email",
+      fields: [],
+    },
+  ]) {
+    const before = writes.length;
+    const t = await mount(m.NativeForm, { ...sample, api });
+    assert.equal(
+      t.root.findAllByType("TextInput").length,
+      0,
+      "Account overview must not contain inner form fields",
+    );
+    await click(t, sample.title);
+    assert.equal(t.root.findAllByType("Modal").length, 1);
+    if (sample.fields.length) {
+      const field = t.root.findAllByType("TextInput")[0];
+      await act(async () =>
+        field.props.onChangeText(
+          sample.action === "preferences.save" ? "20" : "fixture-only",
+        ),
+      );
+    }
+    await click(t, "Close sheet");
+    assert.equal(writes.length, before, "Closing a focused form cannot submit");
+    await click(t, sample.title);
+    if (sample.fields.length)
+      assert.equal(
+        t.root.findAllByType("TextInput")[0].props.value,
+        sample.action === "preferences.save" ? "20" : "fixture-only",
+      );
+    assertTextParents(t.toJSON());
+    await act(async () => t.unmount());
+  }
+});
+
+test("NXT-GUEST-ACCOUNT: signed-out Account has one clear sign-in action and public settings, without private workflow menus", async () => {
+  const destinations: string[] = [];
+  const t = await mount(m.GuestNextAccount, {
+    navigate: (x: string) => destinations.push(x),
+  });
+  assert.match(text(t), /Your EasyGas account/);
+  assert.doesNotMatch(
+    text(t),
+    /My Wallet|Credit & redemption|Native QA|Refill plans/,
+  );
+  await click(t, "Sign in");
+  assert.deepEqual(destinations, ["login"]);
+  await click(t, "Policies & terms");
+  assert.deepEqual(destinations, ["login", "public-policies"]);
+  assertTextParents(t.toJSON());
+  await act(async () => t.unmount());
 });

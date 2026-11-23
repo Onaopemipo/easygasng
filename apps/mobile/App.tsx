@@ -75,7 +75,7 @@ import FleetLocations from "./FleetLocations";
 import { withoutRiderLocations } from "../../packages/business-rules/src/rider-location";
 import Cylinders from "./Cylinders";
 import CustomerNotifications from "./CustomerNotifications";
-import AccountHub from "./AccountHub";
+import AccountHub, { GuestNextAccount } from "./AccountHub";
 import Invoices from "./Invoices";
 import { Ionicons } from "@expo/vector-icons";
 import { useTheme } from "./theme";
@@ -2094,6 +2094,8 @@ export default function App() {
                       </View>
                     ))}
                   </>
+                ) : screen === "more" && !user ? (
+                  <GuestNextAccount navigate={navigateCustomer} />
                 ) : screen === "more" &&
                   user &&
                   ["customer", "commercial"].includes(user.role) ? (
