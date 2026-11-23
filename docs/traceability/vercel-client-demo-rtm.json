@@ -1,5 +1,5 @@
 {
-  "phase": "Temporary Vercel client demo — 9 November 2026",
+  "phase": "Temporary Vercel client demo \u2014 9 November 2026",
   "productionDecision": "NO-GO unchanged; temporary isolated demo authorised; real import remains held",
   "requirements": [
     {
@@ -158,7 +158,7 @@
       "acceptanceGate": "VDEMO-G4",
       "status": "VERIFIED_COMPLETE",
       "reason": "Set all four fulfilment values on the isolated demo project and verified a new deployment inherited them without overrides.",
-      "testResult": "PASS — project-level values and preserved Preview/Paystack settings, hosted readiness, driver controls, tracking, bulk LPG, existing proof and sandbox payment mode.",
+      "testResult": "PASS \u2014 project-level values and preserved Preview/Paystack settings, hosted readiness, driver controls, tracking, bulk LPG, existing proof and sandbox payment mode.",
       "outstandingWork": "Retain normal demo readiness and sandbox checks on future releases. Existing physical, provider and commercial production gates carry forward."
     }
   ],
@@ -275,7 +275,7 @@
     "deploymentId": "dpl_yZaERKondML9nt2b8FkMjfV8uXxT",
     "url": "https://easygas-client-demo.vercel.app",
     "status": "VERIFIED_COMPLETE",
-    "reason": "Bounded source push and client-demo redeployment complete; Git remote confirmed initial commit5e5b2e0. Cloud build READY; migrations070–072 applied after authenticated encrypted backup; existing record counts preserved. Hosted origin/auth/privilege/catalogue/no-index and new document/wallet/dispatch endpoint checks pass. No full production acceptance inferred.",
+    "reason": "Bounded source push and client-demo redeployment complete; Git remote confirmed initial commit5e5b2e0. Cloud build READY; migrations070\u2013072 applied after authenticated encrypted backup; existing record counts preserved. Hosted origin/auth/privilege/catalogue/no-index and new document/wallet/dispatch endpoint checks pass. No full production acceptance inferred.",
     "evidence": [
       "docs/deployment/evidence/redeploy-20261109-build.txt",
       "docs/deployment/evidence/redeploy-20261109-hosted.txt",
@@ -528,5 +528,43 @@
     "businessMutation": false,
     "mobileBuild": false,
     "productionDecision": "NO-GO preserved"
+  },
+  "loadingRepair20261124": {
+    "sourceCommit": "e3ac2709d4b145c6251dd9325b235a05514aef87",
+    "projectId": "prj_cFSaJuN9r4x93RLov1LLVO3cdVA2",
+    "orgId": "team_fSpg4LlHLQsMVao9qUVmd20h",
+    "deploymentId": "dpl_5c9a2tgJfRdsySpwQBhbKG5mWs23",
+    "candidateUrl": "https://easygas-client-demo-29grykjsf-onaopemipos-projects.vercel.app",
+    "rollbackDeploymentId": "dpl_59Y5HPQtW9ghk39TNku7J66fQgdq",
+    "stableUrl": "https://easygas-client-demo.vercel.app",
+    "status": "READY",
+    "applicationFilesVerified": 446,
+    "businessWrites": 0,
+    "migrations": 0,
+    "environmentChanges": 0,
+    "mobileBuilds": 0,
+    "mobileExports": 0,
+    "productionDecision": "Existing NO-GO and unrelated gates retained",
+    "verifiedAt": "2026-11-23T22:14:50.636297+00:00",
+    "actualProjectName": "easygas-client-demo",
+    "sourceMetaVerified": true,
+    "stableAliasResolvesToDeployment": true,
+    "matrix": "docs/traceability/loading-performance-rtm.json",
+    "evidence": "docs/loading-performance/README.md",
+    "ci": {
+      "runId": 45276033368,
+      "url": "https://github.com/Onaopemipo/easygasng/actions/runs/45276033368",
+      "sourceCommit": "e3ac2709d4b145c6251dd9325b235a05514aef87",
+      "status": "PASS",
+      "tests": {
+        "total": 1236,
+        "passed": 1236,
+        "failed": 0,
+        "skipped": 0
+      },
+      "nativeExport": "SKIPPED",
+      "evidence": "docs/loading-performance/evidence/ci.json"
+    },
+    "timingEvidence": "docs/loading-performance/evidence/hosted-comparison.json"
   }
 }

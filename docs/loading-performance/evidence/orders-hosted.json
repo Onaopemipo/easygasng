@@ -1,0 +1,140 @@
+{
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "e3ac2709d4b145c6251dd9325b235a05514aef87",
+  "deploymentId": "dpl_5c9a2tgJfRdsySpwQBhbKG5mWs23",
+  "status": "PASS",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "LOADH-ORDERS",
+      "status": "PASS",
+      "detail": "Seven role outcomes, own-customer/driver and branch filters, full list item/history/gas structure and secret stripping retained"
+    },
+    {
+      "id": "LOADH-ORDER-EXCEPTIONS",
+      "status": "PASS",
+      "detail": "Anonymous and malformed-ID reads denied; repeated owner response unchanged; no business mutation"
+    }
+  ],
+  "requestTimings": [
+    {
+      "role": "owner",
+      "query": "list",
+      "status": 200,
+      "ms": 1985,
+      "bytes": 81155,
+      "rows": 24
+    },
+    {
+      "role": "owner",
+      "query": "list",
+      "status": 200,
+      "ms": 1840,
+      "bytes": 81155,
+      "rows": 24
+    },
+    {
+      "role": "manager",
+      "query": "list",
+      "status": 200,
+      "ms": 2466,
+      "bytes": 79810,
+      "rows": 23
+    },
+    {
+      "role": "manager",
+      "query": "scoped/invalid ID",
+      "status": 200,
+      "ms": 716,
+      "bytes": 2,
+      "rows": 0
+    },
+    {
+      "role": "finance",
+      "query": "list",
+      "status": 200,
+      "ms": 1863,
+      "bytes": 79810,
+      "rows": 23
+    },
+    {
+      "role": "finance",
+      "query": "scoped/invalid ID",
+      "status": 200,
+      "ms": 728,
+      "bytes": 2,
+      "rows": 0
+    },
+    {
+      "role": "driver",
+      "query": "list",
+      "status": 200,
+      "ms": 1555,
+      "bytes": 30807,
+      "rows": 6
+    },
+    {
+      "role": "driver",
+      "query": "scoped/invalid ID",
+      "status": 200,
+      "ms": 824,
+      "bytes": 2,
+      "rows": 0
+    },
+    {
+      "role": "technician",
+      "query": "list",
+      "status": 403,
+      "ms": 819,
+      "bytes": 180
+    },
+    {
+      "role": "customer",
+      "query": "list",
+      "status": 200,
+      "ms": 1276,
+      "bytes": 34745,
+      "rows": 10
+    },
+    {
+      "role": "customer",
+      "query": "scoped/invalid ID",
+      "status": 200,
+      "ms": 719,
+      "bytes": 2,
+      "rows": 0
+    },
+    {
+      "role": "commercial",
+      "query": "list",
+      "status": 200,
+      "ms": 1187,
+      "bytes": 2270,
+      "rows": 1
+    },
+    {
+      "role": "commercial",
+      "query": "scoped/invalid ID",
+      "status": 200,
+      "ms": 709,
+      "bytes": 2,
+      "rows": 0
+    },
+    {
+      "role": "",
+      "query": "list",
+      "status": 401,
+      "ms": 530,
+      "bytes": 64
+    },
+    {
+      "role": "owner",
+      "query": "scoped/invalid ID",
+      "status": 400,
+      "ms": 800,
+      "bytes": 24
+    }
+  ],
+  "unavailableHostedFixtures": [],
+  "completedAt": "2026-11-23T22:12:17.035Z"
+}

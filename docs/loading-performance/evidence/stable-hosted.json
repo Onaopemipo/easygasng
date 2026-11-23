@@ -1,0 +1,439 @@
+{
+  "stage": "stable",
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "e3ac2709d4b145c6251dd9325b235a05514aef87",
+  "deploymentId": "dpl_5c9a2tgJfRdsySpwQBhbKG5mWs23",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "LOADH-READY",
+      "status": "PASS",
+      "detail": "Ready demo, test payment environment and production NO-GO retained"
+    },
+    {
+      "id": "LOADH-ROLES",
+      "status": "PASS",
+      "detail": "Seven roles, management fleet scope, restricted driver own-trip access, custody/planning restrictions and anonymous denial pass"
+    },
+    {
+      "id": "LOADH-GUARDS",
+      "status": "PASS",
+      "detail": "Fresh unverified owner and six nonowner roles cannot register a vehicle"
+    },
+    {
+      "id": "LOADH-PRESERVE",
+      "status": "PASS",
+      "detail": "Orders, inventory, complete current ledger response, vehicles, trip state, LPG custody and policies unchanged"
+    }
+  ],
+  "requestTimings": [
+    {
+      "role": "",
+      "action": "status",
+      "status": 200,
+      "ms": 656
+    },
+    {
+      "role": "owner",
+      "action": "payments/paystack/configuration",
+      "status": 200,
+      "ms": 855
+    },
+    {
+      "role": "owner",
+      "action": "production.readiness",
+      "status": 200,
+      "ms": 1480
+    },
+    {
+      "role": "owner",
+      "action": "orders",
+      "status": 200,
+      "ms": 1884
+    },
+    {
+      "role": "owner",
+      "action": "inventory",
+      "status": 200,
+      "ms": 761
+    },
+    {
+      "role": "owner",
+      "action": "finance.ledger?limit=500",
+      "status": 200,
+      "ms": 1378
+    },
+    {
+      "role": "owner",
+      "action": "fleet.summary",
+      "status": 200,
+      "ms": 1034
+    },
+    {
+      "role": "owner",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 2429
+    },
+    {
+      "role": "",
+      "action": "policies",
+      "status": 200,
+      "ms": 549
+    },
+    {
+      "role": "owner",
+      "action": "fleet.summary",
+      "status": 200,
+      "ms": 1022
+    },
+    {
+      "role": "owner",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 200,
+      "ms": 1449
+    },
+    {
+      "role": "owner",
+      "action": "manifest.summary",
+      "status": 200,
+      "ms": 912
+    },
+    {
+      "role": "owner",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 2424
+    },
+    {
+      "role": "owner",
+      "action": "dispatch.board",
+      "status": 200,
+      "ms": 1762
+    },
+    {
+      "role": "manager",
+      "action": "fleet.summary",
+      "status": 200,
+      "ms": 1000
+    },
+    {
+      "role": "manager",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 200,
+      "ms": 1194
+    },
+    {
+      "role": "manager",
+      "action": "manifest.summary",
+      "status": 200,
+      "ms": 960
+    },
+    {
+      "role": "manager",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 2357
+    },
+    {
+      "role": "manager",
+      "action": "dispatch.board",
+      "status": 200,
+      "ms": 1745
+    },
+    {
+      "role": "finance",
+      "action": "fleet.summary",
+      "status": 200,
+      "ms": 1185
+    },
+    {
+      "role": "finance",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 403,
+      "ms": 721
+    },
+    {
+      "role": "finance",
+      "action": "manifest.summary",
+      "status": 200,
+      "ms": 957
+    },
+    {
+      "role": "finance",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 2400
+    },
+    {
+      "role": "finance",
+      "action": "dispatch.board",
+      "status": 403,
+      "ms": 720
+    },
+    {
+      "role": "driver",
+      "action": "fleet.summary",
+      "status": 403,
+      "ms": 725
+    },
+    {
+      "role": "driver",
+      "action": "driver.location",
+      "status": 200,
+      "ms": 810
+    },
+    {
+      "role": "driver",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 403,
+      "ms": 729
+    },
+    {
+      "role": "driver",
+      "action": "manifest.summary",
+      "status": 200,
+      "ms": 817
+    },
+    {
+      "role": "driver",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 1303
+    },
+    {
+      "role": "driver",
+      "action": "dispatch.board",
+      "status": 403,
+      "ms": 725
+    },
+    {
+      "role": "technician",
+      "action": "fleet.summary",
+      "status": 403,
+      "ms": 782
+    },
+    {
+      "role": "technician",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 403,
+      "ms": 721
+    },
+    {
+      "role": "technician",
+      "action": "manifest.summary",
+      "status": 403,
+      "ms": 727
+    },
+    {
+      "role": "technician",
+      "action": "bulk.summary",
+      "status": 403,
+      "ms": 803
+    },
+    {
+      "role": "technician",
+      "action": "dispatch.board",
+      "status": 403,
+      "ms": 723
+    },
+    {
+      "role": "customer",
+      "action": "fleet.summary",
+      "status": 403,
+      "ms": 812
+    },
+    {
+      "role": "customer",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 403,
+      "ms": 716
+    },
+    {
+      "role": "customer",
+      "action": "manifest.summary",
+      "status": 403,
+      "ms": 722
+    },
+    {
+      "role": "customer",
+      "action": "bulk.summary",
+      "status": 403,
+      "ms": 736
+    },
+    {
+      "role": "customer",
+      "action": "dispatch.board",
+      "status": 403,
+      "ms": 797
+    },
+    {
+      "role": "commercial",
+      "action": "fleet.summary",
+      "status": 403,
+      "ms": 714
+    },
+    {
+      "role": "commercial",
+      "action": "dispatch.centre?date=2026-11-23&tab=queue&page=1",
+      "status": 403,
+      "ms": 716
+    },
+    {
+      "role": "commercial",
+      "action": "manifest.summary",
+      "status": 403,
+      "ms": 735
+    },
+    {
+      "role": "commercial",
+      "action": "bulk.summary",
+      "status": 403,
+      "ms": 734
+    },
+    {
+      "role": "commercial",
+      "action": "dispatch.board",
+      "status": 403,
+      "ms": 723
+    },
+    {
+      "role": "",
+      "action": "fleet.summary",
+      "status": 401,
+      "ms": 575
+    },
+    {
+      "role": "owner",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 1067
+    },
+    {
+      "role": "manager",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 1002
+    },
+    {
+      "role": "finance",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 999
+    },
+    {
+      "role": "driver",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 728
+    },
+    {
+      "role": "technician",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 731
+    },
+    {
+      "role": "customer",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 1004
+    },
+    {
+      "role": "commercial",
+      "action": "fleet.vehicle.create",
+      "status": 403,
+      "ms": 1016
+    },
+    {
+      "role": "owner",
+      "action": "orders",
+      "status": 200,
+      "ms": 1889
+    },
+    {
+      "role": "owner",
+      "action": "inventory",
+      "status": 200,
+      "ms": 737
+    },
+    {
+      "role": "owner",
+      "action": "finance.ledger?limit=500",
+      "status": 200,
+      "ms": 817
+    },
+    {
+      "role": "owner",
+      "action": "fleet.summary",
+      "status": 200,
+      "ms": 1001
+    },
+    {
+      "role": "owner",
+      "action": "bulk.summary",
+      "status": 200,
+      "ms": 2408
+    },
+    {
+      "role": "",
+      "action": "policies",
+      "status": 200,
+      "ms": 523
+    }
+  ],
+  "status": "PASS",
+  "denied": [
+    {
+      "role": "owner",
+      "status": 403,
+      "code": "REAUTH_REQUIRED"
+    },
+    {
+      "role": "manager",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "finance",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "technician",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "status": 403,
+      "code": "FORBIDDEN"
+    }
+  ],
+  "snapshot": {
+    "orders": "81dbac6605672f2630ab6d9db61d7266dc70a480a2e9949ad3828995055aa998",
+    "inventory": "b87bfcf6d4dfba4f552b6ef5b6c6642efbf7476544ddff5f8f423ed2a16d0a91",
+    "ledger": "abb3e54473c0e0b74497e53da2b6bc4f3b93f68ccd17677381d0c9294f8fa938",
+    "vehicles": "a34d0b5bf8e30884ff576912fd4af5901e4978e3f40d2d5051ad5c5127757957",
+    "trips": "eae11f2e494981465aec5a644cad350ac27acecc44ffdb93b06701e4571c3a10",
+    "custody": "7a78cbe2b5d1eb2475e279b535a5a59177eb88b957d77d4d86d0cf17f4b86a65",
+    "policies": "e3c5a80d2f4042966a85793410929064995c2dc70afda0cbc4d7a0f95edc9c47",
+    "counts": {
+      "orders": 24,
+      "vehicles": 7,
+      "trips": 5,
+      "custodyLoads": 5
+    }
+  },
+  "completedAt": "2026-11-23T22:13:00.554Z"
+}

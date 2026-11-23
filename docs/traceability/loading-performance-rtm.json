@@ -23,22 +23,36 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/vehicle-products.ts"
       ],
-      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "dataSource": "Existing authorised database Orders, gas/items/events/attempts/evidence and scoped fleet/manifest reads; actual published-source extraction from c7babcf; direct hosted before/after reads and unchanged canonical business snapshots. No substitute totals or route-only acceptance.",
       "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
       "testFiles": [
         "tests/order-loading-performance.test.ts",
-        "tests/read-loading-recovery.test.ts"
+        "tests/read-loading-recovery.test.ts",
+        "scripts/verify-loading-hosted.mjs",
+        "scripts/verify-loading-orders-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "LOAD-ORDERS",
+        "LOAD-CUSTODY"
+      ],
       "negativeTests": [
         "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/loading-performance/evidence/focused.txt",
+        "docs/loading-performance/evidence/final-followup.txt",
+        "docs/loading-performance/evidence/typecheck.txt",
+        "docs/loading-performance/evidence/build.txt",
+        "docs/loading-performance/evidence/order-query-comparison.json",
+        "docs/loading-performance/evidence/custody-query-comparison.json",
+        "docs/loading-performance/evidence/hosted-comparison.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
       "acceptanceGate": "LOAD-G01",
-      "status": "PARTIAL",
-      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Full published-source contracts match across owner, manager, finance, driver and customers; latest 100 owner query count 803\u219210; fleet 26\u21926 and manifest 31\u21927 with unchanged scoped responses.",
+      "testResult": "PASS \u2014 60 focused checks, 12 final followups, 4 local and 4 hosted browser observations; scoped/denial/snapshot probes; CI 1,236 passed, 0 failed, 0 skipped; types/build. Totals overlap and are not additive.",
+      "outstandingWork": "No remaining bounded repair/publication work. Full production load/concurrency, physical/assistive/native/provider/import/retain-all acceptance and existing production NO-GO remain separate; latest 100 list cap preserved."
     },
     {
       "id": "LOAD-R02",
@@ -60,22 +74,38 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/vehicle-products.ts"
       ],
-      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "dataSource": "Existing authorised database Orders, gas/items/events/attempts/evidence and scoped fleet/manifest reads; actual published-source extraction from c7babcf; direct hosted before/after reads and unchanged canonical business snapshots. No substitute totals or route-only acceptance.",
       "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
       "testFiles": [
         "tests/order-loading-performance.test.ts",
-        "tests/read-loading-recovery.test.ts"
+        "tests/read-loading-recovery.test.ts",
+        "scripts/verify-loading-hosted.mjs",
+        "scripts/verify-loading-orders-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "LOAD-DEADLINE",
+        "LOAD-RECOVERY",
+        "LOAD-SOURCE",
+        "LOAD-UI-TIMEOUT",
+        "LOAD-UI-RETRY"
+      ],
       "negativeTests": [
         "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/loading-performance/evidence/focused.txt",
+        "docs/loading-performance/evidence/final-followup.txt",
+        "docs/loading-performance/evidence/typecheck.txt",
+        "docs/loading-performance/evidence/build.txt",
+        "docs/loading-performance/evidence/browser-local.txt",
+        "docs/loading-performance/evidence/browser-local.json",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
       "acceptanceGate": "LOAD-G02",
-      "status": "PARTIAL",
-      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual shared GET transport, response-body deadline, scoped cancellation/late-result suppression and explicit retry pass; actual browser stalled-read recovery observed; no automatic mutation replay.",
+      "testResult": "PASS \u2014 60 focused checks, 12 final followups, 4 local and 4 hosted browser observations; scoped/denial/snapshot probes; CI 1,236 passed, 0 failed, 0 skipped; types/build. Totals overlap and are not additive.",
+      "outstandingWork": "No remaining bounded repair/publication work. Full production load/concurrency, physical/assistive/native/provider/import/retain-all acceptance and existing production NO-GO remain separate; latest 100 list cap preserved."
     },
     {
       "id": "LOAD-R03",
@@ -97,22 +127,42 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/vehicle-products.ts"
       ],
-      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "dataSource": "Existing authorised database Orders, gas/items/events/attempts/evidence and scoped fleet/manifest reads; actual published-source extraction from c7babcf; direct hosted before/after reads and unchanged canonical business snapshots. No substitute totals or route-only acceptance.",
       "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
       "testFiles": [
         "tests/order-loading-performance.test.ts",
-        "tests/read-loading-recovery.test.ts"
+        "tests/read-loading-recovery.test.ts",
+        "scripts/verify-loading-hosted.mjs",
+        "scripts/verify-loading-orders-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "LOAD-CI",
+        "LOADH-ORDERS",
+        "LOADH-ORDER-EXCEPTIONS",
+        "LOADH-ROLES",
+        "LOADH-GUARDS",
+        "LOADH-PRESERVE"
+      ],
       "negativeTests": [
         "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/loading-performance/evidence/focused.txt",
+        "docs/loading-performance/evidence/final-followup.txt",
+        "docs/loading-performance/evidence/typecheck.txt",
+        "docs/loading-performance/evidence/build.txt",
+        "docs/loading-performance/evidence/stable-hosted.txt",
+        "docs/loading-performance/evidence/orders-hosted.txt",
+        "docs/loading-performance/evidence/ci.txt",
+        "docs/loading-performance/evidence/ci.json",
+        "docs/loading-performance/evidence/guard-inventory.txt",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
       "acceptanceGate": "LOAD-G03",
-      "status": "PARTIAL",
-      "reason": "Measured hosted orders20.4\u201320.6seconds for24records; repair and acceptance in progress",
-      "testResult": "PENDING",
-      "outstandingWork": "Complete contract/performance/security/browser checks and documentation"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Seven hosted role outcomes plus actual foreign-branch/customer/driver ID denials pass. Current CI 1,236 passed/0 failed/0 skipped; 77 stable sensitive guard sites retained; all baseline business snapshots unchanged.",
+      "testResult": "PASS \u2014 60 focused checks, 12 final followups, 4 local and 4 hosted browser observations; scoped/denial/snapshot probes; CI 1,236 passed, 0 failed, 0 skipped; types/build. Totals overlap and are not additive.",
+      "outstandingWork": "No remaining bounded repair/publication work. Full production load/concurrency, physical/assistive/native/provider/import/retain-all acceptance and existing production NO-GO remain separate; latest 100 list cap preserved."
     },
     {
       "id": "LOAD-R04",
@@ -134,55 +184,105 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/vehicle-products.ts"
       ],
-      "dataSource": "Existing authorised orders/manifest/fleet queries; measured hosted QA read timings; exact published source comparison and executed browser/component checks",
+      "dataSource": "Existing authorised database Orders, gas/items/events/attempts/evidence and scoped fleet/manifest reads; actual published-source extraction from c7babcf; direct hosted before/after reads and unchanged canonical business snapshots. No substitute totals or route-only acceptance.",
       "securityControl": "Preserve actor, per-user privilege, branch/customer/driver scope, GPS sharing/freshness, secret stripping, approval/custody/version contracts; GET deadlines only; mutations not replayed",
       "testFiles": [
         "tests/order-loading-performance.test.ts",
-        "tests/read-loading-recovery.test.ts"
+        "tests/read-loading-recovery.test.ts",
+        "scripts/verify-loading-hosted.mjs",
+        "scripts/verify-loading-orders-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "LOADH-SOURCE",
+        "LOADH-ASSETS",
+        "LOADH-READY",
+        "LOADH-UI-ORDERS",
+        "LOADH-UI-DETAILS",
+        "LOADH-UI-FLEET",
+        "LOADH-UI-CLEANUP",
+        "LOADH-CLEANUP"
+      ],
       "negativeTests": [
         "Wrong branch/customer, malformed order link, forbidden/session-expired reads, hung response/body, route cancellation, late results and no automatic retry"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/loading-performance/evidence/focused.txt",
+        "docs/loading-performance/evidence/final-followup.txt",
+        "docs/loading-performance/evidence/typecheck.txt",
+        "docs/loading-performance/evidence/build.txt",
+        "docs/loading-performance/evidence/release-source.txt",
+        "docs/loading-performance/evidence/candidate-hosted.txt",
+        "docs/loading-performance/evidence/stable-hosted.txt",
+        "docs/loading-performance/evidence/browser-hosted.txt",
+        "docs/loading-performance/evidence/browser-hosted.json",
+        "docs/loading-performance/evidence/cleanup-hosted.txt",
+        "docs/loading-performance/evidence/release.json",
+        "docs/loading-performance/evidence/source-integrity.json",
+        "docs/loading-performance/evidence/hosted-assets.json",
+        "docs/loading-performance/evidence/hosted-comparison.json",
+        "docs/loading-performance/evidence/orders-hosted.jpg",
+        "docs/loading-performance/evidence/manifests-hosted.jpg",
+        "docs/user-manual/dispatch-fleet.md"
+      ],
       "acceptanceGate": "LOAD-G04",
-      "status": "PARTIAL",
-      "reason": "Prior client-demo push/deploy authorisation retained; exact-source publication and hosted after measurements pending",
-      "testResult": "PENDING",
-      "outstandingWork": "Commit/push exact source; Ready candidate, promote, verify scoped reads and timings; record current CI and release evidence"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact e3ac270 source uploaded, 446 remote files match committed bytes, candidate accepted and promoted to existing stable demo. Four direct owner Orders reads 1.840\u20131.985 seconds, median 1.8865 seconds versus 20.764 seconds before; actual hosted table/items/history/fleet/empty prerequisites and own-session cleanup observed.",
+      "testResult": "PASS \u2014 60 focused checks, 12 final followups, 4 local and 4 hosted browser observations; scoped/denial/snapshot probes; CI 1,236 passed, 0 failed, 0 skipped; types/build. Totals overlap and are not additive.",
+      "outstandingWork": "No remaining bounded repair/publication work. Full production load/concurrency, physical/assistive/native/provider/import/retain-all acceptance and existing production NO-GO remain separate; latest 100 list cap preserved."
     }
   ],
   "gates": [
     {
       "id": "LOAD-G01",
       "description": "Eliminate repeated per-record order/fleet/manifest read round trips while preserving full contracts",
-      "status": "PENDING",
-      "reason": "Executed acceptance in progress"
+      "status": "PASS",
+      "reason": "Executed evidence mapped to corresponding stable requirement; bounded repair and client-demo publication accepted; broader production gates unchanged"
     },
     {
       "id": "LOAD-G02",
       "description": "Bound shared GET loading and provide safe scoped cancellation and explicit retry",
-      "status": "PENDING",
-      "reason": "Executed acceptance in progress"
+      "status": "PASS",
+      "reason": "Executed evidence mapped to corresponding stable requirement; bounded repair and client-demo publication accepted; broader production gates unchanged"
     },
     {
       "id": "LOAD-G03",
       "description": "Verify timing, roles, failure cases and traceability without weakening existing production gates",
-      "status": "PENDING",
-      "reason": "Executed acceptance in progress"
+      "status": "PASS",
+      "reason": "Executed evidence mapped to corresponding stable requirement; bounded repair and client-demo publication accepted; broader production gates unchanged"
     },
     {
       "id": "LOAD-G04",
       "description": "Publish and verify the web/API repair on the existing client demo, including hosted after timings",
-      "status": "PENDING",
-      "reason": "Prior client-demo push/deploy authorisation retained; exact-source publication and hosted after measurements pending"
+      "status": "PASS",
+      "reason": "Executed evidence mapped to corresponding stable requirement; bounded repair and client-demo publication accepted; broader production gates unchanged"
     }
   ],
   "coverage": {
     "total": 4,
-    "verified": 0,
-    "partial": 4,
-    "excluded": 0
+    "verified": 4,
+    "partial": 0,
+    "excluded": 0,
+    "implementation": {
+      "implemented": 4,
+      "total": 4
+    },
+    "verification": {
+      "verified": 4,
+      "total": 4
+    },
+    "criticalRequirements": {
+      "p0Total": 0,
+      "p0Verified": 0,
+      "reason": "No P0 requirement registered in this bounded performance phase; security negative tests still executed for all four P1 rows."
+    },
+    "routes": {
+      "verified": 2,
+      "total": 2
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    }
   },
   "changeLog": [
     {
@@ -192,6 +292,17 @@
     {
       "date": "2026-11-24",
       "change": "Retained earlier explicit client-demo web/API publication authority; add LOAD-R04 rather than silently treating local benchmarks as hosted performance. Pending manifest redesign will ship with this repair; no mobile binary."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Batch reads, complete-response GET deadline, scoped cancellation/retry and deferred Staff/removed hidden Orders verified and published with pending MANUI redesign. Hosted median 20.764\u21921.8865 seconds for unchanged 24 orders; current CI passed, source verified, own sessions revoked. No mobile binary or broader production approval."
     }
-  ]
+  ],
+  "verification": {
+    "matrixValidation": "docs/loading-performance/evidence/traceability.txt",
+    "sourceCommit": "e3ac2709d4b145c6251dd9325b235a05514aef87",
+    "deploymentId": "dpl_5c9a2tgJfRdsySpwQBhbKG5mWs23",
+    "ciRun": 45276033368,
+    "historicalFailureRetained": "docs/loading-performance/evidence/initial-focused.txt"
+  }
 }

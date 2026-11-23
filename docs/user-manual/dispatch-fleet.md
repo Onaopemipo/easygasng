@@ -63,7 +63,7 @@ Only owner and finance roles see these two actions. Managers can inspect scoped 
 
 A failed password or save keeps the entered stock details. Closing an edited dialog asks whether to keep editing or discard changes, and a pending save cannot be dismissed or repeated. Phone dialogs scroll internally, with the heading and close action at the top. The password and save action remain above the client-demo notice when scrolled into view.
 
-This continuation is locally verified with synthetic data; see the [manifest workspace matrix](../traceability/manifest-workspace-rtm.md). It has not yet been deployed. Existing production NO-GO remains.
+Published to the client demo on 24 November 2026 with the loading repair. Actual hosted empty-trip prerequisites and separated controls were checked; positive stock/payload/password and responsive cases remain locally verified with synthetic data. See the [manifest workspace matrix](../traceability/manifest-workspace-rtm.md). Existing production NO-GO remains.
 
 ## Loading delays and retry
 
@@ -73,4 +73,4 @@ Web API reads stop waiting after 20 seconds if the response or its body stalls. 
 
 Moving away cancels the shared admin records read, and a delayed response from an earlier identity cannot restore its records. There is no automatic retry of a stock, order, payment or other write. If a save has an uncertain result, use its existing recovery/status workflow before repeating it.
 
-This loading repair is verified locally; [timings, tests and rollout status](../loading-performance/README.md). The current client-demo measurement before rollout remains approximately20seconds for24orders; local benchmark timings are not hosted response-time guarantees.
+Published and verified on the client demo on 24 November 2026. The same 24-order response improved from approximately 20.7 seconds to 1.8–2.0 seconds in the recorded hosted probes; actual speed depends on network and workload. Seven-role restrictions, foreign-record denials and order items/history were checked. [Timings and rollout evidence](../loading-performance/README.md), [traceability](../traceability/loading-performance-rtm.md). No mobile binary was created.

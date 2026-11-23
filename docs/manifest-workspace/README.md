@@ -22,3 +22,7 @@ Local browser checks use loopback 3132 and existing real APIs against disposable
 [User manual](../user-manual/dispatch-fleet.md), [requirements matrix](../traceability/manifest-workspace-rtm.md).
 
 ![Product manifests](evidence/desktop-page.png)
+
+## Hosted continuation — 24 November 2026
+
+Published with loading application source `e3ac270` in Ready deployment `dpl_5c9a2tgJfRdsySpwQBhbKG5mWs23`. [Exact-source release and hosted observations](../loading-performance/README.md) verify the owner Product manifests page, its separate payload card and correct zero-active-trip disabled actions. The actual demo had no active trip; positive stock/payload submissions were not manufactured. All four existing local MANUI requirements/gates and positive/phone/tablet/password evidence remain; original production/native/provider/physical/import/retain-all holds remain.
