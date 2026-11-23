@@ -1,8 +1,8 @@
 {
   "date": "2026-11-23",
-  "scope": "Bounded actual iOS26.5 phone observations using normal Expo index.ts and disposable real API fixture. Not individual acceptance of300features, all role/device combinations, provider or physical fulfilment.",
+  "scope": "Bounded actual iOS26.5 phone observations for all seven roles and iPadOS27.0 tablet customer/owner checks, using normal Expo index.ts and disposable real API fixture. Not individual acceptance of300features, every role/device combination, provider or physical fulfilment.",
   "reviewManifest": "docs/mobile-native-next/reviewed-source-changes.json",
-  "reviewManifestSha256": "187ef518fecafa7e38d5c0642e40e4c284aa7322c2847ca507ccdd796081d6fc",
+  "reviewManifestSha256": "9720894bb1c452c9ee70df424fbc2cac15c3a6e994d7addd731444bbafb7f18d",
   "observations": [
     {
       "id": "NXT-D01",
@@ -140,13 +140,120 @@
       "evidence": [
         "docs/mobile-native-next/evidence/native-finance-phone.png"
       ]
+    },
+    {
+      "id": "NXT-D11",
+      "requirements": [
+        "NXT-R07",
+        "NXT-R09"
+      ],
+      "role": "driver",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Today shows one new assignment; Deliveries contains only assigned physical order EG-2026-6E8694EC. Blank reason leaves acknowledgement disabled; Not now dismisses without acknowledging. Profile and sign-out confirmation remain available.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-driver-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D12",
+      "requirements": [
+        "NXT-R07",
+        "NXT-R09"
+      ],
+      "role": "technician",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Today/Jobs show only assigned EGS-50F40266 Cooker Servicing and current work-authority guidance. Profile, scrolling and sign-out confirmation with pending-evidence guidance work; no assessment or work completion performed.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-technician-phone.png"
+      ]
+    },
+    {
+      "id": "NXT-D13",
+      "requirements": [
+        "NXT-R02",
+        "NXT-R09"
+      ],
+      "role": "commercial",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait phone",
+      "status": "PASS_BOUNDED",
+      "observed": "Signed-in Home shows own order EG-2026-5287C37E, not the separate customer wallet order. Guest Home clears private values after sign-out. Own reference was confirmed in Device Hub accessibility state; the first Home screenshot was obscured by the OS save-password prompt. That prompt was dismissed with Not Now; the later clean Home screenshot is at text size6.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-commercial-password-prompt.png",
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/api-requests.json"
+      ]
+    },
+    {
+      "id": "NXT-D14",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R02"
+      ],
+      "role": "public",
+      "device": "iPad Pro13-inch(M5), iPadOS27.0, portrait, text size3",
+      "status": "PASS_BOUNDED",
+      "observed": "Opened current Expo8083 from Safari and verified current approved native Home, transparent artwork and stable five tabs. Older EasyGas preview excluded.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-home-tablet.png"
+      ]
+    },
+    {
+      "id": "NXT-D15",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R02",
+        "NXT-R09"
+      ],
+      "role": "customer",
+      "device": "iPad Pro13-inch(M5), iPadOS27.0, portrait and landscape, text size6",
+      "status": "PASS_BOUNDED",
+      "observed": "Actual profile input and Continue remain above software keyboard in both orientations at enlarged text. Closing does not submit; signed-out Home clears private values.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-large.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-landscape.png"
+      ]
+    },
+    {
+      "id": "NXT-D16",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R06",
+        "NXT-R09"
+      ],
+      "role": "owner",
+      "device": "iPad Pro13-inch(M5), iPadOS27.0, landscape, text size6",
+      "status": "PASS_BOUNDED",
+      "observed": "Owner Overview loads scoped orders; Inventory renders nine real fixture records, tabs, search and filters with bottom navigation. No inventory action submitted.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-inventory-tablet-landscape.png"
+      ]
+    },
+    {
+      "id": "NXT-D17",
+      "requirements": [
+        "NXT-R01",
+        "NXT-R02",
+        "NXT-R03",
+        "NXT-R09"
+      ],
+      "role": "commercial",
+      "device": "EasyGas First Sign-In QA, iOS26.5, portrait, text size6",
+      "status": "PASS_BOUNDED",
+      "observed": "Home banner overlap found and repaired by stacking cylinder artwork below copy at enlarged phone text sizes. Refill text and sticky total/Delivery details remain readable and reachable. Original text size3 restored on phone/tablet; tablet portrait restored; both local sessions signed out.",
+      "evidence": [
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/native-refill-phone-large.png"
+      ]
     }
   ],
   "limitations": [
     "Calendar day/window selected by user before sign-in continuation; automation did not select the day.",
-    "Device Hub temporarily switched to SmartInvoice and an older EasyGas iPad preview; neither counted as current-source acceptance.",
-    "Text-size slider automation timed out; larger-text check remains open.",
-    "Remaining commercial, driver, technician and current-source tablet checks still pending at this checkpoint."
+    "All seven representative phone role views observed; current-source tablet checks cover public/customer/owner, not every role/device/feature permutation.",
+    "Text size6 checked on iOS phone/tablet; maximal accessibility sizes, VoiceOver, Android runtime and physical devices remain open.",
+    "Real provider browser return, installed store distribution and physical fulfilment were not accepted by the synthetic local fixture.",
+    "Temporary Device Hub switches and older previews are excluded; current-source checks were resumed on the intended devices."
   ],
   "defects": [
     {
@@ -168,6 +275,15 @@
       "detail": "Keyboard sheet double compensation hid fields. KeyboardAvoidingView now owns compensation; nested ScrollView automatic keyboard insets disabled and sheet/scroll can shrink. Reopen/focus retest shows input and Continue above keyboard.",
       "before": "docs/mobile-native-next/evidence/native-profile-keyboard-phone.png",
       "after": "docs/mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png"
+    },
+    {
+      "id": "NXT-DEF-LARGE-HERO",
+      "status": "FIXED_RECHECKED",
+      "implementation": [
+        "apps/mobile/CustomerHome.tsx"
+      ],
+      "detail": "At enlarged phone text, absolute cylinder artwork overlapped banner copy. Below600pt and fontScale>1.15 the artwork now follows the text in flow, preserving default approved composition. Actual text-size6 Home/refill retest passed.",
+      "after": "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png"
     }
   ]
 }

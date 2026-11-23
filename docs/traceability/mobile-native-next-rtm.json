@@ -58,13 +58,23 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-home-dark-phone.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png",
+        "docs/mobile-native-next/evidence/native-home-tablet.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-large.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/native-inventory-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/native-refill-phone-large.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G01",
       "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Approved native shell is implemented. Actual iOS phone light/dark and iPad portrait/landscape observations pass, including software keyboard and text-size6; enlarged phone banner overlap repaired. Other device sizes, Android runtime and maximal accessibility checks remain open.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Android runtime, physical/release devices, additional phone/tablet widths, maximal accessibility sizes and VoiceOver acceptance."
     },
     {
       "id": "NXT-R02",
@@ -116,13 +126,25 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-review-phone.png",
+        "docs/mobile-native-next/evidence/native-home-dark-phone.png",
+        "docs/mobile-native-next/evidence/api-requests.json",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png",
+        "docs/mobile-native-next/evidence/native-home-tablet.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-large.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/native-refill-phone-large.png",
+        "docs/mobile-native-next/evidence/native-commercial-password-prompt.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G02",
       "status": "PARTIAL",
-      "reason": "Actual phone guest sign-in draft recovery, public Account entry, authenticated Home, dark mode and sign-out privacy passed; legacy guest menu and inline account fields fixed. All feature/role/tablet/provider combinations remain separately open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Guest Account, retained checkout sign-in, customer/commercial private Home, sign-out clearing and focused account sheets pass on the actual phone. Customer tablet account/keyboard observations pass. Broader account/security workflows retain separate acceptance.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Individual account/security/preferences/privacy flows across applicable devices and revoked/expired installed sessions."
     },
     {
       "id": "NXT-R03",
@@ -179,13 +201,20 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-review-phone.png",
+        "docs/mobile-native-next/evidence/native-tracking-phone.png",
+        "docs/mobile-native-next/evidence/native-checkout-readback.json",
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/native-refill-phone-large.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G03",
       "status": "PARTIAL",
-      "reason": "Real native component/API gas and product checkout, changed policy/stock/price and uncertain outcomes pass. Mixed-checkout replay now returns the original customer-owned linked appointments; service recovery preserves unrelated cart, and Track your order returns the canonical order ID. Native guest phone screens observed; complete device/provider journey remains open. Guest sign-in preserves entered delivery details without creating a guest order or reopening sign-in during authenticated review. Actual phone wallet checkout and correct order tracking now pass with canonical local read-back.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Actual phone guest delivery draft survives sign-in; one synthetic wallet order is verified by canonical read-back and opens the same tracking reference. Real native component/API tests cover gas/product checkout, policy/stock/price changes and exact-key lost-response linked-booking recovery. Hosted positive physical checkout/replay and provider journey remain open.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Actual provider journey; hosted positive physical-product quote/purchase requires eligible approved stock, currently zero. Hosted successful mixed replay was not executed within read-only scope. Installed retry/relaunch acceptance remains open."
     },
     {
       "id": "NXT-R04",
@@ -232,13 +261,16 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-checkout-readback.json",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G04",
       "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Native and browser return implementation uses the owned intent and exact target, explicit fee consent and canonical server verification. Component/API return and stale/foreign/expired/duplicate exceptions pass; actual provider/browser return and installed distribution have not been accepted. Wallet device payment does not substitute for provider acceptance.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Actual sandbox provider browser return and callback/foreground recovery on iOS and Android, then installed test-store builds. Production provider approval remains a separate hold."
     },
     {
       "id": "NXT-R05",
@@ -287,13 +319,16 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-tracking-phone.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G05",
       "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Actual phone wallet checkout and owned order tracking pass with server status Placed and payment Verified. Services/wallet/orders use real APIs and focused sheets; every redesigned service, invoice, refund and cancellation-request path still needs individual device acceptance.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Individually exercise redesigned services, appointments, quotations, invoices, wallet funding, refunds and cancellation requests on supported devices, including provider/exception paths."
     },
     {
       "id": "NXT-R06",
@@ -341,13 +376,20 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-owner-phone.png",
+        "docs/mobile-native-next/evidence/api-requests.json",
+        "docs/mobile-native-next/evidence/native-manager-phone.png",
+        "docs/mobile-native-next/evidence/native-finance-phone.png",
+        "docs/mobile-native-next/evidence/native-inventory-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G06",
       "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Owner, manager and finance phone views render actual scoped records; owner wrong-password failure and successful re-verification recover in a focused sheet. Owner Inventory also passes tablet landscape/text-size6. Each operational write and role/device combination remains separately tracked.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Individual governed writes, changed-record/recent-password/approval exceptions and other staff tablet/device combinations; prior role restrictions remain in force."
     },
     {
       "id": "NXT-R07",
@@ -395,13 +437,17 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/native-driver-phone.png",
+        "docs/mobile-native-next/evidence/native-technician-phone.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G07",
       "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Actual driver Today/Deliveries/Profile and technician Today/Jobs/Profile show assigned records and server authority guidance. Blank acknowledgement reason blocks submission; dismissing alert does not acknowledge it. Sign-out confirmations work. Physical pickup/delivery/work and provider/device permissions remain open.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Real device camera/location/push/offline custody plus authorised physical trip, delivery, assessment and completion acceptance; other field-role tablet/device combinations."
     },
     {
       "id": "NXT-R08",
@@ -446,13 +492,15 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G08",
       "status": "PARTIAL",
-      "reason": "All 300 original IDs and source/API mappings remain in scope: 286 partial and 14 externally blocked leaves are preserved. No current native leaf is individually accepted.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "All300 stable feature IDs,36 families and117 historical screen entries are retained with source/API mappings. Original286 partial and14 external blocks remain. Representative role views do not individually accept each feature.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Individually verify all300 retained native leaves; do not replace their286partial/14blocked statuses with representative screen results."
     },
     {
       "id": "NXT-R09",
@@ -502,13 +550,24 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/api-requests.json",
+        "docs/mobile-native-next/evidence/native-driver-phone.png",
+        "docs/mobile-native-next/evidence/native-technician-phone.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-large.png",
+        "docs/mobile-native-next/evidence/native-profile-keyboard-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/native-inventory-tablet-landscape.png",
+        "docs/mobile-native-next/evidence/native-home-phone-large-fixed.png",
+        "docs/mobile-native-next/evidence/native-refill-phone-large.png",
+        "docs/mobile-native-next/evidence/native-commercial-password-prompt.png",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G09",
       "status": "PARTIAL",
-      "reason": "Bounded current iOS phone: guest sign-in draft continuity, wallet order and canonical tracking, dark Home, guest Account, repaired profile software keyboard, owner/manager/finance workspace observations pass. Full role/device/provider combinations remain open.",
-      "testResult": "PASS_LOCAL_API_COMPONENT_AND_IMPLEMENTATION_CI; BOUNDED_PHONE_VISUAL; FULL_DEVICE_ACCEPTANCE_OPEN",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "reason": "Seventeen bounded current-source device observations pass: all seven representative iOS phone role views, customer guest sign-in/wallet checkout/canonical tracking, wrong-password recovery, dark appearance, focused software-keyboard sheets, tablet customer/owner portrait/landscape and text-size6. Larger-text banner overlap repaired. Full feature/device/provider/distribution acceptance remains open.",
+      "testResult": "PASS_BOUNDED_API_COMPONENT_AND_DEVICE; FULL_FEATURE_DEVICE_PROVIDER_ACCEPTANCE_OPEN",
+      "outstandingWork": "Every role/feature/device permutation, Android/physical runtime, maximal accessibility/VoiceOver, actual provider/physical operations and installed distribution."
     },
     {
       "id": "NXT-R10",
@@ -554,13 +613,15 @@
         "docs/mobile-native-next/evidence/web-stable-checks.json",
         "docs/mobile-native-next/device-observations.json",
         "docs/mobile-native-next/evidence/device-followup-tests.txt",
-        "docs/mobile-native-next/evidence/ci-dbc0674b.json"
+        "docs/mobile-native-next/evidence/ci-dbc0674b.json",
+        "docs/mobile-native-next/evidence/development-bundles.json",
+        "docs/mobile-native-next/evidence/ci-7aa2855f.json"
       ],
       "acceptanceGate": "NXT-G10",
-      "status": "PARTIAL",
-      "reason": "Native implementation, bounded real API/component checks and implementation CI pass. Corrected API deployed to client demo; candidate71 and stable71 access/quote-negative checks across seven roles pass and stable deployment identity/business snapshot match. Current phone guest Home/refill/delivery/calendar inspected; full role/device/provider and installed acceptance remain open.",
-      "testResult": "PASS_BOUNDED_LOCAL_API_COMPONENT; NATIVE_DEVICE_UNVERIFIED",
-      "outstandingWork": "Finish current-source phone/tablet role, keyboard and accessibility checks, actual provider return and installed distribution acceptance. Hosted positive physical-product quote is blocked by existing zero physical stock; hosted successful mixed replay remains unexecuted within read-only hosted scope. These cases remain in coverage."
+      "status": "VERIFIED",
+      "reason": "Current manual, source-bound device observations, canonical checkout read-back, compiled development bundles, hosted deployment proof and requirement/gate/feature records are updated and linked. Matrix validation passes. This documentation gate does not accept pending implementation/device/provider gates.",
+      "testResult": "PASS_BOUNDED_DOCUMENTATION_AND_MATRIX_VALIDATION",
+      "outstandingWork": "No outstanding work for this bounded documentation update; refresh evidence after future changes. All other acceptance holds remain explicitly recorded."
     }
   ],
   "gates": [
@@ -568,67 +629,67 @@
       "id": "NXT-G01",
       "description": "Approved design system and responsive native shell",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Approved native shell is implemented. Actual iOS phone light/dark and iPad portrait/landscape observations pass, including software keyboard and text-size6; enlarged phone banner overlap repaired. Other device sizes, Android runtime and maximal accessibility checks remain open. Outstanding: Android runtime, physical/release devices, additional phone/tablet widths, maximal accessibility sizes and VoiceOver acceptance."
     },
     {
       "id": "NXT-G02",
       "description": "Native customer Home and account/navigation",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Guest Account, retained checkout sign-in, customer/commercial private Home, sign-out clearing and focused account sheets pass on the actual phone. Customer tablet account/keyboard observations pass. Broader account/security workflows retain separate acceptance. Outstanding: Individual account/security/preferences/privacy flows across applicable devices and revoked/expired installed sessions."
     },
     {
       "id": "NXT-G03",
       "description": "Three-step real API checkout and order continuity",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Actual phone guest delivery draft survives sign-in; one synthetic wallet order is verified by canonical read-back and opens the same tracking reference. Real native component/API tests cover gas/product checkout, policy/stock/price changes and exact-key lost-response linked-booking recovery. Hosted positive physical checkout/replay and provider journey remain open. Outstanding: Actual provider journey; hosted positive physical-product quote/purchase requires eligible approved stock, currently zero. Hosted successful mixed replay was not executed within read-only scope. Installed retry/relaunch acceptance remains open."
     },
     {
       "id": "NXT-G04",
       "description": "Real provider payment, return and recovery",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Native and browser return implementation uses the owned intent and exact target, explicit fee consent and canonical server verification. Component/API return and stale/foreign/expired/duplicate exceptions pass; actual provider/browser return and installed distribution have not been accepted. Wallet device payment does not substitute for provider acceptance. Outstanding: Actual sandbox provider browser return and callback/foreground recovery on iOS and Android, then installed test-store builds. Production provider approval remains a separate hold."
     },
     {
       "id": "NXT-G05",
       "description": "Native services, wallet, orders and tracking",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Actual phone wallet checkout and owned order tracking pass with server status Placed and payment Verified. Services/wallet/orders use real APIs and focused sheets; every redesigned service, invoice, refund and cancellation-request path still needs individual device acceptance. Outstanding: Individually exercise redesigned services, appointments, quotations, invoices, wallet funding, refunds and cancellation requests on supported devices, including provider/exception paths."
     },
     {
       "id": "NXT-G06",
       "description": "Owner, manager and finance workspaces",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Owner, manager and finance phone views render actual scoped records; owner wrong-password failure and successful re-verification recover in a focused sheet. Owner Inventory also passes tablet landscape/text-size6. Each operational write and role/device combination remains separately tracked. Outstanding: Individual governed writes, changed-record/recent-password/approval exceptions and other staff tablet/device combinations; prior role restrictions remain in force."
     },
     {
       "id": "NXT-G07",
       "description": "Driver and technician workflows",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Actual driver Today/Deliveries/Profile and technician Today/Jobs/Profile show assigned records and server authority guidance. Blank acknowledgement reason blocks submission; dismissing alert does not acknowledge it. Sign-out confirmations work. Physical pickup/delivery/work and provider/device permissions remain open. Outstanding: Real device camera/location/push/offline custody plus authorised physical trip, delivery, assessment and completion acceptance; other field-role tablet/device combinations."
     },
     {
       "id": "NXT-G08",
       "description": "All 36 families and 300 features retained with real API authority",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "All300 stable feature IDs,36 families and117 historical screen entries are retained with source/API mappings. Original286 partial and14 external blocks remain. Representative role views do not individually accept each feature. Outstanding: Individually verify all300 retained native leaves; do not replace their286partial/14blocked statuses with representative screen results."
     },
     {
       "id": "NXT-G09",
       "description": "Role, exception, device and visual acceptance",
       "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "reason": "Seventeen bounded current-source device observations pass: all seven representative iOS phone role views, customer guest sign-in/wallet checkout/canonical tracking, wrong-password recovery, dark appearance, focused software-keyboard sheets, tablet customer/owner portrait/landscape and text-size6. Larger-text banner overlap repaired. Full feature/device/provider/distribution acceptance remains open. Outstanding: Every role/feature/device permutation, Android/physical runtime, maximal accessibility/VoiceOver, actual provider/physical operations and installed distribution."
     },
     {
       "id": "NXT-G10",
       "description": "Manual, traceability and delivery evidence",
-      "status": "PENDING",
-      "reason": "Implemented with bounded API/component and CI evidence; API deployed and candidate seven-role access checks pass. Full current-source native role/device/provider/distribution acceptance remains open, with hosted positive stock/replay limits retained."
+      "status": "PASS",
+      "reason": "Current manual, source-bound device observations, canonical checkout read-back, compiled development bundles, hosted deployment proof and requirement/gate/feature records are updated and linked. Matrix validation passes. This documentation gate does not accept pending implementation/device/provider gates. Outstanding: No outstanding work for this bounded documentation update; refresh evidence after future changes. All other acceptance holds remain explicitly recorded."
     }
   ],
   "coverage": {
     "total": 10,
-    "verified": 0,
-    "partial": 10,
+    "verified": 1,
+    "partial": 9,
     "excluded": 0,
     "features": 300,
     "families": 36,
@@ -657,6 +718,10 @@
     {
       "date": "2026-11-23",
       "change": "Resumed actual phone acceptance after user calendar handoff. Verified customer wallet order/tracking and owner/manager/finance layouts; repaired public Account legacy fallback, account focused sheets, duplicate sheet title/card, and double keyboard compensation.24local checks/types pass; prior evidence commit CI1214/1214. No new binary; broader combinations remain open."
+    },
+    {
+      "date": "2026-11-23",
+      "change": "Completed17bounded current native observations: seven phone roles; customer/owner tablet keyboard/landscape and text-size6; repaired enlarged phone banner overlap.24focused checks/types and both development JS bundles pass. Documentation gateNXT-G10 passes; nine full feature/device/provider gates stay pending. All300leaves and existing production holds retained. No new signed binary or store upload."
     }
   ],
   "executedResults": {
@@ -691,7 +756,7 @@
       "driver",
       "technician"
     ],
-    "deviceVisualAcceptance": "Bounded current iOS phone: guest sign-in draft continuity, wallet order and canonical tracking, dark Home, guest Account, repaired profile software keyboard, owner/manager/finance workspace observations pass. Full role/device/provider combinations remain open.",
+    "deviceVisualAcceptance": "Seventeen bounded current-source device observations pass: all seven representative iOS phone role views, customer guest sign-in/wallet checkout/canonical tracking, wrong-password recovery, dark appearance, focused software-keyboard sheets, tablet customer/owner portrait/landscape and text-size6. Larger-text banner overlap repaired. Full feature/device/provider/distribution acceptance remains open.",
     "signedBinariesBuilt": 0,
     "ciImplementationCommit": {
       "commit": "3377eb41b5331a3b2e6541d439d6d94d25f08264",
@@ -747,6 +812,42 @@
       "web": "success",
       "native": "success",
       "scope": "Before the following native guest Account/focused form/keyboard fixes; current fixes have separate24local checks and native typecheck"
+    },
+    "deviceVisualObservations": {
+      "passed": 17,
+      "failed": 0,
+      "excluded": 0,
+      "roles": [
+        "public",
+        "customer",
+        "commercial",
+        "owner",
+        "manager",
+        "finance",
+        "driver",
+        "technician"
+      ],
+      "devices": [
+        "iOS26.5 phone",
+        "iPadOS27.0 iPad Pro13-inch(M5)"
+      ],
+      "limitations": [
+        "Calendar day/window selected by user before sign-in continuation; automation did not select the day.",
+        "All seven representative phone role views observed; current-source tablet checks cover public/customer/owner, not every role/device/feature permutation.",
+        "Text size6 checked on iOS phone/tablet; maximal accessibility sizes, VoiceOver, Android runtime and physical devices remain open.",
+        "Real provider browser return, installed store distribution and physical fulfilment were not accepted by the synthetic local fixture.",
+        "Temporary Device Hub switches and older previews are excluded; current-source checks were resumed on the intended devices."
+      ],
+      "evidence": "docs/mobile-native-next/device-observations.json"
+    },
+    "currentNativeSource": "7aa2855 plus reviewed CustomerHome enlarged-text repair; see reviewed-source-changes.json SHA256 chain",
+    "ciNativeFollowup": {
+      "commit": "7aa2855fb5a3ba739089131024c85d46ecefa65e",
+      "runId": 45112393313,
+      "native": "success",
+      "web": "in_progress",
+      "scope": "Before subsequent enlarged-text Home repair; that repair has24focused tests/native types/device evidence",
+      "evidence": "docs/mobile-native-next/evidence/ci-7aa2855f.json"
     }
   }
 }

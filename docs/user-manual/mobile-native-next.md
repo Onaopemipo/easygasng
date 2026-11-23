@@ -40,13 +40,13 @@ Technicians open the assigned job, inspect current assessment and scope, then us
 
 Recent private reads are scoped to the current account/session and revalidated. Fast navigation avoids a repeated branded loader; slower content uses a consistent delayed skeleton. Foreground revalidation, connection errors and retry actions remain explicit. Page transitions respect Reduce Motion. Transparent artwork and approved light/dark colours are shared across the app. Content remains edge-to-edge with safe-area and keyboard handling.
 
-Current source/API/component results and the still-open phone/tablet, accessibility, hosted positive purchase/replay and distribution checks are recorded in the [native adoption matrix](../traceability/mobile-native-next-rtm.md). Browser prototype screenshots are design evidence, not native device acceptance. Production NO-GO, genuine safety/provider acceptance and historical import/retention holds remain unchanged.
+Current source/API/component results, representative phone/tablet passes, and the still-open broader accessibility, hosted positive purchase/replay and distribution checks are recorded in the [native adoption matrix](../traceability/mobile-native-next-rtm.md). Browser prototype screenshots are design evidence, not native device acceptance. Production NO-GO, genuine safety/provider acceptance and historical import/retention holds remain unchanged.
 
 ## Recovering linked appointments
 
 If the app loses the response after you confirm appointments, reopen the saved checkout and select **View linked requests**, then **Retry saved request**. The same request reference recovers the original appointments. The app preserves other products in your cart. **View appointments** opens your bookings; **Track your order** opens the saved product/gas order.
 
-The current design is visible in the development simulator. Store-installed versions remain on their previously uploaded binaries until a separate release is built and distributed. Role, tablet, keyboard and provider acceptance remain tracked in the native traceability matrix.
+The current design is visible in the development simulator. Store-installed versions remain on their previously uploaded binaries until a separate release is built and distributed. Representative role, tablet and keyboard checks now pass; remaining individual-feature/device/provider acceptance stays tracked in the native traceability matrix.
 
 ![Current native Home](../mobile-native-next/evidence/native-home-phone.png)
 
@@ -59,3 +59,15 @@ When signed out, Account shows one **Sign in** action plus Appearance, Policies 
 Profile, email verification, communication preferences and privacy password checks open focused sheets. Open one action, enter the fields, then continue. Closing a sheet does not submit it. In the verified phone layout, the software keyboard leaves the active input and Continue button visible.
 
 The actual phone journey from guest delivery details through sign-in, synthetic wallet payment and the correct order tracking is recorded in [device observations](../mobile-native-next/device-observations.json). Payment verification does not mark delivery complete.
+
+## Verified phone and tablet layouts
+
+The current development app has been checked with all seven representative phone roles. Business customers see their own orders; drivers see their assignments; technicians see their assigned jobs. Dismissing a driver assignment alert leaves it unacknowledged. Enter the required reason before acknowledging. Technician assessment and completion still require current server work authority.
+
+The customer profile sheet keeps the input and Continue button above the software keyboard on the phone and in tablet portrait/landscape. Owner Inventory keeps Overview, Actions and Activity, search, filters and scoped records available in tablet landscape. At enlarged phone text sizes, the Home cylinder artwork moves below the banner copy so the text remains clear. The page scrolls while the refill total and next action remain fixed above the bottom tabs.
+
+![Profile sheet above the phone keyboard](../mobile-native-next/evidence/native-profile-keyboard-phone-fixed.png)
+
+![Current native tablet Home](../mobile-native-next/evidence/native-home-tablet.png)
+
+The recorded wallet test used disposable local synthetic data. It verifies continuity through sign-in and the correct tracking destination; it does not verify a real provider payment or physical delivery. Text size6 was checked, while maximal accessibility sizes, VoiceOver, Android runtime, physical devices and every feature/device combination remain open. Store-installed apps still require a separately authorised new release to receive this design.

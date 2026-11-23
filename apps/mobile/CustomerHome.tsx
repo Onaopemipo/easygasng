@@ -24,7 +24,7 @@ export default function CustomerHome({
   onOrder?: (id: string) => void;
 }) {
   const { colors } = useTheme(),
-    { width } = useWindowDimensions();
+    { width, fontScale } = useWindowDimensions();
   const orders = useRemote(api, "orders", undefined, !!user),
     wallet = useRemote(api, "wallet", undefined, !!user);
   const latest = (
@@ -33,6 +33,7 @@ export default function CustomerHome({
       : (orders.data?.orders ?? orders.data?.rows ?? [])
   )[0];
   const compact = width < 375;
+  const stackedHero = width < 600 && fontScale > 1.15;
   const openOrder = () =>
     onOrder && latest ? onOrder(latest.id) : navigate("orders");
   return (
@@ -82,7 +83,13 @@ export default function CustomerHome({
             borderColor: "#8ab2840d",
           }}
         />
-        <View style={{ maxWidth: compact ? 190 : 218, gap: 12, zIndex: 2 }}>
+        <View
+          style={{
+            maxWidth: stackedHero ? undefined : compact ? 190 : 218,
+            gap: 12,
+            zIndex: 2,
+          }}
+        >
           <NextText kind="eyebrow" style={{ color: "#d5eadb" }}>
             COOKING GAS, DELIVERED
           </NextText>
@@ -124,11 +131,13 @@ export default function CustomerHome({
           source={require("./assets/cylinder-illustration.png")}
           resizeMode="contain"
           style={{
-            position: "absolute",
+            position: stackedHero ? "relative" : "absolute",
             height: compact ? 173 : 190,
             width: compact ? 119 : 140,
-            right: compact ? -8 : 3,
-            bottom: 14,
+            right: stackedHero ? undefined : compact ? -8 : 3,
+            bottom: stackedHero ? undefined : 14,
+            alignSelf: "flex-end",
+            marginTop: stackedHero ? 16 : 0,
           }}
         />
       </View>
