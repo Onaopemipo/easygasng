@@ -148,12 +148,13 @@ try {
   if (stage === "cleanup") {
     for (const role of Object.keys(session.tokens)) {
       assert.equal((await call(role, "logout", {})).status, 200);
+      assert.equal((await call(role, "me")).status, 401);
       delete session.tokens[role];
     }
     await fs.writeFile(dir + "sessions.json", JSON.stringify(session), {
       mode: 0o600,
     });
-    pass("ALH-CLEANUP", "Only the seven verifier-created sessions revoked");
+    pass("ALH-CLEANUP", "Only the seven verifier-created sessions revoked; subsequent me reads return401");
   } else {
     if (stage === "before") {
       const creds = JSON.parse(

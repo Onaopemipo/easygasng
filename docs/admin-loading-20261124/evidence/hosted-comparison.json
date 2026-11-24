@@ -1,0 +1,67 @@
+{
+  "scope": "Direct stable-demo fetch samples; complete canonical owner responses asserted identical excluding generatedAt; not production-load/cold-start/concurrency acceptance",
+  "beforeSource": "b91aa554fd5701ba69464eb6c574570442130de6",
+  "afterSource": "3b5f4ff5ed5e08352980ce70fa82825988bdf03f",
+  "beforeSamplesPerEndpoint": 2,
+  "afterSamplesPerEndpoint": 7,
+  "candidateSamplesExcluded": "CLI/protection overhead; retained separately in candidate-hosted.json",
+  "outlierPolicy": "Retain every sample, including navigation 2816ms; five follow-up samples were added after observing variance. Unequal sample counts are explicit.",
+  "metrics": [
+    {
+      "key": "dashboard",
+      "beforeMs": [
+        4109,
+        4085
+      ],
+      "afterMs": [
+        1476,
+        1538,
+        1453,
+        1449,
+        1446,
+        1482,
+        1538
+      ],
+      "beforeMedianMs": 4097.0,
+      "afterMedianMs": 1476,
+      "beforeRangeMs": [
+        4085,
+        4109
+      ],
+      "afterRangeMs": [
+        1446,
+        1538
+      ],
+      "medianReductionPercent": 64.0
+    },
+    {
+      "key": "navigation",
+      "beforeMs": [
+        1763,
+        1800
+      ],
+      "afterMs": [
+        1008,
+        2816,
+        1648,
+        1005,
+        993,
+        990,
+        986
+      ],
+      "beforeMedianMs": 1781.5,
+      "afterMedianMs": 1005,
+      "beforeRangeMs": [
+        1763,
+        1800
+      ],
+      "afterRangeMs": [
+        986,
+        2816
+      ],
+      "medianReductionPercent": 43.6
+    }
+  ],
+  "businessWrites": 0,
+  "canonicalContractsMatched": true
+}
