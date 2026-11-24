@@ -48,3 +48,5 @@ Browser Enter-key injection was not accepted as test evidence; the labelled subm
 All5 [verification findings](findings.json) and all6 bounded requirements/gates are now verified. [Final business preservation](evidence/final-preservation.json), [session cleanup](evidence/session-cleanup.json) and [browser cleanup](evidence/browser-cleanup.json) complete the evidence. No outstanding work in this bounded verification UX scope; existing broader production and feature holds remain separate.
 
 Direct Dispatch vehicle assignment (24 November 2026) adds a fresh-password guard to the owner/manager trip action. Its form shows Current password before submission and preserves the shared verification/idempotency behavior; explicit availability also retains staff authority. [DV evidence](../dispatch-vehicle/README.md). Historical acceptance counts remain recorded above.
+
+Inventory generation now retains the original guard-site IDs when another module adds a guard. All previous 77 identities remain matched to committed history; the Dispatch vehicle guard is SVERIFY-SITE-078. Repeated regeneration produces the same inventory.

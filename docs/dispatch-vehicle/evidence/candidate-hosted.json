@@ -1,0 +1,78 @@
+{
+  "stage": "candidate",
+  "base": "https://easygas-client-demo-59nm31v5q-onaopemipos-projects.vercel.app",
+  "sourceCommit": "99fd4d0aeb2e92a70dc354105e9233f0b71f7f58",
+  "deploymentId": "dpl_DQDFeJanVfLgf3pzBaH2uaKyecSB",
+  "status": "PASS",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "DVH-READY",
+      "status": "PASS",
+      "detail": "Existing demo ready and original production NO-GO retained"
+    },
+    {
+      "id": "DVH-ROLES",
+      "status": "PASS",
+      "detail": "Owner/manager setup reads succeed; five lower roles, anonymous, foreign/missing branch and malformed scope fail closed"
+    },
+    {
+      "id": "DVH-VEHICLE",
+      "status": "PASS",
+      "detail": "Owner/manager scoped options; lower-role/anonymous/foreign/malformed denials and fresh-password guard pass. Verified missing-driver requests return404 and roll back; no actual driver, vehicle or trip changed."
+    },
+    {
+      "id": "DVH-SETUP",
+      "status": "PASS",
+      "detail": "Selected branch canonical counts and prerequisite flags returned by the deployed read-only action"
+    },
+    {
+      "id": "DVH-ASSIGNMENT",
+      "status": "PASS",
+      "detail": "Existing order-specific candidate API still provides authoritative eligibility; no assignment submitted"
+    },
+    {
+      "id": "DVH-PRESERVE",
+      "status": "PASS",
+      "detail": "Current order/inventory/vehicle/trip/driver business snapshots unchanged across setup checks and rollout"
+    }
+  ],
+  "vehicleOptions": {
+    "ownerDrivers": 3,
+    "ownerVehicles": 2,
+    "managerDrivers": 3,
+    "writesEnabled": true
+  },
+  "branchCount": 2,
+  "setupCounts": {
+    "drivers": 3,
+    "availableDrivers": 2,
+    "driversOnTrips": 0,
+    "vehicles": 7,
+    "approvedVehicles": 2
+  },
+  "setupChecks": {
+    "branchActive": true,
+    "driversAvailable": true,
+    "vehiclesApproved": true,
+    "activeTrips": false,
+    "deliveryEnabled": true,
+    "deliveryCapacity": true,
+    "deliveryWindows": true,
+    "coverageConfigured": true,
+    "assignmentEnabled": true
+  },
+  "candidateCounts": {
+    "ready": 0,
+    "blocked": 3
+  },
+  "snapshot": {
+    "ordersHash": "3f240af0bbc105751dc3db819579f525e00ef06c8cd91174b7c012c0f1e617e4",
+    "orderCount": 24,
+    "inventoryHash": "1ef65322162991bdd61e64a5ed629b2094e1b3c5a763c9450144fec6d91bc369",
+    "vehiclesHash": "d53dd0c2ce392529b087126bc26723a916e8dffe6b087b31c3810426c8074e06",
+    "tripsHash": "92c6d05cfb5fca5e8e1113e7ea64a1bc87d50221c3d170e601418631816c249d",
+    "driversHash": "4b3a0f1146d74b077a3f11b0caade0429bc8519f3ccd6d09305b86360e0475d4"
+  },
+  "completedAt": "2026-11-24T02:11:06.539Z"
+}

@@ -159,7 +159,9 @@
         "docs/user-manual/dispatch-setup.md",
         "docs/user-manual/dispatch-fleet.md",
         "docs/user-manual/driver-assignment.md",
-        "scripts/lib/reviewed-dispatch-vehicle-source.mjs"
+        "scripts/lib/reviewed-dispatch-vehicle-source.mjs",
+        "scripts/verify-dispatch-vehicle-hosted.mjs",
+        "scripts/audit-sensitive-actions.mjs"
       ],
       "dataSource": "Canonical users/branches/driver_vehicles/driver_trips and business_operation_results; existing order eligibility remains authoritative",
       "securityControl": "Owner/manager only with Dispatch authority, branch scope and fresh password. Explicit availability uses staff authority; no driver impersonation or GPS consent. Atomic/idempotent trip creation locks driver/branch/vehicle; original order safety, payment and custody guards remain.",
@@ -168,10 +170,24 @@
         "tests/dispatch-vehicle-components.test.ts",
         "tests/dispatch-vehicle-source.test.ts",
         "tests/driver-assignment.test.ts",
-        "tests/driver-trip-conflicts.test.ts"
+        "tests/driver-trip-conflicts.test.ts",
+        "tests/sensitive-action-security.test.ts"
       ],
       "testIds": [
-        "DV-SOURCE"
+        "DV-SOURCE",
+        "DVH-SOURCE",
+        "DVH-VEHICLE",
+        "DVH-PRESERVE",
+        "DVH-RELEASE",
+        "DVH-V01",
+        "DVH-V02",
+        "DVH-V03",
+        "DVH-V04",
+        "DVH-CLEANUP",
+        "SVERIFY-AUDIT",
+        "SVERIFY-ROLES",
+        "DVH-CI-SOURCE",
+        "DVH-CI"
       ],
       "negativeTests": [
         "Denied roles/branches, stale verification, revoked authority, invalid/stale vehicle, duplicate trip and release-off writes"
@@ -182,13 +198,30 @@
         "docs/dispatch-vehicle/evidence/browser-local.txt",
         "docs/dispatch-vehicle/evidence/typecheck.txt",
         "docs/dispatch-vehicle/evidence/build.txt",
-        "docs/dispatch-vehicle/evidence/guard-inventory.txt"
+        "docs/dispatch-vehicle/evidence/guard-inventory.txt",
+        "docs/dispatch-vehicle/evidence/source-integrity.json",
+        "docs/dispatch-vehicle/evidence/source-integrity.txt",
+        "docs/dispatch-vehicle/evidence/candidate-hosted.json",
+        "docs/dispatch-vehicle/evidence/candidate-hosted.txt",
+        "docs/dispatch-vehicle/evidence/stable-hosted.json",
+        "docs/dispatch-vehicle/evidence/stable-hosted.txt",
+        "docs/dispatch-vehicle/evidence/release.json",
+        "docs/dispatch-vehicle/evidence/release.txt",
+        "docs/dispatch-vehicle/evidence/browser-hosted.json",
+        "docs/dispatch-vehicle/evidence/browser-hosted.txt",
+        "docs/dispatch-vehicle/evidence/cleanup-hosted.json",
+        "docs/dispatch-vehicle/evidence/cleanup-hosted.txt",
+        "docs/dispatch-vehicle/evidence/security-inventory.txt",
+        "docs/dispatch-vehicle/evidence/ci-source.json",
+        "docs/dispatch-vehicle/evidence/ci-source.txt",
+        "docs/dispatch-vehicle/evidence/ci.json",
+        "docs/dispatch-vehicle/evidence/ci.txt"
       ],
       "acceptanceGate": "DV-G04",
-      "status": "PARTIAL",
-      "reason": "Local implementation, manual and traceability pass; exact-source hosted publication and full GitHub validation remain pending.",
-      "testResult": "PASS \u2014 48 focused tests, zero failures/skips; six actual local browser cases; build/types and 78 sensitive-action guard sites retained.",
-      "outstandingWork": "Publish exact source to existing client demo, verify scoped reads/denials/preservation and hosted form, complete full CI and final evidence push."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact-source existing demo rollout, scoped/denied hosted acceptance and four actual hosted UI cases pass. Corrected full Release validation 45312122235 at test/inventory-only e6d8af0 passes 1,257 regressions with zero failures/skips; all 450 application files equal deployed 99fd4d0. Final manual/evidence publication changes no runtime bytes.",
+      "testResult": "PASS \u2014 48 focused tests, two additional security checks, six local/four hosted actual-browser cases, 1,257 full CI regressions and web/native checks; mobile export skipped.",
+      "outstandingWork": "No remaining bounded implementation, verification or documentation work. Actual vehicle/trip assignments are performed by authorised admins using real odometer/on-duty information. Original production/native/provider/physical/import/retain-all holds remain separate."
     }
   ],
   "gates": [
@@ -213,15 +246,15 @@
     {
       "id": "DV-G04",
       "description": "Executed acceptance, manual/traceability and existing client-demo rollout with no mobile binary",
-      "status": "PENDING",
-      "reason": "Local implementation, manual and traceability pass; exact-source hosted publication and full GitHub validation remain pending."
+      "status": "PASS",
+      "reason": "All mapped source, role/password/branch, negative, concurrency, actual-browser, hosted preservation, full CI and documentation evidence passes."
     }
   ],
   "coverage": {
     "total": 4,
     "implemented": 4,
-    "verified": 3,
-    "partial": 1,
+    "verified": 4,
+    "partial": 0,
     "excluded": 0,
     "criticalSecurity": {
       "covered": 1,
@@ -232,7 +265,7 @@
       "total": 1
     },
     "gates": {
-      "passed": 3,
+      "passed": 4,
       "total": 4
     }
   },
@@ -244,6 +277,18 @@
     {
       "date": "2026-11-24",
       "change": "Admin creates actual duty trip with their own audited authority and password, explicit optional on-duty availability and location consent false. Eight reviewed shared web/rule continuations, two new runtime modules, no schema/native changes. 48 focused checks including real PostgreSQL17 races and six local actual-browser cases pass. Hosted rollout/full CI pending."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Exact 99fd4d0 source published as Ready dpl_DQDFeJanVfLgf3pzBaH2uaKyecSB. Authoritative alias endpoint, 450 remote hashes/four raw downloads, six candidate/six stable groups and four actual hosted UI cases pass without business mutations. Own session cleanup and full CI tracked in DV-R04."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Initial full CI has one stale inventory count failure (1,256/1,257 passed). Test/inventory-only e6d8af0 now preserves all 77 historical guard IDs and allocates SVERIFY-SITE-078 to the new action; regenerated inventory is stable and two security checks pass. All 450 application files match deployed 99fd4d0; corrected full run45312122235 pending."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Corrected full Release validation 45312122235 at e6d8af0 passes 1,257 regressions, zero failures/skips; web/native checks pass, mobile export skipped. All 450 application files match Ready deployed 99fd4d0. All four bounded requirements/gates verified, zero exclusions; final documentation-only publication, original broader holds preserved."
     }
   ],
   "verification": {

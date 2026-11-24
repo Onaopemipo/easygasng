@@ -1,0 +1,34 @@
+{
+  "environment": "Actual existing client-demo UI, final committed application source",
+  "sourceCommit": "99fd4d0aeb2e92a70dc354105e9233f0b71f7f58",
+  "deploymentId": "dpl_DQDFeJanVfLgf3pzBaH2uaKyecSB",
+  "cases": [
+    {
+      "id": "DVH-V01",
+      "status": "PASS",
+      "detail": "Actual final deployed owner form loads canonical Lagos options: three active drivers without trips, two suitable available vehicles, odometer, explicit on-duty checkbox and current-password field. No actual driver/vehicle selected or mutation submitted."
+    },
+    {
+      "id": "DVH-V02",
+      "status": "PASS",
+      "detail": "Actual final deployed 390x844 phone form has document scrollWidth390, 358px dialog and primary-action bottom731.34, above the demo banner; dark appearance remains legible."
+    },
+    {
+      "id": "DVH-V03",
+      "status": "PASS",
+      "detail": "Own labelled live manager session opens the scoped Lagos vehicle-assignment form, including password and permitted explicit availability controls. No trip/configuration/order write submitted."
+    },
+    {
+      "id": "DVH-V04",
+      "status": "PASS",
+      "detail": "Own owner and manager browser QA sessions signed out, Login observed; original dark theme retained, viewport reset to desktop and unrelated browser sessions untouched."
+    }
+  ],
+  "screenshots": [
+    "docs/dispatch-vehicle/evidence/hosted-desktop-form.jpg",
+    "docs/dispatch-vehicle/evidence/hosted-phone-form.jpg",
+    "docs/dispatch-vehicle/evidence/hosted-manager-form.jpg"
+  ],
+  "businessWrites": 0,
+  "limitations": "Positive trip/availability commit and conflicts executed against disposable local fixtures, including independent PostgreSQL transactions. Hosted acceptance uses reads/denials and actual form without assigning existing drivers. Physical/native/assistive acceptance remains separate."
+}
