@@ -41,9 +41,9 @@
       ],
       "acceptanceGate": "TPUB-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "reason": "Bounded implementation and executed component/backend/browser verification pass; exact-source repair is now published and checked on the existing demo.",
       "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
-      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+      "outstandingWork": "No remaining bounded web repair. Broader physical/assistive/native acceptance and original production holds remain separate."
     },
     {
       "id": "TPUB-R02",
@@ -85,9 +85,9 @@
       ],
       "acceptanceGate": "TPUB-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "reason": "Bounded implementation and executed component/backend/browser verification pass; exact-source repair is now published and checked on the existing demo.",
       "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
-      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+      "outstandingWork": "No remaining bounded web repair. Broader physical/assistive/native acceptance and original production holds remain separate."
     },
     {
       "id": "TPUB-R03",
@@ -128,9 +128,9 @@
       ],
       "acceptanceGate": "TPUB-G03",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Bounded local implementation and executed component/backend/browser verification pass; hosted publication remains a separate retained requirement.",
+      "reason": "Bounded implementation and executed component/backend/browser verification pass; exact-source repair is now published and checked on the existing demo.",
       "testResult": "PASS \u201433 focused tests, four actual local browser cases, types/build; no failed or skipped accepted evidence.",
-      "outstandingWork": "No remaining bounded local repair. Hosted rollout, physical/assistive/native acceptance and broader production holds remain separate."
+      "outstandingWork": "No remaining bounded web repair. Broader physical/assistive/native acceptance and original production holds remain separate."
     },
     {
       "id": "TPUB-R04",
@@ -150,18 +150,48 @@
       "securityControl": "Only customer submits draft; only owner moderates; consent, current-version approval, recent password, eligibility and revision checks remain; no hosted content publication",
       "testFiles": [
         "tests/testimonial-publishing-ui.test.ts",
-        "tests/testimonials.test.ts"
+        "tests/testimonials.test.ts",
+        "scripts/verify-testimonial-hosted.mjs"
       ],
-      "testIds": [],
+      "testIds": [
+        "TPUBH-SOURCE",
+        "TPUBH-RELEASE",
+        "TPUBH-READY",
+        "TPUBH-ROLES",
+        "TPUBH-DRAFT-GUARD",
+        "TPUBH-PRESERVE",
+        "TPUBH-V01",
+        "TPUBH-V02",
+        "TPUBH-V03",
+        "TPUBH-CLEANUP",
+        "TPUB-CI"
+      ],
       "negativeTests": [
         "Draft publication, missing consent, wrong role, withdrawn/changed version, stale revision and failed reads/saves"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/testimonial-publishing/evidence/source-integrity.json",
+        "docs/testimonial-publishing/evidence/source-integrity.txt",
+        "docs/testimonial-publishing/evidence/release.json",
+        "docs/testimonial-publishing/evidence/release.txt",
+        "docs/testimonial-publishing/evidence/before-hosted.json",
+        "docs/testimonial-publishing/evidence/before-hosted.txt",
+        "docs/testimonial-publishing/evidence/candidate-hosted.json",
+        "docs/testimonial-publishing/evidence/candidate-hosted.txt",
+        "docs/testimonial-publishing/evidence/stable-hosted.json",
+        "docs/testimonial-publishing/evidence/stable-hosted.txt",
+        "docs/testimonial-publishing/evidence/browser-hosted.json",
+        "docs/testimonial-publishing/evidence/browser-hosted.txt",
+        "docs/testimonial-publishing/evidence/cleanup-hosted.json",
+        "docs/testimonial-publishing/evidence/cleanup-hosted.txt",
+        "docs/testimonial-publishing/evidence/ci.json",
+        "docs/testimonial-publishing/evidence/ci.txt"
+      ],
       "acceptanceGate": "TPUB-G04",
-      "status": "PARTIAL",
-      "reason": "Investigation found demo-notice top alignment, private draft state and post-approval dialog closure",
-      "testResult": "PENDING",
-      "outstandingWork": "Implement, test, verify responsive UI, document and publish web-only repair"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact committed source is Ready and verified at the existing client demo; full application CI and actual hosted read-only UI/role checks pass.",
+      "testResult": "PASS \u20141241 GitHub regressions, zero failures/skips; web build/types/audit and native checks;446remote source hashes and two byte-compared downloads; candidate/stable seven-role controls/preservation; actual hosted centre/guidance; own-session cleanup.",
+      "outstandingWork": "No remaining bounded web release work. Positive hosted publication of customer content was not authorised and was not performed; positive journey verified on disposable local data. Original production/device/provider/physical/import/retain-all gates remain separate."
     }
   ],
   "gates": [
@@ -186,14 +216,14 @@
     {
       "id": "TPUB-G04",
       "description": "Publish the tested web repair to the existing client demo without publishing customer content or creating mobile binaries",
-      "status": "PENDING",
-      "reason": "Execution pending"
+      "status": "PASS",
+      "reason": "Exact-source rollout, candidate/stable roles/preservation, actual hosted UI, cleanup and full application CI verified."
     }
   ],
   "coverage": {
     "total": 4,
-    "verified": 3,
-    "partial": 1,
+    "verified": 4,
+    "partial": 0,
     "excluded": 0
   },
   "changeLog": [
@@ -204,9 +234,18 @@
     {
       "date": "2026-11-24",
       "change": "Centred scoped dialogs, state-specific guidance, approval-to-publication continuation and error/focus/pending recovery locally verified. Existing customer-only submission and server controls preserved; hosted publication pending."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Exact639cafd source and446remote content hashes verified; both changed source files downloaded/byte-compared; Ready candidate and stable seven-role/current-feedback preservation plus actual hosted UI pass. No existing draft submitted, approved or published; own sessions cleaned up. CI remains pending."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Application CI45291436426 succeeds on639cafd:1241passed,0failed,0skipped; web/native jobs pass, mobile export skipped. All4bounded requirements/gates verified,0excluded; all broader holds preserved."
     }
   ],
   "verification": {
-    "matrixValidation": "docs/testimonial-publishing/evidence/traceability.txt"
+    "matrixValidation": "docs/testimonial-publishing/evidence/traceability.txt",
+    "ci": "docs/testimonial-publishing/evidence/ci.json"
   }
 }

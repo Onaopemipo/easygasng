@@ -1,0 +1,40 @@
+{
+  "environment": "Actual hosted client-demo browser, read-only customer content; own temporary QA login only",
+  "base": "https://easygas-client-demo.vercel.app",
+  "deploymentId": "dpl_4fDG9cPQu847x5hvkqT9etxU1sVz",
+  "cases": [
+    {
+      "id": "TPUBH-V01",
+      "status": "PASS",
+      "detail": "Existing Draft review shows Awaiting customer submission and Account \u2192 Your reviews \u2192 Submit for review guidance; no staff draft-publication bypass. Actual dark desktop review is centred, focus inside, no horizontal overflow and clears demo notice.",
+      "geometry": {
+        "width": 1280,
+        "height": 720,
+        "dialogTop": 145.1015625,
+        "dialogBottom": 574.8984375,
+        "centreOffsetY": 0,
+        "noticeTop": 674,
+        "focusInDialog": true,
+        "horizontalOverflow": false
+      }
+    },
+    {
+      "id": "TPUBH-V02",
+      "status": "PASS",
+      "detail": "Actual hosted feedback filters centre at zero vertical offset with focus inside; closing restores focus to Filters. No filter changes or business mutation.",
+      "geometry": {
+        "centreOffsetY": 0,
+        "dialogBottom": 512.046875,
+        "focusInDialog": true
+      }
+    },
+    {
+      "id": "TPUBH-V03",
+      "status": "PASS",
+      "detail": "Own browser QA sign-in signed out; Login form observed. Existing user browser sessions untouched."
+    }
+  ],
+  "hostedContentPublished": false,
+  "screenshot": "docs/testimonial-publishing/evidence/hosted-draft.jpg",
+  "limitations": "Existing hosted dataset contains one Draft, no Approved record. Positive approval/publication/hide tested only with disposable local synthetic data. Phone/tablet are browser breakpoints, not physical device or assistive acceptance."
+}

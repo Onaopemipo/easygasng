@@ -1,0 +1,78 @@
+{
+  "stage": "candidate",
+  "base": "https://easygas-client-demo-kl7r9bkx8-onaopemipos-projects.vercel.app",
+  "sourceCommit": "639cafd7871c78f2f8da6a09a1ec46e7c7c85ce9",
+  "deploymentId": "dpl_4fDG9cPQu847x5hvkqT9etxU1sVz",
+  "status": "PASS",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "TPUBH-READY",
+      "status": "PASS",
+      "detail": "Existing demo ready and original production NO-GO retained"
+    },
+    {
+      "id": "TPUBH-ROLES",
+      "status": "PASS",
+      "detail": "Owner management reads succeed; six lower roles and anonymous management access denied"
+    },
+    {
+      "id": "TPUBH-DRAFT-GUARD",
+      "status": "PASS",
+      "detail": "Seven roles cannot publish the existing private draft; no successful moderation write"
+    },
+    {
+      "id": "TPUBH-PRESERVE",
+      "status": "PASS",
+      "detail": "All current feedback content/status/revisions, complete version/event details and public projection unchanged"
+    }
+  ],
+  "denied": [
+    {
+      "role": "owner",
+      "status": 409,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "manager",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "finance",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "driver",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "technician",
+      "status": 403,
+      "code": "INVALID_REQUEST"
+    },
+    {
+      "role": "customer",
+      "status": 403,
+      "code": "FORBIDDEN"
+    },
+    {
+      "role": "commercial",
+      "status": 403,
+      "code": "FORBIDDEN"
+    }
+  ],
+  "snapshot": {
+    "feedbackHash": "d91b1900f9d280526a341d2874e7dbb31cd03636eb6e7d9a9f313e04468e5466",
+    "detailHash": "8a464ccf44cc1f5703b8788e2da7ff03e3ad72831903a21fece8358b1a03dfb8",
+    "publicHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "total": 1,
+    "publicCount": 0,
+    "stateCounts": {
+      "DRAFT": 1
+    }
+  },
+  "completedAt": "2026-11-23T23:48:48.114Z"
+}

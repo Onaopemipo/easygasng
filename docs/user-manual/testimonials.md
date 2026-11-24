@@ -21,3 +21,5 @@ Moderation requires current password verification. If prompted, enter your exist
 Publication still requires explicit customer consent, an eligible completed transaction and approval of the current version. Customer edits return feedback to Draft for a new review. The server rechecks role, consent, eligibility and revision on every action; a previously displayed button does not override these requirements.
 
 This repair publishes application code only. Existing customer feedback is not automatically approved or published. [Verification and rollout](../testimonial-publishing/README.md), [requirements matrix](../traceability/testimonial-publishing-rtm.md).
+
+The repair is live on the existing client demo. The review shown in the reported screenshot is still Draft: the customer must submit it first. No existing feedback was automatically approved or published during deployment.
