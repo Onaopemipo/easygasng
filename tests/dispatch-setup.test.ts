@@ -45,6 +45,8 @@ test("DS-SCOPE: wrong roles and foreign branch denied; owner chooses among branc
     for (const role of ["driver", "customer", "commercial", "inventory"]) await assert.rejects(() => f.call(role, "dispatch.setup"), (e: any) => e.status === 403);
     await f.db.query("INSERT INTO staff_privilege_overrides(user_id,privilege,effect,changed_by,role_at_change,branch_at_change) VALUES($1,'staff.manage','deny',$2,'manager','lagos')", [f.actors.dispatcher.id, f.actors.owner.id]);
     assert.equal((await f.call("dispatcher", "dispatch.setup")).canReviewDrivers, false);
+    await f.db.query("INSERT INTO staff_privilege_overrides(user_id,privilege,effect,changed_by,role_at_change,branch_at_change) VALUES($1,'dispatch.manage','deny',$2,'manager','lagos')", [f.actors.dispatcher.id, f.actors.owner.id]);
+    await assert.rejects(() => f.call("dispatcher", "dispatch.setup"), (e: any) => e.status === 403 && e.code === "PRIVILEGE_REVOKED");
     process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED = "false";
     assert.equal((await f.call("owner", "dispatch.setup", { branch: "lagos" })).checks.assignmentEnabled, false);
   } finally { process.env = env; await f.db.close?.(); }

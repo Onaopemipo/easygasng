@@ -1,10 +1,13 @@
 import { z } from "zod";
 import { allow, AppError, type Actor } from "./auth";
 import { one, type SQL } from "./db";
+import { enforceStaffPrivilege } from "./staff-privileges";
 
 /** Read-only branch prerequisites. This is never an order eligibility or release approval. */
 export async function dispatchSetup(tx: SQL, user: Actor, input: unknown) {
   allow(user, ["owner", "manager"]);
+  // Inherit individual Dispatch access revocations as well as role/branch access.
+  enforceStaffPrivilege(user, "dispatch.centre");
   const { branch: requested } = z
     .object({ branch: z.string().max(100).default("") })
     .strict()
