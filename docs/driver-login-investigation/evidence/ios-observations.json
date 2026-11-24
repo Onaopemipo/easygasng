@@ -1,0 +1,30 @@
+{
+  "environment": "Device Hub: EasyGas First Sign-In QA, iOS 26.5, existing Expo Go SDK 58",
+  "account": "driver.qa-ac7e0495@demo.easygas.invalid",
+  "initial": {
+    "status": "REPRODUCED",
+    "visibleIdentifierMatchesUser": true,
+    "visibleError": "Email, phone number or password is incorrect.",
+    "previewApiOrigin": "http://127.0.0.1:3140",
+    "cause": "Isolated fixture and supplied shared-demo account belong to different environments"
+  },
+  "correction": {
+    "apiOrigin": "https://easygas-client-demo.vercel.app",
+    "runtime": "preview",
+    "metroPort": 8086,
+    "reload": "Expo Go menu Reload via native UI"
+  },
+  "final": {
+    "status": "PASS",
+    "observedVisibleState": ["LAGOS", "Ready for the road?", "Driver workspace", "Trip & delivery readiness", "Today", "Deliveries", "Work", "Profile"],
+    "newAssignments": 0,
+    "inProgress": 0,
+    "leftSignedInForUser": true
+  },
+  "passwordChanged": false,
+  "roleOrPrivilegesChanged": false,
+  "tripOrDeliveryActionSubmitted": false,
+  "newMobileBinary": false,
+  "testFlightChanged": false,
+  "commercialReleaseAccepted": false
+}

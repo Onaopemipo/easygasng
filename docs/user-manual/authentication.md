@@ -20,3 +20,9 @@ On startup, a slow product catalogue does not prevent native sign-in. An unavail
 
 
 On mobile, Back from recovery or an account link returns to Sign In. Back from Sign In returns to the previous guest page, including a saved checkout step; it does not reopen an old recovery/link screen. Back from Create Account returns to Sign In first. Larger text simplifies decorative artwork and keeps the form scrollable. On Android, scroll the authentication form when the keyboard reduces the visible area. You can submit Sign In or Account recovery using the keyboard’s submit key or the form action. Sign out from My Account; opening Account afterward requires Sign In again.
+
+## Supplied demo logins in Expo Go
+
+Supplied `@demo.easygas.invalid` staff accounts belong to the shared client-demo backend, `https://easygas-client-demo.vercel.app`. An Expo Go preview connected to a private local fixture uses different accounts; a generic incorrect-credentials response there does not mean the hosted password expired. The 8086 preview was reconnected to the shared demo after the supplied driver account failed against local API 3140. Reload the Expo Go project before retrying with the existing supplied password. No password reset or new iOS binary is needed for this configuration correction. TestFlight 4 already uses the shared demo backend; its configuration was not changed by this repair.
+
+Keep local fixture credentials and hosted demo credentials separate. See the [verified driver-preview repair](../driver-login-investigation/README.md) and [traceability](../traceability/driver-preview-login-rtm.md). These synthetic `.invalid` addresses are login identifiers, not deliverable email inboxes.

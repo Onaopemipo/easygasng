@@ -20,3 +20,5 @@ Actual local browser checks cover all three core routes at seven viewport widths
 ![Actual mobile web Sign In](evidence/web-390-login.jpg)
 
 The disposable local web preview uses port 3140. The existing Expo Go development preview uses port 8086; open `http://127.0.0.1:3140/launch` in the QA simulator to launch it. These processes may need restarting in a later session. No signed mobile binary, native bundle export, store upload, deployment or new OAuth integration was created. Apple/Google buttons are omitted as required by the handoff because no existing supported integration was found. Original production holds remain.
+
+Preview environment continuation: the user-confirmed supplied-driver issue was an account/backend mismatch. The existing Expo Go server on 8086 now uses the shared website demo API, with the exact supplied driver sign-in verified on the QA iPhone. API 3140 remains the isolated fixture for web/automated checks. Earlier native evidence above remains the recorded local-fixture acceptance; this environment change does not close broader native gates. [Repair and restart instructions](../driver-login-investigation/README.md).

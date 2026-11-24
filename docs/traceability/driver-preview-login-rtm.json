@@ -1,0 +1,153 @@
+{
+  "phase": "Supplied driver Expo Go backend mismatch repair",
+  "date": "2026-11-24",
+  "baseCommit": "12d2aaf",
+  "productionDecision": "Original NO-GO and all unrelated native/provider/physical/production holds preserved.",
+  "requirements": [
+    {
+      "id": "DLOGIN-01",
+      "requirement": "Identify the reported supplied iOS driver account failure without resetting credentials",
+      "priority": "P1",
+      "scope": "Existing Expo Go QA preview and supplied labelled demo driver only; no new mobile binary, deployment, password/role changes or operational actions.",
+      "uiReference": "User-reported driver.qa-ac7e0495@demo.easygas.invalid sign-in on iOS Expo Go",
+      "route": "Expo Go login / driver Home",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/app.config.js",
+        "apps/web/lib/service.ts",
+        "docs/driver-login-investigation/README.md",
+        "docs/user-manual/authentication.md"
+      ],
+      "dataSource": "Current Metro process environment; shared demo login/driver.login/me and driver read endpoints; actual QA iPhone UI.",
+      "securityControl": "Existing password/role/branch/session safeguards retained; target credentials read privately; no password/token evidence; only own API sessions revoked.",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-PRESERVE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-login-investigation/evidence/exact-ios-driver-account.json",
+        "docs/driver-login-investigation/evidence/environment-comparison.json",
+        "docs/driver-login-investigation/evidence/corrected-preview-runtime.json",
+        "docs/driver-login-investigation/evidence/ios-observations.json",
+        "docs/driver-login-investigation/evidence/auth-regression.txt"
+      ],
+      "acceptanceGate": "DLOGIN-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact user-confirmed supplied driver in iOS Expo Go failed due to isolated local backend mismatch. Corrected preview runtime and actual signed-in Lagos driver workspace verified without changing credentials or application source.",
+      "testResult": "PASS: exact account shared/dedicated login and identity/driver reads HTTP200; current preview manifest/API environment verified; actual iOS driver sign-in/workspace;10 authentication regressions pass,0fail/skip.",
+      "outstandingWork": "None within this exact supplied-account Expo Go repair. All wider authentication/native/physical/provider/production gates remain separately open; no new binary/TestFlight or hosted business mutation."
+    },
+    {
+      "id": "DLOGIN-02",
+      "requirement": "Reconnect the existing Expo Go preview to the matching shared demo backend",
+      "priority": "P1",
+      "scope": "Existing Expo Go QA preview and supplied labelled demo driver only; no new mobile binary, deployment, password/role changes or operational actions.",
+      "uiReference": "User-reported driver.qa-ac7e0495@demo.easygas.invalid sign-in on iOS Expo Go",
+      "route": "Expo Go login / driver Home",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/app.config.js",
+        "apps/web/lib/service.ts",
+        "docs/driver-login-investigation/README.md",
+        "docs/user-manual/authentication.md"
+      ],
+      "dataSource": "Current Metro process environment; shared demo login/driver.login/me and driver read endpoints; actual QA iPhone UI.",
+      "securityControl": "Existing password/role/branch/session safeguards retained; target credentials read privately; no password/token evidence; only own API sessions revoked.",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-SOURCE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-login-investigation/evidence/exact-ios-driver-account.json",
+        "docs/driver-login-investigation/evidence/environment-comparison.json",
+        "docs/driver-login-investigation/evidence/corrected-preview-runtime.json",
+        "docs/driver-login-investigation/evidence/ios-observations.json",
+        "docs/driver-login-investigation/evidence/auth-regression.txt"
+      ],
+      "acceptanceGate": "DLOGIN-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact user-confirmed supplied driver in iOS Expo Go failed due to isolated local backend mismatch. Corrected preview runtime and actual signed-in Lagos driver workspace verified without changing credentials or application source.",
+      "testResult": "PASS: exact account shared/dedicated login and identity/driver reads HTTP200; current preview manifest/API environment verified; actual iOS driver sign-in/workspace;10 authentication regressions pass,0fail/skip.",
+      "outstandingWork": "None within this exact supplied-account Expo Go repair. All wider authentication/native/physical/provider/production gates remain separately open; no new binary/TestFlight or hosted business mutation."
+    },
+    {
+      "id": "DLOGIN-03",
+      "requirement": "Verify actual iOS sign-in and driver workspace and document environment boundaries",
+      "priority": "P1",
+      "scope": "Existing Expo Go QA preview and supplied labelled demo driver only; no new mobile binary, deployment, password/role changes or operational actions.",
+      "uiReference": "User-reported driver.qa-ac7e0495@demo.easygas.invalid sign-in on iOS Expo Go",
+      "route": "Expo Go login / driver Home",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/app.config.js",
+        "apps/web/lib/service.ts",
+        "docs/driver-login-investigation/README.md",
+        "docs/user-manual/authentication.md"
+      ],
+      "dataSource": "Current Metro process environment; shared demo login/driver.login/me and driver read endpoints; actual QA iPhone UI.",
+      "securityControl": "Existing password/role/branch/session safeguards retained; target credentials read privately; no password/token evidence; only own API sessions revoked.",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-NATIVE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/driver-login-investigation/evidence/exact-ios-driver-account.json",
+        "docs/driver-login-investigation/evidence/environment-comparison.json",
+        "docs/driver-login-investigation/evidence/corrected-preview-runtime.json",
+        "docs/driver-login-investigation/evidence/ios-observations.json",
+        "docs/driver-login-investigation/evidence/auth-regression.txt"
+      ],
+      "acceptanceGate": "DLOGIN-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact user-confirmed supplied driver in iOS Expo Go failed due to isolated local backend mismatch. Corrected preview runtime and actual signed-in Lagos driver workspace verified without changing credentials or application source.",
+      "testResult": "PASS: exact account shared/dedicated login and identity/driver reads HTTP200; current preview manifest/API environment verified; actual iOS driver sign-in/workspace;10 authentication regressions pass,0fail/skip.",
+      "outstandingWork": "None within this exact supplied-account Expo Go repair. All wider authentication/native/physical/provider/production gates remain separately open; no new binary/TestFlight or hosted business mutation."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DLOGIN-G01",
+      "status": "PASS",
+      "description": "Identify the reported supplied iOS driver account failure without resetting credentials",
+      "reason": "Actual runtime/API/native UI outcome and documentation verified within supplied-account Expo Go scope."
+    },
+    {
+      "id": "DLOGIN-G02",
+      "status": "PASS",
+      "description": "Reconnect the existing Expo Go preview to the matching shared demo backend",
+      "reason": "Actual runtime/API/native UI outcome and documentation verified within supplied-account Expo Go scope."
+    },
+    {
+      "id": "DLOGIN-G03",
+      "status": "PASS",
+      "description": "Verify actual iOS sign-in and driver workspace and document environment boundaries",
+      "reason": "Actual runtime/API/native UI outcome and documentation verified within supplied-account Expo Go scope."
+    }
+  ],
+  "coverage": {
+    "total": 3,
+    "verified": 3,
+    "partial": 0,
+    "excluded": 0,
+    "gatesTotal": 3,
+    "gatesPassed": 3
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "User identified exact newer supplied driver account and Expo Go; observed matching native failure, verified shared backend account, corrected owned Metro runtime and accepted actual iOS driver Home. No account resets/role changes/binary/deploy; original NO-GO retained."
+    }
+  ]
+}
