@@ -3,6 +3,7 @@ import { useTheme } from "./theme";
 import React, { forwardRef, useState } from "react";
 import {
   StyleSheet,
+  Platform,
   View,
   Pressable,
   type StyleProp,
@@ -105,7 +106,7 @@ export const TextInput = forwardRef<
         accessibilityState={{ disabled: props.editable === false, selected: visible }}
         disabled={props.editable === false}
         onPress={() => setVisible((current) => !current)}
-        style={{ position: "absolute", right: 4, top: 0, bottom: 0, width: 44, minHeight: 44, alignItems: "center", justifyContent: "center" }}
+        style={{ position: "absolute", right: 4, top: 0, bottom: 0, width: Platform.OS === "android" ? 48 : 44, minHeight: Platform.OS === "android" ? 48 : 44, alignItems: "center", justifyContent: "center" }}
       >
         <Ionicons name={visible ? "eye-off-outline" : "eye-outline"} size={22} color={colors.text} />
       </Pressable>

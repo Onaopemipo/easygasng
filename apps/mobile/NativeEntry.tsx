@@ -1,3 +1,5 @@
+import { AuthShell } from "./AuthPresentation";
+import { FocusedFormContext } from "./CustomerUI";
 import React, { useEffect, useState } from "react";
 import { View } from "./surfaces";
 import { TextInput, Text } from "./typography";
@@ -77,192 +79,202 @@ export function NativeEntryScreen({
     }
   }
   return (
-    <View style={{ gap: 14 }}>
-      <Title>
-        {entry
+    <AuthShell
+      mode="link"
+      onBack={onClose}
+      title={
+        entry
           ? {
               reset: "Reset password",
               verify: "Verify email",
               invitation: "Accept invitation",
               phone: "Complete your account",
             }[entry.kind]
-          : "Open an account link"}
-      </Title>
-      <Button label="Back to sign in" secondary onPress={onClose} />
-      {error && <Text accessibilityRole="alert">{error}</Text>}
-      {message && <Text accessibilityRole="status">{message}</Text>}
-      {!token && !done && (
-        <Card>
-          <Copy>
-            Paste the complete EasyGas link from your email or requested phone
-            message. Missing, invalid, expired and already used links cannot
-            establish access.
-          </Copy>
-          <TextInput
-            accessibilityLabel="EasyGas account link"
-            value={link}
-            onChangeText={setLink}
-            autoCapitalize="none"
-            autoCorrect={false}
-          />
-          <Button
-            label="Open account link"
-            onPress={() => {
-              const next = nativeEntryLink(link, origin);
-              setLink("");
-              if (!next?.token) {
-                setError(
-                  "This is not a valid account link for this EasyGas service. Request a fresh link.",
-                );
-                return;
-              }
-              setError("");
-              onEntry(next);
-            }}
-          />
-        </Card>
-      )}
-      {token && !done && entry?.kind === "verify" && (
-        <NativeForm
-          api={submit}
-          action="account.verify"
-          title="Confirm email verification"
-          fields={[]}
-          submitLabel="Verify this email"
-          onDone={(r) => {
-            setMessage(r.message);
-            setDone(true);
-            onEntry({ ...entry, token: null });
-          }}
-        />
-      )}
-      {token && !done && entry?.kind === "invitation" && (
-        <>
-          <Copy>
-            Use the temporary password provided with this invitation. Acceptance
-            preserves the server’s staff-access review; it does not grant a
-            role. You’ll replace the temporary password when you sign in.
-          </Copy>
+          : "Open an account link"
+      }
+    >
+      <FocusedFormContext.Provider value={true}>
+        <Button label="Back to sign in" secondary onPress={onClose} />
+        {error && <Text accessibilityRole="alert">{error}</Text>}
+        {message && <Text accessibilityRole="status">{message}</Text>}
+        {!token && !done && (
+          <Card>
+            <Copy>
+              Paste the complete EasyGas link from your email or requested phone
+              message. Missing, invalid, expired and already used links cannot
+              establish access.
+            </Copy>
+            <TextInput
+              accessibilityLabel="EasyGas account link"
+              value={link}
+              onChangeText={setLink}
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+            <Button
+              label="Open account link"
+              onPress={() => {
+                const next = nativeEntryLink(link, origin);
+                setLink("");
+                if (!next?.token) {
+                  setError(
+                    "This is not a valid account link for this EasyGas service. Request a fresh link.",
+                  );
+                  return;
+                }
+                setError("");
+                onEntry(next);
+              }}
+            />
+          </Card>
+        )}
+        {token && !done && entry?.kind === "verify" && (
           <NativeForm
             api={submit}
-            action="invitation.accept"
-            title="Invitation credentials"
-            fields={[
-              {
-                name: "password",
-                label: "Invitation temporary password",
-                type: "password",
-              },
-            ]}
-            submitLabel="Accept invitation"
+            action="account.verify"
+            title="Confirm email verification"
+            fields={[]}
+            submitLabel="Verify this email"
             onDone={(r) => {
               setMessage(r.message);
               setDone(true);
               onEntry({ ...entry, token: null });
             }}
           />
-        </>
-      )}
-      {token && !done && entry?.kind === "reset" && (
-        <NativeForm
-          api={submit}
-          action="account.reset"
-          title="Choose a new password"
-          fields={[
-            { name: "password", label: "New password", type: "password" },
-            {
-              name: "confirmPassword",
-              label: "Confirm new password",
-              type: "password",
-            },
-          ]}
-          submitLabel="Reset password"
-          onDone={(r) => {
-            setMessage(r.message);
-            setDone(true);
-            onEntry({ ...entry, token: null });
-          }}
-        />
-      )}
-      {token && !done && entry?.kind === "phone" && (
-        <>
-          <Copy>
-            Verify the phone before viewing the order. Completion keeps the
-            existing customer and order.
-          </Copy>
+        )}
+        {token && !done && entry?.kind === "invitation" && (
+          <>
+            <Copy>
+              Use the temporary password provided with this invitation.
+              Acceptance preserves the server’s staff-access review; it does not
+              grant a role. You’ll replace the temporary password when you sign
+              in.
+            </Copy>
+            <NativeForm
+              api={submit}
+              action="invitation.accept"
+              title="Invitation credentials"
+              fields={[
+                {
+                  name: "password",
+                  label: "Invitation temporary password",
+                  type: "password",
+                },
+              ]}
+              submitLabel="Accept invitation"
+              onDone={(r) => {
+                setMessage(r.message);
+                setDone(true);
+                onEntry({ ...entry, token: null });
+              }}
+            />
+          </>
+        )}
+        {token && !done && entry?.kind === "reset" && (
           <NativeForm
             api={submit}
-            action="phone.otp"
-            title="Request verification code"
+            action="account.reset"
+            title="Choose a new password"
             fields={[
+              { name: "password", label: "New password", type: "password" },
               {
-                name: "channel",
-                label: "Requested channel",
-                value: "sms",
-                options: [
-                  { value: "sms", label: "SMS" },
-                  { value: "whatsapp", label: "WhatsApp" },
-                ],
+                name: "confirmPassword",
+                label: "Confirm new password",
+                type: "password",
               },
             ]}
-            submitLabel="Request code"
-            onDone={(r) => setMessage(r.message)}
-          />
-          <TextInput
-            accessibilityLabel="Six-digit verification code"
-            keyboardType="number-pad"
-            value={code}
-            onChangeText={(v) => {
-              setCode(v);
-              setOrder(null);
+            submitLabel="Reset password"
+            onDone={(r) => {
+              setMessage(r.message);
+              setDone(true);
+              onEntry({ ...entry, token: null });
             }}
           />
-          <Button
-            label={busy ? "Checking code…" : "Review linked order"}
-            onPress={() => void reviewPhone()}
-            disabled={busy || !/^\d{6}$/.test(code)}
-          />
-          {order && (
-            <Card>
-              <Title>{order.reference}</Title>
-              <Copy>
-                {order.status} · ₦
-                {(Number(order.total_kobo) / 100).toLocaleString("en-NG")}
-              </Copy>
-              <Copy>
-                {order.address?.street} · {order.delivery_date} ·{" "}
-                {order.delivery_window}
-              </Copy>
-              <Button
-                label="Read policies and terms"
-                secondary
-                onPress={onPolicies}
-              />
-              <NativeForm
-                key={code}
-                api={(a, d) => submit(a, { ...d, code })}
-                action="phone.complete"
-                title="Finish account setup"
-                fields={[
-                  { name: "password", label: "New password", type: "password" },
-                  {
-                    name: "confirmPassword",
-                    label: "Confirm new password",
-                    type: "password",
-                  },
-                  {
-                    name: "termsAccepted",
-                    label: "I have read and accept the applicable terms",
-                    type: "checkbox",
-                  },
-                ]}
-                submitLabel="Complete account"
-              />
-            </Card>
-          )}
-        </>
-      )}
-    </View>
+        )}
+        {token && !done && entry?.kind === "phone" && (
+          <>
+            <Copy>
+              Verify the phone before viewing the order. Completion keeps the
+              existing customer and order.
+            </Copy>
+            <NativeForm
+              api={submit}
+              action="phone.otp"
+              title="Request verification code"
+              fields={[
+                {
+                  name: "channel",
+                  label: "Requested channel",
+                  value: "sms",
+                  options: [
+                    { value: "sms", label: "SMS" },
+                    { value: "whatsapp", label: "WhatsApp" },
+                  ],
+                },
+              ]}
+              submitLabel="Request code"
+              onDone={(r) => setMessage(r.message)}
+            />
+            <TextInput
+              accessibilityLabel="Six-digit verification code"
+              keyboardType="number-pad"
+              value={code}
+              onChangeText={(v) => {
+                setCode(v);
+                setOrder(null);
+              }}
+            />
+            <Button
+              label={busy ? "Checking code…" : "Review linked order"}
+              onPress={() => void reviewPhone()}
+              disabled={busy || !/^\d{6}$/.test(code)}
+            />
+            {order && (
+              <Card>
+                <Title>{order.reference}</Title>
+                <Copy>
+                  {order.status} · ₦
+                  {(Number(order.total_kobo) / 100).toLocaleString("en-NG")}
+                </Copy>
+                <Copy>
+                  {order.address?.street} · {order.delivery_date} ·{" "}
+                  {order.delivery_window}
+                </Copy>
+                <Button
+                  label="Read policies and terms"
+                  secondary
+                  onPress={onPolicies}
+                />
+                <NativeForm
+                  key={code}
+                  api={(a, d) => submit(a, { ...d, code })}
+                  action="phone.complete"
+                  title="Finish account setup"
+                  fields={[
+                    {
+                      name: "password",
+                      label: "New password",
+                      type: "password",
+                    },
+                    {
+                      name: "confirmPassword",
+                      label: "Confirm new password",
+                      type: "password",
+                    },
+                    {
+                      name: "termsAccepted",
+                      label: "I have read and accept the applicable terms",
+                      type: "checkbox",
+                    },
+                  ]}
+                  submitLabel="Complete account"
+                />
+              </Card>
+            )}
+          </>
+        )}
+      </FocusedFormContext.Provider>
+    </AuthShell>
   );
 }
 export function NativePublicPolicies({

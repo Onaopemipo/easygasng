@@ -1,0 +1,1669 @@
+{
+  "phase": "Approved authentication redesign",
+  "date": "2026-11-24",
+  "baseCommit": "46fde7ee76fc930f27b044832f735cfd68afa85b",
+  "productionDecision": "NO-GO: original platform holds retained; critical unverified device/security gates block release. No deployment/provider activation/mobile binary in this phase.",
+  "requirements": [
+    {
+      "id": "AUTH-001",
+      "requirement": "Sign In",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/web/components/auth-presentation.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/AuthPresentation.tsx",
+        "apps/mobile/DriverSignIn.tsx",
+        "apps/mobile/TechnicianSignIn.tsx",
+        "packages/business-rules/src/auth-request.ts"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-WEB",
+        "AUTH-NATIVE",
+        "AUTH-REQUEST",
+        "SIGNIN-01"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G03",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G03",
+        "AUTH-G05",
+        "AUTH-G11",
+        "AUTH-G12",
+        "AUTH-G15",
+        "AUTH-G17",
+        "AUTH-G22",
+        "AUTH-G24",
+        "AUTH-G28"
+      ]
+    },
+    {
+      "id": "AUTH-002",
+      "requirement": "Create Account",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/mobile/AuthPresentation.tsx",
+        "packages/business-rules/src/password-policy.ts"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-NATIVE",
+        "PW-MIN01"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G03",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G03",
+        "AUTH-G05",
+        "AUTH-G11",
+        "AUTH-G12",
+        "AUTH-G18",
+        "AUTH-G23",
+        "AUTH-G25",
+        "AUTH-G28"
+      ]
+    },
+    {
+      "id": "AUTH-003",
+      "requirement": "Account recovery",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/auth-recovery-request.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/mobile/AuthRecovery.tsx",
+        "packages/business-rules/src/auth-request.ts"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-RECOVERY",
+        "ONBOARD-03"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G03",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G03",
+        "AUTH-G05",
+        "AUTH-G11",
+        "AUTH-G19",
+        "AUTH-G20",
+        "AUTH-G28"
+      ]
+    },
+    {
+      "id": "AUTH-004",
+      "requirement": "Supporting account-link/reset/verification/invitation states",
+      "priority": "P0",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/auth-link-entry.tsx",
+        "apps/web/components/phone-completion.tsx",
+        "apps/web/components/workflows.tsx",
+        "apps/mobile/NativeEntry.tsx",
+        "packages/business-rules/src/native-entry-links.ts"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-LINK",
+        "NATIVE-ENTRY-HTTP"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G06",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G06",
+        "AUTH-G20",
+        "AUTH-G21",
+        "AUTH-G25",
+        "AUTH-G28"
+      ]
+    },
+    {
+      "id": "AUTH-005",
+      "requirement": "Responsive brand presentation and original assets",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/auth-presentation.tsx",
+        "apps/web/app/auth.css",
+        "apps/mobile/AuthPresentation.tsx",
+        "apps/mobile/BrandLogo.tsx"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-WEB-01",
+        "AUTH-NATIVE"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G03",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G03",
+        "AUTH-G04",
+        "AUTH-G07",
+        "AUTH-G08",
+        "AUTH-G09",
+        "AUTH-G10",
+        "AUTH-G11"
+      ]
+    },
+    {
+      "id": "AUTH-006",
+      "requirement": "Accessible controls, motion and theme",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/auth-presentation.tsx",
+        "apps/web/app/auth.css",
+        "apps/mobile/AuthPresentation.tsx",
+        "apps/mobile/ScreenTransition.tsx",
+        "apps/mobile/theme.tsx",
+        "apps/mobile/typography.tsx"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-NATIVE",
+        "AUTH-WEB-02"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G11",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G11",
+        "AUTH-G12",
+        "AUTH-G13",
+        "AUTH-G14"
+      ]
+    },
+    {
+      "id": "AUTH-007",
+      "requirement": "Session, roles, drafts, onboarding and identity preservation",
+      "priority": "P0",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "apps/web/components/site.tsx",
+        "apps/mobile/App.tsx",
+        "apps/mobile/NativeEntry.tsx",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/auth.ts",
+        "apps/web/lib/accounts.ts",
+        "packages/business-rules/src/customer-navigation.ts",
+        "apps/mobile/Onboarding.tsx"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-PRESERVE",
+        "AUTH-SESSION",
+        "AUTH-SOURCE"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G16",
+      "status": "PARTIAL",
+      "reason": "Supported frontend flow implemented and bounded software/browser checks pass. Current iOS/Android preview, keyboard/back and assistive acceptance remain unexecuted and retained; no release claim.",
+      "outstandingWork": "Current iOS/Android preview safe-area/keyboard/Back/tablet/large-text acceptance and physical password-manager/VoiceOver/TalkBack/asset-failure checks. No deployment/provider/store activation authorised; original production holds retained.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G16",
+        "AUTH-G17",
+        "AUTH-G18",
+        "AUTH-G19",
+        "AUTH-G20",
+        "AUTH-G22",
+        "AUTH-G23",
+        "AUTH-G24",
+        "AUTH-G25",
+        "AUTH-G26",
+        "AUTH-G27"
+      ]
+    },
+    {
+      "id": "AUTH-008",
+      "requirement": "Regression, evidence, rollback and explicit release decision",
+      "priority": "P1",
+      "scope": "Existing web/mobile-web/iOS/Android authentication; visual frontend only; no provider/backend/schema/deployment change",
+      "uiReference": "Approved_Authentication_Screens.png and master handoff",
+      "route": [
+        "/login",
+        "/register",
+        "/forgot-password",
+        "/reset-password",
+        "/verify-email",
+        "/accept-invitation",
+        "native:login",
+        "native:recovery",
+        "native:entry-link"
+      ],
+      "implementationFiles": [
+        "docs/auth-redesign/00-audit.md",
+        "docs/auth-redesign/01-contracts-and-permissions.md",
+        "docs/auth-redesign/02-design-handoff.md",
+        "docs/auth-redesign/03-security-regression.md",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/05-rollback-release.md",
+        "docs/user-manual/authentication.md",
+        "scripts/lib/reviewed-authentication-source.mjs"
+      ],
+      "dataSource": "Existing login/register/account/phone/invitation actions and shared identity/secure-session contracts",
+      "securityControl": "Unchanged server authority, hash/expiry/rate-limit/CSRF/role/branch/approval/redirect/secure storage boundaries",
+      "testFiles": [
+        "tests/auth-redesign.test.ts",
+        "tests/unified-sign-in.test.ts",
+        "tests/native-entry.test.ts",
+        "tests/account-onboarding.test.ts",
+        "tests/password-minimum.test.ts",
+        "tests/password-visibility.test.ts",
+        "tests/operations-completion.test.ts",
+        "tests/audit-remediation.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "AUTH-SOURCE"
+      ],
+      "negativeTests": [
+        "AUTH-LINK",
+        "AUTH-PRESERVE",
+        "AUTH-REQUEST"
+      ],
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/browser-web.txt",
+        "docs/auth-redesign/evidence/browser-web.json",
+        "docs/auth-redesign/evidence/responsive-web.json",
+        "docs/auth-redesign/evidence/supporting-web.json",
+        "docs/auth-redesign/evidence/web-build.txt",
+        "docs/auth-redesign/evidence/web-types.txt",
+        "docs/auth-redesign/evidence/native-types.txt",
+        "docs/auth-redesign/evidence/native-dependencies.txt",
+        "docs/auth-redesign/reviewed-source-changes.json",
+        "docs/auth-redesign/04-test-results.md",
+        "docs/auth-redesign/evidence/release-regression.txt",
+        "docs/auth-redesign/evidence/source-final.txt",
+        "docs/auth-redesign/evidence/traceability.txt"
+      ],
+      "acceptanceGate": "AUTH-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded delivery/reporting requirement complete: actual source, executed evidence, honest open gates, manual/matrix and reversible rollback with explicit NO-GO.",
+      "outstandingWork": "No outstanding reporting work; implementation acceptance on native/physical/assistive devices remains open in AUTH-001\u2013007 and their gates.",
+      "testResult": "PASS bounded local evidence:1,284 broad regressions (including PostgreSQL),43 final focused auth/assisted/security checks,49 final historical-source checks and9 current auth component/request/session/bootstrap tests; zero failures/skips. Ten actual web groups include21 viewport/route observations. Web build/types and native types/dependency tests pass. Current native/physical/assistive acceptance remains unexecuted.",
+      "acceptanceGates": [
+        "AUTH-G01",
+        "AUTH-G02",
+        "AUTH-G28",
+        "AUTH-G29",
+        "AUTH-G30"
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "AUTH-G01",
+      "description": "audit complete",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G02",
+      "description": "baseline recorded",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G03",
+      "description": "approved visual fidelity",
+      "status": "PARTIAL",
+      "reason": "Web/renderer/source evidence passes; current native/assistive/OS/device visual interaction remains unexecuted."
+    },
+    {
+      "id": "AUTH-G04",
+      "description": "original brand assets",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G05",
+      "description": "three core screens implemented",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G06",
+      "description": "supporting existing recovery states preserved",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G07",
+      "description": "web desktop",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G08",
+      "description": "mobile web",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G09",
+      "description": "iOS",
+      "status": "NOT_RUN",
+      "reason": "Updated native preview was not observed. Device Hub window unavailable and user launch handoff pending; Android emulator not attached. No native binary built."
+    },
+    {
+      "id": "AUTH-G10",
+      "description": "Android",
+      "status": "NOT_RUN",
+      "reason": "Updated native preview was not observed. Device Hub window unavailable and user launch handoff pending; Android emulator not attached. No native binary built."
+    },
+    {
+      "id": "AUTH-G11",
+      "description": "responsive keyboard/safe areas",
+      "status": "PARTIAL",
+      "reason": "Web/renderer/source evidence passes; current native/assistive/OS/device visual interaction remains unexecuted."
+    },
+    {
+      "id": "AUTH-G12",
+      "description": "accessible labels and focus",
+      "status": "PARTIAL",
+      "reason": "Web/renderer/source evidence passes; current native/assistive/OS/device visual interaction remains unexecuted."
+    },
+    {
+      "id": "AUTH-G13",
+      "description": "reduced motion",
+      "status": "PARTIAL",
+      "reason": "Web/renderer/source evidence passes; current native/assistive/OS/device visual interaction remains unexecuted."
+    },
+    {
+      "id": "AUTH-G14",
+      "description": "theme persistence",
+      "status": "PARTIAL",
+      "reason": "Web/renderer/source evidence passes; current native/assistive/OS/device visual interaction remains unexecuted."
+    },
+    {
+      "id": "AUTH-G15",
+      "description": "no unsupported provider buttons",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G16",
+      "description": "existing auth contracts unchanged",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G17",
+      "description": "email/phone sign-in preserved",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G18",
+      "description": "registration policy unchanged",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G19",
+      "description": "recovery privacy",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G20",
+      "description": "reset token safety",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G21",
+      "description": "account-link entry preserved",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G22",
+      "description": "role routing and approval state",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G23",
+      "description": "no privilege escalation",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G24",
+      "description": "safe redirects",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G25",
+      "description": "assisted order/cart preservation",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G26",
+      "description": "onboarding preservation",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G27",
+      "description": "no secret logging",
+      "status": "PASS",
+      "reason": "Executed local baseline/software/browser contracts and documented exact scope; see per-requirement evidence."
+    },
+    {
+      "id": "AUTH-G28",
+      "description": "regression/build evidence",
+      "status": "PASS",
+      "reason": "1,284 broad local tests plus43 focused/49 source follow-ups and current9 auth tests; zero failures/skips. Web build/types, native types/3 dependency checks passed. No native export/binary or GitHub CI claim."
+    },
+    {
+      "id": "AUTH-G29",
+      "description": "traceability and rollback",
+      "status": "PASS",
+      "reason": "Audit, contracts, design, security/test/rollback reports, user manual and full stable matrix updated. Traceability validator executed at closure; open device gates retained."
+    },
+    {
+      "id": "AUTH-G30",
+      "description": "explicit GO/NO-GO",
+      "status": "PASS",
+      "reason": "Explicit NO-GO recorded; critical unverified device/assistive gates and original production holds retained. No deployment/provider/native binary/store upload."
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "AUTH-T01",
+      "description": "Existing sign-in route/deep link",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T02",
+      "description": "registration route",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T03",
+      "description": "recovery route",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T04",
+      "description": "safe back/guest return",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T05",
+      "description": "bottom tabs hidden only in auth",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T06",
+      "description": "tabs restored after exit",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T07",
+      "description": "existing onboarding persistence",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T08",
+      "description": "replay preserved",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T09",
+      "description": "email sign-in",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T10",
+      "description": "activated phone sign-in",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T11",
+      "description": "invalid identifier",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T12",
+      "description": "invalid password",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T13",
+      "description": "generic credential error",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T14",
+      "description": "password visibility",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T15",
+      "description": "password manager",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "reason": "No current device/password-manager/assistive/asset-failure run; retained in coverage denominator."
+    },
+    {
+      "id": "AUTH-T16",
+      "description": "keyboard submit",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T17",
+      "description": "duplicate submit",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T18",
+      "description": "offline",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T19",
+      "description": "timeout",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T20",
+      "description": "rate limit",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T21",
+      "description": "session expiry",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T22",
+      "description": "existing session restoration",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T23",
+      "description": "logout",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T24",
+      "description": "customer routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T25",
+      "description": "owner routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T26",
+      "description": "administrator routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T27",
+      "description": "branch manager routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T28",
+      "description": "driver routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T29",
+      "description": "technician routing",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T30",
+      "description": "remaining staff roles",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T31",
+      "description": "awaiting role approval",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T32",
+      "description": "no public privilege escalation",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T33",
+      "description": "safe return URL",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T34",
+      "description": "malicious redirect rejected",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T35",
+      "description": "cart preservation",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T36",
+      "description": "assisted payment link",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T37",
+      "description": "assisted profile completion",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T38",
+      "description": "valid registration",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T39",
+      "description": "invalid email",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T40",
+      "description": "missing name",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T41",
+      "description": "actual password policy",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T42",
+      "description": "duplicate account handling",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T43",
+      "description": "verification required",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T44",
+      "description": "recovery valid request",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T45",
+      "description": "unknown email indistinguishable",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T46",
+      "description": "resend cooldown",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T47",
+      "description": "provider failure",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T48",
+      "description": "reset deep link",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T49",
+      "description": "manual account link",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T50",
+      "description": "invalid origin",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T51",
+      "description": "expired token",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T52",
+      "description": "used token",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T53",
+      "description": "reset success",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T54",
+      "description": "existing session revocation policy",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T55",
+      "description": "no token/password logs",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T56",
+      "description": "Apple hidden if unsupported",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T57",
+      "description": "Google hidden if unsupported",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T58",
+      "description": "supported provider regression if present",
+      "status": "NOT_APPLICABLE",
+      "evidence": [],
+      "reason": "No existing Apple/Google provider integration to regress; unsupported social sections are verified absent. Conditional case retained explicitly."
+    },
+    {
+      "id": "AUTH-T59",
+      "description": "web 320/375/390/768/1024/1440/1920",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T60",
+      "description": "iOS safe area/keyboard",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "reason": "No current device/password-manager/assistive/asset-failure run; retained in coverage denominator."
+    },
+    {
+      "id": "AUTH-T61",
+      "description": "Android back/keyboard",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "reason": "No current device/password-manager/assistive/asset-failure run; retained in coverage denominator."
+    },
+    {
+      "id": "AUTH-T62",
+      "description": "light/dark/system",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T63",
+      "description": "reduced motion",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T64",
+      "description": "VoiceOver/TalkBack",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "reason": "No current device/password-manager/assistive/asset-failure run; retained in coverage denominator."
+    },
+    {
+      "id": "AUTH-T65",
+      "description": "web keyboard/focus",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T66",
+      "description": "large text",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Supporting software/source evidence exists; current native/OS/device interaction is not executed."
+    },
+    {
+      "id": "AUTH-T67",
+      "description": "asset failure fallback",
+      "status": "NOT_RUN",
+      "evidence": [],
+      "reason": "No current device/password-manager/assistive/asset-failure run; retained in coverage denominator."
+    },
+    {
+      "id": "AUTH-T68",
+      "description": "no horizontal overflow",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T69",
+      "description": "no backend/schema changes",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T70",
+      "description": "existing order/payment/service/role regression",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/focused-final.txt",
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/browser-web.json"
+      ],
+      "reason": "Bounded service/HTTP, real component or actual web observation passes; physical/native gates tracked separately."
+    },
+    {
+      "id": "AUTH-T71",
+      "description": "Assisted account-link raw fragment remains compatible with existing /activate handler",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt"
+      ],
+      "reason": "AUTH-LINK executed; native hardware Back remains unexecuted where applicable."
+    },
+    {
+      "id": "AUTH-T72",
+      "description": "Temporary invitation/reset setup flag survives manual account-link entry",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt"
+      ],
+      "reason": "AUTH-LINK executed; native hardware Back remains unexecuted where applicable."
+    },
+    {
+      "id": "AUTH-T73",
+      "description": "Initial session check withholds unresolved identity, reports unavailable reads and ignores late aborted responses",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt"
+      ],
+      "reason": "AUTH-SESSION executed; native hardware Back remains unexecuted where applicable."
+    },
+    {
+      "id": "AUTH-T74",
+      "description": "Registration Back returns to Sign In before leaving unified native authentication",
+      "status": "PARTIAL",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt"
+      ],
+      "reason": "AUTH-PRESERVE executed; native hardware Back remains unexecuted where applicable."
+    },
+    {
+      "id": "AUTH-T75",
+      "description": "Post-login routing uses latest server me role if it differs from login response",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt"
+      ],
+      "reason": "AUTH-WEB executed; native hardware Back remains unexecuted where applicable."
+    },
+    {
+      "id": "AUTH-T76",
+      "description": "Native identity restoration/sign-in remain independent of a hung catalogue and malformed saved cart",
+      "status": "PASS",
+      "evidence": [
+        "docs/auth-redesign/evidence/auth-tests.txt",
+        "docs/auth-redesign/evidence/focused-final.txt"
+      ],
+      "reason": "Actual native bootstrap effect extracted from current App executed with held catalogue and corrupt JSON; real identity restore still completes. Actual device presentation remains a separate gate."
+    }
+  ],
+  "coverage": {
+    "total": 8,
+    "implemented": 8,
+    "verified": 1,
+    "partial": 7,
+    "excluded": 0,
+    "criticalTotal": 2,
+    "criticalVerified": 0,
+    "gatesTotal": 30,
+    "gatesPassed": 23,
+    "gatesOpen": 7,
+    "scenariosTotal": 76,
+    "scenariosPass": 53,
+    "scenariosPartial": 17,
+    "scenariosNotRun": 5,
+    "conditionalNotApplicable": 1
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered8 requirements,70 minimum scenarios and30 gates before changes. Existing requirements and original NO-GO retained; no social provider integration invented."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Implemented9 reviewed frontend transitions and8 additions; all8 requirements/30gates/70minimum scenarios retained. AddedT71\u201375 for discovered raw-fragment/setup-flag compatibility, session lifecycle, native registration Back and latest server-role routing. No Apple/Google integration/backend/schema change. Device gates remain explicitly open."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Final bounded local evidence:1284 broad tests pass with PostgreSQL and no skips; final43 focused/49 source checks and9 auth tests pass. Reviewed scope now10 existing frontend transitions/8 additions, including48dp Android password controls and independent native startup/auth busy state. AddedT76 for hung catalogue/corrupt cart, preserved all70 original cases. All8 requirements implemented;7partial and1reporting verified;23/30 gates pass,7 remain open. No deployment/new OAuth/binary/store upload. Original NO-GO retained."
+    }
+  ],
+  "verificationScope": {
+    "web": "Actual local browser core3routes x7widths, dark/errors/recovery/manual-invalid and missing supporting links, customer/owner routing and logout. No deployed changes.",
+    "native": "Source/type and actual presentation renderer only; updated Expo preview/device checks NOT RUN; no new binary/export/store upload.",
+    "services": "Unchanged canonical server authority; disposable PGlite/PostgreSQL/HTTP tests; no real message/payment provider.",
+    "release": "NO-GO; all original platform holds retained."
+  },
+  "routeCoverage": {
+    "webAuthRoutes": 7,
+    "positiveCoreBrowserRoutes": 3,
+    "supportingMissingTokenBrowserRoutes": 4,
+    "nativeRouteStates": 8,
+    "nativeActualAccepted": 0,
+    "excluded": 0,
+    "reason": "Supporting routes have service/HTTP and missing-link browser checks, not a fresh positive native/physical acceptance. No route is dropped."
+  }
+}

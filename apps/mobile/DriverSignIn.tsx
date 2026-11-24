@@ -1,3 +1,4 @@
+import { AuthShell } from "./AuthPresentation";
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import React from "react";
@@ -47,135 +48,157 @@ export default function DriverSignIn({
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           ...fullWidthScreenContent,
-          padding: 24,
-          gap: 18,
+          padding: 0,
+          gap: 0,
           flexGrow: 1,
-          justifyContent: "center",
+          justifyContent: "flex-start",
           width: "100%",
           alignSelf: "stretch",
         }}
       >
-        <BrandLogo
-          accessibilityLabel="EasyGas Energy Solutions Driver App"
-          style={{
-            width: 250,
-            height: 100,
-            alignSelf: "stretch",
+        <AuthShell
+          mode={recover ? "recovery" : "signin"}
+          title={recover ? "Account recovery." : "Welcome back."}
+          description={
+            recover
+              ? "Regain access to your EasyGas work account."
+              : "Sign in to your EasyGas driver workspace."
+          }
+          onBack={() => {
+            setPassword("");
+            setNewPassword("");
+            setRecover(!recover);
           }}
-        />
-        <Title>{recover ? "Driver Account Recovery" : "Driver Sign In"}</Title>
-        <Feedback error={error} />
-        {signout ? (
-          <Button
-            label="Sign out of this non-driver session"
-            onPress={signout}
-          />
-        ) : recover ? (
-          <>
-            <NativeForm
-              api={api}
-              action="account.recover"
-              title="Request secure recovery"
-              fields={[
-                {
-                  name: "email",
-                  label: "Registered work email",
-                  value: identifier.includes("@") ? identifier : "",
-                  type: "email",
-                },
-              ]}
-            />
-            <Copy>
-              Open the link in your email to set a new password, then return
-              here to sign in.
-            </Copy>
+        >
+          <Text
+            accessibilityRole="header"
+            style={{ fontWeight: "700", fontSize: 18, color: colors.text }}
+          >
+            Driver {recover ? "Account Recovery" : "Sign In"}
+          </Text>
+          <Feedback error={error} />
+          {signout ? (
             <Button
-              label="Back to Driver Sign In"
-              secondary
-              onPress={() => setRecover(false)}
+              label="Sign out of this non-driver session"
+              onPress={signout}
             />
-          </>
-        ) : (
-          <>
-            <FieldCaption required={true}>Email or phone number</FieldCaption>
-            <TextInput
-              accessibilityLabel="Email or phone number, required"
-              autoComplete="username"
-              keyboardType="default"
-              autoCorrect={false}
-              autoCapitalize="none"
-              value={identifier}
-              onChangeText={setIdentifier}
-              placeholder="Email or phone number"
-              style={{
-                padding: 15,
-                borderWidth: 1,
-                borderColor: colors.border,
-                color: colors.text,
-                backgroundColor: colors.input,
-                borderRadius: 14,
-              }}
-            />
-            <FieldCaption required={true}>Password</FieldCaption>
-            <TextInput
-              accessibilityLabel="Driver password, required"
-              autoComplete="current-password"
-              secureTextEntry
-              value={password}
-              onChangeText={setPassword}
-              placeholder="Password"
-              style={{
-                padding: 15,
-                borderWidth: 1,
-                borderColor: colors.border,
-                color: colors.text,
-                backgroundColor: colors.input,
-                borderRadius: 14,
-              }}
-            />
-            {passwordChangeRequired && (
-              <>
-                <Copy>Choose a new password to finish your first sign-in.</Copy>
-                <FieldCaption required={true}>New password</FieldCaption>
-                <TextInput
-                  accessibilityLabel="New password, required"
-                  autoComplete="new-password"
-                  secureTextEntry
-                  value={newPassword}
-                  onChangeText={setNewPassword}
-                  placeholder="New password"
-                  style={{
-                    padding: 15,
-                    borderWidth: 1,
-                    borderColor: colors.border,
-                    color: colors.text,
-                    backgroundColor: colors.input,
-                    borderRadius: 14,
-                  }}
-                />
-              </>
-            )}
-            <Button
-              label={
-                busy
-                  ? "Signing in…"
-                  : passwordChangeRequired
-                    ? "Change Password & Sign In"
-                    : "Sign In"
-              }
-              disabled={busy || !identifier || !password}
-              onPress={submit}
-            />
-            <Button
-              label="Forgot Password?"
-              secondary
-              onPress={() => setRecover(true)}
-            />
-          </>
-        )}
-        <Copy>
-          Delivery only · no sales, wallet, cash collection or stock editing.
-        </Copy>
+          ) : recover ? (
+            <>
+              <NativeForm
+                api={api}
+                action="account.recover"
+                title="Request secure recovery"
+                fields={[
+                  {
+                    name: "email",
+                    label: "Registered work email",
+                    value: identifier.includes("@") ? identifier : "",
+                    type: "email",
+                  },
+                ]}
+              />
+              <Copy>
+                Open the link in your email to set a new password, then return
+                here to sign in.
+              </Copy>
+              <Button
+                label="Back to Driver Sign In"
+                secondary
+                onPress={() => setRecover(false)}
+              />
+            </>
+          ) : (
+            <>
+              <FieldCaption required={true}>Email or phone number</FieldCaption>
+              <TextInput
+                accessibilityLabel="Email or phone number, required"
+                autoComplete="username"
+                keyboardType="default"
+                autoCorrect={false}
+                autoCapitalize="none"
+                value={identifier}
+                onChangeText={setIdentifier}
+                placeholder="Email or phone number"
+                style={{
+                  padding: 15,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  color: colors.text,
+                  backgroundColor: colors.input,
+                  borderRadius: 14,
+                }}
+              />
+              <FieldCaption required={true}>Password</FieldCaption>
+              <TextInput
+                accessibilityLabel="Driver password, required"
+                autoComplete="current-password"
+                secureTextEntry
+              editable={!busy}
+              textContentType="password"
+              returnKeyType="go"
+              onSubmitEditing={submit}
+                value={password}
+                onChangeText={setPassword}
+                placeholder="Password"
+                style={{
+                  padding: 15,
+                  borderWidth: 1,
+                  borderColor: colors.border,
+                  color: colors.text,
+                  backgroundColor: colors.input,
+                  borderRadius: 14,
+                }}
+              />
+              {passwordChangeRequired && (
+                <>
+                  <Copy>
+                    Choose a new password to finish your first sign-in.
+                  </Copy>
+                  <FieldCaption required={true}>New password</FieldCaption>
+                  <TextInput
+                    accessibilityLabel="New password, required"
+                    autoComplete="new-password"
+                    secureTextEntry
+                    value={newPassword}
+                    onChangeText={setNewPassword}
+                    placeholder="New password"
+                    style={{
+                      padding: 15,
+                      borderWidth: 1,
+                      borderColor: colors.border,
+                      color: colors.text,
+                      backgroundColor: colors.input,
+                      borderRadius: 14,
+                    }}
+                  />
+                </>
+              )}
+              <Button
+                label={
+                  busy
+                    ? "Signing in…"
+                    : passwordChangeRequired
+                      ? "Change Password & Sign In"
+                      : "Sign In"
+                }
+                disabled={busy || !identifier || !password}
+                onPress={submit}
+              />
+              <Button
+                label="Forgot Password?"
+                secondary
+                onPress={() => {
+                  setPassword("");
+                  setNewPassword("");
+                  setRecover(true);
+                }}
+              />
+            </>
+          )}
+          <Copy>
+            Delivery only · no sales, wallet, cash collection or stock editing.
+          </Copy>
+        </AuthShell>
       </ScrollView>
     </ScreenCanvas>
   );

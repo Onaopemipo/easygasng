@@ -1,0 +1,11 @@
+# Security and regression boundaries
+
+All original authentication service, account challenge, session, API route, password policy, database, payment, stock, dispatch and approval authority is retained byte-for-byte. The exact reviewed frontend baseline/continuation is [reviewed-source-changes.json](reviewed-source-changes.json); historical baselines remain immutable. Later approved authentication changes are checked with an exact allowlist and committed/current hashes, not a blanket exclusion.
+
+Real disposable database/HTTP tests retain email and activated-phone identity resolution; unknown/unverified/ambiguous phone rejection; shared attempt limits; staff invitation acceptance/replacement; session revocation; 8-character policy; reset and verification purpose, expiry and single-use rules; independent authority and no public staff escalation; and assisted phone proof before order access. No live provider or real inbox/payment used. Public recovery remains indistinguishable for known/unknown email and provider errors do not become success.
+
+UI tests exercise the actual web Auth handler (mock transport/router only), actual native presentation/typography and actual recovery request components. Duplicate submit is locked synchronously. Bounded auth requests abort stalled headers/body, reject ignored/late success, settle once and never retry automatically. Native session persistence follows the confirmed me response; screen exit aborts its active auth lifecycle. Web existing shared GET semantics remain for me. Timeout communicates uncertainty and offers explicit action; no optimistic authentication, session minting or mutation replay.
+
+Manual entry never reads clipboard automatically. Links are validated with native-entry-links and tokens remain component memory or URL fragment; target routes scrub fragments. Query redirects are allowlisted; staff use existing /admin/effective workspace routing. Source tests keep onboarding, theme preference, private authority and draft logic intact. No new raw password/token persistence, logging, analytics or frontend secret was introduced.
+
+Broader device/assistive/store/provider and original production NO-GO remain separate gates. No security policy was weakened to make a demo flow succeed.

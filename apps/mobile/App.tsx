@@ -1,3 +1,9 @@
+import {
+  withAuthDeadline,
+  isAuthenticationAction,
+} from "../../packages/business-rules/src/auth-request";
+import { NativeAuth } from "./AuthPresentation";
+import AuthRecovery from "./AuthRecovery";
 import { NextCatalogue, NextProduct, NextCart } from "./MobileNextCatalogue";
 import {
   CustomerNextQuotations,
@@ -160,6 +166,7 @@ export default function App() {
     [loading, setLoading] = useState(true),
     [error, setError] = useState(""),
     [loginError, setLoginError] = useState(""),
+    [authBusy, setAuthBusy] = useState(false),
     [identifier, setIdentifier] = useState(""),
     [password, setPassword] = useState(""),
     [newPassword, setNewPassword] = useState(""),
@@ -194,6 +201,8 @@ export default function App() {
     scrollRef.current?.scrollTo({ y: 0, animated: false });
   }, [screen, user?.id]);
   const navHistory = useRef<string[]>(["home"]);
+  const authRouteRef = useRef({ screen, register });
+  authRouteRef.current = { screen, register };
   const serviceBack = useRef<(() => boolean) | null>(null);
   const pendingServiceSignIn = useRef<string | null>(null);
   const checkoutGuestDraft = useRef<any>(null);
@@ -212,7 +221,18 @@ export default function App() {
       else history.push(screen);
     }
   }, [screen]);
+  useEffect(() => {
+    if (screen !== "login") {
+      setPassword("");
+      setNewPassword("");
+      setPasswordChangeRequired(false);
+      setLoginError("");
+    }
+  }, [screen]);
   function back() {
+    if (authRouteRef.current.screen === "login" && authRouteRef.current.register) {
+      setRegister(false); setPassword(""); setNewPassword(""); setLoginError(""); setPasswordChangeRequired(false); return true;
+    }
     if (serviceBack.current?.()) return true;
     if (navHistory.current.at(-1) === "orders" && orderFilterRef.current) {
       setOrderFilter(null);
@@ -365,7 +385,12 @@ export default function App() {
     );
   }
 
-  async function api(action: string, data?: any, session = token) {
+  async function api(
+    action: string,
+    data?: any,
+    session = token,
+    requestSignal?: AbortSignal,
+  ) {
     if (action === "checkout" && data) data = { ...data, source: "MOBILE" };
     if (action === "checkout.mixed" && data?.products)
       data = { ...data, products: { ...data.products, source: "MOBILE" } };
@@ -375,18 +400,25 @@ export default function App() {
       Constants.expoConfig?.extra?.easygasRuntime === "local-demo",
     );
     const multipart = data instanceof FormData;
-    const response = await fetch(`${origin}/api/${action}`, {
-      method: data === undefined ? "GET" : "POST",
-      headers: {
-        ...(multipart ? {} : { "Content-Type": "application/json" }),
-        "x-easygas-client": "native",
-        ...(session ? { Authorization: `Bearer ${session}` } : {}),
-      },
-      ...(data === undefined
-        ? {}
-        : { body: multipart ? data : JSON.stringify(data) }),
-    });
-    const body = await response.json();
+    const send = async (signal?: AbortSignal) => {
+      const response = await fetch(`${origin}/api/${action}`, {
+        signal,
+        method: data === undefined ? "GET" : "POST",
+        headers: {
+          ...(multipart ? {} : { "Content-Type": "application/json" }),
+          "x-easygas-client": "native",
+          ...(session ? { Authorization: `Bearer ${session}` } : {}),
+        },
+        ...(data === undefined
+          ? {}
+          : { body: multipart ? data : JSON.stringify(data) }),
+      });
+      const body = await response.json();
+      return { response, body };
+    };
+    const { response, body } = isAuthenticationAction(action)
+      ? await withAuthDeadline(send, requestSignal)
+      : await send(requestSignal);
     if (!response.ok) {
       if (
         response.status === 401 &&
@@ -507,9 +539,12 @@ export default function App() {
   useEffect(() => {
     (async () => {
       try {
-        const savedCart = JSON.parse(
-          (await SecureStore.getItemAsync("easygas.cart")) ?? "[]",
-        );
+        let savedCart: any = [];
+        try {
+          savedCart = JSON.parse((await SecureStore.getItemAsync("easygas.cart")) ?? "[]");
+        } catch {
+          setError("Your saved cart could not be restored. You can still sign in.");
+        }
         if (Array.isArray(savedCart))
           setCart(
             savedCart
@@ -524,8 +559,6 @@ export default function App() {
           );
         const saved = await SecureStore.getItemAsync("easygas.session");
         if (saved) setToken(saved);
-        const c = await api("catalogue", undefined, null);
-        setCatalogue(c);
         if (saved) {
           const me = await api("me", undefined, saved);
           setUser(me.user);
@@ -537,6 +570,14 @@ export default function App() {
         setLoading(false);
       }
     })();
+  }, []);
+  useEffect(() => {
+    let active = true;
+    const controller = new AbortController();
+    api("catalogue", undefined, null, controller.signal)
+      .then(c => { if (active) setCatalogue(c); })
+      .catch(e => { if (active && !controller.signal.aborted) setError(e.message); });
+    return () => { active = false; controller.abort(); };
   }, []);
   useEffect(() => {
     if (hydrated)
@@ -705,14 +746,21 @@ export default function App() {
       setSyncing(false);
     }
   }
+  const authSubmitting = useRef(false);
+  const authController = useRef<AbortController | null>(null);
+  useEffect(() => () => authController.current?.abort(), [screen, register]);
   async function login() {
+    if (authSubmitting.current) return;
     if (passwordChangeRequired && newPassword.length < PASSWORD_MIN_LENGTH) {
       setLoginError(
         `Use at least ${PASSWORD_MIN_LENGTH} characters for your new password.`,
       );
       return;
     }
-    setLoading(true);
+    authSubmitting.current = true;
+    const controller = new AbortController();
+    authController.current = controller;
+    setAuthBusy(true);
     setError("");
     setLoginError("");
     try {
@@ -731,15 +779,17 @@ export default function App() {
           ...(register ? { name } : {}),
         },
         null,
+        controller.signal,
       );
       if (result.passwordChangeRequired) {
         setPasswordChangeRequired(true);
         return;
       }
+      const me = await api("me", undefined, result.token, controller.signal);
+      if (controller.signal.aborted) return;
       await SecureStore.setItemAsync("easygas.session", result.token);
       clearPrivateState(true);
       setToken(result.token);
-      const me = await api("me", undefined, result.token);
       Keyboard.dismiss();
       setUser(me.user);
       setPassword("");
@@ -763,9 +813,10 @@ export default function App() {
         setScreen("home");
       }
     } catch (e: any) {
-      setLoginError(e.message);
+      if (!controller.signal.aborted) setLoginError(e.message);
     } finally {
-      setLoading(false);
+      authSubmitting.current = false;
+      setAuthBusy(false);
     }
   }
   async function logout() {
@@ -896,7 +947,7 @@ export default function App() {
         setIdentifier={setIdentifier}
         setPassword={setPassword}
         submit={login}
-        busy={loading}
+        busy={authBusy || !hydrated}
         error={loginError || error}
         recover={driverRecover}
         setRecover={setDriverRecover}
@@ -926,7 +977,7 @@ export default function App() {
         setIdentifier={setIdentifier}
         setPassword={setPassword}
         submit={login}
-        busy={loading || !hydrated}
+        busy={authBusy || !hydrated}
         error={
           user
             ? "This app requires a verified driver account."
@@ -942,6 +993,8 @@ export default function App() {
       />
     );
   const customerView = !user || ["customer", "commercial"].includes(user.role);
+  const authScreen =
+    !user && ["login", "recovery", "entry-link"].includes(screen);
   const staffHomeTitles: Record<string, string> = {
     manager: "Branch Dashboard",
     finance: "Finance Overview",
@@ -976,7 +1029,14 @@ export default function App() {
       scope={`${user?.id ?? "guest"}:${user?.role ?? "public"}:${user?.branchId ?? user?.branch_id ?? ""}:${token ?? "anonymous"}`}
     >
       <NextDockContext.Provider value={setNextDock}>
-        <ScreenCanvas style={[s.app, { backgroundColor: colors.background }]}>
+        <ScreenCanvas
+          style={[s.app, { backgroundColor: colors.background }]}
+          topBackgroundColor={
+            authScreen && screen === "login" && !register
+              ? "#003b2c"
+              : colors.background
+          }
+        >
           {initialLinkResolved &&
             introductionAudience(
               user ? (user.role ?? "unknown") : token ? "unverified" : null,
@@ -992,8 +1052,14 @@ export default function App() {
                 })}
               />
             )}
-          <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
-          {screen !== "login" && (
+          <StatusBar
+            barStyle={
+              dark || (authScreen && screen === "login" && !register)
+                ? "light-content"
+                : "dark-content"
+            }
+          />
+          {!authScreen && (
             <NextHeader
               home={screen === "home"}
               title={
@@ -1027,7 +1093,10 @@ export default function App() {
           <ScreenTitleContext.Provider
             value={customerView ? (headerTitle[screen] ?? null) : null}
           >
-            <ScreenTransition identity={screen}>
+            <ScreenTransition
+              identity={authScreen ? screen + String(register) : screen}
+              duration={authScreen ? 220 : 160}
+            >
               <ScrollView
                 ref={scrollRef}
                 contentContainerStyle={[
@@ -1039,6 +1108,7 @@ export default function App() {
                     width: "100%",
                     alignSelf: "stretch",
                   },
+                  authScreen && { padding: 0, gap: 0 },
                 ]}
                 keyboardShouldPersistTaps="handled"
                 automaticallyAdjustKeyboardInsets
@@ -1260,11 +1330,12 @@ export default function App() {
                       setScreen(cart.length ? "checkout" : "products");
                     }}
                   />
+                ) : screen === "recovery" ? (
+                  <AuthRecovery api={api} onBack={() => setScreen("login")} />
                 ) : [
                     "profile",
                     "credit",
                     "plans",
-                    "recovery",
                     "recurring",
                     "notifications",
                   ].includes(screen) ? (
@@ -1287,128 +1358,38 @@ export default function App() {
                     />
                   </>
                 ) : screen === "login" ? (
-                  <>
-                    <View
-                      style={{
-                        alignItems: "center",
-                        marginTop: 35,
-                        marginBottom: 25,
-                      }}
-                    >
-                      <BrandLogo
-                        style={{
-                          width: 245,
-                          height: 82,
-                        }}
-                      />
-                    </View>
-                    <Text style={s.title}>
-                      {register ? "Make yourself at home." : "Welcome back."}
-                    </Text>
-                    <Text style={s.body}>More Cooking. Less Worry.</Text>
-                    {register &&
-                      field("Full name", name, setName, {
-                        autoComplete: "name",
-                      })}
-                    {field(
-                      register ? "Email address" : "Email or phone number",
-                      identifier,
-                      setIdentifier,
-                      {
-                        autoCapitalize: "none",
-                        autoCorrect: false,
-                        keyboardType: register ? "email-address" : "default",
-                        autoComplete: register ? "email" : "username",
-                      },
-                    )}
-                    {field(
-                      passwordChangeRequired
-                        ? "Temporary password"
-                        : "Password",
-                      password,
-                      setPassword,
-                      {
-                        secureTextEntry: true,
-                        autoComplete: register
-                          ? "new-password"
-                          : "current-password",
-                      },
-                    )}
-                    {passwordChangeRequired && (
-                      <>
-                        <Text style={s.caption}>
-                          Choose a new password to finish your first sign-in.
-                        </Text>
-                        {field("New password", newPassword, setNewPassword, {
-                          secureTextEntry: true,
-                          autoComplete: "new-password",
-                        })}
-                      </>
-                    )}
-                    {register && (
-                      <Text style={s.caption}>
-                        Use at least {PASSWORD_MIN_LENGTH} characters. No role
-                        selection is required.
-                      </Text>
-                    )}
-                    {loginError ? (
-                      <View style={s.notice}>
-                        <Text accessibilityRole="alert" style={s.noticeText}>
-                          {friendlyMessage(loginError)}
-                        </Text>
-                      </View>
-                    ) : null}
-                    {button(
-                      passwordChangeRequired
-                        ? "Change Password & Sign In"
-                        : register
-                          ? "Create Account"
-                          : "Sign In",
-                      login,
-                      false,
-                      loading || !hydrated,
-                    )}
-                    {button(
-                      register
-                        ? "Already a member? Sign in"
-                        : "New to EasyGas? Create an account",
-                      () => {
-                        setLoginError("");
-                        setPasswordChangeRequired(false);
-                        setNewPassword("");
-                        setRegister(!register);
-                      },
-                      true,
-                    )}
-                    {button(
-                      "Forgot password?",
-                      () => {
-                        setPassword("");
-                        setNewPassword("");
-                        setPasswordChangeRequired(false);
-                        setScreen("recovery");
-                      },
-                      true,
-                    )}
-                    {button(
-                      "Open an account link",
-                      () => {
-                        setEntryLink(null);
-                        setScreen("entry-link");
-                      },
-                      true,
-                    )}
-                    {button(
-                      "Policies & terms",
-                      () => setScreen("public-policies"),
-                      true,
-                    )}
-                    {button(
-                      "About & delivery",
-                      () => setScreen("public-info"),
-                      true,
-                    )}
-                  </>
+                  <NativeAuth
+                    register={register}
+                    name={name}
+                    identifier={identifier}
+                    password={password}
+                    newPassword={newPassword}
+                    passwordChangeRequired={passwordChangeRequired}
+                    error={loginError ? friendlyMessage(loginError) : ""}
+                    busy={authBusy || !hydrated}
+                    onName={setName}
+                    onIdentifier={setIdentifier}
+                    onPassword={setPassword}
+                    onNewPassword={setNewPassword}
+                    onSubmit={login}
+                    onSwitch={() => {
+                      setLoginError("");
+                      setPassword("");
+                      setNewPassword("");
+                      setPasswordChangeRequired(false);
+                      setRegister(!register);
+                    }}
+                    onRecovery={() => setScreen("recovery")}
+                    onLink={() => {
+                      setEntryLink(null);
+                      setScreen("entry-link");
+                    }}
+                    onPolicies={() => setScreen("public-policies")}
+                    onInfo={() => setScreen("public-info")}
+                    onBack={() => {
+                      if (!back()) setScreen("home");
+                    }}
+                  />
                 ) : screen === "payment" ? (
                   <NativePaymentReturn api={api} intentId={orderFilter} />
                 ) : screen === "customer-quotations" && user && customerView ? (
@@ -2275,16 +2256,18 @@ export default function App() {
               </ScrollView>
             </ScreenTransition>
           </ScreenTitleContext.Provider>
-          {nextDock}
-          <NextTabs
-            tabs={customerView ? customerNextTabs : businessNextTabs}
-            active={nextActiveTab(screen, customerView)}
-            onNavigate={(destination) =>
-              customerView
-                ? navigateCustomer(destination)
-                : setScreen(destination)
-            }
-          />
+          {!authScreen && nextDock}
+          {!authScreen && (
+            <NextTabs
+              tabs={customerView ? customerNextTabs : businessNextTabs}
+              active={nextActiveTab(screen, customerView)}
+              onNavigate={(destination) =>
+                customerView
+                  ? navigateCustomer(destination)
+                  : setScreen(destination)
+              }
+            />
+          )}
         </ScreenCanvas>
       </NextDockContext.Provider>
     </RemoteReadScope>

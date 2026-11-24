@@ -6,10 +6,12 @@ export function ScreenTransition({
   identity,
   children,
   fill = true,
+  duration = 160,
 }: {
   identity: string;
   children: React.ReactNode;
   fill?: boolean;
+  duration?: number;
 }) {
   const opacity = useRef(new Animated.Value(1)).current;
   const [reduced, setReduced] = useState(true);
@@ -37,7 +39,7 @@ export function ScreenTransition({
     opacity.setValue(0.55);
     const animation = Animated.timing(opacity, {
       toValue: 1,
-      duration: 160,
+      duration,
       useNativeDriver: true,
       isInteraction: false,
     });
@@ -46,7 +48,7 @@ export function ScreenTransition({
       animation.stop();
       opacity.setValue(1);
     };
-  }, [identity, reduced, opacity]);
+  }, [identity, reduced, opacity, duration]);
   return (
     <Animated.View
       style={{ flex: fill ? 1 : undefined, width: "100%", opacity }}

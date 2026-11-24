@@ -1,3 +1,4 @@
+import {assertReviewedAuthenticationNativeScope} from "../scripts/lib/reviewed-authentication-source.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -14,6 +15,6 @@ test('AL-SOURCE: exact reviewed read-only repairs retain committed baselines; na
  assert.deepEqual(Object.keys(r.additions),['apps/web/lib/admin-dashboard-batch.ts']);
  assert.equal(sha(await readFile('apps/web/lib/admin-dashboard-batch.ts')),r.additions['apps/web/lib/admin-dashboard-batch.ts']);
  for(const f of ['apps/web/lib/auth.ts','apps/web/lib/dispatch-trip.ts','apps/web/lib/dispatch-vehicle.ts','apps/web/lib/order-tracking.ts','apps/web/lib/inventory-business.ts','apps/web/lib/business-reporting.ts','apps/web/lib/bulk-lpg.ts','apps/web/lib/vehicle-products.ts','packages/business-rules/src/staff-privileges.ts'])assert.equal(sha(await readFile(f)),sha(execFileSync('git',['show',r.baseCommit+':'+f])));
- assert.equal(execFileSync('git',['diff',r.baseCommit,'--','apps/mobile'],{encoding:'utf8'}),'');
+ await assertReviewedAuthenticationNativeScope(r.baseCommit);
  assert.equal(await reviewedAdminLoadingSourceHash('apps/mobile/App.tsx','retained-native'),'retained-native');
 });

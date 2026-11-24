@@ -1,4 +1,8 @@
 "use client";
+import { RecoveryRequest } from "./auth-recovery-request";
+import { AuthShell } from "./auth-presentation";
+import { authRequest } from "./auth-request";
+import { safeCustomerReturn, customerAuthHref } from "../../../packages/business-rules/src/customer-navigation";
 import { FieldCaption } from "./field-caption";
 import { WorkspaceDialog, WorkspaceTabs } from "./compact-workspace";
 import { CampaignRecords } from "./engagement-records";
@@ -44,6 +48,7 @@ export function ActionForm({
   submit = "Save",
   confirm,
   contextual = false,
+  request = api,
 }: {
   action: string;
   title: string;
@@ -53,6 +58,7 @@ export function ActionForm({
   submit?: string;
   confirm?: string;
   contextual?: boolean;
+  request?: typeof api;
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
@@ -114,7 +120,7 @@ export function ActionForm({
         data.config = JSON.parse(data.config);
       if (action.startsWith("approval.") && typeof data.value === "string")
         data.value = JSON.parse(data.value);
-      const result = await api(action, data);
+      const result = await request(action, data);
       onResult?.(result);
       setSuccess(result.message ?? "Saved successfully.");
       if (result.signedOut) {
@@ -239,6 +245,9 @@ export function Recovery({
 }: {
   mode: "recover" | "reset" | "verify" | "invite";
 }) {
+  const search = useSearchParams();
+  const returnTo = safeCustomerReturn(search.get("returnTo"));
+  const signIn = customerAuthHref(false, returnTo);
   const [link, setLink] = useState<{ token: string; temporary: boolean }>();
   const [result, setResult] = useState("");
   const linkRead = useRef(false);
@@ -246,12 +255,19 @@ export function Recovery({
     if (linkRead.current) return;
     linkRead.current = true;
     const params = new URLSearchParams(window.location.hash.slice(1));
-    setLink({ token: params.get("token") ?? "", temporary: params.get("setup") === "temporary" });
+    setLink({
+      token: params.get("token") ?? "",
+      temporary: params.get("setup") === "temporary",
+    });
     if (window.location.hash)
-      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + window.location.search,
+      );
   }, []);
   const title = {
-    recover: "Reset your password",
+    recover: "Account recovery.",
     reset: "Choose a new password",
     invite: "Accept your invitation",
     verify: "Confirm your email address",
@@ -264,25 +280,40 @@ export function Recovery({
   }[mode];
   const requiresLink = mode !== "recover";
   return (
-    <div className="container page workflow-stack">
-      <h1>{title}</h1>
+    <AuthShell
+      mode={mode === "recover" ? "recovery" : "link"}
+      title={title}
+      back={signIn}
+      description={
+        mode === "recover"
+          ? "We’ll send a password reset link to your email so you can regain access to your EasyGas account."
+          : undefined
+      }
+    >
       {result ? (
         <Notice type="success" message={result} />
       ) : requiresLink && !link ? (
         <Loading label="Preparing your secure link" />
       ) : requiresLink && !/^[a-f0-9]{64}$/.test(link?.token ?? "") ? (
-        <Notice type="error" message={mode === "invite"
-          ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
-          : mode === "verify"
-            ? "Open the verification link in your EasyGas email. If it has expired, sign in and request a new verification email from Account & privacy."
-          : "Open the link in your EasyGas email. If your reset link has expired, request a new one."} />
+        <Notice
+          type="error"
+          message={
+            mode === "invite"
+              ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
+              : mode === "verify"
+                ? "Open the verification link in your EasyGas email. If it has expired, sign in and request a new verification email from Account & privacy."
+                : "Open the link in your EasyGas email. If your reset link has expired, request a new one."
+          }
+        />
+      ) : mode === "recover" ? (
+        <RecoveryRequest onResult={setResult} />
       ) : (
         <ActionForm
+          request={authRequest}
           action={action}
-          title={mode === "recover" ? "Enter your account email"
-            : link?.temporary ? "Enter the temporary password from your email"
-              : mode === "verify" ? "Confirm your address to continue" : "Set your password"}
-          fields={mode === "recover" ? [{ name: "email", label: "Email address", type: "email" }] : [
+          title={link?.temporary ? "Enter the temporary password from your email"
+            : mode === "verify" ? "Confirm your address to continue" : "Set your password"}
+          fields={[
             { name: "token", label: "", value: link?.token, type: "hidden" },
             ...(mode === "verify" ? [] : [{
               name: "password",
@@ -291,14 +322,26 @@ export function Recovery({
               autoComplete: link?.temporary ? "current-password" : "new-password",
             }]),
           ]}
-          submit={{ recover: "Send Reset Link", reset: "Reset Password", invite: "Accept Invitation", verify: "Confirm Email" }[mode]}
+          submit={{ reset: "Reset Password", invite: "Accept Invitation", verify: "Confirm Email" }[mode]}
           onResult={(response) => setResult(response.message)}
         />
       )}
-      {mode === "reset" && <Link href="/forgot-password">Request a new reset link</Link>}
-      {mode === "verify" && <Link href="/account-settings">Request a new verification email in your account</Link>}
-      <Link href="/login">Return to sign in</Link>
-    </div>
+      {mode === "recover" && (
+        <aside className="eg-auth-note">
+          Open your reset link in EasyGas, or choose “Open an account link” on
+          Sign In and paste the link from your email.
+        </aside>
+      )}
+      <div className="eg-auth-links">
+        {mode === "reset" && (
+          <Link href="/forgot-password">Request a new reset link</Link>
+        )}
+        {mode === "verify" && (
+          <Link href="/account-settings">Request a new verification email in your account</Link>
+        )}
+        <Link href={signIn}>Remember your password? Sign In</Link>
+      </div>
+    </AuthShell>
   );
 }
 const supportStatuses = [

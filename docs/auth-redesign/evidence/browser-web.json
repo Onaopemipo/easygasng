@@ -1,0 +1,90 @@
+{
+  "scope": "Actual local IAB browser, isolated easygas-auth-qa.localhost:3140, disposable synthetic fixture; no deployment or provider sending. Current native preview not observed.",
+  "cases": [
+    {
+      "id": "AUTH-WEB-01",
+      "status": "PASS",
+      "observation": "All three core routes render expected editable fields at320/375/390/768/1024/1440/1920 widths;21 observations, no horizontal overflow or unsupported social actions.",
+      "evidence": [
+        "responsive-web.json",
+        "web-390-login.jpg",
+        "web-390-register.jpg",
+        "web-390-forgot-password.jpg",
+        "web-1440-login.jpg",
+        "web-1440-register.jpg",
+        "web-1440-forgot-password.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-02",
+      "status": "PASS",
+      "observation": "Dark preference applied; actual fields rgb(19,44,33) background and rgb(241,247,243) text, no overflow. Preference remained on route changes until explicit light toggle.",
+      "evidence": [
+        "web-390-login-dark.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-03",
+      "status": "PASS",
+      "observation": "Enter submits password field. Unknown fixture credentials produce generic error and enabled Sign In; no success navigation. Password cleared before capture.",
+      "evidence": [
+        "web-390-invalid-credentials.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-04",
+      "status": "PASS",
+      "observation": "Unknown fixture email recovery returns generic conditional confirmation; send uses disposable in-memory backend with background sending disabled.",
+      "evidence": [
+        "web-390-recovery-success.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-05",
+      "status": "PASS",
+      "observation": "Manual foreign account link rejected, cleared and retained on entry screen. No automatic clipboard read.",
+      "evidence": [
+        "web-390-invalid-account-link.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-06",
+      "status": "PASS",
+      "observation": "Reset URL without token displays missing/expired-link guidance plus request-new-link and Sign In actions; no false reset confirmation.",
+      "evidence": []
+    },
+    {
+      "id": "AUTH-WEB-07",
+      "status": "PASS",
+      "observation": "Actual fixture customer email/password sign-in returns to safe intended /orders and shows customer workspace/empty order list.",
+      "evidence": [
+        "web-customer-return-orders.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-08",
+      "status": "PASS",
+      "observation": "Actual fixture owner sign-in overrides customer intended route and opens /admin Business Overview with original scoped controls.",
+      "evidence": [
+        "web-owner-role-routing.jpg"
+      ]
+    },
+    {
+      "id": "AUTH-WEB-09",
+      "status": "PASS",
+      "observation": "Both fixture sessions signed out through actual account menus: customer returns to public homepage; owner returns to /login. Public header/guest navigation restored. No user session on another origin was touched.",
+      "evidence": []
+    },
+    {
+      "id": "AUTH-WEB-10",
+      "status": "PASS",
+      "observation": "Settled missing-token verification and invitation pages show original recovery/resend guidance. Assisted activation without a token disables request/review and exposes no private order.",
+      "evidence": [
+        "supporting-web.json"
+      ]
+    }
+  ],
+  "pass": 10,
+  "fail": 0,
+  "native": "NOT RUN: Device Hub lost its accessible window while selecting preview; launch handoff remains pending. No stale native view used as evidence."
+}
