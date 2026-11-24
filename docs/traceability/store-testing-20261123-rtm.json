@@ -5,7 +5,8 @@
   "scopeChanges": [
     "User explicitly authorised new Android/iOS test binaries and test-store uploads, superseding earlier no-new-mobile-binary instruction only within this phase.",
     "User first selected live backend, then approved existing website backend after discovery showed only hosted synthetic demo API is configured.",
-    "User requested a new iOS-only build and TestFlight upload after approving native Mobile Next redesign and Android/provider repairs. Android build2 historical acceptance retained; no new Android build authorised in this continuation."
+    "User requested a new iOS-only build and TestFlight upload after approving native Mobile Next redesign and Android/provider repairs. Android build2 historical acceptance retained; no new Android build authorised in this continuation.",
+    "24 November: user explicitly authorised a new iOS-only latest-source build and TestFlight upload, superseding the previous no-new-binary constraint for iOS only. Reuse approved testing API and existing internal testers; preserve Android history and all unrelated acceptance holds."
   ],
   "requirements": [
     {
@@ -45,13 +46,18 @@
         "docs/ios-testflight-refresh-20261123/artifact-verification.txt",
         "docs/ios-testflight-refresh-20261123/preflight-validation.txt",
         "docs/ios-testflight-refresh-20261123/submission.json",
-        "docs/ios-testflight-refresh-20261123/final-validation.txt"
+        "docs/ios-testflight-refresh-20261123/final-validation.txt",
+        "docs/ios-testflight-refresh-20261124/preflight.json"
       ],
       "acceptanceGate": "STORE23-G01",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained.",
-      "testResult": "PASS — configured project-scoped approved API/identifier guard; signed builds use approved source and HTTPS API",
-      "outstandingWork": "None for this bounded configuration gate; physical/live readiness separate."
+      "status": "PARTIAL",
+      "reason": "New iOS-only refresh authorised on 24 November; exact latest-source build/artifact/upload/Apple processing and existing internal availability pending.",
+      "testResult": "Pending latest-source iOS distribution; historical Android/build2/build3 evidence retained.",
+      "outstandingWork": "Verify current source/configuration, signed artifact, exact-build upload, compliance and internal tester availability; record evidence.",
+      "previousVerifiedIosBuild3": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained."
+      }
     },
     {
       "id": "STORE23-R02",
@@ -89,8 +95,8 @@
       ],
       "acceptanceGate": "STORE23-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "PASS — actual signed AAB structure/signature/certificate/package/version/API verified",
-      "testResult": "PASS — actual signed AAB structure/signature/certificate/package/version/API verified",
+      "reason": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified",
+      "testResult": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified",
       "outstandingWork": "None for artifact generation; Play tester availability remains R04."
     },
     {
@@ -141,16 +147,21 @@
         "docs/ios-testflight-refresh-20261123/artifact-verification.txt",
         "docs/ios-testflight-refresh-20261123/preflight-validation.txt",
         "docs/ios-testflight-refresh-20261123/submission.json",
-        "docs/ios-testflight-refresh-20261123/final-validation.txt"
+        "docs/ios-testflight-refresh-20261123/final-validation.txt",
+        "docs/ios-testflight-refresh-20261124/preflight.json"
       ],
       "acceptanceGate": "STORE23-G03",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS — new iOS0.1.0 build3 FINISHED; exact device IPA passes8 signature/team/bundle/App Store profile/version/iPhone+iPad/API/orientation/URL-scheme/architecture checks.",
-      "testResult": "PASS — IOS23-A01–A08 executed against exact signed build3 IPA.",
-      "outstandingWork": "None for this iOS archive gate; Apple processing/testing and installed-device acceptance remain separate.",
+      "status": "PARTIAL",
+      "reason": "New iOS-only refresh authorised on 24 November; exact latest-source build/artifact/upload/Apple processing and existing internal availability pending.",
+      "testResult": "Pending latest-source iOS distribution; historical Android/build2/build3 evidence retained.",
+      "outstandingWork": "Verify current source/configuration, signed artifact, exact-build upload, compliance and internal tester availability; record evidence.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
-        "reason": "PASS — actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
+        "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
+      },
+      "previousVerifiedIosBuild3": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 new iOS0.1.0 build3 FINISHED; exact device IPA passes8 signature/team/bundle/App Store profile/version/iPhone+iPad/API/orientation/URL-scheme/architecture checks."
       }
     },
     {
@@ -189,8 +200,8 @@
       ],
       "acceptanceGate": "STORE23-G04",
       "status": "VERIFIED_COMPLETE",
-      "reason": "PASS — Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
-      "testResult": "PASS — Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
+      "reason": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
+      "testResult": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved.",
       "outstandingWork": "None for bounded internal distribution; tester opt-in/install and device acceptance are separate."
     },
     {
@@ -239,16 +250,21 @@
         "docs/ios-testflight-refresh-20261123/store-acceptance.txt",
         "docs/ios-testflight-refresh-20261123/README.md",
         "docs/ios-testflight-refresh-20261123/WHAT-TO-TEST.md",
-        "docs/ios-testflight-refresh-20261123/final-validation.txt"
+        "docs/ios-testflight-refresh-20261123/final-validation.txt",
+        "docs/ios-testflight-refresh-20261124/preflight.json"
       ],
       "acceptanceGate": "STORE23-G05",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred.",
-      "testResult": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred.",
-      "outstandingWork": "None for bounded iOS distribution; installed-device/provider/lifecycle/physical/commercial acceptance remains in original matrices.",
+      "status": "PARTIAL",
+      "reason": "New iOS-only refresh authorised on 24 November; exact latest-source build/artifact/upload/Apple processing and existing internal availability pending.",
+      "testResult": "Pending latest-source iOS distribution; historical Android/build2/build3 evidence retained.",
+      "outstandingWork": "Verify current source/configuration, signed artifact, exact-build upload, compliance and internal tester availability; record evidence.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
-        "reason": "PASS — exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
+        "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
+      },
+      "previousVerifiedIosBuild3": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
       }
     },
     {
@@ -302,16 +318,21 @@
         "docs/ios-testflight-refresh-20261123/store-acceptance.txt",
         "docs/ios-testflight-refresh-20261123/README.md",
         "docs/ios-testflight-refresh-20261123/WHAT-TO-TEST.md",
-        "docs/ios-testflight-refresh-20261123/final-validation.txt"
+        "docs/ios-testflight-refresh-20261123/final-validation.txt",
+        "docs/ios-testflight-refresh-20261124/preflight.json"
       ],
       "acceptanceGate": "STORE23-G06",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred.",
-      "testResult": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred.",
-      "outstandingWork": "None for bounded iOS distribution; installed-device/provider/lifecycle/physical/commercial acceptance remains in original matrices.",
+      "status": "PARTIAL",
+      "reason": "New iOS-only refresh authorised on 24 November; exact latest-source build/artifact/upload/Apple processing and existing internal availability pending.",
+      "testResult": "Pending latest-source iOS distribution; historical Android/build2/build3 evidence retained.",
+      "outstandingWork": "Verify current source/configuration, signed artifact, exact-build upload, compliance and internal tester availability; record evidence.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
-        "reason": "PASS — immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
+        "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
+      },
+      "previousVerifiedIosBuild3": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "PASS \u2014 exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
       }
     }
   ],
@@ -319,44 +340,44 @@
     {
       "id": "STORE23-G01",
       "description": "Verify source, approved API and build configuration",
-      "status": "PASS",
-      "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained."
+      "status": "PENDING",
+      "reason": "Latest-source iOS refresh pending; prior verified distribution evidence retained."
     },
     {
       "id": "STORE23-G02",
       "description": "Produce a signed Android app bundle for internal testing",
       "status": "PASS",
-      "reason": "PASS — actual signed AAB structure/signature/certificate/package/version/API verified"
+      "reason": "PASS \u2014 actual signed AAB structure/signature/certificate/package/version/API verified"
     },
     {
       "id": "STORE23-G03",
       "description": "Produce a signed device iOS archive for TestFlight",
-      "status": "PASS",
-      "reason": "PASS — new iOS0.1.0 build3 FINISHED; exact device IPA passes8 signature/team/bundle/App Store profile/version/iPhone+iPad/API/orientation/URL-scheme/architecture checks."
+      "status": "PENDING",
+      "reason": "Latest-source iOS refresh pending; prior verified distribution evidence retained."
     },
     {
       "id": "STORE23-G04",
       "description": "Upload Android build and verify Google Play internal testing",
       "status": "PASS",
-      "reason": "PASS — Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved."
+      "reason": "PASS \u2014 Google Play internal release0.1.0(2) is Active and Available to internal testers; same existing48-member Pilot Testers list as AfriMarket selected and saved."
     },
     {
       "id": "STORE23-G05",
       "description": "Upload iOS build and verify TestFlight processing",
-      "status": "PASS",
-      "reason": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
+      "status": "PENDING",
+      "reason": "Latest-source iOS refresh pending; prior verified distribution evidence retained."
     },
     {
       "id": "STORE23-G06",
       "description": "Record artifact and hosted testing evidence while preserving original release holds",
-      "status": "PASS",
-      "reason": "PASS — exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
+      "status": "PENDING",
+      "reason": "Latest-source iOS refresh pending; prior verified distribution evidence retained."
     }
   ],
   "coverage": {
     "total": 6,
-    "verified": 6,
-    "partial": 0,
+    "verified": 2,
+    "partial": 4,
     "blocked": 0,
     "notImplemented": 0,
     "excluded": 0
@@ -384,7 +405,7 @@
     },
     {
       "date": "2026-11-23",
-      "change": "User approved actual Apple encryption/no-France declaration and explicitly requested reuse of AfriMarket testing accounts. Saved compliance; matched AfriMarket Pilot Testers(48) on Google and two existing internal testers on Apple. Google track Active and Apple build Testing; beta notes Saved. STORE23-R01–06 bounded store distribution accepted, while prior production/physical/provider/300-feature native gates remain unchanged."
+      "change": "User approved actual Apple encryption/no-France declaration and explicitly requested reuse of AfriMarket testing accounts. Saved compliance; matched AfriMarket Pilot Testers(48) on Google and two existing internal testers on Apple. Google track Active and Apple build Testing; beta notes Saved. STORE23-R01\u201306 bounded store distribution accepted, while prior production/physical/provider/300-feature native gates remain unchanged."
     },
     {
       "date": "2026-11-23",
@@ -393,6 +414,10 @@
     {
       "date": "2026-11-23",
       "change": "Completed iOS-only build3 refresh: exact signed IPA passes8checks; EAS submission finished; Apple processing and unchanged approved compliance completed; existing2-tester internal group build3 Testing and notes Saved. Androidbuild2 unchanged. STORE23 six distribution gates pass; no installed/physical/provider or production gate inferred."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Registered latest-source iOS-only refresh before packaging. All six STORE23 IDs retained; R01/R03/R05/R06 reopened as partial, R02/R04 Android evidence preserved. No new Android build or public release."
     }
   ],
   "iosRefresh20261123": {
@@ -406,5 +431,11 @@
     "appleBuildId": "0bd8cec8-ed8b-46ab-b39d-079d232b3f3c",
     "internalTesters": 2,
     "testNotes": "Saved"
+  },
+  "iosRefresh20261124": {
+    "applicationSource": "3bc85209d40ef794d0ffccd200a85afe68b99520",
+    "evidence": "docs/ios-testflight-refresh-20261124/preflight.json",
+    "status": "PREFLIGHT",
+    "androidChanged": false
   }
 }
