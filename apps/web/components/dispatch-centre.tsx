@@ -24,6 +24,7 @@ import { api, Notice, Loading, money } from "./ui";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import DispatchTracking from "./order-tracking";
 import { OperationsExtensions } from "./operations-completion";
+import DispatchSetup from "./dispatch-setup";
 import { DriverAssignmentChoices } from "./driver-assignment";
 import {
   lagosDate,
@@ -201,8 +202,9 @@ export default function DispatchCentre({ user }: { user: any }) {
           "button:not(:disabled),input:not(:disabled),textarea:not(:disabled),select:not(:disabled),a[href]",
         ) ?? [],
       );
-      const first = nodes[0],
-        last = nodes[nodes.length - 1];
+      const visibleNodes = nodes.filter((node) => node.getClientRects().length > 0);
+      const first = visibleNodes[0],
+        last = visibleNodes[visibleNodes.length - 1];
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last?.focus();
@@ -422,6 +424,10 @@ export default function DispatchCentre({ user }: { user: any }) {
         </div>
         }
       </header>
+      <DispatchSetup user={user} branch={branch} onBranch={(id) => { setBranch(id); setPage(1); }} onFleet={() => {
+        setOperationsView("fleet"); setView("operations"); setCandidate(null);
+        window.requestAnimationFrame(() => document.getElementById("dispatch-operations")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+      }} />
       {error && <Notice type="error" message={error} />}
       {!data ? (
         (!error || busy) && <Loading page label="Loading dispatch records" />

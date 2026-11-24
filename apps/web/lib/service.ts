@@ -1,3 +1,4 @@
+import { dispatchSetup } from "./dispatch-setup";
 import { hydrateOrderRecords } from "./order-records";
 import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
 import { availableEmptyCylinderPredicate } from "./cylinder-allocation";
@@ -386,6 +387,7 @@ export async function dispatch(
         ].includes(action)
       )
         return inventoryWorkspace(tx, user, action, input);
+      if (action === "dispatch.setup") return dispatchSetup(tx, user, input);
       if (["dispatch.centre", "dispatch.candidates", "drivers.workspace"].includes(action))
         return dispatchCentre(tx, user, action, input);
       if (action === "admin.dashboard") return adminDashboard(tx, user, input);

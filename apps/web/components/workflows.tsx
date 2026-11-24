@@ -488,6 +488,11 @@ export function OperationsWorkspace({
   isOwner?: boolean;
 }) {
   const [tab, setTab] = useState("purchasing");
+  useEffect(() => {
+    const reveal = () => { if (window.location.hash === "#branches") setTab("branches"); };
+    reveal(); window.addEventListener("hashchange", reveal);
+    return () => window.removeEventListener("hashchange", reveal);
+  }, []);
   return (
     <div className="workflow-stack product-workspace operations-workspace">
       <ProductHeading eyebrow="BUSINESS OPERATIONS" title="Operations centre" description="Manage purchasing, catalogue and branch operations from one workspace." />

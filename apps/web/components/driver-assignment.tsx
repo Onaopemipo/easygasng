@@ -120,8 +120,11 @@ export function DriverAssignmentChoices({
   onRefresh: () => void;
   disabled?: boolean;
 }) {
-  const ready =
-    data?.candidates.filter((d) => d.readiness.ready === true).length ?? 0;
+  const readyDrivers =
+    data?.candidates.filter((d) => d.readiness.ready === true) ?? [];
+  const blockedDrivers =
+    data?.candidates.filter((d) => d.readiness.ready !== true) ?? [];
+  const ready = readyDrivers.length;
   return (
     <section
       className={styles.workspace}
@@ -169,65 +172,97 @@ export function DriverAssignmentChoices({
           )}
           <fieldset disabled={disabled || loading} className={styles.options}>
             <legend>Choose an eligible branch driver</legend>
-            {data.candidates.map((driver) => {
-              const issues = driver.readiness.issues?.length
-                ? driver.readiness.issues
-                : driver.readiness.reasons.map((r) => fulfilmentIssue(r));
-              return (
-                <article className={styles.driver} key={driver.id}>
-                  <label className={styles.choice}>
-                    <input
-                      type="radio"
-                      name="assignmentDriver"
-                      value={driver.id}
-                      checked={selected === driver.id}
-                      disabled={
-                        driver.readiness.ready !== true || !data.writesEnabled
-                      }
-                      onChange={() => onSelect(driver.id)}
-                    />
-                    <span>
-                      <strong>{driver.name}</strong>
-                      <small>
-                        {driver.readiness.ready === true
-                          ? "Eligible at last check"
-                          : "Not ready for assignment"}
-                      </small>
-                    </span>
-                  </label>
-                  {issues.length > 0 && (
-                    <ul className={styles.issues}>
-                      {issues.map((issue, index) => (
-                        <li key={issue.code + index}>
-                          <strong>{issue.title}</strong>
-                          <p>
-                            <span className={styles.responsible}>
-                              {issue.responsible}:
-                            </span>{" "}
-                            {issue.resolution}
-                          </p>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  {issues.some((i) => i.help === "drivers") &&
-                    data.canReviewDrivers && (
-                      <a href="/admin/drivers" className={styles.help}>
-                        Review driver accounts and availability
-                      </a>
-                    )}
-                  {issues.some((i) => i.help === "fleet") &&
-                    data.canReviewVehicles && (
-                      <a
-                        href="/admin/deliveries#driver-fleet"
-                        className={styles.help}
-                      >
-                        Review branch vehicles and trips
-                      </a>
-                    )}
-                </article>
-              );
-            })}
+            {readyDrivers.map((driver) => (
+              <article className={styles.driver} key={driver.id}>
+                <label className={styles.choice}>
+                  <input
+                    type="radio"
+                    name="assignmentDriver"
+                    value={driver.id}
+                    checked={selected === driver.id}
+                    disabled={!data.writesEnabled}
+                    onChange={() => onSelect(driver.id)}
+                  />
+                  <span>
+                    <strong>{driver.name}</strong>
+                    <small>Eligible at last check</small>
+                  </span>
+                </label>
+              </article>
+            ))}
+            {blockedDrivers.length > 0 && (
+              <details
+                className="driver-assignment-blocked-group"
+                key={data.orderId}
+              >
+                <summary>
+                  Blocked drivers ({blockedDrivers.length})
+                  <span>View requirements and next steps</span>
+                </summary>
+                <div className="driver-assignment-blocked-list">
+                  {blockedDrivers.map((driver) => {
+                    const issues = driver.readiness.issues?.length
+                      ? driver.readiness.issues
+                      : driver.readiness.reasons.map((r) => fulfilmentIssue(r));
+                    return (
+                      <article className={styles.driver} key={driver.id}>
+                        <label className={styles.choice}>
+                          <input
+                            type="radio"
+                            name="assignmentDriver"
+                            value={driver.id}
+                            checked={selected === driver.id}
+                            disabled={
+                              driver.readiness.ready !== true ||
+                              !data.writesEnabled
+                            }
+                            onChange={() => onSelect(driver.id)}
+                          />
+                          <span>
+                            <strong>{driver.name}</strong>
+                            <small>
+                              {driver.readiness.ready === true
+                                ? "Eligible at last check"
+                                : "Not ready for assignment"}
+                            </small>
+                          </span>
+                        </label>
+                        {issues.length > 0 && (
+                          <ul className={styles.issues}>
+                            {issues.map((issue, index) => (
+                              <li key={issue.code + index}>
+                                <strong>{issue.title}</strong>
+                                <p>
+                                  <span className={styles.responsible}>
+                                    {issue.responsible}:
+                                  </span>{" "}
+                                  {issue.resolution}
+                                </p>
+                              </li>
+                            ))}
+                          </ul>
+                        )}
+                        {issues.some((i) => i.help === "drivers") &&
+                          data.canReviewDrivers && (
+                            <a href="/admin/drivers" className={styles.help}>
+                              Review driver accounts and availability
+                            </a>
+                          )}
+                        {issues.some((i) => i.help === "fleet") &&
+                          data.canReviewVehicles && (
+                            <a
+                              href="/admin/deliveries#driver-fleet"
+                              className={styles.help}
+                            >
+                              Review branch vehicles and trips
+                            </a>
+                          )}
+                      </article>
+                    );
+                  })}
+                </div>
+              </details>
+            )}
             {!data.candidates.length && (
               <p>
                 No driver accounts are registered in this fulfilment branch. Ask

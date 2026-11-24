@@ -772,8 +772,10 @@ function Settings({
   onChange: () => void;
   verify: () => void;
 }) {
+  const setupParams = useSearchParams();
+  const settingsScope = setupParams.get("scope") || user.branchId || "lagos";
   const { data, error } = useData(
-      `settings?scope=${user.branchId ?? "lagos"}`,
+      `settings?scope=${encodeURIComponent(settingsScope)}`,
       refresh,
     ),
     [category, setCategory] = useState(""),
@@ -785,6 +787,7 @@ function Settings({
     [historyError, setHistoryError] = useState(""),
     [message, setMessage] = useState(""),
     [actionError, setActionError] = useState("");
+  useEffect(() => { setQuery(setupParams.get("q") ?? ""); setCategory(setupParams.get("category") ?? ""); setEditing(null); setHistory(null); }, [setupParams]);
   const categories = settingsCategories(data ?? []);
   const current = categories.includes(category) ? category : categories[0];
   return (
@@ -799,6 +802,7 @@ function Settings({
           </button>
         }
       />
+      <p className="muted">Settings branch: {settingsScope}</p>
       {data && (
         <details className="settings-tools">
           <summary>Gas stock, pricing and delivery tools</summary>

@@ -1,0 +1,54 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DS-ACTIONS: actual checklist shows missing prerequisites, scoped links, owner-only registration and direct fleet action (18.846167ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DS-CHOICES: actual assignment puts ready drivers first and keeps false/null drivers in a collapsed disabled group (2.310209ms)
+✔ DS-RECOVERY: scope changes clear old setup; late success is ignored; errors and retry never imply readiness (5.872333ms)
+✔ DS-DATA: canonical setup distinguishes empty configuration, available drivers, suitable vehicles and active trips without guessing order readiness (1291.986792ms)
+✖ DS-SCOPE: wrong roles and foreign branch denied; owner chooses among branches; privilege and release controls stay authoritative (885.794709ms)
+✔ DS-READ: repeated setup reads do not change business records or start trips (912.086291ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 5
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3902.570917
+
+✖ failing tests:
+
+test at tests/dispatch-setup.test.ts:1:1980
+✖ DS-SCOPE: wrong roles and foreign branch denied; owner chooses among branches; privilege and release controls stay authoritative (885.794709ms)
+  error: column "privilege_overrides" of relation "users" does not exist
+      at ye.Ve (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:17616)
+      at ye.nt (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:15003)
+      at ye.parse (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/chunk-3WWIVTCY.js:1:13755)
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:191801)
+      at wasm://wasm/021cbcb2:wasm-function[3707]:0x27cef1
+      at wasm://wasm/021cbcb2:wasm-function[3717]:0x27d268
+      at wasm://wasm/021cbcb2:wasm-function[9494]:0x509d72
+      at wasm://wasm/021cbcb2:wasm-function[175]:0x598a3
+      at invoke_v (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/dist/index.js:3:176458)
+      at wasm://wasm/021cbcb2:wasm-function[178]:0x5a0e8 {
+    length: 139,
+    severity: 'ERROR',
+    code: '42703',
+    detail: undefined,
+    hint: undefined,
+    position: '18',
+    internalPosition: undefined,
+    internalQuery: undefined,
+    where: undefined,
+    schema: undefined,
+    table: undefined,
+    column: undefined,
+    dataType: undefined,
+    constraint: undefined,
+    file: 'analyze.c',
+    line: '2536',
+    routine: 'transformUpdateTargetList',
+    query: 'UPDATE users SET privilege_overrides=$1 WHERE id=$2',
+    params: [ { 'staff.manage': 'deny' }, 'c87527b1-aac1-4744-b6ed-ffa14ab76669' ],
+    queryOptions: undefined
+  }

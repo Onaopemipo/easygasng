@@ -74,3 +74,5 @@ Web API reads stop waiting after 20 seconds if the response or its body stalls. 
 Moving away cancels the shared admin records read, and a delayed response from an earlier identity cannot restore its records. There is no automatic retry of a stock, order, payment or other write. If a save has an uncertain result, use its existing recovery/status workflow before repeating it.
 
 Published and verified on the client demo on 24 November 2026. The same 24-order response improved from approximately 20.7 seconds to 1.8–2.0 seconds in the recorded hosted probes; actual speed depends on network and workload. Seven-role restrictions, foreign-record denials and order items/history were checked. [Timings and rollout evidence](../loading-performance/README.md), [traceability](../traceability/loading-performance-rtm.md). No mobile binary was created.
+
+Current Dispatch setup: use the [single branch checklist](dispatch-setup.md) before assignment. Ready drivers appear first; expand **Blocked drivers** for exact requirements and next steps. Existing password, approval and final safety/custody checks remain.

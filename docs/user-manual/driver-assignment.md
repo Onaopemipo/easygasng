@@ -60,3 +60,5 @@ If the password is incorrect, the form displays the error and clears only the pa
 Other shared operation forms display the same inline field if their server verification has expired. Complete verification in the original form; you do not need a separate page or to re-enter the operation details. The server still checks your role, branch and five-minute verification window. The show-password control only changes visibility and does not submit the form.
 
 The fix was verified with one labelled synthetic QA vehicle, with LPG suitability left off. Only the labelled QA vehicle was created; existing orders, stock, ledger records, vehicles and trips were preserved. See the [verification matrix](../traceability/fleet-verification-rtm.md).
+
+Current Dispatch setup: use the [single branch checklist](dispatch-setup.md) before assignment. Ready drivers appear first; expand **Blocked drivers** for exact requirements and next steps. Existing password, approval and final safety/custody checks remain.

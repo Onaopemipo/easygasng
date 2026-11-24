@@ -1,0 +1,25 @@
+// Disposable loopback-only fixture; never uses a hosted database or real orders.
+import next from "next";
+import { createServer } from "node:http";
+import { mkdtemp, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { fixture } from "../tests/helpers/order-tracking-fixture";
+import { hashPassword, id } from "../apps/web/lib/auth";
+import { lagosDate } from "../packages/business-rules/src/dispatch-centre";
+if (process.env.DATABASE_URL || process.env.NODE_ENV === "production") throw Error("Disposable local fixture only");
+const dir = await mkdtemp(join(tmpdir(), "easygas-dispatch-setup-")), f = await fixture(), db = f.db;
+const password = "Synthetic-setup-ui-only-123!";
+for (const [role, actor] of Object.entries(f.actors)) await db.query("UPDATE users SET name=$1,email=$2,password_hash=$3,verified=true WHERE id=$4", ["Synthetic setup " + role, role + "@setup-ui.example.test", hashPassword(password), actor.id]);
+await db.query("UPDATE sessions SET verified_at=now() WHERE user_id=$1", [f.actors.owner.id]);
+const v = await f.call("owner", "fleet.vehicle.create", { branchId: "lagos", label: "SYNTHETIC SETUP VAN", capacityGrams: 50000, physicalCapacityGrams: 50000, lpgSuitable: true, operationKey: id() });
+await f.call("driver", "trip.start", { vehicleId: v.id, startOdometer: 100, locationConsent: false, operationKey: id() });
+for (const name of ["A · Synthetic off duty", "B · Synthetic no trip"]) await db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id,verified,driver_available) VALUES($1,$2,$3,$4,'driver','lagos',true,$5)", [id(), name, id() + "@setup-ui.example.test", hashPassword(password), name.startsWith("B")]);
+const order = await f.make(); await f.transition(order, "accepted"); await f.transition(order, "preparing");
+await db.query("UPDATE orders SET delivery_date=$1 WHERE id=$2", [lagosDate(), order.id]);
+(globalThis as any).easygasDb = Promise.resolve(db); (globalThis as any).easygasLocalVersion = 82;
+process.env.EASYGAS_BACKGROUND_JOBS = "false"; process.env.EASYGAS_CLIENT_DEMO = "true";
+const app = next({ dev: true, hostname: "127.0.0.1", port: 3133, dir: "apps/web", conf: { distDir: ".next-dispatch-setup", serverExternalPackages: ["@electric-sql/pglite", "pg"] } });
+await app.prepare();
+await writeFile(".data/dispatch-setup-qa.json", JSON.stringify({ dir, password, ownerEmail: "owner@setup-ui.example.test", managerEmail: "dispatcher@setup-ui.example.test", orderId: order.id }), { mode: 0o600 });
+createServer(app.getRequestHandler()).listen(3133, "127.0.0.1", () => console.log("Synthetic setup QA ready: http://127.0.0.1:3133/admin/deliveries"));

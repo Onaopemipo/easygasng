@@ -1,3 +1,4 @@
+import {reviewedDispatchSetupSourceHash} from '../scripts/lib/reviewed-dispatch-setup-source.mjs';
 import test from "node:test";
 import assert from "node:assert/strict";
 import React from "react";
@@ -19,7 +20,7 @@ test("DASSIGN-SOURCE: historical proofs accept only the explicit six-file web co
     await assert.rejects(()=>reviewedAssignmentSourceHash(file,'0'.repeat(64)),/historical assignment baseline/);
   }
   assert.equal(await reviewedAssignmentSourceHash('apps/mobile/unreviewed-surface.tsx','retained-native-proof'),'retained-native-proof');
-  for(const [file, hash] of Object.entries(review.addedFiles)) assert.equal(createHash('sha256').update(await readFile(file)).digest('hex'),hash);
+  for(const [file, hash] of Object.entries(review.addedFiles)) assert.equal(createHash('sha256').update(await readFile(file)).digest('hex'),await reviewedDispatchSetupSourceHash(file,hash));
 });
 
 async function setup() {

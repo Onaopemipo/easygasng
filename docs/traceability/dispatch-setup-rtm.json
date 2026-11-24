@@ -1,0 +1,173 @@
+{
+  "phase": "Dispatch setup checklist and ready-first assignment",
+  "date": "2026-11-24",
+  "productionDecision": "Existing NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "DS-R01",
+      "requirement": "Single branch-scoped Dispatch setup checklist with authoritative branch, driver, vehicle and operational prerequisites",
+      "priority": "P1",
+      "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "route": [
+        "/admin/deliveries",
+        "/admin/orders",
+        "/admin/drivers",
+        "/admin/settings",
+        "/admin/operations#branches"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-setup.ts",
+        "apps/web/components/dispatch-setup.tsx",
+        "apps/web/components/driver-assignment.tsx"
+      ],
+      "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
+      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DS-G01",
+      "status": "PARTIAL",
+      "reason": "Implementation in progress; acceptance not yet executed",
+      "testResult": "PENDING",
+      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+    },
+    {
+      "id": "DS-R02",
+      "requirement": "Direct role-aware setup actions and correct branch/settings destinations",
+      "priority": "P1",
+      "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "route": [
+        "/admin/deliveries",
+        "/admin/orders",
+        "/admin/drivers",
+        "/admin/settings",
+        "/admin/operations#branches"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-setup.ts",
+        "apps/web/components/dispatch-setup.tsx",
+        "apps/web/components/driver-assignment.tsx"
+      ],
+      "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
+      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DS-G02",
+      "status": "PARTIAL",
+      "reason": "Implementation in progress; acceptance not yet executed",
+      "testResult": "PENDING",
+      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+    },
+    {
+      "id": "DS-R03",
+      "requirement": "Ready drivers first and compact expandable blocked-driver requirements in both assignment entry points",
+      "priority": "P1",
+      "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "route": [
+        "/admin/deliveries",
+        "/admin/orders",
+        "/admin/drivers",
+        "/admin/settings",
+        "/admin/operations#branches"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-setup.ts",
+        "apps/web/components/dispatch-setup.tsx",
+        "apps/web/components/driver-assignment.tsx"
+      ],
+      "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
+      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DS-G03",
+      "status": "PARTIAL",
+      "reason": "Implementation in progress; acceptance not yet executed",
+      "testResult": "PENDING",
+      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+    },
+    {
+      "id": "DS-R04",
+      "requirement": "Verify permissions, non-mutating reads, exceptions and responsive UI; update manual and traceability",
+      "priority": "P1",
+      "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "route": [
+        "/admin/deliveries",
+        "/admin/orders",
+        "/admin/drivers",
+        "/admin/settings",
+        "/admin/operations#branches"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-setup.ts",
+        "apps/web/components/dispatch-setup.tsx",
+        "apps/web/components/driver-assignment.tsx"
+      ],
+      "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
+      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
+      "testFiles": [],
+      "testIds": [],
+      "negativeTests": [
+        "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
+      ],
+      "evidence": [],
+      "acceptanceGate": "DS-G04",
+      "status": "PARTIAL",
+      "reason": "Implementation in progress; acceptance not yet executed",
+      "testResult": "PENDING",
+      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DS-G01",
+      "description": "Single branch-scoped Dispatch setup checklist with authoritative branch, driver, vehicle and operational prerequisites",
+      "status": "PENDING",
+      "reason": "Execution pending"
+    },
+    {
+      "id": "DS-G02",
+      "description": "Direct role-aware setup actions and correct branch/settings destinations",
+      "status": "PENDING",
+      "reason": "Execution pending"
+    },
+    {
+      "id": "DS-G03",
+      "description": "Ready drivers first and compact expandable blocked-driver requirements in both assignment entry points",
+      "status": "PENDING",
+      "reason": "Execution pending"
+    },
+    {
+      "id": "DS-G04",
+      "description": "Verify permissions, non-mutating reads, exceptions and responsive UI; update manual and traceability",
+      "status": "PENDING",
+      "reason": "Execution pending"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "verified": 0,
+    "partial": 4,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered approved web-only setup checklist and compact assignment. No new mobile binary or automatic business setup inferred."
+    }
+  ]
+}
