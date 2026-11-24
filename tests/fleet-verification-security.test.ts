@@ -113,9 +113,10 @@ test("FVERIFY-AUTH: unverified/expired owners and verified nonowners cannot regi
 });
 
 test("FLEETUI-SOURCE: scoped web continuation preserves historical hashes and current implementation while native and server code stay outside its allowlist", async () => {
+  const { reviewedDispatchSetupSourceHash } = await import("../scripts/lib/reviewed-dispatch-setup-source.mjs");
   const review = JSON.parse(await readFile("docs/dispatch-fleet-redesign/reviewed-source-changes.json", "utf8"));
   for (const [file, baseline] of Object.entries(review.baseline)) {
-    assert.equal(await reviewedFleetUiSourceHash(file, baseline), createHash("sha256").update(await readFile(file)).digest("hex"));
+    assert.equal(await reviewedDispatchSetupSourceHash(file, await reviewedFleetUiSourceHash(file, baseline)), createHash("sha256").update(await readFile(file)).digest("hex"));
     await assert.rejects(() => reviewedFleetUiSourceHash(file, "tampered"), /fleet UI historical baseline/);
   }
   for (const [file, hash] of Object.entries(review.newFiles)) assert.equal(createHash("sha256").update(await readFile(file)).digest("hex"), hash);
