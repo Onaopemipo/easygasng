@@ -1,0 +1,333 @@
+{
+  "phase": "Full Dispatch journey acceptance",
+  "date": "2026-11-24",
+  "productionDecision": "Existing NO-GO and unrelated holds unchanged",
+  "requirements": [
+    {
+      "id": "DJ-R01",
+      "requirement": "Admin vehicle assignment and independent driver/order assignment",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-GAS"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "None in bounded local controls; browser/release evidence tracked by DJ-R06"
+    },
+    {
+      "id": "DJ-R02",
+      "requirement": "Paid gas delivery from real checkout through inspected pickup, metering, proof and handover",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-GAS"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "None in bounded local controls; browser/release evidence tracked by DJ-R06"
+    },
+    {
+      "id": "DJ-R03",
+      "requirement": "Product/COD delivery, separate cash verification and product custody reconciliation",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-COD"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "None in bounded local controls; browser/release evidence tracked by DJ-R06"
+    },
+    {
+      "id": "DJ-R04",
+      "requirement": "Failed-delivery exact return, safe retry and no duplicate money/stock effects",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-RETRY"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "None in bounded local controls; browser/release evidence tracked by DJ-R06"
+    },
+    {
+      "id": "DJ-R05",
+      "requirement": "Role/branch/password/version/replay and trip-close reconciliation failure cases",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-PROOF-UI",
+        "DJ-COMPLETION-UI",
+        "DJ-SOURCE"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "None in bounded local controls; browser/release evidence tracked by DJ-R06"
+    },
+    {
+      "id": "DJ-R06",
+      "requirement": "Actual browser journey, fixes, manual, traceability and bounded demo release",
+      "priority": "P1",
+      "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
+      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "route": [
+        "/admin/deliveries",
+        "/driver",
+        "/admin/reconciliation"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/bulk-lpg.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/web/components/driver-experience.tsx"
+      ],
+      "dataSource": "Canonical users/driver_vehicles/driver_trips/orders/delivery_attempts, manifests, gas loads/meter/dispenser records, wallet/cash/ledger/invoice and consented current-attempt proof",
+      "securityControl": "Existing role/branch/privilege, own-password, independent receipt/finance/qualifications, version/idempotency and release controls; no hosted qualification or business mutations",
+      "testFiles": [
+        "tests/dispatch-journey.test.ts",
+        "tests/dispatch-journey-components.test.ts",
+        "tests/dispatch-journey-source.test.ts"
+      ],
+      "testIds": [
+        "DJ-COMPLETION-UI"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+      ],
+      "evidence": [
+        "docs/dispatch-journey/evidence/journey.txt",
+        "docs/dispatch-journey/evidence/focused.txt",
+        "docs/dispatch-journey/reviewed-source-changes.json"
+      ],
+      "acceptanceGate": "DJ-G06",
+      "status": "PARTIAL",
+      "reason": "Connected gas, COD/product and failed retry journeys plus proof/completion fixes pass; actual browser shift and full CI publication in progress",
+      "testResult": "PASS \u201469 focused existing journey/security/PostgreSQL checks plus new connected/UI/source regressions; no skips",
+      "outstandingWork": "Complete independent receipt/admin closure browser acceptance, exact-source CI and bounded existing demo rollout"
+    }
+  ],
+  "gates": [
+    {
+      "id": "DJ-G01",
+      "description": "Admin vehicle assignment and independent driver/order assignment",
+      "status": "PASS",
+      "reason": "Executed connected and retained focused evidence"
+    },
+    {
+      "id": "DJ-G02",
+      "description": "Paid gas delivery from real checkout through inspected pickup, metering, proof and handover",
+      "status": "PASS",
+      "reason": "Executed connected and retained focused evidence"
+    },
+    {
+      "id": "DJ-G03",
+      "description": "Product/COD delivery, separate cash verification and product custody reconciliation",
+      "status": "PASS",
+      "reason": "Executed connected and retained focused evidence"
+    },
+    {
+      "id": "DJ-G04",
+      "description": "Failed-delivery exact return, safe retry and no duplicate money/stock effects",
+      "status": "PASS",
+      "reason": "Executed connected and retained focused evidence"
+    },
+    {
+      "id": "DJ-G05",
+      "description": "Role/branch/password/version/replay and trip-close reconciliation failure cases",
+      "status": "PASS",
+      "reason": "Executed connected and retained focused evidence"
+    },
+    {
+      "id": "DJ-G06",
+      "description": "Actual browser journey, fixes, manual, traceability and bounded demo release",
+      "status": "PENDING",
+      "reason": "Browser and release completion pending"
+    }
+  ],
+  "coverage": {
+    "total": 6,
+    "implemented": 6,
+    "verified": 5,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Approved connected Dispatch acceptance; new mobile binaries prohibited. Hosted business records preserved; positive operational testing restricted to disposable fixtures."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Found and repaired3 connected web issues: earlier-attempt photo upload falsely reported success; premature handover before proof; obsolete active-assignment screen after successful completion. Server custody/payment/role protections unchanged."
+    }
+  ]
+}

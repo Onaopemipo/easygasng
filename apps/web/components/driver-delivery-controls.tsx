@@ -1,7 +1,7 @@
 "use client";
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { FieldCaption } from "./field-caption";
-import { Notice } from "./ui";
+import { api, Notice } from "./ui";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import styles from "./driver-trip-controls.module.css";
 
@@ -23,6 +23,53 @@ export default function DriverDeliveryControls({
   const [photoBusy, setPhotoBusy] = useState(false);
   const [photoError, setPhotoError] = useState("");
   const [photoMessage, setPhotoMessage] = useState("");
+  const [proofReady, setProofReady] = useState(false);
+  const [proofChecking, setProofChecking] = useState(false);
+  const [proofReadError, setProofReadError] = useState("");
+  const [proofRevision, setProofRevision] = useState(0);
+  const proofRead = useRef<AbortController | null>(null);
+  useEffect(() => {
+    setProofReady(false);
+    setProofReadError("");
+    if (order.attempt?.state !== "arrived") return;
+    const controller = new AbortController();
+    proofRead.current = controller;
+    setProofChecking(true);
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    let current = true;
+    api(
+      "delivery.photos?" +
+        new URLSearchParams({ orderId: order.id, attemptId: order.attempt.id }),
+      undefined,
+      { signal: controller.signal },
+    )
+      .then((result) => {
+        if (
+          current &&
+          proofRead.current === controller &&
+          !controller.signal.aborted
+        )
+          setProofReady(result.photos.length > 0);
+      })
+      .catch((e) => {
+        if (current && proofRead.current === controller)
+          setProofReadError(
+            controller.signal.aborted
+              ? "Proof check timed out. Retry the check."
+              : e.message,
+          );
+      })
+      .finally(() => {
+        clearTimeout(timeout);
+        if (current && proofRead.current === controller)
+          setProofChecking(false);
+      });
+    return () => {
+      current = false;
+      controller.abort();
+      clearTimeout(timeout);
+    };
+  }, [order.id, order.attempt?.id, order.attempt?.state, proofRevision]);
   const uploading = useRef(false);
   const blocked = disabled || photoBusy;
   const context = { orderId: order.id, version: order.tracking_version };
@@ -57,6 +104,12 @@ export default function DriverDeliveryControls({
         throw new Error(
           result.error ?? "Proof photo upload was not confirmed.",
         );
+      const previousRead = proofRead.current;
+      proofRead.current = null;
+      previousRead?.abort();
+      setProofReadError("");
+      setProofChecking(false);
+      setProofReady(true);
       setPhotoMessage("Proof photo uploaded for this order.");
       await refresh();
     } catch (e: any) {
@@ -233,9 +286,26 @@ export default function DriverDeliveryControls({
                 six-digit code after handing over every item and the full gas
                 quantity.
               </p>
+              {proofChecking && (
+                <p role="status">Checking current-visit proof…</p>
+              )}
+              {proofReadError && (
+                <>
+                  <Notice type="error" message={proofReadError} />
+                  <button
+                    type="button"
+                    className="button secondary"
+                    disabled={blocked}
+                    onClick={() => setProofRevision((n) => n + 1)}
+                  >
+                    Retry proof check
+                  </button>
+                </>
+              )}
               <fieldset
                 disabled={
                   blocked ||
+                  !proofReady ||
                   lpg?.handoverReady === false ||
                   order.payment_status !== "verified"
                 }

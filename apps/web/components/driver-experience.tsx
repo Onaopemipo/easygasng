@@ -72,6 +72,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
   const [ready, setReady] = useState(false);
   const [stale, setStale] = useState(false);
   const [error, setError] = useState("");
+  const [completionMessage, setCompletionMessage] = useState("");
   const [connectionError, setConnectionError] = useState("");
   const [busy, setBusy] = useState(false);
   const [selected, setSelected] = useState<string | null>(null);
@@ -142,6 +143,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
   }, []);
 
   useEffect(() => {
+    setCompletionMessage("");
     setTripOpen(false);
     setData(null);
     setHistory(null);
@@ -253,6 +255,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
     writing.current = true;
     setBusy(true);
     setError("");
+    setCompletionMessage("");
     request.current?.abort();
     const signature = action + JSON.stringify(input);
     const key = operation.current.get(signature) ?? crypto.randomUUID();
@@ -260,6 +263,15 @@ export default function DriverExperience({ userId }: { userId: string }) {
     try {
       await api(action, { ...input, operationKey: key });
       operation.current.delete(signature);
+      if (action === "driver.complete") {
+        setSelected(null);
+        setRecord(null);
+        setTab("History");
+        setFilters(emptyFilters);
+        setHistorySearch("");
+        setHistoryRetry(n => n + 1);
+        setCompletionMessage("Delivery completed. The confirmed handover is in History.");
+      }
       await refresh();
     } catch (e: any) {
       setError(e.message);
@@ -271,6 +283,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
   }
 
   function switchTab(next: Tab) {
+    setCompletionMessage("");
     setTab(next);
     setSelected(null);
     setRecord(null);
@@ -358,6 +371,7 @@ export default function DriverExperience({ userId }: { userId: string }) {
         })}
       </nav>
       {error && <Notice type="error" message={error} />}
+      {completionMessage && <Notice message={completionMessage} />}
       {connectionError && !data && (
         <Notice type="error" message={connectionError} />
       )}

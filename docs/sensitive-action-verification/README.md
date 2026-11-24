@@ -6,7 +6,7 @@ The common web API client now offers a compact **Verify your identity** dialog w
 
 ## Audit boundary and retained denominator
 
-[Reproducible inventory](inventory.json) records **79 actual guard sites across 36 server modules**, **369 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
+[Reproducible inventory](inventory.json) records **79 actual guard sites across 36 server modules**, **370 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
 
 | Purpose | Audited guard families | Recovery |
 | --- | --- | --- |

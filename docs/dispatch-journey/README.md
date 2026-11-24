@@ -1,0 +1,5 @@
+# Connected Dispatch acceptance
+
+Connected normal-action gas, COD/product and failed-wallet retry tests now cover admin vehicle assignment, manager order dispatch, qualified custody, restricted-driver metering/proof/handover, independent cash/stock/LPG reconciliation and admin closure. No successful business stage is created by directly patching order, trip or custody state; SQL creates initial disposable stock/configuration/accounts only.
+
+Three repairs: reject photo bytes belonging to an earlier attempt explicitly; keep handover disabled until current proof is confirmed (including failed/read/retry races); open History with a confirmed-delivery message after success.69 retained focused regressions passed without skips, including actual independent PostgreSQL tests. New connected/UI/source checks passed. Actual browser receipts/closure and full CI/release remain pending in DJ-R06. [Matrix](../traceability/dispatch-journey-rtm.md). No new mobile binary/export. Production NO-GO and unrelated holds retained.

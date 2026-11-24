@@ -91,9 +91,14 @@ export async function attachDeliveryPhoto(
   const hash = createHash("sha256").update(data).digest("hex");
   const prior = await one(
     tx,
-    "SELECT id FROM delivery_photos WHERE order_id=$1 AND sha256=$2",
+    "SELECT id,attempt_id FROM delivery_photos WHERE order_id=$1 AND sha256=$2",
     [o.id, hash],
   );
+  if (prior && prior.attempt_id !== a.id)
+    throw new AppError(
+      409,
+      "This photo belongs to an earlier delivery attempt. Upload new consented proof for the current visit.",
+    );
   if (prior)
     return { id: prior.id, url: "/api/media/" + prior.id, replayed: true };
   if (
