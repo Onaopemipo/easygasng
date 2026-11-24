@@ -28,6 +28,7 @@ export function DispatchSetupChecklist({
   onRefresh,
   onBranch,
   onFleet,
+  onAssignVehicle,
 }: {
   data: DispatchSetupData | null;
   loading: boolean;
@@ -35,6 +36,7 @@ export function DispatchSetupChecklist({
   onRefresh: () => void;
   onBranch: (id: string) => void;
   onFleet: () => void;
+  onAssignVehicle?: () => void;
 }) {
   const checks = data?.checks,
     counts = data?.counts;
@@ -169,10 +171,10 @@ export function DispatchSetupChecklist({
                 <>
                   {!checks.activeTrips && (
                     <p>
-                      Driver: open Home → Start trip, select an approved branch
-                      vehicle and enter the starting odometer.
+                      {onAssignVehicle ? "Assign an available vehicle to a driver here, or ask the driver to use Home → Start trip." : "Driver: open Home → Start trip, select an approved branch vehicle and enter the starting odometer."}
                     </p>
                   )}
+                  {onAssignVehicle && <button type="button" className="text-link" onClick={onAssignVehicle}>Assign vehicle to driver</button>}
                   {(!checks.deliveryEnabled ||
                     !checks.deliveryCapacity ||
                     !checks.deliveryWindows ||
@@ -258,11 +260,13 @@ export default function DispatchSetup({
   branch,
   onBranch,
   onFleet,
+  onAssignVehicle,
 }: {
   user: any;
   branch: string;
   onBranch: (id: string) => void;
   onFleet: () => void;
+  onAssignVehicle?: () => void;
 }) {
   const scope = JSON.stringify([
     user.id,
@@ -318,6 +322,7 @@ export default function DispatchSetup({
       onRefresh={() => setRevision((n) => n + 1)}
       onBranch={onBranch}
       onFleet={onFleet}
+      onAssignVehicle={onAssignVehicle}
     />
   );
 }

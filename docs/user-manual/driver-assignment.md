@@ -28,7 +28,7 @@ On a phone, scroll within the assignment panel. The confirmation stays disabled 
 
 | Requirement | Who resolves it | Next step |
 | --- | --- | --- |
-| Driver has no active vehicle trip | Driver | Sign in as that driver, open **Home → Start trip**, select a suitable branch vehicle and enter the starting odometer. Location sharing is optional. Then dispatch refreshes eligibility. |
+| Driver has no active vehicle trip | Dispatch / driver | Use **Assign vehicle to driver** to select a suitable available branch vehicle and enter the starting odometer, then verify the admin password. Alternatively the driver uses **Home → Start trip**. Admin-created trips keep location sharing off. Then refresh eligibility. |
 | Driver account is inactive | Business owner | Review the actual account in **Drivers** or use another active driver. |
 | Driver availability is off | Authorised staff / dispatch | Confirm the driver is on duty and update availability in **Drivers**, or choose someone else. Availability does not start a trip. |
 | Active trip belongs to a different branch | Driver / dispatch | Use a trip in the fulfilment branch. Reconcile existing custody before ending the old trip and starting another. |
@@ -41,7 +41,7 @@ On a phone, scroll within the assignment panel. The confirmation stays disabled 
 
 ## Review vehicles as the owner
 
-Use **Review branch vehicles and trips** on a blocked driver’s card. This opens **Deliveries → Manifests, LPG, trips & returns → Driver trips, vehicle and fuel records**. Review the branch, vehicle status, genuine LPG suitability and approved capacity. Only the business owner has the existing **Register vehicle** action. Do not create duplicate accounts or fabricated safety evidence. The driver starts their own trip; admin assignment does not do this automatically.
+Use **Review branch vehicles and trips** on a blocked driver’s card. This opens **Deliveries → Manifests, LPG, trips & returns → Driver trips, vehicle and fuel records**. Review the branch, vehicle status, genuine LPG suitability and approved capacity. Only the business owner has the existing **Register vehicle** action. Do not create duplicate accounts or fabricated safety evidence. The owner or branch manager can now use **Deliveries → Assign vehicle to driver** to start the trip directly after password confirmation; the driver can also start their own trip. Order assignment remains a separate action.
 
 A duty trip can cover multiple orders. Complete delivery custody and vehicle/stock/LPG reconciliation before ending it. If the list is empty, ask the business owner to review driver accounts and branch assignments. If eligibility cannot load, refresh before assigning; a failed read does not make a driver eligible.
 

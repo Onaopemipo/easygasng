@@ -6,7 +6,7 @@ The common web API client now offers a compact **Verify your identity** dialog w
 
 ## Audit boundary and retained denominator
 
-[Reproducible inventory](inventory.json) records **77 actual guard sites across 34 server modules**, **370 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
+[Reproducible inventory](inventory.json) records **78 actual guard sites across 35 server modules**, **367 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
 
 | Purpose | Audited guard families | Recovery |
 | --- | --- | --- |
@@ -46,3 +46,5 @@ The published API pass changes only normal authentication/audit metadata. Hosted
 Browser Enter-key injection was not accepted as test evidence; the labelled submit button is verified and is the manual instruction. This phase does not claim physical-device/native/provider/business-policy acceptance or completion of all370 discovery call sites as separate business workflows. All77 password guard sites remain in scope.
 
 All5 [verification findings](findings.json) and all6 bounded requirements/gates are now verified. [Final business preservation](evidence/final-preservation.json), [session cleanup](evidence/session-cleanup.json) and [browser cleanup](evidence/browser-cleanup.json) complete the evidence. No outstanding work in this bounded verification UX scope; existing broader production and feature holds remain separate.
+
+Direct Dispatch vehicle assignment (24 November 2026) adds a fresh-password guard to the owner/manager trip action. Its form shows Current password before submission and preserves the shared verification/idempotency behavior; explicit availability also retains staff authority. [DV evidence](../dispatch-vehicle/README.md). Historical acceptance counts remain recorded above.

@@ -111,6 +111,7 @@ export function DriverAssignmentChoices({
   onSelect,
   onRefresh,
   disabled = false,
+  onAssignVehicle,
 }: {
   data: AssignmentCandidates | null;
   loading: boolean;
@@ -119,6 +120,7 @@ export function DriverAssignmentChoices({
   onSelect: (id: string) => void;
   onRefresh: () => void;
   disabled?: boolean;
+  onAssignVehicle?: () => void;
 }) {
   const readyDrivers =
     data?.candidates.filter((d) => d.readiness.ready === true) ?? [];
@@ -257,6 +259,9 @@ export function DriverAssignmentChoices({
                               Review branch vehicles and trips
                             </a>
                           )}
+                        {issues.some((i) => i.code === "DRIVER_TRIP_REQUIRED") && data.canReviewVehicles && (
+                          <a href="/admin/deliveries#assign-vehicle" className={styles.help} onClick={onAssignVehicle ? e => { e.preventDefault(); onAssignVehicle(); } : undefined}>Assign vehicle to driver</a>
+                        )}
                       </article>
                     );
                   })}

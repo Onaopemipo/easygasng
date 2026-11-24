@@ -25,6 +25,7 @@ import { ActionLoadingIndicator } from "./easygas-loader";
 import DispatchTracking from "./order-tracking";
 import { OperationsExtensions } from "./operations-completion";
 import DispatchSetup from "./dispatch-setup";
+import DispatchVehicleAssignment from "./dispatch-vehicle";
 import { DriverAssignmentChoices } from "./driver-assignment";
 import {
   lagosDate,
@@ -49,10 +50,16 @@ export default function DispatchCentre({ user }: { user: any }) {
     [selected, setSelected] = useState(""),
     [working, setWorking] = useState(false);
   const [operationsView, setOperationsView] = useState("fleet");
+  const [vehicleOpen, setVehicleOpen] = useState(false), [setupRevision, setSetupRevision] = useState(0), [vehicleMessage, setVehicleMessage] = useState("");
+  function closeVehicle() {
+    setVehicleOpen(false);
+    if (window.location.hash === "#assign-vehicle") window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+  }
   const [candidateLoading, setCandidateLoading] = useState(false);
   const [assignmentError, setAssignmentError] = useState("");
   useEffect(() => {
     const openFleet = () => {
+      if (window.location.hash === "#assign-vehicle") { setCandidate(null); setVehicleOpen(true); }
       if (window.location.hash === "#driver-fleet") {
         setOperationsView("fleet");
         setView("operations");
@@ -424,10 +431,13 @@ export default function DispatchCentre({ user }: { user: any }) {
         </div>
         }
       </header>
-      <DispatchSetup user={user} branch={branch} onBranch={(id) => { setBranch(id); setPage(1); }} onFleet={() => {
+      <div className="dispatch-vehicle-launch"><button className="button" onClick={() => { setVehicleMessage(""); setVehicleOpen(true); }}><Truck size={18}/> Assign vehicle to driver</button></div>
+      {vehicleMessage && <Notice message={vehicleMessage}/>}
+      <DispatchSetup key={setupRevision} user={user} branch={branch} onAssignVehicle={() => setVehicleOpen(true)} onBranch={(id) => { setBranch(id); setPage(1); }} onFleet={() => {
         setOperationsView("fleet"); setView("operations"); setCandidate(null);
         window.requestAnimationFrame(() => document.getElementById("dispatch-operations")?.scrollIntoView({ behavior: "smooth", block: "start" }));
       }} />
+      {vehicleOpen && <DispatchVehicleAssignment key={viewerScope} branch={branch} onClose={closeVehicle} onDone={result => { closeVehicle(); setVehicleMessage(result.message); setSetupRevision(n => n + 1); void refresh(); }}/>}
       {error && <Notice type="error" message={error} />}
       {!data ? (
         (!error || busy) && <Loading page label="Loading dispatch records" />
@@ -1100,6 +1110,7 @@ export default function DispatchCentre({ user }: { user: any }) {
               selected={selected}
               onSelect={setSelected}
               disabled={working}
+              onAssignVehicle={() => { setCandidate(null); setVehicleOpen(true); }}
               onRefresh={() => {
                 setAssignmentError("");
                 void refreshCandidates();

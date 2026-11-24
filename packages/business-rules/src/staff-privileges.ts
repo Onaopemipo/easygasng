@@ -65,6 +65,8 @@ export const staffPrivileges: readonly Privilege[] = [
     roles: ["owner", "manager"],
     actions: [
       "dispatch.centre",
+      "dispatch.vehicle.options",
+      "dispatch.vehicle.assign",
       "drivers.workspace",
       "dispatch.candidates",
       "dispatch.assign",

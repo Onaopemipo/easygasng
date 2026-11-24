@@ -1,0 +1,42 @@
+{
+  "environment": "Actual loopback3134 Next.js/API with disposable synthetic in-memory PGlite; independent concurrency also tested on disposable PostgreSQL17",
+  "cases": [
+    {
+      "id": "DV-V01",
+      "status": "PASS",
+      "detail": "Desktop owner form contains driver, available branch vehicle, odometer, explicit on-duty checkbox and current password. Occupied vehicles and drivers are excluded."
+    },
+    {
+      "id": "DV-V02",
+      "status": "PASS",
+      "detail": "Actual wrong-password submission clears only password and preserves selected driver/vehicle/odometer; correct retry starts one trip for the synthetic off-duty driver, marks available explicitly and updates setup to 4/4 and order eligibility to 1/4. No order assignment submitted."
+    },
+    {
+      "id": "DV-V03",
+      "status": "PASS",
+      "detail": "Phone 390x844 has document scrollWidth390 and 358px modal; primary action remains above the demo banner. Tablet820x1180 dark form is legible with no horizontal overflow; Shift+Tab from Close wraps to the final disclosure button, which expands existing trips."
+    },
+    {
+      "id": "DV-V04",
+      "status": "PASS",
+      "detail": "Edited assignment close offers Keep editing/Discard changes; Keep editing retains the driver selection and Discard closes. Pending/duplicate mutation protection additionally tested with the actual shared form renderer."
+    },
+    {
+      "id": "DV-V05",
+      "status": "PASS",
+      "detail": "Missing-trip guidance offers the admin alternative. Both Dispatch blocked-driver and Orders Details\u2192Assign shortcuts open the vehicle dialog. Dispatch callback closes the old assignment dialog; deep-link close clears its hash."
+    },
+    {
+      "id": "DV-V06",
+      "status": "PASS",
+      "detail": "Actual branch-manager identity opens the same scoped Lagos form with current-password confirmation. Owner and manager QA sessions signed out; Login observed, initial light theme and desktop viewport restored."
+    }
+  ],
+  "screenshots": [
+    "docs/dispatch-vehicle/evidence/desktop-form.jpg",
+    "docs/dispatch-vehicle/evidence/phone-form.jpg",
+    "docs/dispatch-vehicle/evidence/dark-tablet-form.jpg"
+  ],
+  "hostedBusinessWrites": 0,
+  "limitations": "Browser breakpoints and keyboard checks, not physical/native/assistive acceptance. One trip/availability mutation occurred only in disposable local fixture. No order, stock or financial mutation."
+}

@@ -1,0 +1,252 @@
+{
+  "phase": "Direct Dispatch vehicle assignment",
+  "date": "2026-11-24",
+  "productionDecision": "Existing NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "DV-R01",
+      "requirement": "Admin assigns a suitable branch vehicle to an active driver directly from Dispatch, with odometer and explicit optional availability",
+      "priority": "P1",
+      "scope": "Web Dispatch administrative vehicle-trip assignment; driver self-start and order assignment remain separate",
+      "uiReference": "Approved direct admin vehicle assignment request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Canonical users/branches/driver_vehicles/driver_trips and business_operation_results; existing order eligibility remains authoritative",
+      "securityControl": "Owner/manager only with Dispatch authority, branch scope and fresh password. Explicit availability uses staff authority; no driver impersonation or GPS consent. Atomic/idempotent trip creation locks driver/branch/vehicle; original order safety, payment and custody guards remain.",
+      "testFiles": [
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-vehicle-components.test.ts",
+        "tests/dispatch-vehicle-source.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [
+        "DV-ASSIGN",
+        "DV-STALE",
+        "DV-V02"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale verification, revoked authority, invalid/stale vehicle, duplicate trip and release-off writes"
+      ],
+      "evidence": [
+        "docs/dispatch-vehicle/evidence/focused.txt",
+        "docs/dispatch-vehicle/evidence/browser-local.json",
+        "docs/dispatch-vehicle/evidence/browser-local.txt",
+        "docs/dispatch-vehicle/evidence/typecheck.txt",
+        "docs/dispatch-vehicle/evidence/build.txt",
+        "docs/dispatch-vehicle/evidence/guard-inventory.txt"
+      ],
+      "acceptanceGate": "DV-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved.",
+      "testResult": "PASS \u2014 48 focused tests, zero failures/skips; six actual local browser cases; build/types and 78 sensitive-action guard sites retained.",
+      "outstandingWork": "No remaining bounded local work; publication/full CI tracked in DV-R04. Original production/native/provider/physical/import/retain-all holds remain separate."
+    },
+    {
+      "id": "DV-R02",
+      "requirement": "Simple responsive Dispatch dialog, password confirmation, safe loading/retry and refreshed setup",
+      "priority": "P1",
+      "scope": "Web Dispatch administrative vehicle-trip assignment; driver self-start and order assignment remain separate",
+      "uiReference": "Approved direct admin vehicle assignment request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/dispatch-vehicle.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/dispatch-setup.tsx",
+        "apps/web/components/driver-assignment.tsx",
+        "packages/business-rules/src/assignment-requirements.ts"
+      ],
+      "dataSource": "Canonical users/branches/driver_vehicles/driver_trips and business_operation_results; existing order eligibility remains authoritative",
+      "securityControl": "Owner/manager only with Dispatch authority, branch scope and fresh password. Explicit availability uses staff authority; no driver impersonation or GPS consent. Atomic/idempotent trip creation locks driver/branch/vehicle; original order safety, payment and custody guards remain.",
+      "testFiles": [
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-vehicle-components.test.ts",
+        "tests/dispatch-vehicle-source.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [
+        "DV-UI",
+        "DV-FORM",
+        "DV-READ-RECOVERY",
+        "DV-V01",
+        "DV-V03",
+        "DV-V04",
+        "DV-V05",
+        "DV-V06"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale verification, revoked authority, invalid/stale vehicle, duplicate trip and release-off writes"
+      ],
+      "evidence": [
+        "docs/dispatch-vehicle/evidence/focused.txt",
+        "docs/dispatch-vehicle/evidence/browser-local.json",
+        "docs/dispatch-vehicle/evidence/browser-local.txt",
+        "docs/dispatch-vehicle/evidence/typecheck.txt",
+        "docs/dispatch-vehicle/evidence/build.txt",
+        "docs/dispatch-vehicle/evidence/guard-inventory.txt"
+      ],
+      "acceptanceGate": "DV-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved.",
+      "testResult": "PASS \u2014 48 focused tests, zero failures/skips; six actual local browser cases; build/types and 78 sensitive-action guard sites retained.",
+      "outstandingWork": "No remaining bounded local work; publication/full CI tracked in DV-R04. Original production/native/provider/physical/import/retain-all holds remain separate."
+    },
+    {
+      "id": "DV-R03",
+      "requirement": "Role, branch, privilege, release, concurrency, idempotency, audit and GPS consent controls",
+      "priority": "P1",
+      "scope": "Web Dispatch administrative vehicle-trip assignment; driver self-start and order assignment remain separate",
+      "uiReference": "Approved direct admin vehicle assignment request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-vehicle.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Canonical users/branches/driver_vehicles/driver_trips and business_operation_results; existing order eligibility remains authoritative",
+      "securityControl": "Owner/manager only with Dispatch authority, branch scope and fresh password. Explicit availability uses staff authority; no driver impersonation or GPS consent. Atomic/idempotent trip creation locks driver/branch/vehicle; original order safety, payment and custody guards remain.",
+      "testFiles": [
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-vehicle-components.test.ts",
+        "tests/dispatch-vehicle-source.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [
+        "DV-AUTH",
+        "DV-RELEASE",
+        "DV-PG",
+        "DV-SOURCE",
+        "DASSIGN-NEG",
+        "DUPTRIP-CONCURRENT"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale verification, revoked authority, invalid/stale vehicle, duplicate trip and release-off writes"
+      ],
+      "evidence": [
+        "docs/dispatch-vehicle/evidence/focused.txt",
+        "docs/dispatch-vehicle/evidence/browser-local.json",
+        "docs/dispatch-vehicle/evidence/browser-local.txt",
+        "docs/dispatch-vehicle/evidence/typecheck.txt",
+        "docs/dispatch-vehicle/evidence/build.txt",
+        "docs/dispatch-vehicle/evidence/guard-inventory.txt"
+      ],
+      "acceptanceGate": "DV-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved.",
+      "testResult": "PASS \u2014 48 focused tests, zero failures/skips; six actual local browser cases; build/types and 78 sensitive-action guard sites retained.",
+      "outstandingWork": "No remaining bounded local work; publication/full CI tracked in DV-R04. Original production/native/provider/physical/import/retain-all holds remain separate."
+    },
+    {
+      "id": "DV-R04",
+      "requirement": "Executed acceptance, manual/traceability and existing client-demo rollout with no mobile binary",
+      "priority": "P1",
+      "scope": "Web Dispatch administrative vehicle-trip assignment; driver self-start and order assignment remain separate",
+      "uiReference": "Approved direct admin vehicle assignment request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "docs/user-manual/dispatch-setup.md",
+        "docs/user-manual/dispatch-fleet.md",
+        "docs/user-manual/driver-assignment.md",
+        "scripts/lib/reviewed-dispatch-vehicle-source.mjs"
+      ],
+      "dataSource": "Canonical users/branches/driver_vehicles/driver_trips and business_operation_results; existing order eligibility remains authoritative",
+      "securityControl": "Owner/manager only with Dispatch authority, branch scope and fresh password. Explicit availability uses staff authority; no driver impersonation or GPS consent. Atomic/idempotent trip creation locks driver/branch/vehicle; original order safety, payment and custody guards remain.",
+      "testFiles": [
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-vehicle-components.test.ts",
+        "tests/dispatch-vehicle-source.test.ts",
+        "tests/driver-assignment.test.ts",
+        "tests/driver-trip-conflicts.test.ts"
+      ],
+      "testIds": [
+        "DV-SOURCE"
+      ],
+      "negativeTests": [
+        "Denied roles/branches, stale verification, revoked authority, invalid/stale vehicle, duplicate trip and release-off writes"
+      ],
+      "evidence": [
+        "docs/dispatch-vehicle/evidence/focused.txt",
+        "docs/dispatch-vehicle/evidence/browser-local.json",
+        "docs/dispatch-vehicle/evidence/browser-local.txt",
+        "docs/dispatch-vehicle/evidence/typecheck.txt",
+        "docs/dispatch-vehicle/evidence/build.txt",
+        "docs/dispatch-vehicle/evidence/guard-inventory.txt"
+      ],
+      "acceptanceGate": "DV-G04",
+      "status": "PARTIAL",
+      "reason": "Local implementation, manual and traceability pass; exact-source hosted publication and full GitHub validation remain pending.",
+      "testResult": "PASS \u2014 48 focused tests, zero failures/skips; six actual local browser cases; build/types and 78 sensitive-action guard sites retained.",
+      "outstandingWork": "Publish exact source to existing client demo, verify scoped reads/denials/preservation and hosted form, complete full CI and final evidence push."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DV-G01",
+      "description": "Admin assigns a suitable branch vehicle to an active driver directly from Dispatch, with odometer and explicit optional availability",
+      "status": "PASS",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved."
+    },
+    {
+      "id": "DV-G02",
+      "description": "Simple responsive Dispatch dialog, password confirmation, safe loading/retry and refreshed setup",
+      "status": "PASS",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved."
+    },
+    {
+      "id": "DV-G03",
+      "description": "Role, branch, privilege, release, concurrency, idempotency, audit and GPS consent controls",
+      "status": "PASS",
+      "reason": "Actual canonical, negative, independent PostgreSQL concurrency and owner/manager browser acceptance passes; existing final order/self-start guards preserved."
+    },
+    {
+      "id": "DV-G04",
+      "description": "Executed acceptance, manual/traceability and existing client-demo rollout with no mobile binary",
+      "status": "PENDING",
+      "reason": "Local implementation, manual and traceability pass; exact-source hosted publication and full GitHub validation remain pending."
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "implemented": 4,
+    "verified": 3,
+    "partial": 1,
+    "excluded": 0,
+    "criticalSecurity": {
+      "covered": 1,
+      "total": 1
+    },
+    "routes": {
+      "locallyVerified": 1,
+      "total": 1
+    },
+    "gates": {
+      "passed": 3,
+      "total": 4
+    }
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Explicitly approved admin-created driver trip from Dispatch; no driver impersonation, automatic order assignment or GPS consent. No new mobile binary."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Admin creates actual duty trip with their own audited authority and password, explicit optional on-duty availability and location consent false. Eight reviewed shared web/rule continuations, two new runtime modules, no schema/native changes. 48 focused checks including real PostgreSQL17 races and six local actual-browser cases pass. Hosted rollout/full CI pending."
+    }
+  ],
+  "verification": {
+    "matrixValidation": "docs/dispatch-vehicle/evidence/traceability.txt"
+  }
+}

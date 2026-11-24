@@ -35,7 +35,7 @@ Closing an edited dialog asks whether to **Keep editing** or **Discard changes**
 
 ## Driver access and trip actions
 
-Hosted drivers use **Deliveries → Driver workspace → Home → Current trip**. Choose **Start trip** when there is no active trip; an active trip provides the existing trip management controls. Use an active, LPG-suitable vehicle in the fulfilment branch, provide the starting odometer and required location consent. Ask the owner to register/verify a suitable vehicle if none is eligible. The server prevents concurrent active trips for a driver or vehicle and retains custody/reconciliation checks at trip end.
+Hosted drivers use **Deliveries → Driver workspace → Home → Current trip**. Choose **Start trip** when there is no active trip; an active trip provides the existing trip management controls. Use an active, LPG-suitable vehicle in the fulfilment branch, provide the starting odometer; location consent is optional. Ask the owner to register/verify a suitable vehicle if none is eligible. The server prevents concurrent active trips for a driver or vehicle and retains custody/reconciliation checks at trip end.
 
 Production driver sessions are delivery-only. They can read their own trip through the driver endpoint and their permitted assigned manifest/LPG records. They cannot access the management Fleet & trips summary, route planning or fuel/cash/stock management APIs. Owner, manager and finance fleet reads retain their existing branch scope; only the owner can register a vehicle after password verification. The management workspace's legacy full-session driver forms, exercised by local component tests, do not expand hosted driver authority.
 
@@ -76,3 +76,7 @@ Moving away cancels the shared admin records read, and a delayed response from a
 Published and verified on the client demo on 24 November 2026. The same 24-order response improved from approximately 20.7 seconds to 1.8–2.0 seconds in the recorded hosted probes; actual speed depends on network and workload. Seven-role restrictions, foreign-record denials and order items/history were checked. [Timings and rollout evidence](../loading-performance/README.md), [traceability](../traceability/loading-performance-rtm.md). No mobile binary was created.
 
 Current Dispatch setup: use the [single branch checklist](dispatch-setup.md) before assignment. Ready drivers appear first; expand **Blocked drivers** for exact requirements and next steps. Existing password, approval and final safety/custody checks remain.
+
+## Assign a vehicle without driver sign-in
+
+In **Deliveries**, choose **Assign vehicle to driver**. Owners and branch managers select a driver, available suitable vehicle and starting odometer, optionally confirm on-duty availability, then enter their own password. This starts the actual driver trip with GPS sharing off. Occupied drivers/vehicles cannot be reassigned until their existing trip is reconciled and ended. [Step-by-step guide](dispatch-setup.md#assign-a-vehicle-directly-as-an-administrator).

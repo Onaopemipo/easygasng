@@ -30,8 +30,8 @@ const requirements: Record<string, Omit<AssignmentIssue, "code">> = {
   DRIVER_TRIP_REQUIRED: {
     title: "Driver has no active vehicle trip",
     resolution:
-      "The driver must sign in, open Home → Start trip, choose an active LPG-suitable vehicle in this order’s branch, and enter the starting odometer. If no vehicle is offered, ask the business owner to review the branch’s vehicles. Then refresh this check.",
-    responsible: "Driver",
+      "Dispatch can use Assign vehicle to driver to select an available LPG-suitable branch vehicle and enter the starting odometer. The driver can also use Home → Start trip. If no vehicle is offered, ask the business owner to review branch vehicles. Then refresh eligibility.",
+    responsible: "Dispatch / driver",
     help: "fleet",
   },
   TRIP_BRANCH_MISMATCH: {

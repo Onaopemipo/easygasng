@@ -8,6 +8,7 @@ import { notificationInbox, markNotificationsRead } from "./notification-inbox";
 import { enrollSupportSla } from "./support-desk";
 import { auditHistory } from "./audit-history";
 import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
+import { dispatchVehicle } from "./dispatch-vehicle";
 import { techniciansWorkspace } from "./technicians-availability";
 import { accountPassword } from "./password-policy";
 import { orderAdditions } from "./order-additions";
@@ -388,6 +389,8 @@ export async function dispatch(
       )
         return inventoryWorkspace(tx, user, action, input);
       if (action === "dispatch.setup") return dispatchSetup(tx, user, input);
+      if (["dispatch.vehicle.options", "dispatch.vehicle.assign"].includes(action))
+        return dispatchVehicle(tx, user, action, input);
       if (["dispatch.centre", "dispatch.candidates", "drivers.workspace"].includes(action))
         return dispatchCentre(tx, user, action, input);
       if (action === "admin.dashboard") return adminDashboard(tx, user, input);

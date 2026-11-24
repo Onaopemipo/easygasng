@@ -62,7 +62,8 @@ test("DASSIGN-EXACT: missing trip, inactive account, availability, unsuitable/in
     assert.deepEqual(f.codes(result), ["DRIVER_TRIP_REQUIRED"]);
     const issue = result.candidates[0].readiness.issues[0];
     assert.match(issue.resolution, /Home → Start trip/);
-    assert.equal(issue.responsible, "Driver");
+    assert.equal(issue.responsible, "Dispatch / driver");
+    assert.match(issue.resolution, /Dispatch can use Assign vehicle to driver/);
     await f.db.query(
       "UPDATE users SET active=false,driver_available=false WHERE id=$1",
       [f.actors.driver.id],
