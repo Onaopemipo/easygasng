@@ -1,0 +1,28 @@
+{
+  "status": "FIXED_AND_PUBLISHED",
+  "findings": [
+    {
+      "id": "DJ-F01",
+      "problem": "Earlier-attempt photo bytes reported successful replay but could not satisfy current-attempt proof",
+      "fix": "Return explicit409 asking for new consented current-visit proof; retain same-attempt replay",
+      "evidence": "initial.txt showed DJ-RETRY failing before repair; journey.txt now passes"
+    },
+    {
+      "id": "DJ-F02",
+      "problem": "Metering alone enabled handover before proof",
+      "fix": "Fail-closed current-attempt proof read plus cancellation/retry handling; upload success enables handover without a late stale read overriding it",
+      "evidence": "DJ-PROOF-UI and phone browser gating/reopen"
+    },
+    {
+      "id": "DJ-F03",
+      "problem": "Confirmed handover left obsolete active assignment message",
+      "fix": "Open unfiltered History with explicit completion notice",
+      "evidence": "DJ-COMPLETION-UI and second actual browser delivery"
+    }
+  ],
+  "harnessNotes": [
+    "Initial wallet configuration used the wrong setting name; corrected disposable fixture to wallet.enabled before product acceptance.",
+    "First retained PostgreSQL pass used the wrong startup port and had connection refusals; restarted own cluster explicitly55437 and reran69 checks with zero failures/skips.",
+    "Hosted proof metadata smoke initially assumed a branch_id wire field; corrected it to select from authoritative manager-scoped orders and exclude customer/commercial/driver-owned order IDs. All8 access cases then passed and7 own sessions were revoked with401 confirmed."
+  ]
+}
