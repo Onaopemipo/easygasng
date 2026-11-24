@@ -80,3 +80,7 @@ Current Dispatch setup: use the [single branch checklist](dispatch-setup.md) bef
 ## Assign a vehicle without driver sign-in
 
 In **Deliveries**, choose **Assign vehicle to driver**. Owners and branch managers select a driver, available suitable vehicle and starting odometer, optionally confirm on-duty availability, then enter their own password. This starts the actual driver trip with GPS sharing off. Occupied drivers/vehicles cannot be reassigned until their existing trip is reconciled and ended. [Step-by-step guide](dispatch-setup.md#assign-a-vehicle-directly-as-an-administrator).
+
+## Manage trips without driver sign-in
+
+Use **Deliveries → Manage trips**, select the driver’s current trip, then choose **End trip** or **Change vehicle**. Enter the actual ending odometer; a change also requires an available suitable replacement and its separate starting reading. Verify your own password. Existing reconciliation must be clear before either action: unresolved manifests, LPG, active deliveries and held returns remain blockers with direct resolution links. Driver availability stays unchanged, and replacement GPS sharing is off. Changes are atomic; a failed replacement leaves the old trip intact. [Detailed steps](dispatch-setup.md#end-a-trip-or-change-its-vehicle-as-an-administrator).

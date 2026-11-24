@@ -139,16 +139,16 @@ test("SVERIFY-AUDIT: retained guard inventory covers server sites and all browse
   const inventory = JSON.parse(
     await readFile("docs/sensitive-action-verification/inventory.json", "utf8"),
   );
-  assert.equal(inventory.guardSites.length, 78);
-  assert.equal(new Set(inventory.guardSites.map((r: any) => r.file)).size, 35);
-  const previous = JSON.parse(execFileSync("git", ["show", "d309ad8737903f73c6ed223e8ccbd514dd26a670:docs/sensitive-action-verification/inventory.json"], { encoding: "utf8" }));
-  assert.equal(previous.guardSites.length, 77);
+  assert.equal(inventory.guardSites.length, 79);
+  assert.equal(new Set(inventory.guardSites.map((r: any) => r.file)).size, 36);
+  const previous = JSON.parse(execFileSync("git", ["show", "7d1928f88281bf96bf8091758c8ae068b2ec07d6:docs/sensitive-action-verification/inventory.json"], { encoding: "utf8" }));
+  assert.equal(previous.guardSites.length, 78);
   const identity = ({id,file,function:fn,conditions}:any) => ({id,file,function:fn,conditions});
-  const retained = inventory.guardSites.filter((r:any) => r.file !== "apps/web/lib/dispatch-vehicle.ts");
+  const retained = inventory.guardSites.filter((r:any) => r.file !== "apps/web/lib/dispatch-trip.ts");
   assert.deepEqual(retained.map(identity).sort((a:any,b:any)=>a.id.localeCompare(b.id)), previous.guardSites.map(identity).sort((a:any,b:any)=>a.id.localeCompare(b.id)));
-  const added = inventory.guardSites.find((r:any) => r.file === "apps/web/lib/dispatch-vehicle.ts");
-  assert.equal(added.id, "SVERIFY-SITE-078");
-  assert.ok(added.actionCandidates.includes("dispatch.vehicle.assign"));
+  const added = inventory.guardSites.find((r:any) => r.file === "apps/web/lib/dispatch-trip.ts");
+  assert.equal(added.id, "SVERIFY-SITE-079");
+  assert.ok(added.actionCandidates.includes("dispatch.trip.end"));
   for (const row of inventory.guardSites) {
     const lines = (await readFile(row.file, "utf8")).split("\n");
     assert.match(lines[row.line - 1], /recentVerification\(user\)/);

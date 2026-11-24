@@ -27,6 +27,17 @@ The checklist is live on the existing client demo. At verification, Lagos had th
 4. Leave **I confirm the driver is on duty — mark available for deliveries** checked only when the driver is on duty. Uncheck it to keep availability unchanged. This option is absent if your staff-management authority is revoked.
 5. Enter your **Current password** and choose **Verify and assign vehicle**. The trip starts and Dispatch refreshes automatically; the driver sees it on Home. You can then assign an order normally.
 
-Owners and branch managers can use this action within their authorised scope. GPS sharing stays off; an admin cannot give location consent for a driver. No driver sign-in or permanent vehicle/account change is required. A driver or vehicle already on a trip is listed separately: reconcile and end that trip before changing vehicles. The existing payment, coverage, inspection, stock and custody checks still apply to each order.
+Owners and branch managers can use this action within their authorised scope. GPS sharing stays off; an admin cannot give location consent for a driver. No driver sign-in or permanent vehicle/account change is required. A driver or vehicle already on a trip is listed separately: choose **Manage trip** to reconcile and end it or change vehicles directly. The existing payment, coverage, inspection, stock and custody checks still apply to each order.
 
 On an incorrect password or failed save, entries stay in the form. Retry an uncertain save with the same entries so it cannot create a duplicate trip. **Refresh options** rechecks availability; edited entries require confirmation before being discarded. Closing a pending save is blocked. [Verification matrix](../traceability/dispatch-vehicle-rtm.md).
+
+## End a trip or change its vehicle as an administrator
+
+1. Open **Deliveries → Manage trips**. Select the branch and **Driver / current vehicle**. Alternatively, expand **Drivers already on a trip** in the assignment dialog and choose **Manage trip** beside the driver.
+2. Review the current vehicle, starting odometer and reconciliation check. If blocked, use **Review product manifests**, **Review LPG custody** or **Review deliveries & returns**. Authorised operations/finance staff must complete the existing receipt, return and reconciliation workflows; refresh the trip afterwards.
+3. Choose **End trip** to record the actual current vehicle ending odometer. Choose **Change vehicle** to also select a different available suitable branch vehicle and enter that replacement vehicle’s actual starting odometer. These are separate readings and may be different.
+4. Enter **your own current password**, then choose **Verify and end trip** or **Verify and change vehicle**. Dispatch refreshes automatically. No driver sign-in is required.
+
+Owners and authorised branch managers can use these controls. Ending is blocked by unreconciled product manifests, bulk LPG custody, assigned/in-transit deliveries and held delivery goods/cylinders. A stale trip, unavailable replacement or failed reconciliation cannot force a change. Changing a vehicle closes the old trip and starts the replacement together: if either part fails, the old trip remains intact. Nothing transfers or clears custody automatically.
+
+Driver availability stays unchanged. Location sharing stops on the ended trip and stays off on a replacement trip; an admin cannot provide the driver’s GPS consent. Incorrect passwords clear only the password; entries remain for retry. Edited entries require confirmation before refresh, mode changes or dismissal; pending saves cannot be dismissed. [Trip management verification matrix](../traceability/dispatch-trip-rtm.md).

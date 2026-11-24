@@ -555,6 +555,21 @@
       "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
     },
     {
+      "id": "SVERIFY-SITE-079",
+      "file": "apps/web/lib/dispatch-trip.ts",
+      "line": 120,
+      "function": "dispatchTrip",
+      "conditions": [],
+      "actionCandidates": [
+        "dispatch.centre",
+        "dispatch.trip.options",
+        "dispatch.trip.review",
+        "dispatch.trip.end",
+        "dispatch.trip.change"
+      ],
+      "recovery": "shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained"
+    },
+    {
       "id": "SVERIFY-SITE-078",
       "file": "apps/web/lib/dispatch-vehicle.ts",
       "line": 71,
@@ -2536,28 +2551,28 @@
     },
     {
       "file": "apps/web/components/dispatch-centre.tsx",
-      "line": 145,
+      "line": 147,
       "transport": "api",
       "target": "\"dispatch.centre?\" + query",
       "literal": null
     },
     {
       "file": "apps/web/components/dispatch-centre.tsx",
-      "line": 237,
+      "line": 239,
       "transport": "api",
       "target": "\"dispatch.candidates?orderId=\" + encodeURIComponent(order.id)",
       "literal": null
     },
     {
       "file": "apps/web/components/dispatch-centre.tsx",
-      "line": 250,
+      "line": 252,
       "transport": "api",
       "target": "\"dispatch.candidates?orderId=\" + encodeURIComponent(orderId)",
       "literal": null
     },
     {
       "file": "apps/web/components/dispatch-centre.tsx",
-      "line": 296,
+      "line": 298,
       "transport": "api",
       "target": "candidate.action",
       "literal": null
@@ -2570,15 +2585,29 @@
       "literal": null
     },
     {
+      "file": "apps/web/components/dispatch-trip.tsx",
+      "line": 65,
+      "transport": "api",
+      "target": "\"dispatch.trip.options\"",
+      "literal": "dispatch.trip.options"
+    },
+    {
+      "file": "apps/web/components/dispatch-trip.tsx",
+      "line": 109,
+      "transport": "api",
+      "target": "\"dispatch.trip.review?tripId=\" + encodeURIComponent(tripId)",
+      "literal": null
+    },
+    {
       "file": "apps/web/components/dispatch-vehicle.tsx",
-      "line": 49,
+      "line": 51,
       "transport": "api",
       "target": "\"dispatch.vehicle.options\"",
       "literal": "dispatch.vehicle.options"
     },
     {
       "file": "apps/web/components/dispatch-vehicle.tsx",
-      "line": 183,
+      "line": 185,
       "transport": "form action",
       "target": "dispatch.vehicle.assign",
       "literal": "dispatch.vehicle.assign"
@@ -4547,9 +4576,9 @@
     }
   ],
   "summary": {
-    "guardSites": 78,
-    "guardFiles": 35,
-    "browserCalls": 367,
+    "guardSites": 79,
+    "guardFiles": 36,
+    "browserCalls": 369,
     "directFetch": 11
   },
   "notes": [

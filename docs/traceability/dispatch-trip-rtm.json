@@ -1,0 +1,215 @@
+{
+  "phase": "Admin trip closure and vehicle change",
+  "date": "2026-11-24",
+  "productionDecision": "Existing NO-GO and native/provider/physical/import/retain-all holds unchanged",
+  "requirements": [
+    {
+      "id": "TC-R01",
+      "requirement": "Admin ends a driver trip directly from Dispatch with ending odometer and own password",
+      "priority": "P1",
+      "scope": "Web Dispatch admin trip closure and atomic vehicle replacement; existing native and driver self-service authority retained",
+      "uiReference": "User-approved admin end-trip/change-vehicle request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/components/dispatch-trip.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Canonical driver_trips/users/driver_vehicles, vehicle_product_loads, bulk_lpg_loads, orders/delivery_attempts and business_operation_results",
+      "securityControl": "Owner/manager Dispatch authority, branch scope, fresh password, field release, optimistic trip version, locked atomic/idempotent closure; no admin GPS consent or reconciliation bypass",
+      "testFiles": [
+        "tests/dispatch-trip.test.ts",
+        "tests/dispatch-trip-components.test.ts",
+        "tests/dispatch-trip-source.test.ts"
+      ],
+      "testIds": [
+        "TC-END"
+      ],
+      "negativeTests": [
+        "Wrong roles/branches, revoked access, stale versions/password, open custody, invalid odometer/replacement and concurrent writes"
+      ],
+      "evidence": [
+        "docs/dispatch-trip/evidence/focused.txt",
+        "docs/dispatch-trip/evidence/browser-local.txt",
+        "docs/dispatch-trip/evidence/browser-local.json"
+      ],
+      "acceptanceGate": "TC-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical controls and local acceptance passed; hosted release/full CI pending",
+      "testResult": "PASS \u2014 42 focused regressions including PostgreSQL races, component controls and historical preservation; actual synthetic browser end/change passed",
+      "outstandingWork": "None within local backend scope; hosted/full CI publication tracked in TC-R04"
+    },
+    {
+      "id": "TC-R02",
+      "requirement": "Admin changes vehicle atomically after reconciliation, preserving old trip if replacement fails",
+      "priority": "P1",
+      "scope": "Web Dispatch admin trip closure and atomic vehicle replacement; existing native and driver self-service authority retained",
+      "uiReference": "User-approved admin end-trip/change-vehicle request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/components/dispatch-trip.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Canonical driver_trips/users/driver_vehicles, vehicle_product_loads, bulk_lpg_loads, orders/delivery_attempts and business_operation_results",
+      "securityControl": "Owner/manager Dispatch authority, branch scope, fresh password, field release, optimistic trip version, locked atomic/idempotent closure; no admin GPS consent or reconciliation bypass",
+      "testFiles": [
+        "tests/dispatch-trip.test.ts",
+        "tests/dispatch-trip-components.test.ts",
+        "tests/dispatch-trip-source.test.ts"
+      ],
+      "testIds": [
+        "TC-CHANGE",
+        "TC-PG"
+      ],
+      "negativeTests": [
+        "Wrong roles/branches, revoked access, stale versions/password, open custody, invalid odometer/replacement and concurrent writes"
+      ],
+      "evidence": [
+        "docs/dispatch-trip/evidence/focused.txt",
+        "docs/dispatch-trip/evidence/browser-local.txt",
+        "docs/dispatch-trip/evidence/browser-local.json"
+      ],
+      "acceptanceGate": "TC-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical controls and local acceptance passed; hosted release/full CI pending",
+      "testResult": "PASS \u2014 42 focused regressions including PostgreSQL races, component controls and historical preservation; actual synthetic browser end/change passed",
+      "outstandingWork": "None within local backend scope; hosted/full CI publication tracked in TC-R04"
+    },
+    {
+      "id": "TC-R03",
+      "requirement": "Canonical reconciliation, active-delivery, authority, version, concurrency and idempotency controls",
+      "priority": "P1",
+      "scope": "Web Dispatch admin trip closure and atomic vehicle replacement; existing native and driver self-service authority retained",
+      "uiReference": "User-approved admin end-trip/change-vehicle request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/components/dispatch-trip.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Canonical driver_trips/users/driver_vehicles, vehicle_product_loads, bulk_lpg_loads, orders/delivery_attempts and business_operation_results",
+      "securityControl": "Owner/manager Dispatch authority, branch scope, fresh password, field release, optimistic trip version, locked atomic/idempotent closure; no admin GPS consent or reconciliation bypass",
+      "testFiles": [
+        "tests/dispatch-trip.test.ts",
+        "tests/dispatch-trip-components.test.ts",
+        "tests/dispatch-trip-source.test.ts"
+      ],
+      "testIds": [
+        "TC-CUSTODY",
+        "TC-RECEIVE",
+        "TC-AUTH"
+      ],
+      "negativeTests": [
+        "Wrong roles/branches, revoked access, stale versions/password, open custody, invalid odometer/replacement and concurrent writes"
+      ],
+      "evidence": [
+        "docs/dispatch-trip/evidence/focused.txt",
+        "docs/dispatch-trip/evidence/browser-local.txt",
+        "docs/dispatch-trip/evidence/browser-local.json"
+      ],
+      "acceptanceGate": "TC-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical controls and local acceptance passed; hosted release/full CI pending",
+      "testResult": "PASS \u2014 42 focused regressions including PostgreSQL races, component controls and historical preservation; actual synthetic browser end/change passed",
+      "outstandingWork": "None within local backend scope; hosted/full CI publication tracked in TC-R04"
+    },
+    {
+      "id": "TC-R04",
+      "requirement": "Simple responsive UI, actual acceptance, manual/traceability and existing client-demo publication",
+      "priority": "P1",
+      "scope": "Web Dispatch admin trip closure and atomic vehicle replacement; existing native and driver self-service authority retained",
+      "uiReference": "User-approved admin end-trip/change-vehicle request, 24 November 2026",
+      "route": [
+        "/admin/deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/components/dispatch-trip.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts"
+      ],
+      "dataSource": "Canonical driver_trips/users/driver_vehicles, vehicle_product_loads, bulk_lpg_loads, orders/delivery_attempts and business_operation_results",
+      "securityControl": "Owner/manager Dispatch authority, branch scope, fresh password, field release, optimistic trip version, locked atomic/idempotent closure; no admin GPS consent or reconciliation bypass",
+      "testFiles": [
+        "tests/dispatch-trip.test.ts",
+        "tests/dispatch-trip-components.test.ts",
+        "tests/dispatch-trip-source.test.ts"
+      ],
+      "testIds": [
+        "TC-UI",
+        "TC-BLOCKERS",
+        "TC-RECOVERY",
+        "TC-SOURCE"
+      ],
+      "negativeTests": [
+        "Wrong roles/branches, revoked access, stale versions/password, open custody, invalid odometer/replacement and concurrent writes"
+      ],
+      "evidence": [
+        "docs/dispatch-trip/evidence/focused.txt",
+        "docs/dispatch-trip/evidence/browser-local.txt",
+        "docs/dispatch-trip/evidence/browser-local.json"
+      ],
+      "acceptanceGate": "TC-G04",
+      "status": "PARTIAL",
+      "reason": "Canonical controls and local acceptance passed; hosted release/full CI pending",
+      "testResult": "PASS \u2014 42 focused regressions including PostgreSQL races, component controls and historical preservation; actual synthetic browser end/change passed",
+      "outstandingWork": "Full GitHub validation and existing client-demo publication/read-only preservation checks"
+    }
+  ],
+  "gates": [
+    {
+      "id": "TC-G01",
+      "description": "Admin ends a driver trip directly from Dispatch with ending odometer and own password",
+      "status": "PASS",
+      "reason": "Executed focused evidence and synthetic browser acceptance"
+    },
+    {
+      "id": "TC-G02",
+      "description": "Admin changes vehicle atomically after reconciliation, preserving old trip if replacement fails",
+      "status": "PASS",
+      "reason": "Executed focused evidence and synthetic browser acceptance"
+    },
+    {
+      "id": "TC-G03",
+      "description": "Canonical reconciliation, active-delivery, authority, version, concurrency and idempotency controls",
+      "status": "PASS",
+      "reason": "Executed focused evidence and synthetic browser acceptance"
+    },
+    {
+      "id": "TC-G04",
+      "description": "Simple responsive UI, actual acceptance, manual/traceability and existing client-demo publication",
+      "status": "PENDING",
+      "reason": "Hosted/full CI pending"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "implemented": 4,
+    "verified": 3,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Approved admin trip end and atomic vehicle change without driver sign-in; required reconciliation and existing production holds retained. No new mobile binary."
+    }
+  ]
+}

@@ -6,7 +6,7 @@ The common web API client now offers a compact **Verify your identity** dialog w
 
 ## Audit boundary and retained denominator
 
-[Reproducible inventory](inventory.json) records **78 actual guard sites across 35 server modules**, **367 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
+[Reproducible inventory](inventory.json) records **79 actual guard sites across 36 server modules**, **369 browser API/form entry points**, and **11 direct fetch sites**. `node scripts/audit-sensitive-actions.mjs` regenerates source locations. Every guard stays in the denominator, including conditional governance, delegated approval and recovery helpers. Direct password checks were also reviewed: sign-in, invitation/reset entry and account password change already have their own required password fields; account password change still requires the current password and revokes existing sessions. Context literals are discovery candidates, not a count of completed business workflows.
 
 | Purpose | Audited guard families | Recovery |
 | --- | --- | --- |
@@ -50,3 +50,5 @@ All5 [verification findings](findings.json) and all6 bounded requirements/gates 
 Direct Dispatch vehicle assignment (24 November 2026) adds a fresh-password guard to the owner/manager trip action. Its form shows Current password before submission and preserves the shared verification/idempotency behavior; explicit availability also retains staff authority. [DV evidence](../dispatch-vehicle/README.md). Historical acceptance counts remain recorded above.
 
 Inventory generation now retains the original guard-site IDs when another module adds a guard. All previous 77 identities remain matched to committed history; the Dispatch vehicle guard is SVERIFY-SITE-078. Repeated regeneration produces the same inventory.
+
+Admin trip management adds `SVERIFY-SITE-079` in `dispatch-trip.ts` for end/change; IDs 001–078 remain stable. Both operations use the existing own-password form and server verification, role/branch/privilege, release, version, operation identity and canonical reconciliation controls. See the [trip phase matrix](../traceability/dispatch-trip-rtm.md).

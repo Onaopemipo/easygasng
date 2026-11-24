@@ -62,3 +62,7 @@ Other shared operation forms display the same inline field if their server verif
 The fix was verified with one labelled synthetic QA vehicle, with LPG suitability left off. Only the labelled QA vehicle was created; existing orders, stock, ledger records, vehicles and trips were preserved. See the [verification matrix](../traceability/fleet-verification-rtm.md).
 
 Current Dispatch setup: use the [single branch checklist](dispatch-setup.md) before assignment. Ready drivers appear first; expand **Blocked drivers** for exact requirements and next steps. Existing password, approval and final safety/custody checks remain.
+
+## Change or end a driver’s current trip
+
+An owner or authorised branch manager can use **Deliveries → Manage trips** without signing in as the driver. Select the current trip, resolve the displayed custody/delivery blockers, then end it or change its vehicle with actual odometer readings and your own password. Changing vehicles is one atomic action; failed replacement leaves the original trip intact. This does not reassign orders, transfer stock, change availability or grant GPS consent. [Step-by-step trip controls](dispatch-setup.md#end-a-trip-or-change-its-vehicle-as-an-administrator).

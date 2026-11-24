@@ -9,6 +9,7 @@ import { enrollSupportSla } from "./support-desk";
 import { auditHistory } from "./audit-history";
 import {enforceStaffPrivilege, staffPrivilegeAction} from "./staff-privileges";
 import { dispatchVehicle } from "./dispatch-vehicle";
+import { dispatchTrip } from "./dispatch-trip";
 import { techniciansWorkspace } from "./technicians-availability";
 import { accountPassword } from "./password-policy";
 import { orderAdditions } from "./order-additions";
@@ -391,6 +392,8 @@ export async function dispatch(
       if (action === "dispatch.setup") return dispatchSetup(tx, user, input);
       if (["dispatch.vehicle.options", "dispatch.vehicle.assign"].includes(action))
         return dispatchVehicle(tx, user, action, input);
+      if (["dispatch.trip.options", "dispatch.trip.review", "dispatch.trip.end", "dispatch.trip.change"].includes(action))
+        return dispatchTrip(tx, user, action, input);
       if (["dispatch.centre", "dispatch.candidates", "drivers.workspace"].includes(action))
         return dispatchCentre(tx, user, action, input);
       if (action === "admin.dashboard") return adminDashboard(tx, user, input);

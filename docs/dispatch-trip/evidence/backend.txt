@@ -1,0 +1,14 @@
+✔ TC-END: owner/manager end a reconciled driver trip with their own audited identity and password; GPS stops, availability stays and exact replay creates no duplicate (1240.493542ms)
+✔ TC-CHANGE: vehicle replacement atomically closes the old trip and starts one new trip with separate odometers, no GPS consent and unchanged availability (991.766875ms)
+✔ TC-CUSTODY: every unreconciled product/LPG state and assigned/outbound/held failed delivery blocks both admin actions without clearing custody; driver baseline still blocks physical loads (920.999333ms)
+✔ TC-RECEIVE: actual qualified manifest return and independent receipt clears the existing reconciliation gate before admin closure (840.339375ms)
+✔ TC-AUTH: all roles, branch/revoked/password/release/version/odometer/replacement exceptions fail closed and preserve the original trip (911.067708ms)
+✔ TC-PG: concurrent end/change and replacement claims serialize; stale replacement never strands the driver or closes the old trip (675.174666ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6069.732791

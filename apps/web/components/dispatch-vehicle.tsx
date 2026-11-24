@@ -29,10 +29,12 @@ export default function DispatchVehicleAssignment({
   branch,
   onClose,
   onDone,
+  onManageTrip,
 }: {
   branch: string;
   onClose: () => void;
   onDone: (result: any) => void;
+  onManageTrip?: (tripId: string) => void;
 }) {
   const [data, setData] = useState<Options | null>(null),
     [error, setError] = useState("");
@@ -255,6 +257,7 @@ export default function DispatchVehicleAssignment({
                     .map((d) => (
                       <li key={d.id}>
                         {d.name} · {d.vehicle_label ?? "Assigned vehicle"}
+                        {onManageTrip && <button type="button" className="button secondary" onClick={async () => { if (await canDiscard()) onManageTrip(d.trip_id!); }}>Manage trip</button>}
                       </li>
                     ))}
                 </ul>

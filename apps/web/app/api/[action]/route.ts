@@ -26,6 +26,8 @@ const reads = new Set([
   "dispatch.centre",
   "dispatch.setup",
   "dispatch.vehicle.options",
+  "dispatch.trip.options",
+  "dispatch.trip.review",
   "drivers.workspace",
   "dispatch.candidates",
   "fleet.summary",
