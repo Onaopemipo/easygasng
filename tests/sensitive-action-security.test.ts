@@ -2,6 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
+import { execFileSync } from "node:child_process";
 import { fixture } from "./helpers/order-tracking-fixture";
 import { id, hashPassword, issueSession, digest } from "../apps/web/lib/auth";
 import { reviewedSensitiveVerificationSourceHash } from "../scripts/lib/reviewed-sensitive-verification-source.mjs";
@@ -138,8 +139,16 @@ test("SVERIFY-AUDIT: retained guard inventory covers server sites and all browse
   const inventory = JSON.parse(
     await readFile("docs/sensitive-action-verification/inventory.json", "utf8"),
   );
-  assert.equal(inventory.guardSites.length, 77);
-  assert.equal(new Set(inventory.guardSites.map((r: any) => r.file)).size, 34);
+  assert.equal(inventory.guardSites.length, 78);
+  assert.equal(new Set(inventory.guardSites.map((r: any) => r.file)).size, 35);
+  const previous = JSON.parse(execFileSync("git", ["show", "d309ad8737903f73c6ed223e8ccbd514dd26a670:docs/sensitive-action-verification/inventory.json"], { encoding: "utf8" }));
+  assert.equal(previous.guardSites.length, 77);
+  const identity = ({id,file,function:fn,conditions}:any) => ({id,file,function:fn,conditions});
+  const retained = inventory.guardSites.filter((r:any) => r.file !== "apps/web/lib/dispatch-vehicle.ts");
+  assert.deepEqual(retained.map(identity).sort((a:any,b:any)=>a.id.localeCompare(b.id)), previous.guardSites.map(identity).sort((a:any,b:any)=>a.id.localeCompare(b.id)));
+  const added = inventory.guardSites.find((r:any) => r.file === "apps/web/lib/dispatch-vehicle.ts");
+  assert.equal(added.id, "SVERIFY-SITE-078");
+  assert.ok(added.actionCandidates.includes("dispatch.vehicle.assign"));
   for (const row of inventory.guardSites) {
     const lines = (await readFile(row.file, "utf8")).split("\n");
     assert.match(lines[row.line - 1], /recentVerification\(user\)/);

@@ -24,7 +24,14 @@ for(const file of await files('apps/web')) {
   ts.forEachChild(n,visit);
  }visit(source);
 }
-guards.sort((a,b)=>a.file.localeCompare(b.file)||a.line-b.line).forEach((g,i)=>g.id=`SVERIFY-SITE-${String(i+1).padStart(3,'0')}`);
+// Preserve existing site identities when another module adds a guard. Source
+// order and line moves must not renumber previously traced controls.
+let prior=[];
+try{prior=JSON.parse(await fs.readFile('docs/sensitive-action-verification/inventory.json','utf8')).guardSites;}catch(e){if(e.code!=='ENOENT')throw e;}
+const signature=g=>JSON.stringify([g.file,g.function,g.conditions]);
+const retained=new Map();let lastId=0;
+for(const g of prior){const key=signature(g),ids=retained.get(key)??[];ids.push(g.id);retained.set(key,ids);lastId=Math.max(lastId,Number(g.id.split('-').at(-1)));}
+guards.sort((a,b)=>a.file.localeCompare(b.file)||a.line-b.line).forEach(g=>{g.id=retained.get(signature(g))?.shift()??`SVERIFY-SITE-${String(++lastId).padStart(3,'0')}`;});
 const inventory={scope:'All server recentVerification call sites and browser transports; indirect policy/privilege callers retained in guard-site denominator. Workflow business acceptance is separate.',guardSites:guards.map(g=>({...g,recovery:'shared api -> explicit password dialog -> same-session, exact-body, one retry; existing inline fields retained'})),browserEntryPoints:entrypoints,directFetch,summary:{guardSites:guards.length,guardFiles:new Set(guards.map(g=>g.file)).size,browserCalls:entrypoints.length,directFetch:directFetch.length},notes:['Direct fetch: shared API transport, workspace/search/export reads, media uploads and hosted-payment transport. None invokes recentVerification outside shared /api/[action] dispatch.','Conditional governance, delegated privilege and recovery helper guards remain in scope; actionCandidates are context literals, not a count of accepted business operations.','No server role, branch, qualification, provider, approval or verification-expiry rule removed.']};
 await fs.writeFile('docs/sensitive-action-verification/inventory.json',JSON.stringify(inventory,null,2)+'\n');
 console.log(JSON.stringify(inventory.summary));
