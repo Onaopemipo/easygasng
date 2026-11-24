@@ -59,7 +59,7 @@ await writeFile(
   `
 import React from 'react';
 const host=(t)=>React.forwardRef((p,r)=>React.createElement(t,{...p,ref:r},p.children));
-export const View=host('View'),Text=host('Text'),TextInput=host('TextInput'),Image=host('Image'),Pressable=host('Pressable'),ScrollView=host('ScrollView');
+export const View=host('View'),Text=host('Text'),TextInput=host('TextInput'),Image=host('Image'),Pressable=host('Pressable'),ScrollView=host('ScrollView'),KeyboardAvoidingView=host('KeyboardAvoidingView');
 export const Platform={OS:'android'};export const StyleSheet={create:x=>x,flatten:x=>Array.isArray(x)?Object.assign({},...x.filter(Boolean).map(y=>StyleSheet.flatten(y))):x||{},absoluteFill:{position:'absolute'}};
 export const useWindowDimensions=()=>globalThis.authDimensions||({width:390,height:844,fontScale:1});
 export const useTheme=()=>({dark:false,colors:{background:'#f8faf8',surface:'#fff',input:'#fff',text:'#142c23',primary:'#087a43',border:'#e1e9e4',muted:'#61736a',elevated:'#edf5ef',error:'#93431d'}});
@@ -538,7 +538,7 @@ test("AUTH-RECOVERY: actual web/native forms prevent duplicates, preserve errors
   await act(async()=>tree=create(React.createElement(NativeRecovery,{api,onBack(){}})));
   await act(async()=>tree.root.findByType('TextInput').props.onChangeText('unknown@example.test'));
   await act(async()=>tree.root.findByType('TextInput').props.onSubmitEditing());assert.equal(calls,1);
-  if(fail){assert.match(texts(tree),/Mail provider unavailable/);assert.doesNotMatch(texts(tree),/If an account exists/);}else{assert.match(texts(tree),/If an account exists/);assert.doesNotMatch(texts(tree),/Do not surface/);}
+  if(fail){assert.match(texts(tree),/Mail provider unavailable/);assert.doesNotMatch(texts(tree),/If an account exists/);}else{assert.match(texts(tree),/If an account exists/);assert.doesNotMatch(texts(tree),/Do not surface/);assert.equal(tree.root.findAll((n:any)=>n.type==='Text'&&n.props.accessibilityRole==='status').length,0);assert.equal(tree.root.findAll((n:any)=>n.type==='Text'&&n.props.accessibilityLiveRegion==='polite').length,1);}
   await act(async()=>tree.unmount());
  }
  delete(globalThis as any).authTest;
@@ -587,4 +587,22 @@ test("AUTH-NATIVE-BOOT: actual native startup restores identity independently of
  }
  const source=await readFile('apps/mobile/App.tsx','utf8');assert.equal((source.match(/busy=\{authBusy \|\| !hydrated\}/g)||[]).length,3);
  delete(globalThis as any).authTest;
+});
+
+
+test("AUTH-NATIVE-BACK: actual Back handler exits auth loops, preserves the guest checkout return and retains order drilldown", () => {
+  const source = nativeSource.slice(nativeSource.indexOf("  function back() {"), nativeSource.indexOf("  useEffect(() => {\n    const subscription"));
+  const createBack = new Function("authRouteRef", "navHistory", "serviceBack", "orderFilterRef", "setScreen", "setRegister", "setPassword", "setNewPassword", "setLoginError", "setPasswordChangeRequired", "setOrderFilter", source + "\nreturn back;");
+  const route = { current: { screen: "login", register: false, guest: true } };
+  const history = { current: ["home", "login", "recovery", "login", "entry-link", "login"] };
+  const calls: any[] = [];
+  const setters = ["screen", "register", "password", "newPassword", "error", "passwordChange", "orderFilter"].map(k => (value: any) => calls.push([k, value]));
+  const filter = { current: null as string | null };
+  const back = createBack(route, history, { current: null }, filter, ...setters);
+  assert.equal(back(), true); assert.deepEqual(history.current, ["home"]); assert.deepEqual(calls.at(-1), ["screen", "home"]);
+  history.current = ["home", "checkout", "login", "recovery", "login"];
+  back(); assert.deepEqual(history.current, ["home", "checkout"]); assert.deepEqual(calls.at(-1), ["screen", "checkout"]);
+  route.current.register = true; calls.length = 0; back(); assert.ok(calls.some(([k,v]) => k === "register" && v === false)); assert.ok(calls.some(([k,v]) => k === "password" && v === "")); assert.ok(!calls.some(([k]) => k === "screen"));
+  route.current = { screen: "recovery", register: false, guest: true }; back(); assert.deepEqual(calls.at(-1), ["screen", "login"]);
+  route.current = { screen: "orders", register: false, guest: false }; history.current = ["home", "orders"]; filter.current = "order-id"; back(); assert.deepEqual(calls.at(-1), ["orderFilter", null]); assert.deepEqual(history.current, ["home", "orders"]);
 });

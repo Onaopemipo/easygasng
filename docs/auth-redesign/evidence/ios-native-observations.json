@@ -1,0 +1,49 @@
+{
+  "platform": "iOS 26.5 simulator, EasyGas First Sign-In QA",
+  "runtime": "Existing Expo Go, Metro 8086, disposable local API 3140",
+  "checks": [
+    {
+      "id": "AUTH-IOS-01",
+      "status": "PASS",
+      "result": "Current Sign In/Register/Recovery rendered with editable labelled fields and no social controls or customer tabs."
+    },
+    {
+      "id": "AUTH-IOS-02",
+      "status": "PASS",
+      "result": "Clipped primary gradient/button fixed; current Sign In/Create Account/Send Reset Link actions fully rendered."
+    },
+    {
+      "id": "AUTH-IOS-03",
+      "status": "PASS",
+      "result": "Invalid disposable credentials returned generic error; password cleared before screenshot."
+    },
+    {
+      "id": "AUTH-IOS-04",
+      "status": "PASS",
+      "result": "Unknown synthetic recovery email returned generic account-existence-safe confirmation."
+    },
+    {
+      "id": "AUTH-IOS-05",
+      "status": "PASS",
+      "result": "Foreign account-link origin rejected and pasted value cleared."
+    },
+    {
+      "id": "AUTH-IOS-06",
+      "status": "PASS",
+      "result": "Registration Back returns Sign In; after recovery/link cycling, Sign In Back exits to guest Home with all five tabs restored."
+    },
+    {
+      "id": "AUTH-IOS-07",
+      "status": "PASS",
+      "result": "Dark appearance, larger Text Size 5 and Reduce Motion on observed; decorative cylinder removed at larger text to avoid crowding. Original Light/Text Size 3/Reduce Motion off restored."
+    }
+  ],
+  "notRun": [
+    "Software keyboard obstruction/keyboard submit: simulator uses hardware keyboard; no software keyboard acceptance claimed",
+    "iPad native rendering",
+    "VoiceOver and physical password manager",
+    "Positive reset/verification/invitation/assisted account completion on actual iOS device"
+  ],
+  "newEasyGasBinary": false,
+  "liveProvider": false
+}

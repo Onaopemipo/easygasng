@@ -96,7 +96,7 @@ export function NativeEntryScreen({
       <FocusedFormContext.Provider value={true}>
         <Button label="Back to sign in" secondary onPress={onClose} />
         {error && <Text accessibilityRole="alert">{error}</Text>}
-        {message && <Text accessibilityRole="status">{message}</Text>}
+        {message && <Text accessible accessibilityLiveRegion="polite">{message}</Text>}
         {!token && !done && (
           <Card>
             <Copy>

@@ -51,7 +51,11 @@ export default function AuthRecovery({
       onBack={onBack}
     >
       {sent ? (
-        <Text accessibilityRole="status" style={{ color: colors.text }}>
+        <Text
+          accessible
+          accessibilityLiveRegion="polite"
+          style={{ color: colors.text }}
+        >
           If an account exists for that email, follow the reset instructions
           sent to you.
         </Text>

@@ -1,4 +1,4 @@
-import { AuthShell } from "./AuthPresentation";
+import { AuthShell, AuthKeyboardFrame } from "./AuthPresentation";
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
 import BrandLogo from "./BrandLogo";
 import React from "react";
@@ -43,6 +43,7 @@ export default function TechnicianSignIn({
   return (
     <ScreenCanvas style={{ flex: 1, backgroundColor: colors.background }}>
       <StatusBar barStyle={dark ? "light-content" : "dark-content"} />
+      <AuthKeyboardFrame>
       <ScrollView
         automaticallyAdjustKeyboardInsets
         keyboardShouldPersistTaps="handled"
@@ -200,6 +201,7 @@ export default function TechnicianSignIn({
           </Copy>
         </AuthShell>
       </ScrollView>
+      </AuthKeyboardFrame>
     </ScreenCanvas>
   );
 }

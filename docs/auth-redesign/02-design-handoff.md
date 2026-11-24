@@ -23,3 +23,6 @@ Native `AuthPresentation.tsx` supplies AuthShell/AuthField/AuthAction/NativeAuth
 Actual local-browser screenshots and 21 width/route observations are under evidence. Device screenshots are recorded only when actually observed; simulator/Android/physical/assistive gates cannot be inferred from renderer snapshots or type checking. No new mobile binary or deployment was made.
 
 Session availability: initial web auth waits for the actual me result and offers Retry session check on unavailable reads. Native catalogue loading no longer blocks identity restoration or sign-in; cart parsing failures are isolated. Password-reveal controls meet 48px web auth/48dp Android, while iOS retains 44pt. Supporting envelope decoration shrinks on short screens.
+
+
+Native follow-up: absolute decoration no longer sizes the primary action; scalable labels have their full available row width. The hero removes decorative cylinders above font scale 1.15. Guest authentication Back removes only auth history entries before returning to the previous guest screen. Android auth scroll viewports use a shared keyboard frame; it returns children directly outside Android authentication and in iOS. Recovery/account-link announcements use supported native live regions. See 06-native-followup.md for actual device evidence and remaining gates.

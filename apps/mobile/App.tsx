@@ -2,7 +2,7 @@ import {
   withAuthDeadline,
   isAuthenticationAction,
 } from "../../packages/business-rules/src/auth-request";
-import { NativeAuth } from "./AuthPresentation";
+import { NativeAuth, AuthKeyboardFrame } from "./AuthPresentation";
 import AuthRecovery from "./AuthRecovery";
 import { NextCatalogue, NextProduct, NextCart } from "./MobileNextCatalogue";
 import {
@@ -199,10 +199,10 @@ export default function App() {
   );
   useEffect(() => {
     scrollRef.current?.scrollTo({ y: 0, animated: false });
-  }, [screen, user?.id]);
+  }, [screen, user?.id, register]);
   const navHistory = useRef<string[]>(["home"]);
-  const authRouteRef = useRef({ screen, register });
-  authRouteRef.current = { screen, register };
+  const authRouteRef = useRef({ screen, register, guest: !user });
+  authRouteRef.current = { screen, register, guest: !user };
   const serviceBack = useRef<(() => boolean) | null>(null);
   const pendingServiceSignIn = useRef<string | null>(null);
   const checkoutGuestDraft = useRef<any>(null);
@@ -230,8 +230,20 @@ export default function App() {
     }
   }, [screen]);
   function back() {
-    if (authRouteRef.current.screen === "login" && authRouteRef.current.register) {
-      setRegister(false); setPassword(""); setNewPassword(""); setLoginError(""); setPasswordChangeRequired(false); return true;
+    const route = authRouteRef.current;
+    if (route.guest && route.screen === "login") {
+      if (route.register) {
+        setRegister(false); setPassword(""); setNewPassword(""); setLoginError(""); setPasswordChangeRequired(false); return true;
+      }
+      while (["login", "recovery", "entry-link"].includes(navHistory.current.at(-1) ?? "")) {
+        navHistory.current.pop();
+      }
+      setScreen(navHistory.current.at(-1) ?? "home");
+      return true;
+    }
+    if (route.guest && ["recovery", "entry-link"].includes(route.screen)) {
+      setScreen("login");
+      return true;
     }
     if (serviceBack.current?.()) return true;
     if (navHistory.current.at(-1) === "orders" && orderFilterRef.current) {
@@ -1093,6 +1105,7 @@ export default function App() {
           <ScreenTitleContext.Provider
             value={customerView ? (headerTitle[screen] ?? null) : null}
           >
+            <AuthKeyboardFrame active={authScreen}>
             <ScreenTransition
               identity={authScreen ? screen + String(register) : screen}
               duration={authScreen ? 220 : 160}
@@ -2255,6 +2268,7 @@ export default function App() {
                 )}
               </ScrollView>
             </ScreenTransition>
+            </AuthKeyboardFrame>
           </ScreenTitleContext.Provider>
           {!authScreen && nextDock}
           {!authScreen && (

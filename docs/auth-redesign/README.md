@@ -2,19 +2,20 @@
 
 The approved Sign In, Create Account and Account recovery design is implemented in the existing web and native applications. Existing reset, verification, invitation, manual account-link and assisted account-completion flows use the same presentation. Authentication authority remains on the existing server.
 
-**Status: implemented, partially verified; release NO-GO.** Local web acceptance passed. The updated native preview, device keyboard/Back/safe areas, physical password managers and assistive acceptance remain open. Device Hub and Android Studio could not expose usable windows, and no Android emulator was attached. No native device result is inferred from component tests.
+**Status: implemented, partially verified; release NO-GO.** Local web acceptance and bounded iOS phone/Android phone/tablet checks passed. The [native follow-up](06-native-followup.md) records the corrected clipping, Back history, recovery crash and Android keyboard issues. Remaining iOS software-keyboard, iPad, Android phone cold reconnect/remaining keyboard, physical password-manager and assistive checks stay open. The Android phone is awaiting a decision on Expo Go's Nearby devices permission.
 
 - [Audit](00-audit.md) and [existing contracts](01-contracts-and-permissions.md)
 - [Design implementation and deliberate adaptations](02-design-handoff.md)
 - [Security boundaries](03-security-regression.md)
 - [Executed results and unresolved acceptance](04-test-results.md)
 - [Rollback and release decision](05-rollback-release.md)
+- [Actual native follow-up and fixes](06-native-followup.md)
 - [Requirements traceability](../traceability/auth-redesign-rtm.md)
 - [User manual](../user-manual/authentication.md)
 
-The broad local run passed 1,284 tests, including PostgreSQL, without failures or skips. Subsequent final authentication changes passed 43 focused tests and 49 historical-source checks. Web build/type checks and native type/dependency checks passed. These suites overlap; their counts are not a combined unique total or a GitHub Actions result.
+The broad local run passed 1,284 tests, including PostgreSQL, without failures or skips. The first source phase passed 43 focused tests and 49 historical-source checks. The native follow-up passes 44 focused tests, 10 authentication tests and 25 historical-source checks. Web build/type checks and native type/dependency checks passed. These suites overlap; their counts are not a combined unique total or a GitHub Actions result.
 
-Actual local browser checks cover all three core routes at seven viewport widths, plus dark mode, errors, recovery, account links, customer/staff routing and logout. Screenshots are browser evidence, not installed mobile screenshots.
+Actual local browser checks cover all three core routes at seven viewport widths, plus dark mode, errors, recovery, account links, customer/staff routing and logout. The web screenshots are browser evidence; separate iOS/Android Expo Go screenshots document bounded native observations. They are not installed store-build acceptance.
 
 ![Actual mobile web Sign In](evidence/web-390-login.jpg)
 

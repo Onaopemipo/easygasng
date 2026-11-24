@@ -17,3 +17,6 @@ Light/Dark/System reuses the existing appearance preference. Web auth has the th
 This redesign is local source/preview work; it has not replaced the deployed website or current TestFlight/store binary. [Verification and release matrix](../traceability/auth-redesign-rtm.md).
 
 On startup, a slow product catalogue does not prevent native sign-in. An unavailable web session check offers **Retry session check**. A corrupt saved cart cannot grant access or stop identity restoration; current product/checkout validation is still required before ordering.
+
+
+On mobile, Back from recovery or an account link returns to Sign In. Back from Sign In returns to the previous guest page, including a saved checkout step; it does not reopen an old recovery/link screen. Back from Create Account returns to Sign In first. Larger text simplifies decorative artwork and keeps the form scrollable. On Android, scroll the authentication form while the keyboard is open; recovery can be submitted using the visible action above the keyboard.

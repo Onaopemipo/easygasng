@@ -14,7 +14,7 @@ All evidence is local synthetic QA. No real email, payment, production account, 
 | Actual browser |10 groups pass, including 21 width/route observations, dark/errors, generic recovery, manual-link rejection, customer intended return, owner routing and both logouts; browser-web.json |
 | Web build, sequential post-build web types, native types/dependencies |Outputs in web-build.txt/web-types.txt/native-types.txt/native-dependencies.txt; all passed; 3 native dependency tests passed, 0 failures/skips |
 | Full regression with fresh PostgreSQL |release-regression.txt is the final run; 1,284 passed, 0 failed, 0 skipped; 31 formerly skipped PostgreSQL checks executed against the new isolated local fixture |
-| iOS/Android actual preview, keyboard/back, tablets/large text and assistive |NOT RUN; Device Hub window/updated preview handoff pending. Renderer/type tests do not substitute for those gates. |
+| Initial iOS/Android preview attempt |Initially blocked by inaccessible windows. See the executed native follow-up below; remaining keyboard/iPad/assistive cases stay open. |
 | Physical password-manager/VoiceOver/TalkBack/provider delivery/store build |NOT RUN; not silently marked passed |
 | Lint |NOT RUN: no lint script exists in actual package scripts |
 
@@ -28,4 +28,15 @@ The first full PostgreSQL run had 1,283 tests: 1,282 passed, 1 failed, 0 skipped
 
 No benchmark screenshots or stale native screenshots are substituted for actual browser evidence. Current signed binaries and deployed demo remain unchanged. Full release remains NO-GO until critical open device/security/assistive gates are resolved.
 
-Final source protections: 49/49 historical-source follow-ups pass on the exact current manifest; 10 existing frontend transitions and 8 additions, all server/auth/schema and unrelated authority files unchanged. Native preview/physical/assistive acceptance still NOT RUN. Device Hub and Android Studio both failed to expose windows; no Android emulator was attached. No deployment or mobile binary/export/upload.
+At the initial source checkpoint, 49/49 historical-source checks passed and native preview remained NOT RUN because windows were inaccessible and no Android emulator was attached. The native follow-up below supersedes that environment status, while retaining the same ten existing frontend transitions/eight additions and unchanged server/auth/schema authority. No deployment or EasyGas binary/export/upload was made.
+
+
+## Native follow-up after preview handoff
+
+[Actual observations and fixes](06-native-followup.md) include seven iOS groups and six Android groups. iOS phone core screens/errors/recovery/link rejection/Back, dark/larger text/reduced-motion settings, Android phone core screens/registration Back, and Android tablet core screens/dark/1.6 font scale/recovery success/Back/software-keyboard CTA were observed. Original settings were restored. No new EasyGas binary was built.
+
+The latest source passes **44 focused tests** (`focused-native-followup.txt`), **10 authentication tests** (`auth-tests-followup.txt`), **25 source/traceability preservation tests** (`source-native-followup.txt`) and native type checking (`native-types-followup.txt`), all zero failures/skips. The actual Back-handler test covers repeated auth navigation, checkout return and authenticated order drilldown. The recovery renderer asserts a supported polite live announcement. Suites overlap and are not added into a unique count. The 1,284-test broad run and original web build remain earlier-phase evidence, not a fresh full-suite run after these native changes.
+
+Actual devices found and resolved an iOS gradient/label clipping defect, larger-text artwork crowding, guest auth-history loops, an Android recovery success crash from an unsupported accessibility role and Android keyboard obstruction. The original Android failure image is retained; the actual corrected tablet confirmation and keyboard screenshots are separate. No assertion or security requirement was weakened.
+
+Full iOS software-keyboard/submit, iPad, Android phone cold reconnect/remaining keyboard and native positive account-link/physical/assistive/asset-failure coverage remain open. Expo Go on the Android phone is waiting for the user's decision about Nearby devices permission. No permissions were silently granted. Dedicated staff keyboard framing is implemented but not separately accepted on actual devices. Release remains NO-GO.

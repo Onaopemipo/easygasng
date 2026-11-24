@@ -4,6 +4,8 @@ import {
   StyleSheet,
   View,
   Pressable,
+  KeyboardAvoidingView,
+  Platform,
   useWindowDimensions,
   type TextInputProps,
 } from "react-native";
@@ -13,6 +15,24 @@ import { Text, TextInput } from "./typography";
 import BrandLogo from "./BrandLogo";
 import { useTheme } from "./theme";
 import { PASSWORD_MIN_LENGTH } from "../../packages/business-rules/src/password-policy";
+
+export function AuthKeyboardFrame({
+  active = true,
+  children,
+}: {
+  active?: boolean;
+  children: React.ReactNode;
+}) {
+  if (!active || Platform.OS !== "android") return <>{children}</>;
+  return (
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior="height"
+    >
+      {children}
+    </KeyboardAvoidingView>
+  );
+}
 
 export function AuthAction({
   label,
@@ -40,20 +60,17 @@ export function AuthAction({
       ]}
     >
       {!secondary && (
-        <Svg
-          width="100%"
-          height="100%"
-          style={StyleSheet.absoluteFill}
-          preserveAspectRatio="none"
-        >
-          <Defs>
-            <LinearGradient id="auth-button" x1="0" y1="0" x2="1" y2="1">
-              <Stop offset="0" stopColor="#078514" />
-              <Stop offset="1" stopColor="#006112" />
-            </LinearGradient>
-          </Defs>
-          <Rect width="100%" height="100%" rx="18" fill="url(#auth-button)" />
-        </Svg>
+        <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+          <Svg width="100%" height="100%" preserveAspectRatio="none">
+            <Defs>
+              <LinearGradient id="auth-button" x1="0" y1="0" x2="1" y2="1">
+                <Stop offset="0" stopColor="#078514" />
+                <Stop offset="1" stopColor="#006112" />
+              </LinearGradient>
+            </Defs>
+            <Rect width="100%" height="100%" rx="18" fill="url(#auth-button)" />
+          </Svg>
+        </View>
       )}
       <Text
         style={{
@@ -61,6 +78,8 @@ export function AuthAction({
           fontWeight: "700",
           color: secondary ? colors.primary : "#ffffff",
           textAlign: "center",
+          flexShrink: 1,
+          flex: secondary ? undefined : 1,
         }}
         preserveColor
       >
@@ -88,7 +107,8 @@ export function AuthShell({
 }) {
   const { colors } = useTheme(),
     { height, fontScale } = useWindowDimensions();
-  const compact = height < 720 || fontScale > 1.3;
+  const largeText = fontScale > 1.15;
+  const compact = height < 720 || largeText;
   const heroHeight =
     mode === "signin" ? (compact ? 250 : 310) : compact ? 175 : 235;
   return (
@@ -99,10 +119,9 @@ export function AuthShell({
         style={[
           styles.hero,
           {
-            height:
-              fontScale > 1.3 && mode === "signin" ? undefined : heroHeight,
+            height: largeText && mode === "signin" ? undefined : heroHeight,
             minHeight: heroHeight,
-            paddingBottom: fontScale > 1.3 && mode === "signin" ? 52 : 0,
+            paddingBottom: largeText && mode === "signin" ? 52 : 0,
             backgroundColor: mode === "signin" ? "#003b2c" : colors.background,
           },
         ]}
@@ -127,7 +146,7 @@ export function AuthShell({
             style={[
               styles.welcome,
               compact && { top: 104 },
-              fontScale > 1.3 && {
+              largeText && {
                 position: "relative",
                 top: undefined,
                 left: undefined,
@@ -154,22 +173,33 @@ export function AuthShell({
               style={{
                 fontSize: 15,
                 color: "#fff",
-                maxWidth: fontScale > 1.3 ? "100%" : "73%",
+                maxWidth: largeText ? "100%" : "73%",
               }}
               preserveColor
             >
-              {compact && mode === "signin" ? "Sign in to your EasyGas account." : description}
+              {compact && mode === "signin"
+                ? "Sign in to your EasyGas account."
+                : description}
             </Text>
           </View>
         )}
         {mode === "recovery" || mode === "link" ? (
-          <View accessible={false} accessibilityElementsHidden importantForAccessibility="no-hide-descendants" style={[styles.envelope, compact && { bottom: 16 }]}>
+          <View
+            accessible={false}
+            accessibilityElementsHidden
+            importantForAccessibility="no-hide-descendants"
+            style={[styles.envelope, compact && { bottom: 16 }]}
+          >
             <Ionicons name="mail" size={compact ? 72 : 108} color="#087a36" />
             <View style={[styles.lock, compact && { padding: 8 }]}>
-              <Ionicons name="lock-closed" size={compact ? 24 : 31} color="#07592e" />
+              <Ionicons
+                name="lock-closed"
+                size={compact ? 24 : 31}
+                color="#07592e"
+              />
             </View>
           </View>
-        ) : fontScale <= 1.3 ? (
+        ) : !largeText ? (
           <View
             pointerEvents="none"
             accessibilityElementsHidden
@@ -477,7 +507,14 @@ export function NativeAuth({
         onPress={onSwitch}
         disabled={busy}
       />
-      {register && <AuthAction label="Forgot password?" secondary onPress={onRecovery} disabled={busy} />}
+      {register && (
+        <AuthAction
+          label="Forgot password?"
+          secondary
+          onPress={onRecovery}
+          disabled={busy}
+        />
+      )}
       <AuthAction
         label="Open an account link"
         secondary
@@ -552,6 +589,7 @@ const styles = StyleSheet.create({
   },
   primary: {
     minHeight: 56,
+    backgroundColor: "#006112",
     borderRadius: 18,
     overflow: "hidden",
     padding: 14,
