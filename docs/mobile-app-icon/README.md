@@ -24,3 +24,7 @@ The in-app wordmark, onboarding artwork and web favicon retain their existing as
 [Traceability matrix](../traceability/mobile-app-icon-rtm.md): four requirements retained; three source/documentation requirements verified, one installed-appearance gate pending, zero excluded.
 
 Final existing configuration contracts: **5passed,0failed,0skipped** ([output](evidence/configuration-contracts.txt)); final traceability checks: **2passed,0failed,0skipped** ([output](evidence/traceability-final.txt)). The initial matrix validation identified a missing PR-07 evidence link; that link is corrected and the final matrix checks pass. Installed appearance remains pending rather than being counted as passed.
+
+## Later authorised iOS release
+
+The user subsequently authorised a new iOS-only build. **TestFlight 0.1.0 (4)** now packages the approved icon; the exact signed iPhone/iPad PNGs match the approved artwork within measured Apple resize/colour-conversion tolerance. [Release and verification](../ios-testflight-refresh-20261124/README.md). Update iOS from TestFlight to see it. APPICON-R04 remains PARTIAL for installed iOS/Android launcher/theme acceptance; Android2 is unchanged. The earlier source-only phase boundary above is historical.

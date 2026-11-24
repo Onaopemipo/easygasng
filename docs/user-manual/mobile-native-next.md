@@ -1,6 +1,6 @@
 # EasyGas native Mobile Next
 
-The approved [private design](https://easygas-mobile-next.philipmuyiwa.chatgpt.site) is now being adopted in the real React Native application. This guide describes the implemented native controls. The private prototype remains a separate synthetic design reference. Installed TestFlight/Play builds do not receive source changes automatically; this phase has not created or uploaded a new binary.
+The approved [private design](https://easygas-mobile-next.philipmuyiwa.chatgpt.site) is now being adopted in the real React Native application. This guide describes the implemented native controls. The private prototype remains a separate synthetic design reference. Installed TestFlight/Play builds receive source changes only through a native update. The latest iOS TestFlight release is now 0.1.0 (4); Android remains 0.1.0 (2).
 
 ## Customer and business customer
 
@@ -82,7 +82,7 @@ A pending, failed or expired attempt does not mean payment succeeded. Check the 
 
 ## Android phone and tablet behaviour
 
-The current-source Android preview uses Expo Go 58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The Android store build2 remains older and needs a separately authorised signed Android release. The latest iOS TestFlight build3 includes these changes.
+The current-source Android preview uses Expo Go 58.0.5 and the client-demo backend. Its seven representative role views and phone/tablet layouts have been checked. The Android store build2 remains older and needs a separately authorised signed Android release. The latest iOS TestFlight build4 retains these changes.
 
 Tablets can rotate between portrait and landscape. Content fills the app window, with controls inside system safe areas. Profile forms move above the docked software keyboard. Android Back first hides the keyboard; pressing Back again closes the sheet without saving. Floating keyboards can be moved with the operating system controls.
 
@@ -98,7 +98,13 @@ Use Account → Appearance to choose Light, Dark or System. The transparent logo
 
 Current application source `aa5a86e` passed [GitHub release validation](https://github.com/Onaopemipo/easygasng/actions/runs/45119392929): **1,219 passed, 0 failed, 0 skipped**; web/native jobs succeeded and native export was skipped. Final documentation-only evidence update changes no application source.
 
-## Update to iOS TestFlight 0.1.0 (3)
+## Update to iOS TestFlight 0.1.0 (4)
+
+Open **TestFlight → EasyGas Energy Solutions → Update** using the existing approved internal Apple account. Confirm **0.1.0 (4)**. It is Testing in the same EasyGas Internal QA group for two existing testers and includes the approved green/orange launcher icon. Android remains on build2.
+
+This packages the latest native/shared source and uses the existing synthetic client-demo backend, which supplies the latest server fixes. Web-only Dispatch controls remain in the web workspace. Follow the saved [build4 What to Test notes](../ios-testflight-refresh-20261124/WHAT-TO-TEST.md), including sign-in/payment return, role restrictions, reconciliation, loading recovery and iPhone/iPad layouts. Packaged icons and upload status do not replace installed-device acceptance. [Build4 release evidence](../ios-testflight-refresh-20261124/README.md).
+
+## Previous iOS TestFlight 0.1.0 (3)
 
 Open **TestFlight → EasyGas Energy Solutions → Update** using the existing approved internal Apple account. Confirm version **0.1.0 (3)**. The build is available to the same two internal testers in EasyGas Internal QA; if the invitation has not been accepted, accept the existing TestFlight invitation first.
 
@@ -110,4 +116,4 @@ Follow the saved [What to Test notes](../ios-testflight-refresh-20261123/WHAT-TO
 
 The approved new launcher icon is an orange flame with a white centre on deep green. Its exact image is applied to the shared mobile source asset, used by the unified app and local driver/technician shells. The in-app transparent EasyGas wordmark is unchanged.
 
-Installed TestFlight0.1.0(3) and Androidstore0.1.0(2) retain the icons packaged into those releases. The new launcher icon becomes available after a new native release is built and installed; there was no new build/upload in this icon-only step. [Verification and pending installed-appearance gate](../traceability/mobile-app-icon-rtm.md).
+The approved icon is now packaged into TestFlight 0.1.0 (4); update from TestFlight to see it on the launcher. Android store 0.1.0 (2) retains its earlier icon. The original icon-only source step created no binary; the separately authorised iOS4 release now verifies signed icon packaging. Installed launcher/theme acceptance remains open. [Verification and pending installed-appearance gate](../traceability/mobile-app-icon-rtm.md).

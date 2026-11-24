@@ -1,0 +1,80 @@
+{
+  "scope": "Static verification of the exact signed iOS refresh; not installed-device/lifecycle acceptance",
+  "buildId": "b67d6ded-554e-4ceb-b4fb-d03ebfbc3c86",
+  "packagingCommit": "a2ef477777a787fa64dbb0897f40d95ec872dbe4",
+  "version": "0.1.0",
+  "buildNumber": "4",
+  "bundleIdentifier": "com.easygasng.customer",
+  "appleTeamId": "RDQ9JJZH7F",
+  "deviceFamilies": [
+    1,
+    2
+  ],
+  "architectures": "arm64",
+  "minimumOSVersion": "16.4",
+  "profileUUID": "e7b0f244-b158-49ab-acab-7c4125567e3f",
+  "profileExpires": "2027-06-25T05:32:07",
+  "orientations": [
+    "UIInterfaceOrientationPortrait",
+    "UIInterfaceOrientationPortraitUpsideDown",
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "ipadOrientations": [
+    "UIInterfaceOrientationPortrait",
+    "UIInterfaceOrientationPortraitUpsideDown",
+    "UIInterfaceOrientationLandscapeLeft",
+    "UIInterfaceOrientationLandscapeRight"
+  ],
+  "urlSchemes": [
+    "easygas",
+    "com.easygasng.customer"
+  ],
+  "encryptionDeclaration": null,
+  "apiOrigin": "https://easygas-client-demo.vercel.app",
+  "checks": [
+    {
+      "id": "IOS23-A01",
+      "description": "Exactly one signed device application in the IPA",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A02",
+      "description": "Signature, provisioning team and bundle identity match EasyGas",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A03",
+      "description": "Exact version/build is an iPhone+iPad App Store device archive without development access",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A04",
+      "description": "Distribution profile remains valid",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A05",
+      "description": "Compiled JavaScript includes the approved hosted testing API",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A06",
+      "description": "Packaged iPhone and iPad orientations retain the portrait/landscape repair",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A07",
+      "description": "Packaged native URL scheme includes easygas",
+      "status": "PASS"
+    },
+    {
+      "id": "IOS23-A08",
+      "description": "Application executable contains the arm64 device architecture",
+      "status": "PASS"
+    }
+  ],
+  "productionDecision": "NO-GO preserved; internal TestFlight testing only",
+  "sha256": "2933eb30dd5123daba587c3f321b03b806b48439155ba1a70b4bb65eb0faa25b",
+  "bytes": 19830823
+}
