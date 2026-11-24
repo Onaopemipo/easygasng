@@ -16,3 +16,5 @@ From **Orders** or the **Dispatch Queue**, open assignment. Eligible drivers app
 Select a ready driver, enter the assignment reason and confirm through the existing guarded workflow. The server rechecks current role/branch, driver availability, trip/vehicle, capacity, payment, inspection, stock and custody. A previously displayed ready option cannot bypass a new blocker. Read errors or changed branches clear the old setup result; refresh after reconnecting.
 
 No setup button changes business records automatically. This web change creates no mobile binary and does not change existing production release decisions. See [verification](../dispatch-setup/README.md) and [traceability](../traceability/dispatch-setup-rtm.md).
+
+The checklist is live on the existing client demo. At verification, Lagos had three setup steps ready; the missing step was an available driver on an active suitable-vehicle trip. The existing order also retained its own address/inspection controls. These records were left unchanged.

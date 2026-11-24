@@ -8,7 +8,7 @@
       "requirement": "Single branch-scoped Dispatch setup checklist with authoritative branch, driver, vehicle and operational prerequisites",
       "priority": "P1",
       "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
-      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request, 24 November 2026",
       "route": [
         "/admin/deliveries",
         "/admin/orders",
@@ -19,28 +19,47 @@
       "implementationFiles": [
         "apps/web/lib/dispatch-setup.ts",
         "apps/web/components/dispatch-setup.tsx",
-        "apps/web/components/driver-assignment.tsx"
+        "apps/web/app/api/[action]/route.ts",
+        "apps/web/lib/service.ts"
       ],
       "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
-      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
-      "testFiles": [],
-      "testIds": [],
+      "securityControl": "Owner/manager and branch-scoped read; individual dispatch.manage revocations enforced. No setup writes or release bypass; only the owner registers vehicles. Final assignment revalidates all safety/payment/custody requirements.",
+      "testFiles": [
+        "tests/dispatch-setup.test.ts",
+        "tests/dispatch-setup-components.test.ts",
+        "tests/dispatch-setup-source.test.ts",
+        "tests/driver-assignment.test.ts"
+      ],
+      "testIds": [
+        "DS-DATA",
+        "DS-SCOPE",
+        "DS-READ",
+        "DS-RECOVERY",
+        "DS-V01"
+      ],
       "negativeTests": [
         "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/dispatch-setup/evidence/focused.txt",
+        "docs/dispatch-setup/evidence/browser-local.json",
+        "docs/dispatch-setup/evidence/browser-local.txt",
+        "docs/dispatch-setup/evidence/typecheck.txt",
+        "docs/dispatch-setup/evidence/build.txt",
+        "docs/dispatch-setup/evidence/guard-inventory.txt"
+      ],
       "acceptanceGate": "DS-G01",
-      "status": "PARTIAL",
-      "reason": "Implementation in progress; acceptance not yet executed",
-      "testResult": "PENDING",
-      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical/API/component and actual local desktop/phone/tablet owner/manager checks pass; final order mutation controls preserved.",
+      "testResult": "PASS \u2014 33 focused tests, five actual local browser cases, types/build and 77 sensitive-action guard sites retained; broader production acceptance remains separate.",
+      "outstandingWork": "No remaining bounded local implementation; hosted rollout/full CI tracked in DS-R04. Original production/native/provider/physical/import/retain-all gates remain separate."
     },
     {
       "id": "DS-R02",
       "requirement": "Direct role-aware setup actions and correct branch/settings destinations",
       "priority": "P1",
       "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
-      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request, 24 November 2026",
       "route": [
         "/admin/deliveries",
         "/admin/orders",
@@ -49,30 +68,47 @@
         "/admin/operations#branches"
       ],
       "implementationFiles": [
-        "apps/web/lib/dispatch-setup.ts",
         "apps/web/components/dispatch-setup.tsx",
-        "apps/web/components/driver-assignment.tsx"
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/workflows.tsx"
       ],
       "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
-      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
-      "testFiles": [],
-      "testIds": [],
+      "securityControl": "Owner/manager and branch-scoped read; individual dispatch.manage revocations enforced. No setup writes or release bypass; only the owner registers vehicles. Final assignment revalidates all safety/payment/custody requirements.",
+      "testFiles": [
+        "tests/dispatch-setup.test.ts",
+        "tests/dispatch-setup-components.test.ts",
+        "tests/dispatch-setup-source.test.ts",
+        "tests/driver-assignment.test.ts"
+      ],
+      "testIds": [
+        "DS-ACTIONS",
+        "DS-V04",
+        "DS-V05"
+      ],
       "negativeTests": [
         "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/dispatch-setup/evidence/focused.txt",
+        "docs/dispatch-setup/evidence/browser-local.json",
+        "docs/dispatch-setup/evidence/browser-local.txt",
+        "docs/dispatch-setup/evidence/typecheck.txt",
+        "docs/dispatch-setup/evidence/build.txt",
+        "docs/dispatch-setup/evidence/guard-inventory.txt"
+      ],
       "acceptanceGate": "DS-G02",
-      "status": "PARTIAL",
-      "reason": "Implementation in progress; acceptance not yet executed",
-      "testResult": "PENDING",
-      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical/API/component and actual local desktop/phone/tablet owner/manager checks pass; final order mutation controls preserved.",
+      "testResult": "PASS \u2014 33 focused tests, five actual local browser cases, types/build and 77 sensitive-action guard sites retained; broader production acceptance remains separate.",
+      "outstandingWork": "No remaining bounded local implementation; hosted rollout/full CI tracked in DS-R04. Original production/native/provider/physical/import/retain-all gates remain separate."
     },
     {
       "id": "DS-R03",
       "requirement": "Ready drivers first and compact expandable blocked-driver requirements in both assignment entry points",
       "priority": "P1",
       "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
-      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request, 24 November 2026",
       "route": [
         "/admin/deliveries",
         "/admin/orders",
@@ -81,30 +117,48 @@
         "/admin/operations#branches"
       ],
       "implementationFiles": [
-        "apps/web/lib/dispatch-setup.ts",
-        "apps/web/components/dispatch-setup.tsx",
-        "apps/web/components/driver-assignment.tsx"
+        "apps/web/components/driver-assignment.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/admin-order-details.tsx"
       ],
       "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
-      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
-      "testFiles": [],
-      "testIds": [],
+      "securityControl": "Owner/manager and branch-scoped read; individual dispatch.manage revocations enforced. No setup writes or release bypass; only the owner registers vehicles. Final assignment revalidates all safety/payment/custody requirements.",
+      "testFiles": [
+        "tests/dispatch-setup.test.ts",
+        "tests/dispatch-setup-components.test.ts",
+        "tests/dispatch-setup-source.test.ts",
+        "tests/driver-assignment.test.ts"
+      ],
+      "testIds": [
+        "DS-CHOICES",
+        "DASSIGN-NEG",
+        "DASSIGN-EXACT",
+        "DS-V02",
+        "DS-V03"
+      ],
       "negativeTests": [
         "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/dispatch-setup/evidence/focused.txt",
+        "docs/dispatch-setup/evidence/browser-local.json",
+        "docs/dispatch-setup/evidence/browser-local.txt",
+        "docs/dispatch-setup/evidence/typecheck.txt",
+        "docs/dispatch-setup/evidence/build.txt",
+        "docs/dispatch-setup/evidence/guard-inventory.txt"
+      ],
       "acceptanceGate": "DS-G03",
-      "status": "PARTIAL",
-      "reason": "Implementation in progress; acceptance not yet executed",
-      "testResult": "PENDING",
-      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Canonical/API/component and actual local desktop/phone/tablet owner/manager checks pass; final order mutation controls preserved.",
+      "testResult": "PASS \u2014 33 focused tests, five actual local browser cases, types/build and 77 sensitive-action guard sites retained; broader production acceptance remains separate.",
+      "outstandingWork": "No remaining bounded local implementation; hosted rollout/full CI tracked in DS-R04. Original production/native/provider/physical/import/retain-all gates remain separate."
     },
     {
       "id": "DS-R04",
       "requirement": "Verify permissions, non-mutating reads, exceptions and responsive UI; update manual and traceability",
       "priority": "P1",
       "scope": "Web Dispatch setup and shared assignment presentation; existing order/security/release checks preserved",
-      "uiReference": "User-approved single setup checklist and ready-first assignment request,24November2026",
+      "uiReference": "User-approved single setup checklist and ready-first assignment request, 24 November 2026",
       "route": [
         "/admin/deliveries",
         "/admin/orders",
@@ -113,61 +167,138 @@
         "/admin/operations#branches"
       ],
       "implementationFiles": [
-        "apps/web/lib/dispatch-setup.ts",
-        "apps/web/components/dispatch-setup.tsx",
-        "apps/web/components/driver-assignment.tsx"
+        "scripts/verify-dispatch-setup-hosted.mjs",
+        "scripts/lib/reviewed-dispatch-setup-source.mjs",
+        "docs/user-manual/dispatch-setup.md"
       ],
       "dataSource": "Canonical branch/user/driver_vehicle/driver_trip/settings/delivery_location records; dispatch.candidates remains order-specific authority",
-      "securityControl": "Owner/manager scoped read; no setup writes or release bypass; only owner registers vehicle; assignment revalidates all safety/payment/custody requirements",
-      "testFiles": [],
-      "testIds": [],
+      "securityControl": "Owner/manager and branch-scoped read; individual dispatch.manage revocations enforced. No setup writes or release bypass; only the owner registers vehicles. Final assignment revalidates all safety/payment/custody requirements.",
+      "testFiles": [
+        "tests/dispatch-setup.test.ts",
+        "tests/dispatch-setup-components.test.ts",
+        "tests/dispatch-setup-source.test.ts",
+        "tests/driver-assignment.test.ts"
+      ],
+      "testIds": [
+        "DS-SOURCE",
+        "DSH-SOURCE",
+        "DSH-ROLES",
+        "DSH-PRESERVE",
+        "DSH-RELEASE",
+        "DSH-V01",
+        "DSH-V02",
+        "DSH-V03",
+        "DSH-CLEANUP",
+        "DSH-V04",
+        "DSH-CI-SOURCE",
+        "DSH-CI"
+      ],
       "negativeTests": [
         "Wrong role and foreign branch denied; stale/failed checks cannot imply readiness; blocked/null drivers unselectable; no business mutation"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/dispatch-setup/evidence/focused.txt",
+        "docs/dispatch-setup/evidence/browser-local.json",
+        "docs/dispatch-setup/evidence/browser-local.txt",
+        "docs/dispatch-setup/evidence/typecheck.txt",
+        "docs/dispatch-setup/evidence/build.txt",
+        "docs/dispatch-setup/evidence/guard-inventory.txt",
+        "docs/dispatch-setup/evidence/source-integrity.json",
+        "docs/dispatch-setup/evidence/source-integrity.txt",
+        "docs/dispatch-setup/evidence/candidate-hosted.json",
+        "docs/dispatch-setup/evidence/candidate-hosted.txt",
+        "docs/dispatch-setup/evidence/stable-hosted.json",
+        "docs/dispatch-setup/evidence/stable-hosted.txt",
+        "docs/dispatch-setup/evidence/release.json",
+        "docs/dispatch-setup/evidence/release.txt",
+        "docs/dispatch-setup/evidence/browser-hosted.json",
+        "docs/dispatch-setup/evidence/browser-hosted.txt",
+        "docs/dispatch-setup/evidence/cleanup-hosted.json",
+        "docs/dispatch-setup/evidence/cleanup-hosted.txt",
+        "docs/dispatch-setup/evidence/ci-source.json",
+        "docs/dispatch-setup/evidence/ci-source.txt",
+        "docs/dispatch-setup/evidence/ci.json",
+        "docs/dispatch-setup/evidence/ci.txt"
+      ],
       "acceptanceGate": "DS-G04",
-      "status": "PARTIAL",
-      "reason": "Implementation in progress; acceptance not yet executed",
-      "testResult": "PENDING",
-      "outstandingWork": "Tests, actual browser verification, manual and final coverage"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Exact-source dedicated demo rollout and four actual hosted UI cases pass. GitHub Release validation 45298859532 at test-only correction 2ccc15d succeeds with 1,248 regressions and no failures/skips; all 448 application files equal deployed 8bb1627 bytes. Manual and final evidence are included in this documentation publication.",
+      "testResult": "PASS \u2014 33 focused tests, five local and four hosted actual-browser cases, 1,248 full CI regressions, web/native checks and unchanged business snapshots; native export skipped.",
+      "outstandingWork": "No remaining bounded implementation, verification or documentation work. Original production/native/provider/physical/import/retain-all holds remain separate; real branch operations still require genuine driver trip/configuration actions."
     }
   ],
   "gates": [
     {
       "id": "DS-G01",
       "description": "Single branch-scoped Dispatch setup checklist with authoritative branch, driver, vehicle and operational prerequisites",
-      "status": "PENDING",
-      "reason": "Execution pending"
+      "status": "PASS",
+      "reason": "Actual bounded local implementation/negative/browser evidence mapped to the stable requirement."
     },
     {
       "id": "DS-G02",
       "description": "Direct role-aware setup actions and correct branch/settings destinations",
-      "status": "PENDING",
-      "reason": "Execution pending"
+      "status": "PASS",
+      "reason": "Actual bounded local implementation/negative/browser evidence mapped to the stable requirement."
     },
     {
       "id": "DS-G03",
       "description": "Ready drivers first and compact expandable blocked-driver requirements in both assignment entry points",
-      "status": "PENDING",
-      "reason": "Execution pending"
+      "status": "PASS",
+      "reason": "Actual bounded local implementation/negative/browser evidence mapped to the stable requirement."
     },
     {
       "id": "DS-G04",
       "description": "Verify permissions, non-mutating reads, exceptions and responsive UI; update manual and traceability",
-      "status": "PENDING",
-      "reason": "Execution pending"
+      "status": "PASS",
+      "reason": "All mapped source, role/security, negative, actual-browser, hosted preservation, full CI and documentation evidence passes."
     }
   ],
   "coverage": {
     "total": 4,
-    "verified": 0,
-    "partial": 4,
-    "excluded": 0
+    "implemented": 4,
+    "verified": 4,
+    "partial": 0,
+    "excluded": 0,
+    "criticalSecurity": {
+      "covered": 3,
+      "total": 3
+    },
+    "routes": {
+      "locallyVerified": 5,
+      "total": 5
+    },
+    "gates": {
+      "passed": 4,
+      "total": 4
+    }
   },
   "changeLog": [
     {
       "date": "2026-11-24",
       "change": "Registered approved web-only setup checklist and compact assignment. No new mobile binary or automatic business setup inferred."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Canonical delivery-window text corrected after actual browser check; direct settings category and compact keyboard-safe blockers verified. Source1f83a40 published as Ready candidate and stable dedicated demo,448hashes/3source downloads; final hosted browser/CI pending. No business configuration/assignment/stock writes or native binary."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Final audit adds explicit inheritance of individual dispatch.manage revocations on setup reads; DS-SCOPE tests PRIVILEGE_REVOKED. Initial successful1f83a40 rollout retained under initial-release, superseded; corrected source rollout/CI remains in DS-R04."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Corrected8bb1627 / Ready dpl_12Wsg86xEFfYy8hG16Nn2di7nC7N published;448remote hashes and3source byte comparisons pass. Five candidate/five stable groups,4 actual hosted UI cases and own-session cleanup pass. CI remains pending; no hosted business mutation."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "CI found the direct historical Fleet source test did not compose the reviewed Dispatch continuation. Test-only correction 2ccc15d preserves original hashes/tamper/native exclusions; expanded focused suite passes 33/33. Four final hosted UI cases now include narrow phone bounds. Full rerun 45298859532 pending."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Full Release validation 45298859532 passes at test-only 2ccc15d: 1,248 regressions, zero failures/skips; web/native types and audits pass, mobile export skipped. All 448 application files match deployed 8bb1627. Four requirements/gates verified, zero excluded; final manual/evidence published without further runtime changes."
     }
-  ]
+  ],
+  "verification": {
+    "matrixValidation": "docs/dispatch-setup/evidence/traceability.txt"
+  }
 }

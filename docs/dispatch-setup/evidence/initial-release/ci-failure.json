@@ -1,0 +1,30 @@
+{
+  "runId": 45295756574,
+  "sourceCommit": "1f83a40c593b1b00b0f11378818794d0138ca1cf",
+  "url": "https://github.com/Onaopemipo/easygasng/actions/runs/45295756574",
+  "conclusion": "failure",
+  "tests": 1248,
+  "passed": 1247,
+  "failed": 1,
+  "skipped": 0,
+  "failedTest": "FLEETUI-SOURCE",
+  "cause": "Historical Fleet UI source comparison stopped before the explicitly reviewed Dispatch setup continuation. Application guard logic was not bypassed by this source-evidence mismatch.",
+  "correctionCommit": "2ccc15da72da2bb2a033aeeda4934757b9564366",
+  "correction": "Compose reviewedFleetUiSourceHash with reviewedDispatchSetupSourceHash in the direct test. Historical hashes, tamper checks and native/server exclusions retained.",
+  "focusedResult": {
+    "tests": 33,
+    "passed": 33,
+    "failed": 0,
+    "skipped": 0
+  },
+  "fullRerun": 45298859532,
+  "sameFailureAtCorrectedApplication": {
+    "runId": 45296964385,
+    "sourceCommit": "8bb1627ad91e0494ca1d3b62b6a284ab2d078ce5",
+    "tests": 1248,
+    "passed": 1247,
+    "failed": 1,
+    "skipped": 0,
+    "failedTest": "FLEETUI-SOURCE"
+  }
+}

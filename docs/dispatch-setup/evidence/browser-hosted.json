@@ -1,0 +1,47 @@
+{
+  "environment": "Actual existing client-demo UI; final source 8bb1627",
+  "sourceCommit": "8bb1627ad91e0494ca1d3b62b6a284ab2d078ce5",
+  "deploymentId": "dpl_12Wsg86xEFfYy8hG16Nn2di7nC7N",
+  "cases": [
+    {
+      "id": "DSH-V01",
+      "status": "PASS",
+      "detail": "Actual final hosted checklist: owner explicitly chooses Lagos from two branches;3/4steps ready,2available drivers,2approved vehicles and0available drivers on active suitable trips. Driver Start trip instructions and direct actions visible. Tablet820x1180 has no horizontal overflow."
+    },
+    {
+      "id": "DSH-V02",
+      "status": "PASS",
+      "detail": "Actual final hosted Orders assignment retains the existing address-coverage warning and shows0/3eligible with Blocked drivers(3) collapsed and final action disabled. Earlier expansion verified exact trip/availability blockers and disabled radios. No assignment or other business mutation submitted."
+    },
+    {
+      "id": "DSH-V03",
+      "status": "PASS",
+      "detail": "Own hosted QA browser session signed out; Login form observed. Original dark theme retained and viewport override reset; unrelated browser sessions untouched."
+    },
+    {
+      "id": "DSH-V04",
+      "status": "PASS",
+      "detail": "Final hosted phone viewport 390 x 844: single-column checklist stays inside 358 px panel, document scrollWidth equals viewport 390 px, long inactive branch option causes no horizontal overflow. Refresh completes with canonical Lagos 3/4 status. Own session signed out again, Login observed and viewport reset."
+    }
+  ],
+  "screenshots": [
+    "docs/dispatch-setup/evidence/hosted-checklist.jpg",
+    "docs/dispatch-setup/evidence/hosted-assignment.jpg",
+    "docs/dispatch-setup/evidence/hosted-phone-checklist.jpg"
+  ],
+  "businessWrites": 0,
+  "geometry": {
+    "width": 820,
+    "height": 1180,
+    "horizontalOverflow": false,
+    "phone": {
+      "width": 390,
+      "height": 844,
+      "documentScrollWidth": 390,
+      "panelWidth": 358,
+      "panelX": 16,
+      "horizontalOverflow": false
+    }
+  },
+  "limitations": "Positive ready-driver selection verified in disposable local UI, final stale-eligibility rejection in backend tests. Existing hosted drivers are blocked; no account/configuration/trip/assignment changes made to manufacture a positive case. Physical/assistive/native acceptance remains separate."
+}
