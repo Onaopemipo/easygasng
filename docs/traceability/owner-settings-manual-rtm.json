@@ -1,0 +1,269 @@
+{
+  "phase": "Owner Settings audit and end-to-end configuration manual",
+  "date": "2026-11-24",
+  "baseCommit": "ad0400c",
+  "productionDecision": "Original production NO-GO, actual import hold, retain-all and unrelated platform/provider/physical gates unchanged.",
+  "requirements": [
+    {
+      "id": "OSM-01",
+      "requirement": "Inventory every Owner setting, its purpose, validation, authority and dependencies",
+      "priority": "P1",
+      "scope": "Read-only Owner Settings source/runtime audit, operator manual and PDF. No business-setting mutation, deployment, provider activation or mobile binary.",
+      "uiReference": "Owner Business settings and end-to-end configuration request",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "docs/user-manual/owner-settings-complete.md",
+        "docs/owner-settings-audit/README.md",
+        "docs/owner-settings-audit/setting-register.json",
+        "packages/business-rules/src/settings-categories.ts",
+        "packages/business-rules/src/admin-settings-purpose.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "dataSource": "Current source ad0400c fingerprinted unchanged; 76 actual role-filtered local settings DTOs, 1 historical-only sandbox location from prior 77-key inventory; per-key type/authority and manual mapping in setting-register.json. Downstream validators/operational consumers listed in audit report. No current hosted-value certification.",
+      "securityControl": "Role/branch/current identity/version checks, independent qualified/finance decisions, retain-all and prior production NO-GO preserved. No real messages, payments or setup mutations.",
+      "testFiles": [
+        "tests/admin-settings-purpose.test.ts"
+      ],
+      "testIds": [
+        "ASSET-COVERAGE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/owner-settings-audit/evidence/focused-tests.txt",
+        "docs/owner-settings-audit/evidence/current-inventory.json",
+        "docs/owner-settings-audit/evidence/browser-observations.json",
+        "docs/owner-settings-audit/evidence/source-fingerprints.json",
+        "docs/owner-settings-audit/evidence/artifact-validation.json",
+        "docs/owner-settings-audit/evidence/visual-review.json",
+        "docs/owner-settings-audit/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "OSM-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded read-only audit/documentation requirement delivered and verified. All 77 controls and seven open findings retained; this is not product repair or production acceptance.",
+      "testResult": "PASS: focused suites 80 passed,0 failed,2 PostgreSQL concurrency skips retained; actual local read/browser inventory; manual/PDF source/link/key and visual verification. Traceability results recorded separately. Documentation/traceability6passed/0failed/0skipped; PDF30pages/77keys/21outlineentries verified.",
+      "outstandingWork": "None for this bounded audit/manual deliverable. OSA-01\u201307 remain OPEN; hosted current values, actual business configuration, real/provider/physical/native/concurrency/commercial acceptance and prior NO-GO remain outside this completion claim."
+    },
+    {
+      "id": "OSM-02",
+      "requirement": "Document every category and safe proposal, approval, activation and restoration procedure",
+      "priority": "P1",
+      "scope": "Read-only Owner Settings source/runtime audit, operator manual and PDF. No business-setting mutation, deployment, provider activation or mobile binary.",
+      "uiReference": "Owner Business settings and end-to-end configuration request",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "docs/user-manual/owner-settings-complete.md",
+        "docs/owner-settings-audit/README.md",
+        "docs/owner-settings-audit/setting-register.json",
+        "apps/web/components/setting-change-form.tsx",
+        "apps/web/components/setting-content-fields.tsx",
+        "apps/web/lib/governance.ts"
+      ],
+      "dataSource": "Current source ad0400c fingerprinted unchanged; 76 actual role-filtered local settings DTOs, 1 historical-only sandbox location from prior 77-key inventory; per-key type/authority and manual mapping in setting-register.json. Downstream validators/operational consumers listed in audit report. No current hosted-value certification.",
+      "securityControl": "Role/branch/current identity/version checks, independent qualified/finance decisions, retain-all and prior production NO-GO preserved. No real messages, payments or setup mutations.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/settings-modal.test.ts",
+        "tests/settings-datetime.test.ts"
+      ],
+      "testIds": [
+        "ASACC-LIFECYCLE"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/owner-settings-audit/evidence/focused-tests.txt",
+        "docs/owner-settings-audit/evidence/current-inventory.json",
+        "docs/owner-settings-audit/evidence/browser-observations.json",
+        "docs/owner-settings-audit/evidence/source-fingerprints.json",
+        "docs/owner-settings-audit/evidence/artifact-validation.json",
+        "docs/owner-settings-audit/evidence/visual-review.json",
+        "docs/owner-settings-audit/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "OSM-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded read-only audit/documentation requirement delivered and verified. All 77 controls and seven open findings retained; this is not product repair or production acceptance.",
+      "testResult": "PASS: focused suites 80 passed,0 failed,2 PostgreSQL concurrency skips retained; actual local read/browser inventory; manual/PDF source/link/key and visual verification. Traceability results recorded separately. Documentation/traceability6passed/0failed/0skipped; PDF30pages/77keys/21outlineentries verified.",
+      "outstandingWork": "None for this bounded audit/manual deliverable. OSA-01\u201307 remain OPEN; hosted current values, actual business configuration, real/provider/physical/native/concurrency/commercial acceptance and prior NO-GO remain outside this completion claim."
+    },
+    {
+      "id": "OSM-03",
+      "requirement": "Explain dependency-ordered setup and end-to-end operational acceptance by role",
+      "priority": "P1",
+      "scope": "Read-only Owner Settings source/runtime audit, operator manual and PDF. No business-setting mutation, deployment, provider activation or mobile binary.",
+      "uiReference": "Owner Business settings and end-to-end configuration request",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "docs/user-manual/owner-settings-complete.md",
+        "docs/owner-settings-audit/README.md",
+        "docs/owner-settings-audit/setting-register.json",
+        "apps/web/lib/dispatch-setup.ts",
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/wallet-funding.ts"
+      ],
+      "dataSource": "Current source ad0400c fingerprinted unchanged; 76 actual role-filtered local settings DTOs, 1 historical-only sandbox location from prior 77-key inventory; per-key type/authority and manual mapping in setting-register.json. Downstream validators/operational consumers listed in audit report. No current hosted-value certification.",
+      "securityControl": "Role/branch/current identity/version checks, independent qualified/finance decisions, retain-all and prior production NO-GO preserved. No real messages, payments or setup mutations.",
+      "testFiles": [
+        "tests/dispatch-setup.test.ts",
+        "tests/dispatch-trip.test.ts"
+      ],
+      "testIds": [
+        "DS-READ",
+        "TC-END"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/owner-settings-audit/evidence/focused-tests.txt",
+        "docs/owner-settings-audit/evidence/current-inventory.json",
+        "docs/owner-settings-audit/evidence/browser-observations.json",
+        "docs/owner-settings-audit/evidence/source-fingerprints.json",
+        "docs/owner-settings-audit/evidence/artifact-validation.json",
+        "docs/owner-settings-audit/evidence/visual-review.json",
+        "docs/owner-settings-audit/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "OSM-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded read-only audit/documentation requirement delivered and verified. All 77 controls and seven open findings retained; this is not product repair or production acceptance.",
+      "testResult": "PASS: focused suites 80 passed,0 failed,2 PostgreSQL concurrency skips retained; actual local read/browser inventory; manual/PDF source/link/key and visual verification. Traceability results recorded separately. Documentation/traceability6passed/0failed/0skipped; PDF30pages/77keys/21outlineentries verified.",
+      "outstandingWork": "None for this bounded audit/manual deliverable. OSA-01\u201307 remain OPEN; hosted current values, actual business configuration, real/provider/physical/native/concurrency/commercial acceptance and prior NO-GO remain outside this completion claim."
+    },
+    {
+      "id": "OSM-04",
+      "requirement": "Record defects, technical prerequisites and remaining production blockers without altering configuration",
+      "priority": "P1",
+      "scope": "Read-only Owner Settings source/runtime audit, operator manual and PDF. No business-setting mutation, deployment, provider activation or mobile binary.",
+      "uiReference": "Owner Business settings and end-to-end configuration request",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "docs/user-manual/owner-settings-complete.md",
+        "docs/owner-settings-audit/README.md",
+        "docs/owner-settings-audit/setting-register.json",
+        "apps/web/lib/readiness.ts",
+        "apps/web/lib/release-checks.ts",
+        "apps/web/lib/payments/runtime.ts",
+        "docs/owner-settings-audit/findings.json"
+      ],
+      "dataSource": "Current source ad0400c fingerprinted unchanged; 76 actual role-filtered local settings DTOs, 1 historical-only sandbox location from prior 77-key inventory; per-key type/authority and manual mapping in setting-register.json. Downstream validators/operational consumers listed in audit report. No current hosted-value certification.",
+      "securityControl": "Role/branch/current identity/version checks, independent qualified/finance decisions, retain-all and prior production NO-GO preserved. No real messages, payments or setup mutations.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/owner-auto-approval.test.ts"
+      ],
+      "testIds": [
+        "ASACC-EXCEPTIONS"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/owner-settings-audit/evidence/focused-tests.txt",
+        "docs/owner-settings-audit/evidence/current-inventory.json",
+        "docs/owner-settings-audit/evidence/browser-observations.json",
+        "docs/owner-settings-audit/evidence/source-fingerprints.json",
+        "docs/owner-settings-audit/evidence/artifact-validation.json",
+        "docs/owner-settings-audit/evidence/visual-review.json",
+        "docs/owner-settings-audit/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "OSM-G04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded read-only audit/documentation requirement delivered and verified. All 77 controls and seven open findings retained; this is not product repair or production acceptance.",
+      "testResult": "PASS: focused suites 80 passed,0 failed,2 PostgreSQL concurrency skips retained; actual local read/browser inventory; manual/PDF source/link/key and visual verification. Traceability results recorded separately. Documentation/traceability6passed/0failed/0skipped; PDF30pages/77keys/21outlineentries verified.",
+      "outstandingWork": "None for this bounded audit/manual deliverable. OSA-01\u201307 remain OPEN; hosted current values, actual business configuration, real/provider/physical/native/concurrency/commercial acceptance and prior NO-GO remain outside this completion claim."
+    },
+    {
+      "id": "OSM-05",
+      "requirement": "Deliver a searchable printable manual and verified traceability with no omitted settings",
+      "priority": "P1",
+      "scope": "Read-only Owner Settings source/runtime audit, operator manual and PDF. No business-setting mutation, deployment, provider activation or mobile binary.",
+      "uiReference": "Owner Business settings and end-to-end configuration request",
+      "route": "/admin/settings",
+      "implementationFiles": [
+        "docs/user-manual/owner-settings-complete.md",
+        "docs/owner-settings-audit/README.md",
+        "docs/owner-settings-audit/setting-register.json",
+        "docs/owner-settings-audit/build_manual.py",
+        "docs/owner-settings-audit/verify_manual.py",
+        "output/pdf/EasyGas-Owner-Settings-Configuration-Manual.pdf"
+      ],
+      "dataSource": "Current source ad0400c fingerprinted unchanged; 76 actual role-filtered local settings DTOs, 1 historical-only sandbox location from prior 77-key inventory; per-key type/authority and manual mapping in setting-register.json. Downstream validators/operational consumers listed in audit report. No current hosted-value certification.",
+      "securityControl": "Role/branch/current identity/version checks, independent qualified/finance decisions, retain-all and prior production NO-GO preserved. No real messages, payments or setup mutations.",
+      "testFiles": [
+        "tests/admin-settings-acceptance.test.ts",
+        "tests/customer-traceability.test.ts"
+      ],
+      "testIds": [
+        "ASACC-EDITORS"
+      ],
+      "negativeTests": [],
+      "evidence": [
+        "docs/owner-settings-audit/evidence/focused-tests.txt",
+        "docs/owner-settings-audit/evidence/current-inventory.json",
+        "docs/owner-settings-audit/evidence/browser-observations.json",
+        "docs/owner-settings-audit/evidence/source-fingerprints.json",
+        "docs/owner-settings-audit/evidence/artifact-validation.json",
+        "docs/owner-settings-audit/evidence/visual-review.json",
+        "docs/owner-settings-audit/evidence/documentation-tests.txt"
+      ],
+      "acceptanceGate": "OSM-G05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Bounded read-only audit/documentation requirement delivered and verified. All 77 controls and seven open findings retained; this is not product repair or production acceptance.",
+      "testResult": "PASS: focused suites 80 passed,0 failed,2 PostgreSQL concurrency skips retained; actual local read/browser inventory; manual/PDF source/link/key and visual verification. Traceability results recorded separately. Documentation/traceability6passed/0failed/0skipped; PDF30pages/77keys/21outlineentries verified.",
+      "outstandingWork": "None for this bounded audit/manual deliverable. OSA-01\u201307 remain OPEN; hosted current values, actual business configuration, real/provider/physical/native/concurrency/commercial acceptance and prior NO-GO remain outside this completion claim."
+    }
+  ],
+  "gates": [
+    {
+      "id": "OSM-G01",
+      "description": "Inventory every Owner setting, its purpose, validation, authority and dependencies",
+      "status": "PASS",
+      "reason": "Bounded audit/manual evidence delivered; open product findings and operational/release gates are explicitly retained separately."
+    },
+    {
+      "id": "OSM-G02",
+      "description": "Document every category and safe proposal, approval, activation and restoration procedure",
+      "status": "PASS",
+      "reason": "Bounded audit/manual evidence delivered; open product findings and operational/release gates are explicitly retained separately."
+    },
+    {
+      "id": "OSM-G03",
+      "description": "Explain dependency-ordered setup and end-to-end operational acceptance by role",
+      "status": "PASS",
+      "reason": "Bounded audit/manual evidence delivered; open product findings and operational/release gates are explicitly retained separately."
+    },
+    {
+      "id": "OSM-G04",
+      "description": "Record defects, technical prerequisites and remaining production blockers without altering configuration",
+      "status": "PASS",
+      "reason": "Bounded audit/manual evidence delivered; open product findings and operational/release gates are explicitly retained separately."
+    },
+    {
+      "id": "OSM-G05",
+      "description": "Deliver a searchable printable manual and verified traceability with no omitted settings",
+      "status": "PASS",
+      "reason": "Bounded audit/manual evidence delivered; open product findings and operational/release gates are explicitly retained separately."
+    }
+  ],
+  "coverage": {
+    "total": 5,
+    "verified": 5,
+    "partial": 0,
+    "excluded": 0,
+    "settingsTotal": 77,
+    "currentSourceLocalRead": 76,
+    "historicalOnly": 1,
+    "settingsExcluded": 0,
+    "findingsTotal": 7,
+    "findingsOpen": 7,
+    "findingsExcluded": 0,
+    "gatesTotal": 5,
+    "gatesPassed": 5
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered five documentation/audit requirements before work. Existing ASSET/SETACC/AUTH and production decisions retained. This does not authorise changing settings."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Completed full read-only source inventory/local browser and 30-page manual. Retained all 77 keys (76 current local,1 historical sandbox), seven open findings and production NO-GO. Focused80pass/0fail/2explicitPGskips; own sessions revoked; no application or business mutation/build/deploy."
+    }
+  ]
+}

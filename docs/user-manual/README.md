@@ -4,6 +4,11 @@ Edition 2, 20 November 2026. Current website: <https://easygas-client-demo.verce
 
 The customised manual covers Customer, the sole Admin/business owner, Service Manager, Inventory including finance, Driver and Technician workflows. It retains 31 task chapters, linked contents and 25 genuine client-demo screenshots. Each task explains its entry point, steps, expected result and blocking conditions.
 
+
+## Comprehensive Owner configuration manual
+
+The current [Owner Settings and end-to-end setup guide](owner-settings-complete.md) and its [dedicated printable PDF](../../output/pdf/EasyGas-Owner-Settings-Configuration-Manual.pdf) cover all nine categories, 77 retained setting keys, safe approvals, staff/stock/fleet prerequisites, orders/services/reconciliation, technical hand-off and acceptance sign-off. The [read-only audit](../owner-settings-audit/README.md) records seven open product findings and the exact local verification scope. This dedicated edition does not replace the historical role manual or authorise configuration changes/commercial release.
+
 ## Current order-to-delivery guide
 
 The [21 November role guide](order-to-delivery.md) adds the exercised trip, assignment, metered gas, COD reconciliation, return/retry, refund and invoice-correction workflows with current demo screenshots. See its [fresh acceptance matrix](../traceability/role-order-acceptance-20261121-rtm.md) for executed coverage and release status. The original Word/PDF editions and their audit evidence remain historical artifacts.

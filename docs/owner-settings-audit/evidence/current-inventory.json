@@ -1,0 +1,2225 @@
+{
+  "at": "2026-11-24T12:52:36.193Z",
+  "scope": "Read-only local disposable runtime, source ad0400c; not hosted current values",
+  "categories": [
+    "Business & Website",
+    "Policies & Terms",
+    "Gas & Products",
+    "Delivery & Dispatch",
+    "Services & Safety",
+    "Payments & Wallet",
+    "Rewards & Retention",
+    "Stock & Valuation",
+    "Staff & Security"
+  ],
+  "count": 76,
+  "definitions": [
+    {
+      "key": "document.identity",
+      "label": "Invoice & receipt business details",
+      "description": "Verified legal/contact details for new financial documents. Existing issued documents retain their original identity snapshot.",
+      "category": "Business & Website",
+      "type": "document_identity",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "unconfigured"
+    },
+    {
+      "key": "legal.cancellation",
+      "label": "Cancellation policy",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.delivery",
+      "label": "Delivery policy",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.loyalty",
+      "label": "EasyRewards terms",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.purchase-credit",
+      "label": "Prepaid wallet credit terms",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.privacy",
+      "label": "Privacy policy",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.refund",
+      "label": "Refund policy",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.service-booking",
+      "label": "Service booking terms",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.warranty",
+      "label": "Service warranty terms",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "legal.terms",
+      "label": "General terms & conditions",
+      "description": "Published customer policy text, subject to existing publication and approval checks. This text does not change operational settings.",
+      "category": "Policies & Terms",
+      "type": "legal",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "delivery.enabled",
+      "label": "Accept delivery orders",
+      "description": "Allow delivery ordering only after stock, prices and verified coverage checks pass.",
+      "category": "Delivery & Dispatch",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "delivery.zones",
+      "label": "Legacy delivery area list",
+      "description": "Historical area list retained. Use Delivery coverage locations for current coverage and verify each actual address.",
+      "category": "Delivery & Dispatch",
+      "type": "text",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "string"
+    },
+    {
+      "key": "delivery.windows",
+      "label": "Bookable delivery windows",
+      "description": "Available delivery time windows, used by scheduling and rescheduling. Branch opening hours are separate.",
+      "category": "Delivery & Dispatch",
+      "type": "text",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "string"
+    },
+    {
+      "key": "delivery.capacity",
+      "label": "Order capacity per delivery window",
+      "description": "Maximum active orders for each delivery date/window. Existing branch locking prevents overbooking.",
+      "category": "Delivery & Dispatch",
+      "type": "integer",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "1",
+      "maximum": "10000",
+      "valueState": "number"
+    },
+    {
+      "key": "dispatch.routing",
+      "label": "Dispatch route & cost estimates",
+      "description": "Internal route-planning rates and stop allowances. Estimates do not change customer delivery fees or bypass route approval checks.",
+      "category": "Delivery & Dispatch",
+      "type": "dispatch_routing",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "location.ajah",
+      "label": "Ajah",
+      "description": "Delivery location visibility, boundary and address-confirmation rules. A listed location alone does not confirm an actual delivery address.",
+      "category": "Delivery & Dispatch",
+      "type": "location",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "location.lagos-island",
+      "label": "Lagos Island",
+      "description": "Delivery location visibility, boundary and address-confirmation rules. A listed location alone does not confirm an actual delivery address.",
+      "category": "Delivery & Dispatch",
+      "type": "location",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "location.lekki",
+      "label": "Lekki",
+      "description": "Delivery location visibility, boundary and address-confirmation rules. A listed location alone does not confirm an actual delivery address.",
+      "category": "Delivery & Dispatch",
+      "type": "location",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "location.victoria-island",
+      "label": "Victoria Island",
+      "description": "Delivery location visibility, boundary and address-confirmation rules. A listed location alone does not confirm an actual delivery address.",
+      "category": "Delivery & Dispatch",
+      "type": "location",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "delivery.fee",
+      "label": "Flat customer delivery fee",
+      "description": "Fee for each eligible physical delivery order. Service call-outs and internal dispatch cost estimates are separate.",
+      "category": "Delivery & Dispatch",
+      "type": "money",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": "0",
+      "maximum": "1000000",
+      "valueState": "number"
+    },
+    {
+      "key": "gas.price_per_kg",
+      "label": "Gas selling price per kg",
+      "description": "Selling price per kilogram for new gas quotations. Historic fixed refill prices are separate legacy controls.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": "1",
+      "maximum": null,
+      "valueState": "number"
+    },
+    {
+      "key": "gas.quantity_policy",
+      "label": "Gas order quantities & cylinder sizes",
+      "description": "Minimum/maximum quantity, increment, precision and supported cylinder capacities required before gas ordering opens.",
+      "category": "Gas & Products",
+      "type": "gas_policy",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "business.hours",
+      "label": "Branch opening hours",
+      "description": "Customer-facing opening hours for this branch. Delivery windows are configured separately.",
+      "category": "Business & Website",
+      "type": "text",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 1,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "string"
+    },
+    {
+      "key": "payment.integration",
+      "label": "Legacy payment integration",
+      "description": "Legacy protective switch; it does not enable Paystack. Use Online payments & fees for the Paystack sandbox. Existing protective-disable controls remain available.",
+      "category": "Payments & Wallet",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "inventory.valuation",
+      "label": "Stock valuation method",
+      "description": "Value existing stock movements using approved costing rules. Missing acquisition costs keep valuation unavailable; this does not change physical stock.",
+      "category": "Stock & Valuation",
+      "type": "inventory_valuation",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "string"
+    },
+    {
+      "key": "loyalty.adjustment",
+      "label": "Customer points adjustment",
+      "description": "One immutable, evidenced points adjustment per approved request. This does not transfer money into a wallet.",
+      "category": "Rewards & Retention",
+      "type": "rewards_adjustment",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "loyalty.policy",
+      "label": "EasyRewards programme",
+      "description": "Current points, discounts, referrals and eligible-offer rules. An activated approved policy and separate technical enablement flags are still required.",
+      "category": "Rewards & Retention",
+      "type": "rewards_policy",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "loyalty.referral_review",
+      "label": "Referral eligibility review",
+      "description": "Hold, clear or block a referral with evidence and independent review. A shared address alone is not proof of fraud.",
+      "category": "Rewards & Retention",
+      "type": "referral_review",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "loyalty.enabled",
+      "label": "Legacy reward earning switch",
+      "description": "Historical control retained. Current EasyRewards earning uses the activated EasyRewards programme and technical issuance flag; this switch does not enable that engine.",
+      "category": "Rewards & Retention",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "loyalty.spend_per_point",
+      "label": "Legacy spend per reward point",
+      "description": "Historical earning rate retained. Configure current earning economics in EasyRewards programme.",
+      "category": "Rewards & Retention",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "loyalty.credit_per_point",
+      "label": "Legacy points-to-wallet conversion rate",
+      "description": "Historical wallet conversion rate retained. Current EasyRewards uses checkout discounts; this does not enable a points-to-wallet transfer.",
+      "category": "Rewards & Retention",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "1",
+      "maximum": "10000",
+      "valueState": "number"
+    },
+    {
+      "key": "crm.retention",
+      "label": "Customer retention & win-back rules",
+      "description": "Inactivity thresholds and message budgets for retention campaigns. Existing consent, suppression and sending controls still apply.",
+      "category": "Rewards & Retention",
+      "type": "crm_retention",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "wallet.maximum",
+      "label": "Cash & bank-transfer wallet limit",
+      "description": "Limit approved cash and bank-transfer funding. Bank transfers also check the resulting wallet balance. Card top-up limits are separate under Online payments & fees.",
+      "category": "Payments & Wallet",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "10000",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "payment.cod",
+      "label": "Cash on delivery",
+      "description": "Allow cash-on-delivery orders. Payment remains unpaid until the cash is verified.",
+      "category": "Payments & Wallet",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "finance",
+        "manager"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "payment.settlement",
+      "label": "Settlement bank details",
+      "description": "Store governed bank account metadata. This does not configure customer bank-transfer instructions or Paystack credentials.",
+      "category": "Payments & Wallet",
+      "type": "bank",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "price.cylinder-empty-12",
+      "label": "12.5kg Empty Cylinder — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.cylinder-empty-12",
+      "label": "12.5kg Empty Cylinder — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.refill-12",
+      "label": "12.5kg Gas Refill — legacy fixed refill price",
+      "description": "Historical fixed-fill price retained. New gas quotations use Gas selling price per kg and the approved quantity rules.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.refill-12",
+      "label": "12.5kg Gas Refill — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.cylinder-empty-25",
+      "label": "25kg Empty Cylinder — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.cylinder-empty-25",
+      "label": "25kg Empty Cylinder — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.refill-25",
+      "label": "25kg Gas Refill — legacy fixed refill price",
+      "description": "Historical fixed-fill price retained. New gas quotations use Gas selling price per kg and the approved quantity rules.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.refill-25",
+      "label": "25kg Gas Refill — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.cylinder-empty-50",
+      "label": "50kg Empty Cylinder — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.cylinder-empty-50",
+      "label": "50kg Empty Cylinder — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.refill-50",
+      "label": "50kg Refill — legacy fixed refill price",
+      "description": "Historical fixed-fill price retained. New gas quotations use Gas selling price per kg and the approved quantity rules.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.refill-50",
+      "label": "50kg Refill — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.cylinder-empty-6",
+      "label": "6kg Empty Cylinder — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.cylinder-empty-6",
+      "label": "6kg Empty Cylinder — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.refill-6",
+      "label": "6kg Gas Refill — legacy fixed refill price",
+      "description": "Historical fixed-fill price retained. New gas quotations use Gas selling price per kg and the approved quantity rules.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "number"
+    },
+    {
+      "key": "publish.refill-6",
+      "label": "6kg Gas Refill — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 2,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.burner",
+      "label": "Double Burner — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "unconfigured"
+    },
+    {
+      "key": "publish.burner",
+      "label": "Double Burner — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.hose",
+      "label": "Gas Hose — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "unconfigured"
+    },
+    {
+      "key": "publish.hose",
+      "label": "Gas Hose — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.regulator",
+      "label": "Gas Regulator — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "unconfigured"
+    },
+    {
+      "key": "publish.regulator",
+      "label": "Gas Regulator — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "price.kit",
+      "label": "Kitchen Starter Kit — selling price",
+      "description": "Selling price for future product orders. Confirmed order prices remain unchanged; storefront visibility is a separate control.",
+      "category": "Gas & Products",
+      "type": "money",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": "100",
+      "maximum": "100000000",
+      "valueState": "unconfigured"
+    },
+    {
+      "key": "publish.kit",
+      "label": "Kitchen Starter Kit — storefront visibility",
+      "description": "Show or hide this product in the customer catalogue. Visibility does not verify stock, safety or delivery coverage.",
+      "category": "Gas & Products",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "manager"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance",
+        "driver"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "service.cooker-installation",
+      "label": "Cooker Installation",
+      "description": "Service description, price and availability. Safety inspection steps are configured separately in Safety checklists.",
+      "category": "Services & Safety",
+      "type": "service",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "checklist.cooker-installation",
+      "label": "Cooker Installation — safety checklist",
+      "description": "Required service inspection/safety steps. Existing qualified-review and activation checks remain enforced.",
+      "category": "Services & Safety",
+      "type": "checklist",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "service.cooker-servicing",
+      "label": "Cooker Servicing",
+      "description": "Service description, price and availability. Safety inspection steps are configured separately in Safety checklists.",
+      "category": "Services & Safety",
+      "type": "service",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "checklist.cooker-servicing",
+      "label": "Cooker Servicing — safety checklist",
+      "description": "Required service inspection/safety steps. Existing qualified-review and activation checks remain enforced.",
+      "category": "Services & Safety",
+      "type": "checklist",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "service.cylinder-installation",
+      "label": "Cylinder Installation",
+      "description": "Service description, price and availability. Safety inspection steps are configured separately in Safety checklists.",
+      "category": "Services & Safety",
+      "type": "service",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "checklist.cylinder-installation",
+      "label": "Cylinder Installation — safety checklist",
+      "description": "Required service inspection/safety steps. Existing qualified-review and activation checks remain enforced.",
+      "category": "Services & Safety",
+      "type": "checklist",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "service.cylinder-maintenance",
+      "label": "Cylinder Maintenance",
+      "description": "Service description, price and availability. Safety inspection steps are configured separately in Safety checklists.",
+      "category": "Services & Safety",
+      "type": "service",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "checklist.cylinder-maintenance",
+      "label": "Cylinder Maintenance — safety checklist",
+      "description": "Required service inspection/safety steps. Existing qualified-review and activation checks remain enforced.",
+      "category": "Services & Safety",
+      "type": "checklist",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "service.gas-safety-check",
+      "label": "Gas Safety Checks",
+      "description": "Service description, price and availability. Safety inspection steps are configured separately in Safety checklists.",
+      "category": "Services & Safety",
+      "type": "service",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "checklist.gas-safety-check",
+      "label": "Gas Safety Checks — safety checklist",
+      "description": "Required service inspection/safety steps. Existing qualified-review and activation checks remain enforced.",
+      "category": "Services & Safety",
+      "type": "checklist",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [
+        "owner"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "security.policy",
+      "label": "Approval safeguards (read-only)",
+      "description": "Locked approval policy for this release. Client input cannot downgrade protected approval rules.",
+      "category": "Staff & Security",
+      "type": "policy",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "security.permissions",
+      "label": "Staff roles & branch access",
+      "description": "Change an existing account’s role and branch through the existing protected access workflow. Self-promotion remains prohibited.",
+      "category": "Staff & Security",
+      "type": "access",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "subscription.enabled",
+      "label": "Recurring cash-on-delivery orders",
+      "description": "Generate recurring orders only with explicit customer consent and a customer-set price ceiling. This does not authorise automatic payment debits.",
+      "category": "Delivery & Dispatch",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "wallet.enabled",
+      "label": "Wallet access",
+      "description": "Allow customers to spend verified wallet credit and submit bank-transfer funding requests. Funding still requires configured bank instructions and approval.",
+      "category": "Payments & Wallet",
+      "type": "boolean",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager",
+        "finance"
+      ],
+      "identityVerification": false,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "boolean"
+    },
+    {
+      "key": "payment.gateway",
+      "label": "Online payments & fees",
+      "description": "Configure Paystack sandbox checkout, payment methods, processing fees and card wallet top-ups. Card top-up limits are configured here.",
+      "category": "Payments & Wallet",
+      "type": "payment_gateway",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 4,
+      "proposeRoles": [
+        "owner",
+        "finance"
+      ],
+      "approveRoles": [
+        "owner",
+        "finance"
+      ],
+      "requiredRoles": [
+        "owner",
+        "finance"
+      ],
+      "viewRoles": [
+        "owner",
+        "finance"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "testimonials.policy",
+      "label": "Customer review publication rules",
+      "description": "Consent, eligibility and moderation rules for customer reviews and photos. Withdrawing consent still removes publication access.",
+      "category": "Business & Website",
+      "type": "testimonial_policy",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 3,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    },
+    {
+      "key": "website.content",
+      "label": "Homepage & public contact details",
+      "description": "Homepage copy and public contacts. Document identity, prices, stock and delivery coverage have separate controls.",
+      "category": "Business & Website",
+      "type": "website_content",
+      "scope": "lagos",
+      "version": 1,
+      "risk": 2,
+      "proposeRoles": [
+        "owner",
+        "manager"
+      ],
+      "approveRoles": [
+        "owner"
+      ],
+      "requiredRoles": [],
+      "viewRoles": [
+        "owner",
+        "manager"
+      ],
+      "identityVerification": true,
+      "ownerAutoApproval": false,
+      "minimum": null,
+      "maximum": null,
+      "valueState": "structured"
+    }
+  ],
+  "historicalOnly": [
+    {
+      "key": "location.66e178b6-1621-48d5-add3-12cc6550df7b",
+      "label": "SANDBOX ONLY — Payment Test",
+      "reason": "Historical labelled sandbox location, absent from isolated fixture; retained in coverage"
+    }
+  ],
+  "businessMutations": 0
+}
