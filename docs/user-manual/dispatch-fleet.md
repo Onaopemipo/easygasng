@@ -84,3 +84,11 @@ In **Deliveries**, choose **Assign vehicle to driver**. Owners and branch manage
 ## Manage trips without driver sign-in
 
 Use **Deliveries → Manage trips**, select the driver’s current trip, then choose **End trip** or **Change vehicle**. Enter the actual ending odometer; a change also requires an available suitable replacement and its separate starting reading. Verify your own password. Existing reconciliation must be clear before either action: unresolved manifests, LPG, active deliveries and held returns remain blockers with direct resolution links. Driver availability stays unchanged, and replacement GPS sharing is off. Changes are atomic; a failed replacement leaves the old trip intact. [Detailed steps](dispatch-setup.md#end-a-trip-or-change-its-vehicle-as-an-administrator).
+
+## Admin loading and Refresh recovery
+
+Dashboard and shared navigation now read their canonical statistics in fewer database round trips. Values, branch filters, independent checks and unavailable financial labels retain their existing meaning. A combined Dashboard read failure falls back to the original independent widget reads.
+
+Dashboard reads have the same 20-second deadline as other admin GET requests. If the connection stalls, the page stops loading and shows **Stale / unavailable** with **Refresh** enabled. Review any retained snapshot as stale, restore connectivity and select **Refresh**. After a failed Dashboard read, automatic polling stays stopped until explicit Refresh or a filter change; normal successful updates continue. A changed branch/date must load its own snapshot, and access revocation clears protected content.
+
+Do not repeat a sensitive stock/payment/trip action merely because a read failed; review its canonical result first. This web-only repair does not change TestFlight4 or create a mobile binary. [Verification and rollout status](../admin-loading-20261124/README.md).

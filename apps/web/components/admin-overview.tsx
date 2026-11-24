@@ -114,6 +114,7 @@ function Trend({ rows, from, to }: { rows: any[]; from: string; to: string }) {
 }
 export default function AdminOverview({ user }: { user: any }) {
   const requestVersion = useRef(0);
+  const automaticReadBlocked = useRef(false);
   const [branchId, setBranchId] = useState("");
   const [range, setRange] = useState("month"),
     [page, setPage] = useState(1),
@@ -155,28 +156,25 @@ export default function AdminOverview({ user }: { user: any }) {
   const refresh = useCallback(
     async (signal?: AbortSignal) => {
       const version = ++requestVersion.current;
+      automaticReadBlocked.current = false;
       setLoading(true);
       try {
-        const response = await fetch(
-          "/api/admin.dashboard?" +
-            new URLSearchParams({
-              ...period(range),
-              ...(branchId ? { branchId } : {}),
-              page: String(page),
-            }),
-          { signal, cache: "no-store" },
+        const result = await api(
+          "admin.dashboard?" + new URLSearchParams({
+            ...period(range),
+            ...(branchId ? { branchId } : {}),
+            page: String(page),
+          }),
+          undefined,
+          { signal },
         );
-        const result = await response.json();
-        if (!response.ok)
-          throw Object.assign(new Error(result.error), {
-            status: response.status,
-          });
         if (signal?.aborted || version !== requestVersion.current) return;
         setData(result);
         setLast(result.generatedAt);
         setError("");
       } catch (e: any) {
         if (e.name !== "AbortError" && version === requestVersion.current) {
+          automaticReadBlocked.current = true;
           if ([401, 403].includes(e.status)) setData(null);
           setError(e.message ?? "Dashboard unavailable.");
         }
@@ -189,9 +187,10 @@ export default function AdminOverview({ user }: { user: any }) {
   );
   useEffect(() => {
     const controller = new AbortController();
+    automaticReadBlocked.current = false;
     let active = false;
     const load = async () => {
-      if (active || document.hidden) return;
+      if (active || document.hidden || automaticReadBlocked.current) return;
       active = true;
       await refresh(controller.signal);
       active = false;

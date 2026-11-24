@@ -1,0 +1,282 @@
+{
+  "phase": "Web admin loading follow-up",
+  "date": "2026-11-24",
+  "productionDecision": "Original NO-GO and all unrelated native/provider/physical/import/retain-all holds retained",
+  "scope": "User clarified Web admin pages; native app and TestFlight build4 unchanged. No new mobile binaries. Fresh own QA sessions/read-only hosted data; no business mutations.",
+  "requirements": [
+    {
+      "id": "AL-R01",
+      "requirement": "Reduce shared navigation count round trips while preserving exact role/branch/action eligibility",
+      "priority": "P1",
+      "scope": "User clarified Web admin pages; native app and TestFlight build4 unchanged. No new mobile binaries. Fresh own QA sessions/read-only hosted data; no business mutations.",
+      "uiReference": "User reports web admin delays after latest iOS release; iOS investigation stopped on clarification",
+      "route": [
+        "/admin",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/finance",
+        "/admin/approvals"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/admin-dashboard.ts",
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/lib/admin-dashboard-batch.ts"
+      ],
+      "dataSource": "Canonical scoped SQL and committed baseline 2b289be; hosted API timing/full contract comparison and actual isolated browser acceptance",
+      "securityControl": "Retain authentication, per-user privileges, branch/role filters, independent approval, revenue definitions, repeatable-read snapshot, fail-closed 401/403 and widget-isolated fallback. No cached private API response or mutation replay.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts",
+        "tests/navigation.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/admin-loading-performance.test.ts",
+        "tests/admin-loading-ui.test.ts",
+        "tests/admin-loading-source.test.ts"
+      ],
+      "testIds": [
+        "AL-CONTRACT"
+      ],
+      "negativeTests": [
+        "Denied role/branch/privilege, malformed date/page, failed read/widget, financial overflow, timeout/body stall, aborted scope and delayed response"
+      ],
+      "evidence": [
+        "docs/admin-loading-20261124/evidence/hosted-before.json",
+        "docs/admin-loading-20261124/evidence/focused.txt",
+        "docs/admin-loading-20261124/evidence/query-comparison.json",
+        "docs/admin-loading-20261124/evidence/before-hosted.txt",
+        "docs/admin-loading-20261124/evidence/before-hosted.json",
+        "docs/admin-loading-20261124/reviewed-source-changes.json",
+        "docs/admin-loading-20261124/evidence/browser-local.json",
+        "docs/admin-loading-20261124/evidence/browser-local.txt",
+        "docs/admin-loading-20261124/evidence/build.txt",
+        "docs/admin-loading-20261124/evidence/typecheck.txt"
+      ],
+      "acceptanceGate": "AL-G01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual committed full-response contract comparisons, bounded round trips and retained scope/financial/widget-error controls pass; published validation is tracked by AL-R04.",
+      "testResult": "PASS \u2014 54 focused checks, zero failures/skips; owner Dashboard 36\u21928 and Navigation12\u21924 internal database round trips; actual component timeout/retry/revocation and real SQL savepoint fallback pass. Hosted rollout remains pending.",
+      "outstandingWork": "Actual browser/CI/exact-source candidate and stable publication under AL-R04; original unrelated holds retained."
+    },
+    {
+      "id": "AL-R02",
+      "requirement": "Reduce Dashboard database round trips while retaining canonical values, financial checks and independent widget failure recovery",
+      "priority": "P1",
+      "scope": "User clarified Web admin pages; native app and TestFlight build4 unchanged. No new mobile binaries. Fresh own QA sessions/read-only hosted data; no business mutations.",
+      "uiReference": "User reports web admin delays after latest iOS release; iOS investigation stopped on clarification",
+      "route": [
+        "/admin",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/finance",
+        "/admin/approvals"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/admin-dashboard.ts",
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/lib/admin-dashboard-batch.ts"
+      ],
+      "dataSource": "Canonical scoped SQL and committed baseline 2b289be; hosted API timing/full contract comparison and actual isolated browser acceptance",
+      "securityControl": "Retain authentication, per-user privileges, branch/role filters, independent approval, revenue definitions, repeatable-read snapshot, fail-closed 401/403 and widget-isolated fallback. No cached private API response or mutation replay.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts",
+        "tests/navigation.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/admin-loading-performance.test.ts",
+        "tests/admin-loading-ui.test.ts",
+        "tests/admin-loading-source.test.ts"
+      ],
+      "testIds": [
+        "AL-CONTRACT",
+        "AL-FALLBACK"
+      ],
+      "negativeTests": [
+        "Denied role/branch/privilege, malformed date/page, failed read/widget, financial overflow, timeout/body stall, aborted scope and delayed response"
+      ],
+      "evidence": [
+        "docs/admin-loading-20261124/evidence/hosted-before.json",
+        "docs/admin-loading-20261124/evidence/focused.txt",
+        "docs/admin-loading-20261124/evidence/query-comparison.json",
+        "docs/admin-loading-20261124/evidence/before-hosted.txt",
+        "docs/admin-loading-20261124/evidence/before-hosted.json",
+        "docs/admin-loading-20261124/reviewed-source-changes.json",
+        "docs/admin-loading-20261124/evidence/browser-local.json",
+        "docs/admin-loading-20261124/evidence/browser-local.txt",
+        "docs/admin-loading-20261124/evidence/build.txt",
+        "docs/admin-loading-20261124/evidence/typecheck.txt"
+      ],
+      "acceptanceGate": "AL-G02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual committed full-response contract comparisons, bounded round trips and retained scope/financial/widget-error controls pass; published validation is tracked by AL-R04.",
+      "testResult": "PASS \u2014 54 focused checks, zero failures/skips; owner Dashboard 36\u21928 and Navigation12\u21924 internal database round trips; actual component timeout/retry/revocation and real SQL savepoint fallback pass. Hosted rollout remains pending.",
+      "outstandingWork": "Actual browser/CI/exact-source candidate and stable publication under AL-R04; original unrelated holds retained."
+    },
+    {
+      "id": "AL-R03",
+      "requirement": "Bound Dashboard headers/body loading and retain safe cancellation, retry and scope isolation",
+      "priority": "P1",
+      "scope": "User clarified Web admin pages; native app and TestFlight build4 unchanged. No new mobile binaries. Fresh own QA sessions/read-only hosted data; no business mutations.",
+      "uiReference": "User reports web admin delays after latest iOS release; iOS investigation stopped on clarification",
+      "route": [
+        "/admin",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/finance",
+        "/admin/approvals"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/admin-dashboard.ts",
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/lib/admin-dashboard-batch.ts"
+      ],
+      "dataSource": "Canonical scoped SQL and committed baseline 2b289be; hosted API timing/full contract comparison and actual isolated browser acceptance",
+      "securityControl": "Retain authentication, per-user privileges, branch/role filters, independent approval, revenue definitions, repeatable-read snapshot, fail-closed 401/403 and widget-isolated fallback. No cached private API response or mutation replay.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts",
+        "tests/navigation.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/admin-loading-performance.test.ts",
+        "tests/admin-loading-ui.test.ts",
+        "tests/admin-loading-source.test.ts"
+      ],
+      "testIds": [
+        "AL-DASHBOARD-RECOVERY",
+        "AL-SOURCE",
+        "AL-UI04",
+        "AL-UI05"
+      ],
+      "negativeTests": [
+        "Denied role/branch/privilege, malformed date/page, failed read/widget, financial overflow, timeout/body stall, aborted scope and delayed response"
+      ],
+      "evidence": [
+        "docs/admin-loading-20261124/evidence/hosted-before.json",
+        "docs/admin-loading-20261124/evidence/focused.txt",
+        "docs/admin-loading-20261124/evidence/query-comparison.json",
+        "docs/admin-loading-20261124/evidence/before-hosted.txt",
+        "docs/admin-loading-20261124/evidence/before-hosted.json",
+        "docs/admin-loading-20261124/reviewed-source-changes.json",
+        "docs/admin-loading-20261124/evidence/browser-local.json",
+        "docs/admin-loading-20261124/evidence/browser-local.txt",
+        "docs/admin-loading-20261124/evidence/build.txt",
+        "docs/admin-loading-20261124/evidence/typecheck.txt"
+      ],
+      "acceptanceGate": "AL-G03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Dashboard timeout/retry/revocation and post-error polling control pass in renderer and actual browser; canonical branch/Orders content retained.",
+      "testResult": "PASS \u2014 54 focused checks, zero failures/skips; owner Dashboard 36\u21928 and Navigation12\u21924 internal database round trips; actual component timeout/retry/revocation and real SQL savepoint fallback pass. Hosted rollout remains pending.",
+      "outstandingWork": "Actual browser/CI/exact-source candidate and stable publication under AL-R04; original unrelated holds retained."
+    },
+    {
+      "id": "AL-R04",
+      "requirement": "Verify scoped contracts, actual browser recovery and hosted before/after performance; update manual/matrix and publish existing web demo",
+      "priority": "P1",
+      "scope": "User clarified Web admin pages; native app and TestFlight build4 unchanged. No new mobile binaries. Fresh own QA sessions/read-only hosted data; no business mutations.",
+      "uiReference": "User reports web admin delays after latest iOS release; iOS investigation stopped on clarification",
+      "route": [
+        "/admin",
+        "/admin/orders",
+        "/admin/deliveries",
+        "/admin/finance",
+        "/admin/approvals"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/admin-dashboard.ts",
+        "apps/web/components/admin-overview.tsx",
+        "apps/web/lib/admin-dashboard-batch.ts"
+      ],
+      "dataSource": "Canonical scoped SQL and committed baseline 2b289be; hosted API timing/full contract comparison and actual isolated browser acceptance",
+      "securityControl": "Retain authentication, per-user privileges, branch/role filters, independent approval, revenue definitions, repeatable-read snapshot, fail-closed 401/403 and widget-isolated fallback. No cached private API response or mutation replay.",
+      "testFiles": [
+        "tests/admin-dashboard.test.ts",
+        "tests/navigation.test.ts",
+        "tests/customer-traceability.test.ts",
+        "tests/admin-loading-performance.test.ts",
+        "tests/admin-loading-ui.test.ts",
+        "tests/admin-loading-source.test.ts"
+      ],
+      "testIds": [
+        "ALH-READS",
+        "AL-UI01",
+        "AL-UI02",
+        "AL-UI03"
+      ],
+      "negativeTests": [
+        "Denied role/branch/privilege, malformed date/page, failed read/widget, financial overflow, timeout/body stall, aborted scope and delayed response"
+      ],
+      "evidence": [
+        "docs/admin-loading-20261124/evidence/hosted-before.json",
+        "docs/admin-loading-20261124/evidence/focused.txt",
+        "docs/admin-loading-20261124/evidence/query-comparison.json",
+        "docs/admin-loading-20261124/evidence/before-hosted.txt",
+        "docs/admin-loading-20261124/evidence/before-hosted.json",
+        "docs/admin-loading-20261124/reviewed-source-changes.json",
+        "docs/admin-loading-20261124/evidence/browser-local.json",
+        "docs/admin-loading-20261124/evidence/browser-local.txt",
+        "docs/admin-loading-20261124/evidence/build.txt",
+        "docs/admin-loading-20261124/evidence/typecheck.txt"
+      ],
+      "acceptanceGate": "AL-G04",
+      "status": "PARTIAL",
+      "reason": "Actual committed full-response contract comparisons, bounded round trips and retained scope/financial/widget-error controls pass; published validation is tracked by AL-R04.",
+      "testResult": "PASS \u2014 54 focused checks, zero failures/skips; owner Dashboard 36\u21928 and Navigation12\u21924 internal database round trips; actual component timeout/retry/revocation and real SQL savepoint fallback pass. Hosted rollout remains pending.",
+      "outstandingWork": "Actual browser/CI/exact-source candidate and stable publication under AL-R04; original unrelated holds retained."
+    }
+  ],
+  "gates": [
+    {
+      "id": "AL-G01",
+      "description": "Reduce shared navigation count round trips while preserving exact role/branch/action eligibility",
+      "status": "PASS",
+      "reason": "Executed canonical full-contract and independent error-control evidence"
+    },
+    {
+      "id": "AL-G02",
+      "description": "Reduce Dashboard database round trips while retaining canonical values, financial checks and independent widget failure recovery",
+      "status": "PASS",
+      "reason": "Executed canonical full-contract and independent error-control evidence"
+    },
+    {
+      "id": "AL-G03",
+      "description": "Bound Dashboard headers/body loading and retain safe cancellation, retry and scope isolation",
+      "status": "PASS",
+      "reason": "Actual scoped browser timeout/retry and renderer revocation/post-error polling checks passed"
+    },
+    {
+      "id": "AL-G04",
+      "description": "Verify scoped contracts, actual browser recovery and hosted before/after performance; update manual/matrix and publish existing web demo",
+      "status": "PENDING",
+      "reason": "Implementation/verification pending"
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "implemented": 4,
+    "verified": 3,
+    "excluded": 0
+  },
+  "changeLog": [
+    {
+      "date": "2026-11-24",
+      "change": "Registered after user clarified web admin. Fresh owner reads: Dashboard4086ms, finance3128ms, approvals2533ms, Orders1880ms, navigation1746ms. Original LOAD-R01\u201304 implementation/history retained; new follow-up IDs do not replace prior requirements."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Full committed contract comparisons and 54 focused checks pass; five actual local browser cases pass. Found post-timeout polling restart and fixed it without altering successful polling. Test harness async setup/cleanup ordering corrected with all assertions retained. Local web build and sequential post-build types pass; hosted rollout/full CI pending under AL-R04."
+    }
+  ],
+  "verificationScope": {
+    "freshPositiveBrowser": [
+      "/admin",
+      "/admin/orders"
+    ],
+    "serviceAndHostedReadScope": [
+      "/admin/deliveries",
+      "/admin/finance",
+      "/admin/approvals"
+    ],
+    "production": "Bounded client demo only; broader load/device/physical/provider/import/retain-all and original NO-GO retained",
+    "native": "TestFlight4 unchanged; no native source/export/binary/upload"
+  }
+}

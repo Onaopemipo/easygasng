@@ -1,3 +1,4 @@
+import { readDashboardBatch } from "./admin-dashboard-batch";
 import { orderRevenueSql } from "./order-financial-basis";
 import { z } from "zod";
 import { one, type SQL } from "./db";
@@ -53,9 +54,10 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       return null;
     }
   }
+  const batch = await readDashboardBatch(tx, branch, d.from, d.to, access.allowed, user.role, errors);
   const orderPeriod =
     "($1::text IS NULL OR o.branch_id=$1) AND (o.created_at AT TIME ZONE 'Africa/Lagos')::date BETWEEN $2::date AND $3::date";
-  const orderStats = await widget("orders", can("orders"), async () => {
+  const orderStats = batch ? batch.orders : await widget("orders", can("orders"), async () => {
     const rows = (
       await tx.query(
         "SELECT o.status,count(*)::int AS count FROM orders o WHERE " +
@@ -69,7 +71,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       statuses: rows,
     };
   });
-  const trend = await widget(
+  const trend = batch ? batch.trend : await widget(
     "trend",
     can("orders"),
     async () =>
@@ -82,7 +84,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
         )
       ).rows,
   );
-  const customers = await widget("customers", can("customers"), async () =>
+  const customers = batch ? batch.customers : await widget("customers", can("customers"), async () =>
     Number(
       (await one(
         tx,
@@ -93,7 +95,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       ))!.count,
     ),
   );
-  const services = await widget("services", can("bookings"), async () =>
+  const services = batch ? batch.services : await widget("services", can("bookings"), async () =>
     Number(
       (await one(
         tx,
@@ -102,7 +104,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       ))!.count,
     ),
   );
-  const cylinders = await widget("cylinders", can("cylinders"), async () =>
+  const cylinders = batch ? batch.cylinders : await widget("cylinders", can("cylinders"), async () =>
     Number(
       (await one(
         tx,
@@ -111,7 +113,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       ))!.count,
     ),
   );
-  const incidents = await widget("incidents", can("incidents"), async () =>
+  const incidents = batch ? batch.incidents : await widget("incidents", can("incidents"), async () =>
     Number(
       (await one(
         tx,
@@ -120,7 +122,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       ))!.count,
     ),
   );
-  const operations = await widget(
+  const operations = batch ? batch.operations : await widget(
     "operations",
     can("orders") || can("bookings"),
     async () => ({
@@ -173,7 +175,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
     ).rows;
     return { rows: rows.slice(0, 5), hasMore: rows.length > 5, page: d.page };
   });
-  const revenue = await widget(
+  const revenue = batch ? batch.revenue : await widget(
     "revenue",
     ["owner", "finance"].includes(user.role),
     async () => {
@@ -191,7 +193,7 @@ export async function adminDashboard(tx: SQL, user: Actor, input: unknown) {
       return value;
     },
   );
-  const campaign = await widget("campaign", can("campaigns"), async () =>
+  const campaign = batch ? batch.campaign : await widget("campaign", can("campaigns"), async () =>
     one(
       tx,
       "SELECT title,body FROM campaigns WHERE ($1::text IS NULL OR branch_id=$1) AND status='approved' AND approved_by IS NOT NULL ORDER BY created_at DESC LIMIT 1",

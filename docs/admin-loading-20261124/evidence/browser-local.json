@@ -1,0 +1,37 @@
+{
+  "scope": "Actual browser on disposable loopback fixture, unique easygas-admin-qa.localhost:3138 hostname; no shared user cookies or hosted business writes",
+  "checks": [
+    {
+      "id": "AL-UI01",
+      "status": "PASS",
+      "detail": "Actual isolated owner Dashboard rendered seven canonical orders, chart and recent rows; unavailable profit remains labelled unavailable rather than zero."
+    },
+    {
+      "id": "AL-UI02",
+      "status": "PASS",
+      "detail": "Changing Dashboard branch to Lagos cleared incompatible scope while reading, then rendered the same authorised seven-order branch snapshot."
+    },
+    {
+      "id": "AL-UI03",
+      "status": "PASS",
+      "detail": "Actual sidebar navigation to Orders rendered all seven fixture rows and retained canonical status/payment labels."
+    },
+    {
+      "id": "AL-UI04",
+      "status": "PASS",
+      "detail": "Deliberately stalled Dashboard headers settled at the shared 20-second deadline; cold-loaded updated UI showed Stale/unavailable, a stable error, no snapshot and enabled Refresh after the polling interval. Renderer test also asserts the poll callback sends no retry after failure."
+    },
+    {
+      "id": "AL-UI05",
+      "status": "PASS",
+      "detail": "Restored fixture backend and clicked explicit Refresh; canonical seven-order chart/table returned and error cleared. Signed out the own synthetic browser account and stopped only the own loopback server."
+    }
+  ],
+  "screenshots": [
+    "01-dashboard.jpg",
+    "02-orders.jpg",
+    "03-timeout-refresh-enabled.jpg",
+    "04-dashboard-refreshed.jpg"
+  ],
+  "native": "No native source, binary, export or store change"
+}

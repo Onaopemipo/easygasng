@@ -1,0 +1,100 @@
+{
+  "stage": "before",
+  "base": "https://easygas-client-demo.vercel.app",
+  "sourceCommit": "b91aa554fd5701ba69464eb6c574570442130de6",
+  "deploymentId": "dpl_HTVUhddZvZHpvxew5LKug2TAQoCd",
+  "status": "PASS",
+  "businessWrites": 0,
+  "checks": [
+    {
+      "id": "ALH-SESSIONS",
+      "status": "PASS",
+      "detail": "Seven fresh verifier-owned role sessions; no identity or permission changes"
+    },
+    {
+      "id": "ALH-READY",
+      "status": "PASS",
+      "detail": "Existing demo ready and original production NO-GO retained"
+    },
+    {
+      "id": "ALH-BASELINE",
+      "status": "PASS",
+      "detail": "Current order/inventory/vehicle/trip/driver snapshots recorded before deployment"
+    },
+    {
+      "id": "ALH-READS",
+      "status": "PASS",
+      "detail": "Actual navigation/dashboard samples, complete canonical owner contract comparison, seven-role outcomes, anonymous/foreign-branch/date denials; no business mutation"
+    },
+    {
+      "id": "ALH-PRESERVE",
+      "status": "PASS",
+      "detail": "Current order/inventory/vehicle/trip/driver business snapshots unchanged across setup checks and rollout"
+    }
+  ],
+  "readTimings": [
+    {
+      "key": "navigation",
+      "sample": 0,
+      "ms": 1763,
+      "transport": "direct stable fetch"
+    },
+    {
+      "key": "navigation",
+      "sample": 1,
+      "ms": 1800,
+      "transport": "direct stable fetch"
+    },
+    {
+      "key": "dashboard",
+      "sample": 0,
+      "ms": 4109,
+      "transport": "direct stable fetch"
+    },
+    {
+      "key": "dashboard",
+      "sample": 1,
+      "ms": 4085,
+      "transport": "direct stable fetch"
+    }
+  ],
+  "readScopeStatuses": {
+    "owner": {
+      "navigation": 200,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 200
+    },
+    "manager": {
+      "navigation": 200,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 200
+    },
+    "finance": {
+      "navigation": 200,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 200
+    },
+    "driver": {
+      "navigation": 200,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 403
+    },
+    "technician": {
+      "navigation": 200,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 403
+    },
+    "customer": {
+      "navigation": 403,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 403
+    },
+    "commercial": {
+      "navigation": 403,
+      "admin.dashboard?from=2026-11-01&to=2026-11-24": 403
+    }
+  },
+  "snapshot": {
+    "ordersHash": "3f240af0bbc105751dc3db819579f525e00ef06c8cd91174b7c012c0f1e617e4",
+    "orderCount": 24,
+    "inventoryHash": "1ef65322162991bdd61e64a5ed629b2094e1b3c5a763c9450144fec6d91bc369",
+    "vehiclesHash": "d53dd0c2ce392529b087126bc26723a916e8dffe6b087b31c3810426c8074e06",
+    "tripsHash": "1c9e3d332283a201b94138c11b85f46b53106cfc2aabacf8d953d6ac2dfacd23",
+    "driversHash": "4b3a0f1146d74b077a3f11b0caade0429bc8519f3ccd6d09305b86360e0475d4"
+  },
+  "completedAt": "2026-11-24T08:00:23.681Z"
+}

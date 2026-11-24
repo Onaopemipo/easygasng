@@ -7,6 +7,50 @@ import os from "node:os";
 import { createRequire } from "node:module";
 import { build } from "esbuild";
 
+
+const req = createRequire(path.resolve("tests/native-renderer/package.json"));
+const React = req("react"),
+  { create, act } = req("react-test-renderer");
+(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
+const temp = await fs.mkdtemp(
+  path.join(os.tmpdir(), "easygas-loading-client-"),
+);
+after(() => fs.rm(temp, { recursive: true, force: true }));
+const browser = path.join(temp, "browser.tsx");
+await fs.writeFile(
+  browser,
+  `import React from 'react';export const createPortal=(c)=>c;export const usePathname=()=>'/admin/orders';export default function Link({children,...p}){return <a {...p}>{children}</a>}`,
+);
+await build({
+  stdin: {
+    contents: `export {api} from './apps/web/components/ui';export {useRecordsData} from './apps/web/components/use-records-data';`,
+    resolveDir: process.cwd(),
+    loader: "tsx",
+  },
+  outfile: path.join(temp, "ui.cjs"),
+  bundle: true,
+  format: "cjs",
+  platform: "node",
+  jsx: "automatic",
+  plugins: [
+    {
+      name: "browser",
+      setup(b) {
+        b.onResolve({ filter: /^react(\/.*)?$/ }, (a) => ({
+          path: req.resolve(a.path),
+          external: true,
+        }));
+        b.onResolve(
+          { filter: /^(react-dom|next\/navigation|next\/link)$/ },
+          () => ({ path: browser }),
+        );
+      },
+    },
+  ],
+});
+const { api, useRecordsData } = createRequire(import.meta.url)(
+  path.join(temp, "ui.cjs"),
+);
 test("LOAD-DEADLINE: stalled headers/body and ignored abort settle once, with no automatic retry; fast success and caller cancellation clear their timers", async () => {
   for (const stage of ["headers", "body"]) {
     let calls = 0,
@@ -61,49 +105,6 @@ test("LOAD-DEADLINE: stalled headers/body and ignored abort settle once, with no
   );
   assert.equal(calls, 0);
 });
-const req = createRequire(path.resolve("tests/native-renderer/package.json"));
-const React = req("react"),
-  { create, act } = req("react-test-renderer");
-(globalThis as any).IS_REACT_ACT_ENVIRONMENT = true;
-const temp = await fs.mkdtemp(
-  path.join(os.tmpdir(), "easygas-loading-client-"),
-);
-after(() => fs.rm(temp, { recursive: true, force: true }));
-const browser = path.join(temp, "browser.tsx");
-await fs.writeFile(
-  browser,
-  `import React from 'react';export const createPortal=(c)=>c;export const usePathname=()=>'/admin/orders';export default function Link({children,...p}){return <a {...p}>{children}</a>}`,
-);
-await build({
-  stdin: {
-    contents: `export {api} from './apps/web/components/ui';export {useRecordsData} from './apps/web/components/use-records-data';`,
-    resolveDir: process.cwd(),
-    loader: "tsx",
-  },
-  outfile: path.join(temp, "ui.cjs"),
-  bundle: true,
-  format: "cjs",
-  platform: "node",
-  jsx: "automatic",
-  plugins: [
-    {
-      name: "browser",
-      setup(b) {
-        b.onResolve({ filter: /^react(\/.*)?$/ }, (a) => ({
-          path: req.resolve(a.path),
-          external: true,
-        }));
-        b.onResolve(
-          { filter: /^(react-dom|next\/navigation|next\/link)$/ },
-          () => ({ path: browser }),
-        );
-      },
-    },
-  ],
-});
-const { api, useRecordsData } = createRequire(import.meta.url)(
-  path.join(temp, "ui.cjs"),
-);
 const response = (status: number, data: any) => ({
   ok: status < 400,
   status,

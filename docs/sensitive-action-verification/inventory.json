@@ -1948,6 +1948,13 @@
       "literal": null
     },
     {
+      "file": "apps/web/components/admin-overview.tsx",
+      "line": 160,
+      "transport": "api",
+      "target": "\"admin.dashboard?\" + new URLSearchParams({\n            ...period(range),\n            ...(branchId ? { branchId } : {}),\n            page: String(page),\n          })",
+      "literal": null
+    },
+    {
       "file": "apps/web/components/admin.tsx",
       "line": 149,
       "transport": "api",
@@ -2768,21 +2775,21 @@
     },
     {
       "file": "apps/web/components/driver-experience.tsx",
-      "line": 1026,
+      "line": 1028,
       "transport": "form action",
       "target": "account.update",
       "literal": "account.update"
     },
     {
       "file": "apps/web/components/driver-experience.tsx",
-      "line": 1070,
+      "line": 1072,
       "transport": "form action",
       "target": "account.password",
       "literal": "account.password"
     },
     {
       "file": "apps/web/components/driver-experience.tsx",
-      "line": 1121,
+      "line": 1123,
       "transport": "form action",
       "target": "support.create",
       "literal": "support.create"
@@ -4505,13 +4512,6 @@
   ],
   "directFetch": [
     {
-      "file": "apps/web/components/admin-overview.tsx",
-      "line": 160,
-      "transport": "fetch",
-      "target": "\"/api/admin.dashboard?\" +\n            new URLSearchParams({\n              ...period(range),\n              ...(branchId ? { branchId } : {}),\n              page: String(page),\n            })",
-      "literal": null
-    },
-    {
       "file": "apps/web/components/admin-search.tsx",
       "line": 30,
       "transport": "fetch",
@@ -4585,8 +4585,8 @@
   "summary": {
     "guardSites": 79,
     "guardFiles": 36,
-    "browserCalls": 370,
-    "directFetch": 11
+    "browserCalls": 371,
+    "directFetch": 10
   },
   "notes": [
     "Direct fetch: shared API transport, workspace/search/export reads, media uploads and hosted-payment transport. None invokes recentVerification outside shared /api/[action] dispatch.",

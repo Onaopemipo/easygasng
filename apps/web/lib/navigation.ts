@@ -23,28 +23,26 @@ export async function navigationAccess(tx: SQL, user: Actor) {
       "This account does not have administration workspace access.",
       "FORBIDDEN",
     );
-  const branch = await one(
+  const accessData = await one(
     tx,
-    "SELECT id,name,active FROM branches WHERE id=$1",
-    [user.branch_id],
+    `SELECT
+      (SELECT jsonb_build_object('id',id,'name',name,'active',active) FROM branches WHERE id=$1) AS branch,
+      (SELECT count(*) FROM setting_definitions d JOIN settings s ON s.key=d.key WHERE s.scope=$2 AND d.view_roles @> $3::jsonb) AS definition_count`,
+    [user.branch_id ?? null, user.branch_id ?? "lagos", JSON.stringify([user.role])],
   );
+  const branch = accessData?.branch;
   if (user.role !== "owner" && !branch?.active)
     throw new AppError(
       403,
       "No active authorised branch assigned.",
       "BRANCH_FORBIDDEN",
     );
-  const definitions = await one(
-    tx,
-    "SELECT count(*) AS count FROM setting_definitions d JOIN settings s ON s.key=d.key WHERE s.scope=$1 AND d.view_roles @> $2::jsonb",
-    [user.branch_id ?? "lagos", JSON.stringify([user.role])],
-  );
   let allowed = groups
     .flatMap((g) => g.items)
     .filter(
       (i) =>
         !["settings", "approvals"].includes(i.id) ||
-        Number(definitions?.count) > 0,
+        Number(accessData?.definition_count) > 0,
     )
     .map((i) => i.id);
   for (const p of staffPrivileges) {
@@ -80,10 +78,9 @@ export async function navigationSnapshot(tx: SQL, user: Actor, input: unknown) {
     global = user.role === "owner",
     b = global ? null : user.branch_id,
     counters: Record<string, number> = {};
-  async function count(key: string, sql: string, params: any[] = [b]) {
-    if (!access.allowed.includes(key)) return;
-    const r = await one(tx, sql, params);
-    counters[key] = Number(r?.count ?? 0);
+  const counts: { key: string; sql: string; params: any[] }[] = [];
+  function count(key: string, sql: string, params: any[] = [b]) {
+    if (access.allowed.includes(key)) counts.push({ key, sql, params });
   }
   // Roles without action authority get no misleading badge even when they can read a module.
   if (["owner", "manager"].includes(user.role))
@@ -122,6 +119,17 @@ export async function navigationSnapshot(tx: SQL, user: Actor, input: unknown) {
     `SELECT count(*) AS count FROM change_requests r JOIN setting_definitions d ON d.key=r.key WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb AND r.status IN ('pending_approval','partially_approved') AND r.expires_at>now() AND r.requester_id<>$3 AND (d.value_type<>'access' OR r.proposed_value->>'userId' IS DISTINCT FROM $3) AND NOT EXISTS(SELECT 1 FROM approval_decisions a WHERE a.request_id=r.id AND a.revision=r.revision AND a.approver_id=$3) AND (d.approve_roles @> $2::jsonb OR (d.risk=2 AND d.value_type IN ('boolean','integer') AND d.category NOT IN ('Staff & Permissions','Security','Payments & Wallet') AND (d.key='delivery.capacity' OR d.key LIKE 'publish.%') AND EXISTS(SELECT 1 FROM approval_delegations a JOIN users g ON g.id=a.grantor_id JOIN users v ON v.id=a.reviewed_by WHERE a.delegate_id=$3 AND $4 IN ('manager','finance') AND a.scope=$5 AND a.setting_key=d.key AND a.scope=r.scope AND a.status='approved' AND a.starts_at<=now() AND a.expires_at>now() AND g.active=true AND v.active=true AND v.role='owner' AND a.reviewed_by<>a.grantor_id AND a.grantor_id<>r.requester_id AND g.role IN ('owner','manager') AND d.approve_roles @> jsonb_build_array(g.role) AND (g.role='owner' OR g.branch_id=r.scope) AND (a.maximum_value IS NULL OR jsonb_typeof(r.proposed_value)='boolean' OR (jsonb_typeof(r.proposed_value)='number' AND (r.proposed_value::text)::numeric<=a.maximum_value)))))`,
     [b, JSON.stringify([user.role]), user.id, user.role, user.branch_id],
   );
+  if (counts.length) {
+    const values: any[] = [];
+    const statements = counts.map(({ key, sql, params }) => {
+      const offset = values.length;
+      const shifted = sql.replace(/\$(\d+)\b/g, (_, n) => "$" + (Number(n) + offset));
+      values.push(...params, key);
+      return `SELECT $${values.length}::text AS key, result.count::text AS count FROM (${shifted}) result`;
+    });
+    for (const row of (await tx.query(statements.join(" UNION ALL "), values)).rows)
+      counters[row.key] = Number(row.count ?? 0);
+  }
   return {
     ...access,
     counters,
