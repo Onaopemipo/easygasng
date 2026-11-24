@@ -8,7 +8,7 @@
       "requirement": "Admin vehicle assignment and independent driver/order assignment",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -30,13 +30,18 @@
       "testFiles": [
         "tests/dispatch-journey.test.ts",
         "tests/dispatch-journey-components.test.ts",
-        "tests/dispatch-journey-source.test.ts"
+        "tests/dispatch-journey-source.test.ts",
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-trip.test.ts"
       ],
       "testIds": [
-        "DJ-GAS"
+        "DJ-GAS",
+        "DV-ASSIGN",
+        "DV-AUTH",
+        "DV-STALE"
       ],
       "negativeTests": [
-        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+        "No active trip prevents order assignment; lower roles, foreign branches, stale passwords, privilege denials, inactive/unsuitable/occupied vehicles and duplicate requests retain existing guards."
       ],
       "evidence": [
         "docs/dispatch-journey/evidence/journey.txt",
@@ -53,20 +58,24 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "None in bounded local control; CI/demo publication tracked by DJ-R06"
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 DJ-GAS and actual owner/manager browser assignment; retained DV role, eligibility and PostgreSQL race checks passed.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     },
     {
       "id": "DJ-R02",
       "requirement": "Paid gas delivery from real checkout through inspected pickup, metering, proof and handover",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -94,7 +103,7 @@
         "DJ-GAS"
       ],
       "negativeTests": [
-        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+        "Pickup without actual LPG load/independent acknowledgement; handover without metering or current-attempt proof; invalid quantity/readings; duplicate successful completion."
       ],
       "evidence": [
         "docs/dispatch-journey/evidence/journey.txt",
@@ -111,20 +120,24 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G02",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "None in bounded local control; CI/demo publication tracked by DJ-R06"
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 actual 10,000 g load \u2192 6,000 g delivery \u2192 independent 4,000 g receipt; one stock debit, zero invoice balance and replay-safe admin closure. Browser confirms all operator stages.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     },
     {
       "id": "DJ-R03",
       "requirement": "Product/COD delivery, separate cash verification and product custody reconciliation",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -152,7 +165,7 @@
         "DJ-COD"
       ],
       "negativeTests": [
-        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+        "Restricted product-COD driver completion denied; collector cannot verify own cash; unresolved surplus manifests block trip closure; replay does not duplicate stock/cash effects."
       ],
       "evidence": [
         "docs/dispatch-journey/evidence/journey.txt",
@@ -169,20 +182,24 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G03",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "None in bounded local control; CI/demo publication tracked by DJ-R06"
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 connected COD service journey delivered one product, independently verified cash and received two surplus manifest units before closure; final stock 49, reserved 0. Fresh positive COD browser journey is not claimed.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     },
     {
       "id": "DJ-R04",
       "requirement": "Failed-delivery exact return, safe retry and no duplicate money/stock effects",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -210,7 +227,7 @@
         "DJ-RETRY"
       ],
       "negativeTests": [
-        "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
+        "Trip closure with held failed custody; driver self-receipt and incomplete receipt; completion without current proof; prior-attempt image bytes rejected with 409."
       ],
       "evidence": [
         "docs/dispatch-journey/evidence/journey.txt",
@@ -227,20 +244,24 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G04",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "None in bounded local control; CI/demo publication tracked by DJ-R06"
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 failed wallet order independently returned exactly, rescheduled into a distinct attempt and delivered with new proof; unchanged wallet/reservation on retry, two retained attempts and replay-safe closure. Fresh positive retry browser journey is not claimed.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     },
     {
       "id": "DJ-R05",
       "requirement": "Role/branch/password/version/replay and trip-close reconciliation failure cases",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -264,7 +285,10 @@
       "testFiles": [
         "tests/dispatch-journey.test.ts",
         "tests/dispatch-journey-components.test.ts",
-        "tests/dispatch-journey-source.test.ts"
+        "tests/dispatch-journey-source.test.ts",
+        "tests/dispatch-vehicle.test.ts",
+        "tests/dispatch-trip.test.ts",
+        "tests/customer-traceability.test.ts"
       ],
       "testIds": [
         "DJ-PROOF-UI",
@@ -292,20 +316,24 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G05",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "None in bounded local control; CI/demo publication tracked by DJ-R06"
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 fail-closed proof read/retry/upload race and successful History transition; seven-role hosted proof metadata checks; retained role/branch/password/version/custody/PostgreSQL checks; 15 historical/source checks pass with committed baselines and original manifests retained.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     },
     {
       "id": "DJ-R06",
       "requirement": "Actual browser journey, fixes, manual, traceability and bounded demo release",
       "priority": "P1",
       "scope": "Connected web Dispatch journeys on disposable synthetic fixtures; existing production/native/provider/physical/import/retain-all holds retained",
-      "uiReference": "User request24November2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
+      "uiReference": "User request, 24 November 2026: full Dispatch assignment-to-delivery/reconciliation/trip-end acceptance; no mobile binaries",
       "route": [
         "/admin/deliveries",
         "/admin/operations",
@@ -330,7 +358,16 @@
         "tests/dispatch-journey-source.test.ts"
       ],
       "testIds": [
-        "DJ-COMPLETION-UI"
+        "DJ-COMPLETION-UI",
+        "DJ-V01",
+        "DJ-V02",
+        "DJ-V03",
+        "DJ-V04",
+        "DJ-V05",
+        "DJ-V06",
+        "DJ-V07",
+        "DJH-CI-SOURCE",
+        "DJ-CI"
       ],
       "negativeTests": [
         "Denied roles/branches, stale versions, duplicate retries, missing proof/payment/custody, unreceived returns and premature trip closure"
@@ -350,13 +387,17 @@
         "docs/dispatch-journey/evidence/deployment.json",
         "docs/dispatch-journey/evidence/preservation.json",
         "docs/dispatch-journey/evidence/browser-hosted.json",
-        "docs/dispatch-journey/evidence/historical-source.txt"
+        "docs/dispatch-journey/evidence/historical-source.txt",
+        "docs/dispatch-journey/evidence/ci-source.json",
+        "docs/dispatch-journey/evidence/ci-source.txt",
+        "docs/dispatch-journey/evidence/ci.json",
+        "docs/dispatch-journey/evidence/ci.txt"
       ],
       "acceptanceGate": "DJ-G06",
-      "status": "PARTIAL",
-      "reason": "Connected normal-action gas/COD/return/retry, actual primary browser shift and published exact-source role/proof-access/preservation checks passed. Full GitHub CI pending under DJ-R06.",
-      "testResult": "PASS \u201469 retained focused regressions and8 connected/UI/source/security tests, with overlap explicitly retained rather than summed; actual gas/product browser shift completed through independent receipt and manager closure",
-      "outstandingWork": "Complete exact-source GitHub validation and candidate/stable deployment/preservation checks"
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Connected synthetic service journeys, actual primary browser shift, published exact-source role/proof-access/preservation checks and full CI run 45330071502 passed. Original production and unrelated acceptance holds remain unchanged.",
+      "testResult": "PASS \u2014 seven actual browser observations and final canonical state; own candidate/stable API sessions and preserved hosted snapshots; all 452 deployed application files match CI commit 0e0f150. CI run 45330071502 passed 1,273 web tests with zero failures/skips, build/types/audits and 3 native dependency tests; mobile export skipped.",
+      "outstandingWork": "None within this bounded web Dispatch acceptance phase. Broader production, physical/native/provider and import/retain-all holds remain in their existing matrices."
     }
   ],
   "gates": [
@@ -393,14 +434,14 @@
     {
       "id": "DJ-G06",
       "description": "Actual browser journey, fixes, manual, traceability and bounded demo release",
-      "status": "PENDING",
-      "reason": "Browser and release completion pending"
+      "status": "PASS",
+      "reason": "Actual browser shift, updated manual/matrix, exact 452-file Ready demo release and successful full CI run 45330071502; no mobile export/build/upload."
     }
   ],
   "coverage": {
     "total": 6,
     "implemented": 6,
-    "verified": 5,
+    "verified": 6,
     "excluded": 0
   },
   "changeLog": [
@@ -410,15 +451,19 @@
     },
     {
       "date": "2026-11-24",
-      "change": "Found and repaired3 connected web issues: earlier-attempt photo upload falsely reported success; premature handover before proof; obsolete active-assignment screen after successful completion. Server custody/payment/role protections unchanged."
+      "change": "Found and repaired 3 connected web issues: earlier-attempt photo upload falsely reported success; premature handover before proof; obsolete active-assignment screen after successful completion. Server custody/payment/role protections unchanged."
     },
     {
       "date": "2026-11-24",
-      "change": "Actual browser completed admin vehicle/order assignment, qualified load, restricted-driver gas and product handovers, blocked closure before independent4kg receipt and manager closure100\u2192125km. Driver workspace uses actual /admin/deliveries; replaced the initial /driver route assumption with observed routes; no requirement dropped."
+      "change": "Actual browser completed admin vehicle/order assignment, qualified load, restricted-driver gas and product handovers, blocked closure before independent 4 kg receipt and manager closure 100\u2192125km. Driver workspace uses actual /admin/deliveries; replaced the initial /driver route assumption with observed routes; no requirement dropped."
     },
     {
       "date": "2026-11-24",
-      "change": "Initial CI45328012490 passed1270/1273 with3 historical-source continuation failures. Strict3-file committed-baseline forwarding repaired the review chain;15 historical/source checks passed without skips. Original manifests, native/physical guards and deployed application bytes unchanged; full rerun pending."
+      "change": "Initial CI 45328012490 passed 1270/1273 with 3 historical-source continuation failures. Strict 3-file committed-baseline forwarding repaired the review chain; 15 historical/source checks passed without skips. Original manifests, native/physical guards and deployed application bytes unchanged; resolved by full rerun 45330071502."
+    },
+    {
+      "date": "2026-11-24",
+      "change": "Completed all six bounded requirements/gates with zero exclusions. CI 45330071502 at 0e0f150 passed 1,273 web tests, build/types/audits and 3 native dependency tests; mobile export skipped. All 452 application files match Ready deployment dpl_HTVUhddZvZHpvxew5LKug2TAQoCd (b91aa55). Hosted business records and unrelated browser session preserved. Final evidence/manual-only commit does not alter application or CI test source."
     }
   ],
   "verificationScope": {
@@ -438,12 +483,12 @@
     "requirements": {
       "total": 6,
       "implemented": 6,
-      "verified": 5,
+      "verified": 6,
       "excluded": 0
     },
     "criticalRequirements": {
       "total": 6,
-      "verified": 5
+      "verified": 6
     },
     "routes": {
       "total": 4,
@@ -454,8 +499,8 @@
     },
     "gates": {
       "total": 6,
-      "passed": 5,
-      "pending": 1
+      "passed": 6,
+      "pending": 0
     }
   }
 }

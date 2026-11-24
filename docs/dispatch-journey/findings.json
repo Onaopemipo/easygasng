@@ -4,7 +4,7 @@
     {
       "id": "DJ-F01",
       "problem": "Earlier-attempt photo bytes reported successful replay but could not satisfy current-attempt proof",
-      "fix": "Return explicit409 asking for new consented current-visit proof; retain same-attempt replay",
+      "fix": "Return explicit 409 asking for new consented current-visit proof; retain same-attempt replay",
       "evidence": "initial.txt showed DJ-RETRY failing before repair; journey.txt now passes"
     },
     {
@@ -22,7 +22,16 @@
   ],
   "harnessNotes": [
     "Initial wallet configuration used the wrong setting name; corrected disposable fixture to wallet.enabled before product acceptance.",
-    "First retained PostgreSQL pass used the wrong startup port and had connection refusals; restarted own cluster explicitly55437 and reran69 checks with zero failures/skips.",
-    "Hosted proof metadata smoke initially assumed a branch_id wire field; corrected it to select from authoritative manager-scoped orders and exclude customer/commercial/driver-owned order IDs. All8 access cases then passed and7 own sessions were revoked with401 confirmed."
-  ]
+    "First retained PostgreSQL pass used the wrong startup port and had connection refusals; restarted own cluster explicitly on port 55437 and reran 69 checks with zero failures/skips.",
+    "Hosted proof metadata smoke initially assumed a branch_id wire field; corrected it to select from authoritative manager-scoped orders and exclude customer/commercial/driver-owned order IDs. All 8 access cases then passed and 7 own sessions were revoked with 401 confirmed."
+  ],
+  "validation": {
+    "ciRun": 45330071502,
+    "webTests": 1273,
+    "webFailures": 0,
+    "webSkipped": 0,
+    "nativeDependencyTests": 3,
+    "mobileExport": "skipped",
+    "sourceFilesIdenticalToPublishedApp": 452
+  }
 }
