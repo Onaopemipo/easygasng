@@ -2,7 +2,7 @@
 
 The approved Sign In, Create Account and Account recovery design is implemented in the existing web and native applications. Existing reset, verification, invitation, manual account-link and assisted account-completion flows use the same presentation. Authentication authority remains on the existing server.
 
-**Status: implemented, partially verified; release NO-GO.** Local web acceptance and bounded iOS phone/Android phone/tablet checks passed. The [native follow-up](06-native-followup.md) records the corrected clipping, Back history, recovery crash and Android keyboard issues. Remaining iOS software-keyboard, iPad, Android phone cold reconnect/remaining keyboard, physical password-manager and assistive checks stay open. The Android phone is awaiting a decision on Expo Go's Nearby devices permission.
+**Status: implemented, partially verified; release NO-GO.** Local web acceptance and bounded iOS phone/Android phone/tablet checks passed. The [native follow-up](06-native-followup.md) records the corrected clipping, Back history, recovery crash and Android keyboard issues. Remaining iOS software-keyboard, iPad, dedicated staff keyboard, positive native account-link, physical password-manager and assistive checks stay open. The approved Android phone Nearby devices permission was allowed; reconnect, keyboard submission, customer sign-in, session restoration and sign-out passed.
 
 - [Audit](00-audit.md) and [existing contracts](01-contracts-and-permissions.md)
 - [Design implementation and deliberate adaptations](02-design-handoff.md)

@@ -30,12 +30,33 @@
       "id": "AUTH-AND-06",
       "status": "PASS",
       "result": "Android tablet recovery input and primary CTA remain above software keyboard; tapping CTA completes generic recovery request."
+    },
+    {
+      "id": "AUTH-AND-07",
+      "status": "PASS",
+      "result": "After explicit user approval, Allow granted Expo Go ACCESS_LOCAL_NETWORK on emulator-5580. Expo Go Home \u2192 EasyGas Local reopened the current preview. Bare exp intent did not reliably foreground Expo Go; no installed-app cold launch claim."
+    },
+    {
+      "id": "AUTH-AND-08",
+      "status": "PASS",
+      "result": "Phone secure password software keyboard and Enter submit returned generic invalid-credential error. Recovery Enter returned generic confirmation without crash; hardware Back returned to Sign In. Phone form remains scrollable."
+    },
+    {
+      "id": "AUTH-AND-09",
+      "status": "PASS",
+      "result": "Valid disposable customer signed in to My Account. After force-stop and reopening Expo Go project, the identical customer identity restored; existing customer introduction was skipped before checking My Account."
+    },
+    {
+      "id": "AUTH-AND-10",
+      "status": "PASS",
+      "result": "Sign out returned guest Home with five tabs. Account then opened Sign In with empty identifier/password; Back returned guest Home. Original IME preferences restored."
     }
   ],
   "open": [
-    "Phone Expo Go cold reconnect awaiting Nearby devices permission decision",
-    "Remaining phone/dedicated-shell keyboard, software-keyboard submit and physical/assistive/positive account-link acceptance"
+    "Full iOS software keyboard/iPad; dedicated staff keyboard; positive native reset/verification/invitation/assisted entry; physical/password-manager/assistive/asset-failure acceptance",
+    "All native roles and installed-store-build cold launch remain outside this bounded preview acceptance"
   ],
   "newEasyGasBinary": false,
-  "liveProvider": false
+  "liveProvider": false,
+  "sourceCommit": "9ad9d6e"
 }
