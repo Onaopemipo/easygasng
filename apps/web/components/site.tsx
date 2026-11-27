@@ -2,9 +2,6 @@
 import { analyticsNavigate } from "../lib/analytics-browser";
 import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
-import { AuthShell, AuthField } from "./auth-presentation";
-import { AccountLinkEntry } from "./auth-link-entry";
-import { authRequest } from "./auth-request";
 import { FieldCaption } from "./field-caption";
 import { RefillProfiles } from "./refill-profiles";
 import { Wrench } from "lucide-react";
@@ -119,12 +116,10 @@ export default function Site({
     [user, setUser] = useState<any>(initialUser),
     [cart, setCart] = useState<CartItem[]>([]),
     [ready, setReady] = useState(false),
-    [authSessionCheck, setAuthSessionCheck] = useState(initialUser ? "complete" : "pending"),
     [toast, setToast] = useState(""),
     [error, setError] = useState("");
   const pathname = usePathname(),
     router = useRouter();
-  const authPath = ["/login", "/register", "/forgot-password", "/reset-password", "/verify-email", "/accept-invitation"].includes(pathname);
   useEffect(() => {
     api(pathname === "/" ? "catalogue?view=homepage" : "catalogue")
       .then(setCatalogue)
@@ -166,8 +161,7 @@ export default function Site({
       const current = controller;
       api("me", undefined, { signal: current.signal })
         .then((d) => {
-          if (live && !current.signal.aborted && !signingOut.current) {
-            setAuthSessionCheck("complete");
+          if (live && !current.signal.aborted && !signingOut.current)
             setUser((previous: any) =>
               previous &&
               ["id", "name", "email", "role", "branchId"].every(
@@ -176,12 +170,9 @@ export default function Site({
                 ? previous
                 : d.user,
             );
-          }
         })
         .catch((e) => {
-          if (!live || current.signal.aborted) return;
-          if (e.status === 401) { invalidate(); setAuthSessionCheck("complete"); }
-          else setAuthSessionCheck("unavailable");
+          if (live && !current.signal.aborted && e.status === 401) invalidate();
         });
     };
     const storage = (e: StorageEvent) => {
@@ -288,7 +279,7 @@ export default function Site({
   };
   return (
     <Context.Provider value={ctx}>
-      {!workspace && !authPath && <Header cataloguePending={!catalogue && !error} />}
+      {!workspace && <Header cataloguePending={!catalogue && !error} />}
       <CustomerFrame workspace={workspace} user={user} onLogout={signOut} cartCount={cart.reduce((n, i) => n + i.quantity, 0)}>
         <main
           id="main"
@@ -303,7 +294,7 @@ export default function Site({
                   : pathname === "/accept-invitation" ? "invite" : "verify"
             } />
           ) : pathname === "/login" || pathname === "/register" ? (
-            ready && (user || authSessionCheck === "complete") ? <Auth key={pathname} register={pathname === "/register"} /> : authSessionCheck === "unavailable" ? <div className="container page"><Notice type="error" message="We could not check your session. Reconnect and try again." /><button className="button" onClick={() => window.location.reload()}>Retry session check</button></div> : <Loading label="Checking your session" />
+            <Auth key={pathname} register={pathname === "/register"} />
           ) : !ready || (protectedPath && !user) ? (
             <Loading page />
           ) : pathname === "/account" && workspace ? (
@@ -450,8 +441,8 @@ export default function Site({
           )}
         </main>
       </CustomerFrame>
-      {!workspace && !authPath && <Footer />}
-      {!workspace && !authPath && (
+      {!workspace && <Footer />}
+      {!workspace && (
         <nav className="mobile-nav" aria-label="Mobile navigation">
           <Link href="/">
             <House />
@@ -1213,15 +1204,6 @@ function ProductDetail({ id }: { id: string }) {
   );
 }
 function Auth({ register }: { register: boolean }) {
-  const submitting = useRef(false);
-  const lifetime = useRef<AbortController | null>(null);
-  useEffect(() => {
-    const controller = new AbortController();
-    lifetime.current = controller;
-    return () => controller.abort();
-  }, []);
-  const [typedPassword, setTypedPassword] = useState("");
-  const [openLink, setOpenLink] = useState(false);
   const [passwordChangeRequired, setPasswordChangeRequired] = useState(false);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -1241,24 +1223,16 @@ function Auth({ register }: { register: boolean }) {
   }, [user, router]);
   async function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (submitting.current) return;
-    submitting.current = true;
-    const form = e.currentTarget;
     setBusy(true);
     setError("");
-    const values = Object.fromEntries(new FormData(form));
+    const values = Object.fromEntries(new FormData(e.currentTarget));
     try {
-      const r = await authRequest(register ? "register" : "login", values, {
-        signal: lifetime.current?.signal,
-      });
+      const r = await api(register ? "register" : "login", values);
       if (r.passwordChangeRequired) {
         setPasswordChangeRequired(true);
         return;
       }
-      const me = await api("me", undefined, {
-        signal: lifetime.current?.signal,
-      });
-      if (lifetime.current?.signal.aborted) return;
+      const me = await api("me");
       const referralCode = register
         ? new URLSearchParams(window.location.search).get("ref")
         : null;
@@ -1274,188 +1248,107 @@ function Auth({ register }: { register: boolean }) {
       try {
         localStorage.setItem("easygas.auth.changed", String(Date.now()));
       } catch {}
-      form.reset();
-      setTypedPassword("");
       setUser(me.user);
-      analyticsNavigate(
-        router,
-        !["customer", "commercial"].includes(me.user.role)
+      analyticsNavigate(router,
+        !["customer", "commercial"].includes(r.role)
           ? "/admin"
           : safeCustomerReturn(
               new URLSearchParams(window.location.search).get("returnTo"),
             ),
       );
     } catch (e: any) {
-      if (!lifetime.current?.signal.aborted) setError(e.message);
+      setError(e.message);
     } finally {
-      submitting.current = false;
       setBusy(false);
     }
   }
-  if (user)
-    return (
-      <div role="status" className="container page">
-        Opening your workspace…
-      </div>
-    );
   return (
-    <AuthShell
-      onBack={openLink ? () => setOpenLink(false) : undefined}
-      mode={openLink ? "link" : register ? "register" : "signin"}
-      title={
-        openLink
-          ? "Open an account link"
-          : register
-            ? "Create your account."
-            : "Welcome back."
-      }
-      description={
-        openLink
-          ? "Paste the complete EasyGas account link from your email."
-          : register
-            ? "It’s quick and easy. Get access to gas delivery, services and more."
-            : "Sign in to your EasyGas account and manage your orders, services and more."
-      }
-      back={openLink ? customerAuthHref(register, returnTo) : register ? customerAuthHref(false, returnTo) : "/"}
-    >
-      {openLink ? (
-        <>
-          <AccountLinkEntry onCancel={() => setOpenLink(false)} />
-        </>
-      ) : (
-        <>
-          <form
-            key={register ? "register" : "signin"}
-            onSubmit={submit}
-            aria-busy={busy}
-          >
-            {!register && (
-              <nav className="eg-auth-switch" aria-label="Account access">
-                <Link
-                  href={customerAuthHref(false, returnTo)}
-                  aria-current="page"
-                >
-                  <UserRound size={19} />
-                  Sign In
-                </Link>
-                <Link href={customerAuthHref(true, returnTo)}>
-                  Create Account
-                </Link>
-              </nav>
-            )}
-            {register && (
-              <AuthField
-                label="Full name"
-                icon="person"
-                name="name"
-                autoComplete="name"
-                placeholder="Full name"
+    <div className="auth-page container">
+      <div className="auth-story">
+        <span className="eyebrow">WELCOME TO EASYGAS</span>
+        <h1>
+          Good food starts
+          <br />
+          with good energy.
+        </h1>
+        <p>
+          Your refills, your orders, your kitchen.
+          <br />
+          All in one place.
+        </p>
+        <img
+          src="/assets/cylinder-illustration.png"
+          alt="Illustrative green EasyGas cylinder"
+        />
+      </div>
+      <form className="auth-card" onSubmit={submit}>
+        <span className="round-icon">
+          <UserRound />
+        </span>
+        <h1>{register ? "Make yourself at home." : "Welcome back."}</h1>
+        <p>
+          {register
+            ? "Create your EasyGas account."
+            : "Sign in and let’s keep you cooking."}
+        </p>
+        {register && (
+          <label>
+            <FieldCaption required={true}>Full name</FieldCaption>
+            <FormInput name="name" autoComplete="name" required minLength={2} />
+          </label>
+        )}
+        <label>
+          <FieldCaption required={true}>{register ? "Email address" : "Email or phone number"}</FieldCaption>
+          <FormInput
+            name={register ? "email" : "identifier"}
+            type={register ? "email" : "text"}
+            autoComplete={register ? "email" : "username"}
+            autoCapitalize="none"
+            required
+          />
+        </label>
+        <label>
+          <FieldCaption required={true}>{passwordChangeRequired ? "Temporary password" : "Password"}</FieldCaption>
+          <FormInput
+            name="password"
+            type="password"
+            autoComplete={register ? "new-password" : "current-password"}
+            required
+            minLength={PASSWORD_MIN_LENGTH}
+          />
+        </label>
+        {passwordChangeRequired && (
+          <>
+            <Notice message="Choose a new password to finish your first sign-in." />
+            <label>
+              <FieldCaption required={true}>New password</FieldCaption>
+              <FormInput
+                name="newPassword"
+                type="password"
+                autoComplete="new-password"
+                minLength={PASSWORD_MIN_LENGTH}
+                maxLength={128}
                 required
-                minLength={2}
-                maxLength={100}
+                autoFocus
               />
-            )}
-            <AuthField
-              label={register ? "Email address" : "Email or phone number"}
-              name={register ? "email" : "identifier"}
-              type={register ? "email" : "text"}
-              autoComplete={register ? "email" : "username"}
-              autoCapitalize="none"
-              spellCheck={false}
-              required
-              maxLength={200}
-              placeholder={
-                register ? "Email address" : "Enter your email or phone"
-              }
-            />
-            <AuthField
-              label={passwordChangeRequired ? "Temporary password" : "Password"}
-              icon="lock"
-              name="password"
-              type="password"
-              autoComplete={register ? "new-password" : "current-password"}
-              required
-              minLength={PASSWORD_MIN_LENGTH}
-              maxLength={128}
-              placeholder={register ? "Create password" : "Enter your password"}
-              value={typedPassword}
-              onChange={(e) => setTypedPassword(e.target.value)}
-            />
-            {passwordChangeRequired && (
-              <>
-                <Notice message="Choose a new password to finish your first sign-in." />
-                <AuthField
-                  label="New password"
-                  icon="lock"
-                  name="newPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  minLength={PASSWORD_MIN_LENGTH}
-                  maxLength={128}
-                  required
-                  autoFocus
-                />
-              </>
-            )}
-            {register ? (
-              <p
-                className="eg-auth-guidance"
-                data-valid={typedPassword.length >= PASSWORD_MIN_LENGTH}
-                aria-live="polite"
-              >
-                {typedPassword.length >= PASSWORD_MIN_LENGTH ? "✓" : "○"} At
-                least {PASSWORD_MIN_LENGTH} characters. Maximum 128 characters.
-              </p>
-            ) : (
-              <Link
-                className="eg-auth-forgot"
-                href={
-                  "/forgot-password?returnTo=" + encodeURIComponent(returnTo)
-                }
-              >
-                Forgot password?
-              </Link>
-            )}
-            {error && <Notice type="error" message={error} />}
-            <button className="button full" disabled={busy}>
-              {busy
-                ? "Please wait…"
-                : passwordChangeRequired
-                  ? "Change Password & Sign In"
-                  : register
-                    ? "Create Account"
-                    : "Sign In"}
-              <ArrowRight size={19} />
-            </button>
-          </form>
-          <div className="eg-auth-links">
-          {register && <Link href={"/forgot-password?returnTo=" + encodeURIComponent(returnTo)}>Forgot password?</Link>}
-            <p>
-              {register ? "Already have an account?" : "New to EasyGas?"}{" "}
-              <Link href={customerAuthHref(!register, returnTo)}>
-                {register ? "Sign in" : "Create an account"}
-              </Link>
-            </p>
-            <button
-              className="text-link"
-              type="button"
-              onClick={() => {
-                setTypedPassword("");
-                setPasswordChangeRequired(false);
-                setError("");
-                setOpenLink(true);
-              }}
-            >
-              Open an account link
-            </button>
-          </div>
-          <div className="eg-auth-policy">
-            <Link href="/privacy">Privacy</Link>
-            <Link href="/terms">Terms</Link>
-          </div>
-        </>
-      )}
-    </AuthShell>
+            </label>
+          </>
+        )}
+        <small>Use at least {PASSWORD_MIN_LENGTH} characters.</small>
+        {error && <Notice type="error" message={error} />}
+        <button className="button full" disabled={busy}>
+          {busy ? "Please wait…" : passwordChangeRequired ? "Change Password & Sign In" : register ? "Create Account" : "Sign In"}
+          <ArrowRight size={18} />
+        </button>
+        <p className="auth-switch">
+          {register ? "Already have an account?" : "New to EasyGas?"}{" "}
+          <Link href={customerAuthHref(!register, returnTo)}>
+            {register ? "Sign in" : "Create an account"}
+          </Link>
+        </p>
+        <Link href="/forgot-password">Forgot your password?</Link>
+      </form>
+    </div>
   );
 }
 function Cart({ checkout = false }: { checkout?: boolean }) {
