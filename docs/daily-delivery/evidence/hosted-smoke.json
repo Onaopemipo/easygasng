@@ -1,0 +1,38 @@
+{
+  "at": "2026-11-27T15:17:54.985Z",
+  "origin": "https://easygas-client-demo.vercel.app",
+  "checks": [
+    {
+      "path": "/api/status",
+      "status": 200,
+      "body": {
+        "status": "ready",
+        "scope": "demo"
+      }
+    },
+    {
+      "path": "/api/daily.summary",
+      "status": 401,
+      "body": {
+        "error": "Please sign in to continue.",
+        "code": "UNAUTHENTICATED"
+      }
+    },
+    {
+      "path": "/api/daily.start",
+      "status": 401,
+      "body": {
+        "error": "Please sign in to continue.",
+        "code": "UNAUTHENTICATED"
+      }
+    },
+    {
+      "path": "/api/daily.refill.record",
+      "status": 401,
+      "body": {
+        "error": "Please sign in to continue.",
+        "code": "UNAUTHENTICATED"
+      }
+    }
+  ]
+}

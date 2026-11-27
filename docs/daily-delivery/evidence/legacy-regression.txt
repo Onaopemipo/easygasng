@@ -1,31 +1,31 @@
-(node:4915) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:12464) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-✔ DRF-JOURNEY: self-service COD refill has no cylinder registry/inspection or OTP, uses actual mass and photo, reconciles cash/tanker and ends trip once (1482.193625ms)
-✔ DRF-NEG: wrong roles, partial or excess mass, missing/stale proof, revoked COD and unverified prepaid cannot complete or consume gas (1093.008291ms)
-✔ DRF-EXTRA: extra gas on an active customer visit reuses current destination evidence, assigns the same tanker driver and adds no delivery fee or cylinder record (1090.224542ms)
-✔ DRF-TANK: an incoming order reserves acknowledged preloaded tanker gas once and cancellation restores its buffer without releasing physical custody (938.625042ms)
-✔ DRF-TANK-DEPOT: assignment uses existing driver tanker buffer without double-counting capacity or reserving both depot and tanker gas (1116.321542ms)
-(node:5113) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+✔ DRF-JOURNEY: self-service COD refill has no cylinder registry/inspection or OTP, uses actual mass and photo, reconciles cash/tanker and ends trip once (1535.292459ms)
+✔ DRF-NEG: wrong roles, partial or excess mass, missing/stale proof, revoked COD and unverified prepaid cannot complete or consume gas (1204.576042ms)
+✔ DRF-EXTRA: extra gas on an active customer visit reuses current destination evidence, assigns the same tanker driver and adds no delivery fee or cylinder record (1196.232125ms)
+✔ DRF-TANK: an incoming order reserves acknowledged preloaded tanker gas once and cancellation restores its buffer without releasing physical custody (1036.882625ms)
+✔ DRF-TANK-DEPOT: assignment uses existing driver tanker buffer without double-counting capacity or reserving both depot and tanker gas (938.417083ms)
+(node:12481) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-✔ PPAY-JOURNEY: first-time phone customer completes scoped profile/address, pays, is confirmed once and receives tanker refill with photo before reconciliation/trip end (1639.161416ms)
-✔ PPAY-SECURITY: anonymous link cannot target another order/wallet, claim an account, alter scope/area or bypass incomplete profile, unpaid policy, expiry, revocation or changed source (1041.49825ms)
-✔ PPAY-MESSAGES: encrypted email and WhatsApp requests are retry-safe, honestly queued while disabled, and revoked email links are never delivered (960.541ms)
-✔ PPAY-VERIFY: pending, mismatched, or browser-asserted payment never confirms an order; exact verified provider evidence posts only once (897.010958ms)
-✔ PPAY-EXTRA: a same-visit extra phone order charges no second delivery fee, stays unassigned until payment and then rejoins the original active driver (1073.319292ms)
-✔ PPAY-LEGACY: already-paid pre-migration phone orders remain paid; unpaid legacy COD requests convert explicitly to card without dispatch bypass (898.641958ms)
-✔ PPAY-ADDRESS: a customer address correction invalidates the prior coverage confirmation and still requires actual current address review (1433.980166ms)
-✔ PPAY-ORIGIN: foreign origins and oversized or missing capabilities cannot access the private customer order (1015.648042ms)
-(node:5442) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+✔ PPAY-JOURNEY: first-time phone customer completes scoped profile/address, pays, is confirmed once and receives tanker refill with photo before reconciliation/trip end (1573.946875ms)
+✔ PPAY-SECURITY: anonymous link cannot target another order/wallet, claim an account, alter scope/area or bypass incomplete profile, unpaid policy, expiry, revocation or changed source (1011.714959ms)
+✔ PPAY-MESSAGES: encrypted email and WhatsApp requests are retry-safe, honestly queued while disabled, and revoked email links are never delivered (924.217459ms)
+✔ PPAY-VERIFY: pending, mismatched, or browser-asserted payment never confirms an order; exact verified provider evidence posts only once (912.275375ms)
+✔ PPAY-EXTRA: a same-visit extra phone order charges no second delivery fee, stays unassigned until payment and then rejoins the original active driver (1029.488334ms)
+✔ PPAY-LEGACY: already-paid pre-migration phone orders remain paid; unpaid legacy COD requests convert explicitly to card without dispatch bypass (887.018791ms)
+✔ PPAY-ADDRESS: a customer address correction invalidates the prior coverage confirmation and still requires actual current address review (1006.643667ms)
+✔ PPAY-ORIGIN: foreign origins and oversized or missing capabilities cannot access the private customer order (917.030834ms)
+(node:12506) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
 (Use `node --trace-deprecation ...` to show where the warning was created)
-✔ VISIT-CREATE: an active driver takes a separate fee-free order on the same visit, retaining original totals and idempotency (1421.469042ms)
-✔ VISIT-GAS: ready busy drivers can receive same-visit gas without a customer cylinder gate (1239.472833ms)
-✔ VISIT-NEG: roles, revoked privileges, client scope/fee overrides, closed visits and stale price/visit are rejected (956.795459ms)
-✔ VISIT-CAPACITY: one visit consumes one stop while gas/vehicle demand and normal delivery fees stay authoritative (980.723666ms)
-✔ VISIT-JOURNEY: an extra order placed at the customer shares the active trip, has independent proof/payment and reconciles both deliveries before trip end (1189.169875ms)
-✔ VISIT-STOCK: missing or unacknowledged custody, stale load quotes and insufficient mass cannot promise an extra order (912.41425ms)
-✔ VISIT-CANCEL: cancellation returns an unpicked extra reservation to vehicle custody exactly once; protected parent, immutable links and role revocations remain (1236.421333ms)
-✔ VISIT-LPG: an extra gas order uses acknowledged buffer once, still requires its own acknowledgement, metering and proof without cylinder registration (1129.788916ms)
-✔ VISIT-SERIAL: extra empty cylinders retain exact acknowledged vehicle serials through allocation and customer handover (1080.512416ms)
+✔ VISIT-CREATE: an active driver takes a separate fee-free order on the same visit, retaining original totals and idempotency (1424.004458ms)
+✔ VISIT-GAS: ready busy drivers can receive same-visit gas without a customer cylinder gate (1136.599625ms)
+✔ VISIT-NEG: roles, revoked privileges, client scope/fee overrides, closed visits and stale price/visit are rejected (971.901083ms)
+✔ VISIT-CAPACITY: one visit consumes one stop while gas/vehicle demand and normal delivery fees stay authoritative (1059.706167ms)
+✔ VISIT-JOURNEY: an extra order placed at the customer shares the active trip, has independent proof/payment and reconciles both deliveries before trip end (1248.835625ms)
+✔ VISIT-STOCK: missing or unacknowledged custody, stale load quotes and insufficient mass cannot promise an extra order (952.552125ms)
+✔ VISIT-CANCEL: cancellation returns an unpicked extra reservation to vehicle custody exactly once; protected parent, immutable links and role revocations remain (987.493917ms)
+✔ VISIT-LPG: an extra gas order uses acknowledged buffer once, still requires its own acknowledgement, metering and proof without cylinder registration (1167.258ms)
+✔ VISIT-SERIAL: extra empty cylinders retain exact acknowledged vehicle serials through allocation and customer handover (1284.091292ms)
 ℹ tests 22
 ℹ suites 0
 ℹ pass 22
@@ -33,4 +33,4 @@
 ℹ cancelled 0
 ℹ skipped 0
 ℹ todo 0
-ℹ duration_ms 26403.284
+ℹ duration_ms 25931.290666

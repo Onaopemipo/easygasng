@@ -19,3 +19,9 @@ Scope changes and operational details:
 - Existing field-operation gates stay enforced. Doorstep amendment/COD/real-provider settings are not automatically enabled.
 
 The implementation was developed in an isolated worktree from `81d322a`, with the existing mobile workspace fixes preserved as prerequisites. No unrelated root working-tree edits are discarded. See the machine-readable matrix for current exact coverage and outstanding acceptance.
+
+## Demo release
+
+Published to https://easygas-client-demo.vercel.app from source `9a97b03`. Vercel deployment `dpl_Fz22Xpaz5CPTAiiQFS3o4nNk1MKg` is READY; downloaded source archive matched505/505 shipped files. Shared schema086 and all existing read-only gates pass. The public demo health route is ready; daily operations reject unauthenticated requests. A follow-up strengthens runtime health to require086 explicitly; its deployment is recorded in the final release evidence.
+
+Coverage:7/7 implementation,6/7 verification,5/5 critical server controls,6/7 gates. Native physical acceptance remains partial. No new TestFlight binary was built; older installed binaries do not contain the scale forms. Use the updated mobile source/preview for this workflow until a new signed release is produced.

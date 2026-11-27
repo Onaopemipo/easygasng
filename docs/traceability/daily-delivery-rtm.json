@@ -56,7 +56,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-01",
       "status": "VERIFIED_COMPLETE",
@@ -119,7 +123,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-02",
       "status": "VERIFIED_COMPLETE",
@@ -188,7 +196,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-03",
       "status": "VERIFIED_COMPLETE",
@@ -252,7 +264,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-04",
       "status": "VERIFIED_COMPLETE",
@@ -318,7 +334,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-05",
       "status": "PARTIAL",
@@ -383,7 +403,11 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-06",
       "status": "VERIFIED_COMPLETE",
@@ -408,19 +432,23 @@
         "release-schema-check.ts",
         "apps/web/lib/db.ts",
         "scripts/export-bootstrap.ts",
-        "database/bootstrap.sql"
+        "database/bootstrap.sql",
+        "apps/web/lib/release-checks.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
       "testFiles": [
         "tests/daily-delivery.test.ts",
         "tests/daily-delivery-components.test.ts",
-        "tests/daily-delivery-postgres.test.ts"
+        "tests/daily-delivery-postgres.test.ts",
+        "tests/production-release.test.ts"
       ],
       "testIds": [
         "DAY01",
         "DAY-PG",
-        "schema082\u2013086 gates"
+        "schema082\u2013086 gates",
+        "PR-SCHEMA-01",
+        "PR-02"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -449,12 +477,16 @@
         "docs/daily-delivery/evidence/web-build.txt",
         "docs/daily-delivery/evidence/ios-export.txt",
         "docs/daily-delivery/evidence/browser-state.json",
-        "docs/daily-delivery/evidence/browser-verification.txt"
+        "docs/daily-delivery/evidence/browser-verification.txt",
+        "docs/daily-delivery/evidence/deployment.json",
+        "docs/daily-delivery/evidence/hosted-smoke.json",
+        "docs/daily-delivery/evidence/source-verification-first.json",
+        "docs/daily-delivery/evidence/release-health-tests.txt"
       ],
       "acceptanceGate": "DAY-G-07",
-      "status": "PARTIAL",
-      "reason": "Shared migration086 applied without changing ten operational tables; restricted-runtime gates082\u2013086 pass; manuals and traceability updated. Deployment verification pending.",
-      "outstandingWork": "Publish bounded source to existing Vercel demo and verify release; preserve production NO-GO and prior native/provider/real-operation gates."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Migration086 and runtime gates082\u2013086 pass; stable demo READY; downloaded deployed source archive matches505/505 tested files; unauthenticated daily operations denied; manuals/traceability and runtime readiness migration coverage pass.",
+      "outstandingWork": "No outstanding bounded release/manual work. Existing production NO-GO, actual operations/provider and signed-device gates remain separately open."
     }
   ],
   "gates": [
@@ -490,22 +522,22 @@
     },
     {
       "id": "DAY-G-07",
-      "status": "OPEN",
+      "status": "PASSED",
       "requirement": "DAY-07"
     }
   ],
   "coverage": {
     "requirements": 7,
     "implemented": 7,
-    "verified": 5,
-    "partial": 2,
+    "verified": 6,
+    "partial": 1,
     "excluded": 0,
     "criticalRequirements": 5,
     "criticalVerified": 5,
     "routesImplemented": 3,
     "routesVerified": 2,
     "gates": 7,
-    "gatesPassed": 5
+    "gatesPassed": 6
   },
   "productionDecision": "NO-GO \u2014 existing commercial/provider/native/import/retention holds remain",
   "changeLog": [
