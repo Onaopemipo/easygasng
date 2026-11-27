@@ -1,0 +1,28 @@
+{
+  "finalDeployment": "dpl_Ccmz2843ctyDHaYJkTSsHZtAwjNT",
+  "resolvedCandidateFailures": [
+    {
+      "attempt": "pre-upload",
+      "issue": "buildCommand exceeded Vercel 256-character limit",
+      "fix": "Sequential release-schema-check.ts retains all four guards"
+    },
+    {
+      "deployment": "dpl_5n9RypeLortS8d7uRidGfGXNYGHf",
+      "issue": "Unrelated pending authentication imports in site/phone-completion",
+      "fix": "Retained published baseline components"
+    },
+    {
+      "deployment": "dpl_Hj6J6XaQ3XWSGuos61iAvGKgkAny",
+      "issue": "Unrelated authentication imports in workflows",
+      "fix": "Applied only three Admin purchasing/delegation changes to published workflows baseline"
+    }
+  ],
+  "productionAliasChangedDuringFailedBuilds": false,
+  "unrelatedAuthenticationWorkPreservedInOriginalWorktree": true,
+  "resolvedValidationIssue": {
+    "issue": "Initial exhaustive Git-source comparison exceeded the default1MB child-process buffer on a retained PNG asset",
+    "fix": "Raised bounded comparison buffer to16MB; both release and traceability checks then passed",
+    "retainedFailureLog": "published-release-validation-initial.txt",
+    "successfulRerun": "published-release-validation.txt"
+  }
+}

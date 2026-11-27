@@ -23,7 +23,7 @@
       ],
       "status": "VERIFIED_COMPLETE",
       "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
-      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "outstandingWork": "Bounded Admin business approval behavior is verified locally and published to the demo. Historical source/CI proof gaps, the prior matrix metadata defect, skipped tests and existing production/native/provider/import holds remain outside this completed behavior; none are claimed resolved.",
       "critical": true,
       "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
       "route": [
@@ -90,7 +90,7 @@
       ],
       "status": "VERIFIED_COMPLETE",
       "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
-      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "outstandingWork": "Bounded Admin business approval behavior is verified locally and published to the demo. Historical source/CI proof gaps, the prior matrix metadata defect, skipped tests and existing production/native/provider/import holds remain outside this completed behavior; none are claimed resolved.",
       "critical": true,
       "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
       "route": [
@@ -176,8 +176,8 @@
         "docs/admin-single-approval/evidence/executed-tests.json"
       ],
       "status": "VERIFIED_COMPLETE",
-      "reason": "Actual high-risk browser form applied one version with audit and no colleague decisions. Backend badge/action eligibility, real component rendering and mobile typecheck passed. No new native Admin approval UI or binary is introduced; field/customer acceptance remains separate.",
-      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "reason": "Actual high-risk browser form applied one version with no colleague decision; current web action eligibility, component rendering and typechecks passed. The published release retains existing authentication components with bounded Admin copy/action changes. No separate native Admin approval UI or new binary is introduced; field/customer acceptance remains separate.",
+      "outstandingWork": "Bounded Admin business approval behavior is verified locally and published to the demo. Historical source/CI proof gaps, the prior matrix metadata defect, skipped tests and existing production/native/provider/import holds remain outside this completed behavior; none are claimed resolved.",
       "critical": false,
       "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
       "route": [
@@ -252,7 +252,7 @@
       ],
       "status": "VERIFIED_COMPLETE",
       "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
-      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "outstandingWork": "Bounded Admin business approval behavior is verified locally and published to the demo. Historical source/CI proof gaps, the prior matrix metadata defect, skipped tests and existing production/native/provider/import holds remain outside this completed behavior; none are claimed resolved.",
       "critical": true,
       "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
       "route": [
@@ -323,11 +323,28 @@
         "docs/admin-single-approval/evidence/executed-tests.json",
         "docs/admin-single-approval/evidence/release-dry-run.json",
         "docs/admin-single-approval/evidence/reviewed-source.json",
-        "docs/admin-single-approval/evidence/whole-suite-initial.tap"
+        "docs/admin-single-approval/evidence/whole-suite-initial.tap",
+        "docs/admin-single-approval/evidence/shared-migration085.json",
+        "docs/admin-single-approval/evidence/shared-migration085.jpg",
+        "docs/admin-single-approval/evidence/release-source.json",
+        "docs/admin-single-approval/evidence/uploaded-source-files.json",
+        "docs/admin-single-approval/evidence/final-dry-run.json",
+        "docs/admin-single-approval/evidence/hosted-build.txt",
+        "docs/admin-single-approval/evidence/candidate-hosted.json",
+        "docs/admin-single-approval/evidence/stable-hosted.json",
+        "docs/admin-single-approval/evidence/stable-alias.json",
+        "docs/admin-single-approval/evidence/stable-identity.json",
+        "docs/admin-single-approval/evidence/promotion.txt",
+        "docs/admin-single-approval/evidence/isolated-release-policy.txt",
+        "docs/admin-single-approval/evidence/isolated-release-workflows.txt",
+        "docs/admin-single-approval/evidence/isolated-release-referral-routing.txt",
+        "docs/admin-single-approval/evidence/isolated-release-driver-load.txt",
+        "docs/admin-single-approval/evidence/isolated-release-types.txt",
+        "docs/admin-single-approval/evidence/published-release-validation.txt"
       ],
-      "status": "PARTIAL",
-      "reason": "Local source reviewed and dry-run verified; migration085/shared deployment/push not performed. Broad initial suite and legacy release-proof/traceability gaps remain recorded.",
-      "outstandingWork": "Action-time confirmation before Neon approval-restriction changes; apply reviewed guarded085, publish exact candidate, complete hosted acceptance and source-proof continuation. Reconcile legacy whole-suite proof/RTM failures and retained native holds without rewriting history.",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "User authorised migration085, push and demo rollout. Shared migration preserved155 canonical table fingerprints. All493 uploaded files match pushed source8c8829c; four schema guards, hosted build, candidate/stable single-Admin audit, stale retry and business preservation checks passed. Historical broad-suite gaps remain separately counted.",
+      "outstandingWork": "Bounded Admin business approval behavior is verified locally and published to the demo. Historical source/CI proof gaps, the prior matrix metadata defect, skipped tests and existing production/native/provider/import holds remain outside this completed behavior; none are claimed resolved.",
       "critical": false,
       "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
       "route": [
@@ -355,7 +372,9 @@
         "tests/platform.test.ts",
         "tests/staff-management.test.ts",
         "tests/reward-customer-selection.test.ts",
-        "tests/navigation.test.ts"
+        "tests/navigation.test.ts",
+        "tests/admin-single-approval-release.test.ts",
+        "tests/admin-single-approval-traceability.test.ts"
       ],
       "testIds": [
         "ASA01",
@@ -373,7 +392,7 @@
         "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
       ],
       "acceptanceGate": "ASA-G05",
-      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+      "testResult": "PASS \u2014 191 initial focused names; 71 tests in four successful isolated-release runs; real PostgreSQL concurrency/security,155-table preservation, exact493 committed/uploaded files, Ready build and candidate/stable Admin authorisation/audit/replay/preservation acceptance. Entire broad suite is not claimed clean."
     }
   ],
   "gates": [
@@ -403,9 +422,9 @@
     },
     {
       "id": "ASA-G05",
-      "status": "OPEN",
+      "status": "PASS",
       "requirement": "ASA-05",
-      "reason": "Local source reviewed and dry-run verified; migration085/shared deployment/push not performed. Broad initial suite and legacy release-proof/traceability gaps remain recorded."
+      "reason": "User authorised migration085, push and demo rollout. Shared migration preserved155 canonical table fingerprints. All493 uploaded files match pushed source8c8829c; four schema guards, hosted build, candidate/stable single-Admin audit, stale retry and business preservation checks passed. Historical broad-suite gaps remain separately counted."
     }
   ],
   "releaseDecision": "NO-GO \u2014 Public Commercial Production",
@@ -413,6 +432,10 @@
     {
       "date": "2026-11-27",
       "change": "User explicitly supersedes all prior colleague/dual business approval requirements for canonical owner (Admin). Other staff policy and genuine evidence/customer consent remain. No retrospective bulk approval; prior production NO-GO, import, retention and unrelated gates remain."
+    },
+    {
+      "date": "2026-11-27",
+      "change": "Explicit user confirmation: apply migration085 to existing demo database, then push and deploy. Guarded shared migration committed; branch codex/admin-single-approval published and stable alias promoted after exact-source and hosted acceptance. Retained authentication WIP separately; all prior production holds and broad gaps preserved."
     }
   ],
   "approvedScopeSupersedes": [
@@ -435,7 +458,7 @@
       "total": 5
     },
     "verification": {
-      "verified": 4,
+      "verified": 5,
       "total": 5
     },
     "critical": {
@@ -443,7 +466,7 @@
       "total": 3
     },
     "gates": {
-      "passed": 4,
+      "passed": 5,
       "total": 5
     },
     "routes": {
@@ -457,6 +480,14 @@
       "failed": 58,
       "skipped": 36,
       "note": "Exploratory audit run, not final current-release evidence. All failed/skipped remain retained; functional policy changes subsequently tested in successful focused runs."
+    },
+    "retainedBroadGaps": {
+      "originalFailed": 58,
+      "subsequentlyRecheckedPassing": 30,
+      "openHistoricalSourceProofs": 27,
+      "openPriorMatrixMetadata": 1,
+      "originalSkipped": 36,
+      "note": "Retained in coverage; no clean full-suite CI or production completion claim."
     }
   }
 }

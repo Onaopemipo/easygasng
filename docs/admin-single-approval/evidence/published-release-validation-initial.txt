@@ -1,0 +1,45 @@
+(node:64669) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✖ ASA-RELEASE: exact pushed source, four retained database guards, Ready deployment and single Admin audit proof bind to the demo (4450.609042ms)
+(node:66592) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ ASA-RTM: completion claims bind executed evidence, migration and exact deployed source; whole-suite gaps stay in the denominator (661.510125ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 1
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 5390.591916
+
+✖ failing tests:
+
+test at tests/admin-single-approval-release.test.ts:1:374
+✖ ASA-RELEASE: exact pushed source, four retained database guards, Ready deployment and single Admin audit proof bind to the demo (4450.609042ms)
+  Error: spawnSync git ENOBUFS
+      at Object.spawnSync (node:internal/child_process:1144:20)
+      at spawnSync (node:child_process:928:24)
+      at execFileSync (node:child_process:971:15)
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/tests/admin-single-approval-release.test.ts:13:84)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    errno: -55,
+    code: 'ENOBUFS',
+    syscall: 'spawnSync git',
+    path: 'git',
+    spawnargs: [ 'show', '8c8829cde22f8ef3318d03552f9cfef534bcc853:apps/web/public/assets/brand-reference.png' ],
+    error: Error: spawnSync git ENOBUFS
+        at Object.spawnSync (node:internal/child_process:1144:20)
+        at spawnSync (node:child_process:928:24)
+        at execFileSync (node:child_process:971:15)
+        at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/tests/admin-single-approval-release.test.ts:13:84)
+        at async Test.run (node:internal/test_runner/test:1389:7)
+        at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3),
+    status: null,
+    signal: 'SIGTERM',
+    output: [ null, <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 06 00 00 00 04 00 08 06 00 00 00 27 71 92 42 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 44 ... 1114062 more bytes>, <Buffer > ],
+    pid: 66591,
+    stdout: <Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 06 00 00 00 04 00 08 06 00 00 00 27 71 92 42 00 00 00 01 73 52 47 42 00 ae ce 1c e9 00 00 00 44 ... 1114062 more bytes>,
+    stderr: <Buffer >
+  }

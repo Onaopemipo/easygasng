@@ -1,0 +1,50 @@
+{
+  "mode": "stable",
+  "base": "https://easygas-client-demo.vercel.app",
+  "checks": [
+    {
+      "id": "ASA-H-POLICY",
+      "status": "PASS",
+      "detail": "Every mutable setting advertises one Admin authority; locked definitions remain locked; pending progress requires one Admin."
+    },
+    {
+      "id": "ASA-H-GUARDS",
+      "status": "PASS",
+      "detail": "Unauthenticated decisions, staff Admin impersonation and Admin self privilege changes fail closed."
+    },
+    {
+      "id": "ASA-H-READBACK",
+      "status": "PASS",
+      "detail": "Stable demo reads the exact candidate Admin-authorised setting version and immutable request proof."
+    },
+    {
+      "id": "ASA-H-PRESERVE",
+      "status": "PASS",
+      "detail": "Orders, bookings, stock, finance ledger, fleet, LPG custody, customers and reward balances unchanged; COD remains off."
+    }
+  ],
+  "businessWrites": 0,
+  "status": "PASS",
+  "oneAdminAcceptance": {
+    "requestId": "058fb02e-5ce7-4c36-a486-49905f1d428f",
+    "key": "business.hours",
+    "valueUnchanged": true,
+    "beforeVersion": 1,
+    "afterVersion": 2,
+    "adminAuditProofs": 1,
+    "additionalColleagueApprovals": 0,
+    "staleReplayStatus": 409
+  },
+  "preservation": {
+    "orders": "a1f5f6da684ad5ba1916da96dfab60c70396f0c1b608f7641cdc1180db5d1d21",
+    "bookings": "13b66bf6b7cecece50b01629bc0b51465d9071cebcd9684dbf80cffc170c9a1f",
+    "inventory": "b87bfcf6d4dfba4f552b6ef5b6c6642efbf7476544ddff5f8f423ed2a16d0a91",
+    "finance.ledger": "8348851b81073c3694417407afd194d247ac721c09e018bd3fe04cd54871245c",
+    "fleet.summary": "24074d98e9d10d91a8b86fe44b0d26a71bbf4072ab64a99ca58f3f8b8c197754",
+    "bulk.summary": "537b2327fb6a3804b00bbf0e0a3ed3928d40af797d98e26c28250cad55bab0d9"
+  },
+  "customerAndRewardsPreserved": true,
+  "codEnabled": false,
+  "deploymentId": "dpl_Ccmz2843ctyDHaYJkTSsHZtAwjNT",
+  "sessionsRevoked": 3
+}

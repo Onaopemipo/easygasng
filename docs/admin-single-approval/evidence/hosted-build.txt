@@ -1,0 +1,89 @@
+Vercel CLI 59.18.0 (Node.js 24.21.0)
+Fetching deployment "easygas-client-demo-e6kdo55pu-onaopemipos-projects.vercel.app" in onaopemipos-projects
+2026-11-27T03:24:29.620Z  Running build in Washington, D.C., USA (East) – iad1
+2026-11-27T03:24:29.620Z  Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
+2026-11-27T03:24:29.631Z  Retrieving list of deployment files...
+2026-11-27T03:24:30.009Z  Downloading 493 deployment files...
+2026-11-27T03:24:30.542Z  Restored build cache from previous deployment (3YuDqESnCgxz2Wc1zQ57uwLHdxpe)
+2026-11-27T03:24:31.096Z  Running "vercel build"
+2026-11-27T03:24:31.103Z  Vercel CLI 66.6.0
+2026-11-27T03:24:31.345Z  Running "install" command: `cd ../.. && npm ci --include=dev`...
+2026-11-27T03:24:31.879Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-27T03:24:38.969Z  
+2026-11-27T03:24:38.969Z  added 64 packages, and audited 66 packages in 7s
+2026-11-27T03:24:38.969Z  
+2026-11-27T03:24:38.969Z  10 packages are looking for funding
+2026-11-27T03:24:38.969Z  run `npm fund` for details
+2026-11-27T03:24:38.970Z  
+2026-11-27T03:24:38.970Z  found 0 vulnerabilities
+2026-11-27T03:24:38.970Z  npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+2026-11-27T03:24:38.970Z  npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+2026-11-27T03:24:38.970Z  npm warn install-scripts
+2026-11-27T03:24:38.971Z  npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+2026-11-27T03:24:39.005Z  Detected Next.js version: 16.4.6
+2026-11-27T03:24:39.013Z  Running "cd ../.. && node --import tsx release-schema-check.ts && npm run build --workspace apps/web"
+2026-11-27T03:24:39.263Z  (node:76) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+2026-11-27T03:24:39.264Z  (Use `node --trace-deprecation ...` to show where the warning was created)
+2026-11-27T03:24:40.319Z  Read-only same-visit schema082 and forced row security verified.
+2026-11-27T03:24:41.070Z  Read-only phone-order schema083/RLS/minimum runtime grants verified.
+2026-11-27T03:24:41.826Z  Read-only Lagos schema084/default/backfill/restricted-runtime checks passed.
+2026-11-27T03:24:42.576Z  Read-only Admin schema085, exact review guard, immutable-history and restricted-runtime checks passed.
+2026-11-27T03:24:42.846Z  npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+2026-11-27T03:24:42.884Z  
+2026-11-27T03:24:42.884Z  > @easygas/web@0.1.0 build
+2026-11-27T03:24:42.884Z  > next build --webpack
+2026-11-27T03:24:42.884Z  
+2026-11-27T03:24:43.230Z  ▲ Next.js 16.4.6 (webpack)
+2026-11-27T03:24:43.303Z  Applying modifyConfig from Vercel
+2026-11-27T03:24:43.307Z  ✓ Running next.config.ts took 77ms
+2026-11-27T03:24:43.329Z  
+2026-11-27T03:24:43.360Z  Creating an optimized production build ...
+2026-11-27T03:24:52.962Z  ✓ Compiled successfully in 7.4s
+2026-11-27T03:24:52.964Z  Running TypeScript ...
+2026-11-27T03:25:03.581Z  Finished TypeScript in 10.6s ...
+2026-11-27T03:25:03.584Z  Collecting page data using 3 workers ...
+2026-11-27T03:25:04.499Z  Generating static pages using 3 workers (0/12) ...
+2026-11-27T03:25:04.577Z  Generating static pages using 3 workers (3/12)
+2026-11-27T03:25:05.615Z  Generating static pages using 3 workers (6/12)
+2026-11-27T03:25:05.616Z  Generating static pages using 3 workers (9/12)
+2026-11-27T03:25:05.616Z  ✓ Generating static pages using 3 workers (12/12) in 1117ms
+2026-11-27T03:25:06.173Z  Finalizing page optimization ...
+2026-11-27T03:25:06.173Z  Collecting build traces ...
+2026-11-27T03:25:13.387Z  Running onBuildComplete from Vercel
+2026-11-27T03:25:13.442Z  
+2026-11-27T03:25:13.444Z  Route (app)
+2026-11-27T03:25:13.444Z  ┌ ƒ /
+2026-11-27T03:25:13.444Z  ├ ƒ /_not-found
+2026-11-27T03:25:13.444Z  ├ ƒ /[...slug]
+2026-11-27T03:25:13.444Z  ├ ƒ /activate
+2026-11-27T03:25:13.444Z  ├ ƒ /admin/[[...section]]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/[action]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/business-live
+2026-11-27T03:25:13.444Z  ├ ƒ /api/invoices/[orderId]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/media
+2026-11-27T03:25:13.444Z  ├ ƒ /api/media/[id]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/messaging/meta
+2026-11-27T03:25:13.444Z  ├ ƒ /api/payments/paystack/[operation]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/phone-orders/[operation]
+2026-11-27T03:25:13.444Z  ├ ƒ /api/receipts
+2026-11-27T03:25:13.444Z  ├ ƒ /api/status
+2026-11-27T03:25:13.444Z  ├ ƒ /api/tracking/stream
+2026-11-27T03:25:13.444Z  ├ ○ /icon.png
+2026-11-27T03:25:13.444Z  ├ ƒ /payment-request
+2026-11-27T03:25:13.445Z  ├ ƒ /payment-return
+2026-11-27T03:25:13.445Z  ├ ƒ /phone-order
+2026-11-27T03:25:13.445Z  ├ ○ /robots.txt
+2026-11-27T03:25:13.445Z  └ ○ /sitemap.xml
+2026-11-27T03:25:13.445Z  
+2026-11-27T03:25:13.445Z  
+2026-11-27T03:25:13.445Z  ○  (Static)   prerendered as static content
+2026-11-27T03:25:13.445Z  ƒ  (Dynamic)  server-rendered on demand
+2026-11-27T03:25:13.445Z  
+2026-11-27T03:25:13.554Z  Build Completed in /vercel/output [42s]
+2026-11-27T03:25:13.575Z  Deploying outputs...
+2026-11-27T03:25:18.579Z  Deployment completed
+2026-11-27T03:25:18.583Z  Creating build cache...
+2026-11-27T03:25:24.856Z  Created build cache: 6s
+2026-11-27T03:25:24.856Z  Uploading build cache [178.42 MB]
+2026-11-27T03:25:28.218Z  Build cache uploaded: 3.362s
+status	● Ready

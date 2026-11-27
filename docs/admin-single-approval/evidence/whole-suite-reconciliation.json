@@ -20,7 +20,8 @@
       "originalCase": 79,
       "originalName": "ASSET-LABELS: current policies, legacy fields and independent operational purposes stay distinct and searchable",
       "currentResult": "PASS_RECHECKED",
-      "passingRecheckName": "ASSET-LABELS: current policies, legacy fields and independent operational purposes stay distinct and searchable"
+      "passingRecheckName": "ASSET-LABELS: current policies, legacy fields and independent operational purposes stay distinct and searchable",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-policy.txt"
     },
     {
       "originalCase": 103,
@@ -79,8 +80,9 @@
     {
       "originalCase": 288,
       "originalName": "ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips",
-      "currentResult": "OPEN_RELEASE_SOURCE_PROOF",
-      "passingRecheckName": null
+      "currentResult": "PASS_RECHECKED",
+      "passingRecheckName": "ROUTE-03: authorised destination revisions and stale-context rejection using canonical orders/trips",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-referral-routing.txt"
     },
     {
       "originalCase": 292,
@@ -115,8 +117,9 @@
     {
       "originalCase": 363,
       "originalName": "DLPG-04: historical registered cylinders stay retained while bulk load, pickup and driver refill handover succeeds",
-      "currentResult": "OPEN_RELEASE_SOURCE_PROOF",
-      "passingRecheckName": null
+      "currentResult": "PASS_RECHECKED",
+      "passingRecheckName": "DLPG-04: historical registered cylinders stay retained while bulk load, pickup and driver refill handover succeeds",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-driver-load.txt"
     },
     {
       "originalCase": 368,
@@ -127,14 +130,16 @@
     {
       "originalCase": 439,
       "originalName": "ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry",
-      "currentResult": "OPEN_RELEASE_SOURCE_PROOF",
-      "passingRecheckName": null
+      "currentResult": "PASS_RECHECKED",
+      "passingRecheckName": "ER-19R: independently approved referral hold blocks posting until separately approved clearance and audited retry",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-referral-routing.txt"
     },
     {
       "originalCase": 441,
       "originalName": "ER-04S: completed service labour earns only after independent payment verification and full refund reverses once",
-      "currentResult": "OPEN_RELEASE_SOURCE_PROOF",
-      "passingRecheckName": null
+      "currentResult": "PASS_RECHECKED",
+      "passingRecheckName": "ER-04S: completed service labour earns only after independent payment verification and full refund reverses once",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-referral-routing.txt"
     },
     {
       "originalCase": 453,
@@ -157,8 +162,9 @@
     {
       "originalCase": 500,
       "originalName": "DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents",
-      "currentResult": "OPEN_RELEASE_SOURCE_PROOF",
-      "passingRecheckName": null
+      "currentResult": "PASS_RECHECKED",
+      "passingRecheckName": "DOC-IDENTITY-APPROVAL: legal identity requires independent approval and never rewrites issued documents",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-workflows.txt"
     },
     {
       "originalCase": 650,
@@ -302,19 +308,22 @@
       "originalCase": 1127,
       "originalName": "SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion",
       "currentResult": "PASS_RECHECKED",
-      "passingRecheckName": "SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion"
+      "passingRecheckName": "SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-workflows.txt"
     },
     {
       "originalCase": 1128,
       "originalName": "SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour",
       "currentResult": "PASS_RECHECKED",
-      "passingRecheckName": "SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour"
+      "passingRecheckName": "SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-workflows.txt"
     },
     {
       "originalCase": 1149,
       "originalName": "SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once",
       "currentResult": "PASS_RECHECKED",
-      "passingRecheckName": "SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once"
+      "passingRecheckName": "SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-workflows.txt"
     },
     {
       "originalCase": 1160,
@@ -350,14 +359,15 @@
       "originalCase": 1316,
       "originalName": "branch transfers remove source stock and destination receipt is independent and idempotent",
       "currentResult": "PASS_RECHECKED",
-      "passingRecheckName": "branch transfers remove source stock and destination receipt is independent and idempotent"
+      "passingRecheckName": "branch transfers remove source stock and destination receipt is independent and idempotent",
+      "recheckEvidence": "docs/admin-single-approval/evidence/isolated-release-workflows.txt"
     }
   ],
   "counts": {
-    "PASS_RECHECKED": 25,
-    "OPEN_RELEASE_SOURCE_PROOF": 32,
+    "OPEN_RELEASE_SOURCE_PROOF": 27,
+    "PASS_RECHECKED": 30,
     "OPEN_PRIOR_MATRIX_METADATA": 1
   },
   "engineFailure": "The exploratory run also logged a Node24/V8/Wasm fatal error. The affected role/manifest group later passed all6 cases in isolation; this is not a clean whole-suite rerun.",
-  "releaseDecision": "Not published; all original failed and skipped cases retained."
+  "releaseDecision": "Demo candidate and stable deployment verified separately in release-source.json and hosted evidence. Original broad failed/skipped counts retained; historical proof and prior matrix metadata gaps remain open. No claim of clean full-suite CI or public commercial production readiness."
 }

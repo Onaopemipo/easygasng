@@ -2,16 +2,17 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFile, access } from "node:fs/promises";
 import { createHash } from "node:crypto";
-test("ASA-RTM: local completion claims bind executed evidence and exact reviewed source; unpublished and whole-suite gaps stay in the denominator", async () => {
+import { execFileSync } from "node:child_process";
+test("ASA-RTM: completion claims bind executed evidence, migration and exact deployed source; whole-suite gaps stay in the denominator", async () => {
   const read = async (path: string) => JSON.parse(await readFile(path, "utf8"));
   const matrix = await read("docs/traceability/admin-single-approval-rtm.json");
   assert.deepEqual(matrix.requirements.map((r: any) => r.id), ["ASA-01", "ASA-02", "ASA-03", "ASA-04", "ASA-05"]);
   assert.equal(matrix.coverage.verification.total, 5);
-  assert.equal(matrix.coverage.verification.verified, 4);
+  assert.equal(matrix.coverage.verification.verified, 5);
   assert.equal(matrix.coverage.critical.total, 3);
   assert.equal(matrix.coverage.critical.verified, 3);
-  assert.equal(matrix.requirements.at(-1).status, "PARTIAL");
-  assert.equal(matrix.gates.at(-1).status, "OPEN");
+  assert.equal(matrix.requirements.at(-1).status, "VERIFIED_COMPLETE");
+  assert.equal(matrix.gates.at(-1).status, "PASS");
   assert.match(matrix.releaseDecision, /NO-GO/);
   for (const r of matrix.requirements) {
     for (const key of ["dataSource", "securityControl", "reason", "outstandingWork", "acceptanceGate"])
@@ -28,8 +29,15 @@ test("ASA-RTM: local completion claims bind executed evidence and exact reviewed
   assert.equal(evidence.uniquePassingTestNames, 191);
   for (const run of evidence.runs) assert.equal(run.failed, 0);
   const source = await read("docs/admin-single-approval/evidence/reviewed-source.json");
+  const release = await read("docs/admin-single-approval/evidence/release-source.json");
+  assert.equal(release.allUploadedSha1Match,true);
+  assert.equal(release.allCommittedSourceSha1Match,true);
   for (const row of source.paths)
-    assert.equal(createHash("sha256").update(await readFile(row.path)).digest("hex"), row.sha256, row.path);
+    assert.equal(createHash("sha256").update(execFileSync("git",["show",release.sourceCommit+":"+row.path])).digest("hex"), row.sha256, row.path);
+  const migration = await read("docs/admin-single-approval/evidence/shared-migration085.json");
+  assert.equal(migration.status,"PASS");assert.equal(migration.canonicalTablesChecked,155);
+  assert.equal(createHash("sha256").update(await readFile("docs/admin-single-approval/apply-migration085.sql")).digest("hex"),migration.sqlSha256);
+  for(const mode of ["candidate","stable"]){const hosted=await read("docs/admin-single-approval/evidence/"+mode+"-hosted.json");assert.equal(hosted.status,"PASS");assert.equal(hosted.customerAndRewardsPreserved,true);assert.equal(hosted.oneAdminAcceptance.additionalColleagueApprovals,0);assert.equal(hosted.oneAdminAcceptance.adminAuditProofs,1);assert.equal(hosted.deploymentId,release.deploymentId);}
   const dry = await read("docs/admin-single-approval/evidence/release-dry-run.json");
   assert.equal(dry.reviewedFileCount, 492);
   assert.equal(dry.uploaded, false);
