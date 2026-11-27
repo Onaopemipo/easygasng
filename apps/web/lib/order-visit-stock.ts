@@ -1,3 +1,4 @@
+import { allocateDaily } from "./daily-delivery";
 import { AppError, id, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 import { productCustodyEvent } from "./vehicle-products";
@@ -52,7 +53,9 @@ export async function visitStockPlan(
   }
   let gas: any = null;
   if (grams) {
-    gas = await one(
+    const day=await one(tx,"SELECT * FROM daily_delivery_runs WHERE trip_id=$1 AND state='active' AND opening_grams+added_grams-supplied_grams-committed_grams>=$2 FOR UPDATE",[tripId,grams]);
+    if(day)gas={dailyRunId:day.id,loadId:day.id,version:Number(day.version),grams};
+    else gas = await one(
       tx,
       "SELECT id,version FROM bulk_lpg_loads WHERE trip_id=$1 AND state='active' AND acknowledged_by IS NOT NULL AND buffer_grams>=$2 ORDER BY id LIMIT 1 FOR UPDATE",
       [tripId, grams],
@@ -62,7 +65,7 @@ export async function visitStockPlan(
         409,
         "The vehicle has insufficient acknowledged LPG buffer for this extra order. Load and independently acknowledge enough measured LPG before reviewing the extra order.",
       );
-    gas = { loadId: gas.id, version: Number(gas.version), grams };
+    if(!gas.dailyRunId)gas = { loadId: gas.id, version: Number(gas.version), grams };
   }
   return { products, gas };
 }
@@ -86,6 +89,7 @@ export async function reserveVisitStock(
         [p.loadId, p.serialIds],
       );
   }
+  if(plan.gas?.dailyRunId){await tx.query('UPDATE daily_delivery_runs SET committed_grams=committed_grams+$1,version=version+1 WHERE id=$2',[plan.gas.grams,plan.gas.dailyRunId]);await tx.query('UPDATE gas_stock SET reserved_grams=reserved_grams-$1 WHERE branch_id=$2',[plan.gas.grams,branch]);return;}
   if (plan.gas) {
     await tx.query(
       "UPDATE bulk_lpg_loads SET buffer_grams=buffer_grams-$1,version=version+1 WHERE id=$2",
@@ -128,6 +132,7 @@ export async function recordVisitStock(
         p.loadId,
       ],
     );
+  if(plan.gas?.dailyRunId){const r=await one(tx,'SELECT * FROM daily_delivery_runs WHERE id=$1',[plan.gas.dailyRunId]);await allocateDaily(tx,user,orderId,r,plan.gas.grams,false);return;}
   if (plan.gas)
     await tx.query(
       "INSERT INTO gas_stock_movements(id,branch_id,grams,kind,reference,actor_id,reason) SELECT $1,branch_id,$2,'released',$3,$4,'Transfer acknowledged buffer reservation to linked order' FROM bulk_lpg_loads WHERE id=$5",

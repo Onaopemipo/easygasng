@@ -12,7 +12,7 @@ export async function departDelivery(tx: SQL, user: Actor, input: unknown) {
     .object({
       orderId: z.uuid(),
       version: z.number().int().nonnegative(),
-      loadConfirmed: z.literal(true),
+      loadConfirmed: z.literal(true).optional(),
       manifest: z.unknown(),
     })
     .strict()
@@ -34,6 +34,8 @@ export async function departDelivery(tx: SQL, user: Actor, input: unknown) {
       409,
       "This order changed. Refresh before starting delivery.",
     );
+  const daily=await one(tx,"SELECT a.id FROM daily_delivery_allocations a JOIN daily_delivery_runs r ON r.id=a.run_id WHERE a.order_id=$1 AND a.state='allocated' AND r.state='active' AND r.driver_id=$2",[order.id,user.id]);
+  if(!daily&&d.loadConfirmed!==true)throw new AppError(400,"Confirm the vehicle load before departure.");
   const attempt = await one(
     tx,
     "SELECT * FROM delivery_attempts WHERE order_id=$1 ORDER BY assignment_version DESC LIMIT 1 FOR UPDATE",

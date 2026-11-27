@@ -1,3 +1,4 @@
+import { dailyDelivery } from "./daily-delivery";
 import { DEFAULT_USER_BRANCH_ID } from "../../../packages/business-rules/src/user-branch";
 import { addRewardPoints, rewardAdditionOutcome } from "./rewards-direct";
 import { rewardsCustomers } from "./rewards-customers";
@@ -475,6 +476,7 @@ export async function dispatch(
       technicianSessionPermission(user, action, input);
       if (["staff.privileges", "staff.privileges.save"].includes(action))
         return staffPrivilegeAction(tx, user, action, input);
+      if(action.startsWith("daily.")) return action === "daily.summary" ? dailyDelivery(tx,user,action,input) : requiredBusinessOperation(tx,user,action,input,clean=>dailyDelivery(tx,user!,action,clean));
       if (action.startsWith("bulk.")) {
         if (
           action !== "bulk.summary" &&

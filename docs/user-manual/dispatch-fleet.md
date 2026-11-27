@@ -1,3 +1,5 @@
+> For the single-vehicle, portable-scale workflow, use [Daily weighed gas delivery](daily-delivery.md). The metered custody instructions below apply to earlier/legacy trips.
+
 # Dispatch Centre: fleet and trips
 
 Open **Deliveries → Fleet & stock → Fleet & trips**. Existing links to `/admin/deliveries#driver-fleet` open the same workspace.

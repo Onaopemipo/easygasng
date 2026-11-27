@@ -1,3 +1,5 @@
+> For the single-vehicle, portable-scale workflow, use [Daily weighed gas delivery](daily-delivery.md). The metered custody instructions below apply to earlier/legacy trips.
+
 # EasyGas website audit and user manual
 
 Edition 2, 20 November 2026. Current website: <https://easygas-client-demo.vercel.app>.

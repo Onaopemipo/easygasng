@@ -33,6 +33,7 @@ const reads = new Set([
   "fleet.summary",
   "manifest.summary",
   "bulk.summary",
+  "daily.summary",
   "crm.summary",
   "crm.followups",
   "channels.status",

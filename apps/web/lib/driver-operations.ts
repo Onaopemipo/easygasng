@@ -572,6 +572,7 @@ export async function driverOperations(
     return { ok: true, stopLocation: true };
   }
   if (action === "trip.end") {
+    if(await one(tx,"SELECT id FROM daily_delivery_runs WHERE driver_id=$1 AND state='active'",[user.id]))throw new AppError(409,"Ask the office to record the closing gas weight and close today’s delivery day.");
     if (d.endOdometer === undefined || d.endOdometer < Number(t.start_odometer))
       throw new AppError(400, "End odometer must be at least the start.");
     if (t.ended_at) throw new AppError(409, "Trip already ended.");

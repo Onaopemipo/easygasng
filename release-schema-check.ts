@@ -4,3 +4,4 @@ await import("./phone-order-schema-check.ts");
 await import("./default-user-branch-schema-check.ts");
 await import("./admin-single-approval-schema-check.ts");
 export {};
+await import("./daily-delivery-schema-check.ts");

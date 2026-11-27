@@ -984,7 +984,7 @@ export default function DriverWorkspace({
                               disabled={busy || !connected || revoked}
                             />
                           )}
-                          <DriverPickupSummary order={order} refill={refill} />
+                          {!order.daily_run && <DriverPickupSummary order={order} refill={refill} />}
                           <DriverDeparture
                             key={"depart:" + order.id + ":" + order.tracking_version}
                             order={order}
@@ -993,7 +993,7 @@ export default function DriverWorkspace({
                               !connected ||
                               revoked ||
                               (!!order.gas_lines?.length &&
-                                (loadReadiness?.key !== driverLoadScope(order, snapshot?.trip?.id ?? null) || !loadReadiness.ready)) ||
+                                (loadReadiness?.key !== driverLoadScope(order, snapshot?.trip?.id ?? null) || !loadReadiness?.ready)) ||
                               (response !== "acknowledged" &&
                                 order.attempt?.state !== "picked_up")
                             }
@@ -1093,10 +1093,11 @@ export default function DriverWorkspace({
                             upload a photo of the completed refill. No customer
                             cylinder registration or handover code is required.
                           </Copy>
-                          <BulkLPG api={api} orderId={order.id} />
+                          <BulkLPG api={api} orderId={order.id} order={order} onSaved={refresh} />
                         </>
                       )}
-                      <DriverProof
+                      {!refill && order.daily_run && <BulkLPG api={api} orderId={order.id} order={order} onSaved={refresh}/>}
+                      {(!order.daily_run || Number(order.daily_run.supplied_grams)>0)&&<DriverProof
                         userId={user.id}
                         order={order}
                         galleryApproved={snapshot.galleryApproved}
@@ -1104,6 +1105,7 @@ export default function DriverWorkspace({
                           setQueue((n) => (n === null ? null : n + 1))
                         }
                       />
+                      }
                       <Button
                         label="Synchronise Encrypted Proof"
                         disabled={busy}

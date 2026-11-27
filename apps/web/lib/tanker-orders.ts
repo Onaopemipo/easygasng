@@ -1,3 +1,4 @@
+import { availableDaily, takeDaily, allocateDaily, dailyAllocation } from "./daily-delivery";
 import { AppError, id, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 
@@ -9,6 +10,7 @@ export async function availableTanker(
   driver?: string,
   lock = false,
 ) {
+  const daily=await availableDaily(tx,branch,grams,driver,lock);if(daily)return daily;
   return one(
     tx,
     `SELECT l.*,t.driver_id FROM bulk_lpg_loads l
@@ -29,6 +31,7 @@ export async function takeTankerBuffer(
   grams: number,
   driver?: string,
 ) {
+  const daily=await takeDaily(tx,branch,grams,driver);if(daily)return daily;
   const tank = await availableTanker(tx, branch, grams, driver, true);
   if (!tank) return;
   await tx.query(
@@ -46,6 +49,7 @@ export async function recordTankerAllocation(
   grams: number,
   releaseDuplicateOrderReservation: boolean,
 ) {
+  if(tank.daily_run_id)return allocateDaily(tx,user,orderId,tank,grams,releaseDuplicateOrderReservation);
   if (releaseDuplicateOrderReservation) {
     const released = await one(
       tx,
@@ -106,6 +110,7 @@ export async function reserveTankerForAssignment(
     ))!.n,
   );
   if (!grams) return;
+  const assignedDaily=await dailyAllocation(tx,order.id);if(assignedDaily){if(assignedDaily.driver_id!==driverId||assignedDaily.run_state!=="active")throw new AppError(409,"This order belongs to another delivery day. Contact the office.");return;}
   const prior = await one(
     tx,
     "SELECT a.*,t.driver_id FROM bulk_lpg_allocations a JOIN bulk_lpg_loads l ON l.id=a.load_id JOIN driver_trips t ON t.id=l.trip_id WHERE a.order_id=$1 AND a.state IN ('allocated','dispensed')",

@@ -1,3 +1,5 @@
+> For the single-vehicle, portable-scale workflow, use [Daily weighed gas delivery](daily-delivery.md). The metered custody instructions below apply to earlier/legacy trips.
+
 # Order to delivery: role guide
 
 Use this guide with [driver assignment](driver-assignment.md). It includes the connected disposable-fixture Dispatch checks completed on 24 November 2026; the earlier 21 November client-demo evidence remains historical. The [acceptance matrix](../traceability/role-order-acceptance-20261121-rtm.md) distinguishes executed web checks from wider production and native acceptance. The original illustrated Word/PDF manual remains a historical edition.

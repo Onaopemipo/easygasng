@@ -72,6 +72,8 @@ export async function attachDeliveryPhoto(
       409,
       "Photo capture time is outside this delivery attempt.",
     );
+  const daily=await one(tx,"SELECT a.id,f.recorded_at FROM daily_delivery_allocations a LEFT JOIN daily_delivery_refills f ON f.allocation_id=a.id AND f.attempt_id=$2 WHERE a.order_id=$1 AND a.state<>'released'",[o.id,a.id]);
+  if(daily&&(!daily.recorded_at||capture<new Date(daily.recorded_at).getTime()))throw new AppError(409,'Record the scale refill first, then take a new photo of that refill.');
   if (data.length > 4000000 || alt.length < 3 || alt.length > 250)
     throw new AppError(400, "Image or label is invalid.");
   const days = z.coerce

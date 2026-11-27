@@ -1,4 +1,5 @@
 "use client";
+import DailyDelivery from "./daily-delivery";
 import { FieldCaption } from "./field-caption";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { RiderMap } from "./rider-map";
@@ -462,6 +463,7 @@ export default function DispatchCentre({ user }: { user: any }) {
           </div>
         )}
       </header>
+      {["owner","manager"].includes(user.role)&&<DailyDelivery user={user} branch={branch} onChange={()=>{setSetupRevision(n=>n+1);refresh();}}/>}
       <div className="dispatch-vehicle-launch">
         <button
           className="button secondary"
@@ -1191,7 +1193,7 @@ export default function DispatchCentre({ user }: { user: any }) {
                         </dd>
                       </div>
                       <div>
-                        <dt>Gas Delivered</dt>
+                        <dt>Gas supplied / delivered</dt>
                         <dd>
                           {data ? data.operations.deliveredGrams / 1000 : "—"}{" "}
                           kg
@@ -1209,11 +1211,7 @@ export default function DispatchCentre({ user }: { user: any }) {
                     </dl>
                   </div>
                   <p className="dc-muted">
-                    Branch scope; loading, deliveries and verified returns use
-                    the selected Lagos date. Order search filters do not
-                    partition vehicle mass. Remaining is current open-load
-                    custody, including held loads; it is not a physical stock
-                    verification. Held loads:{" "}
+                    Branch scope; loading, daily scale supply, earlier metered deliveries and closing returns use the selected Lagos date. Daily scale supply is counted when recorded, even if its photo is pending. Order search filters do not partition vehicle gas. Remaining is the expected gas on all currently open runs/loads; verify it using the actual closing gas-only weight. Earlier held loads:{" "}
                     {data?.operations.heldLoads ?? "—"}. Verified returns:{" "}
                     {data ? data.operations.verifiedReturnsGrams / 1000 : "—"}{" "}
                     kg. Return discrepancies recorded:{" "}

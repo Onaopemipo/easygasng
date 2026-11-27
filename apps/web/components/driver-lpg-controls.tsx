@@ -1,11 +1,13 @@
 "use client";
 import { isDoorstepRefillOrder } from "../../../packages/business-rules/src/refill-workflow";
 import React from "react";
+import DailyRefill from "./daily-refill";
 import { FieldCaption } from "./field-caption";
 import { Notice } from "./ui";
 import styles from "./driver-trip-controls.module.css";
 
 export function lpgReadiness(order: any, bulk: any) {
+  if(order?.daily_run)return {required:true,load:null,allocation:order.daily_run,pickupReady:order.daily_run.state==="active"&&order.daily_run.allocation_state==="allocated",handoverReady:Number(order.daily_run.supplied_grams)>0};
   const gas =
     (order?.gas_lines?.length ?? order?.manifest?.gas?.length ?? 0) > 0;
   const required = gas && bulk?.required;
@@ -39,6 +41,7 @@ export default function DriverLPGControls({
   disabled: boolean;
   write: (action: string, input: Record<string, unknown>) => Promise<void>;
 }) {
+  if(order?.daily_run)return <DailyRefill key={order.id} order={order} disabled={disabled} write={write}/>;
   const ready = order ? lpgReadiness(order, bulk) : null;
   const load =
     ready?.load ??

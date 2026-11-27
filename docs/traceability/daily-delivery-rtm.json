@@ -1,0 +1,521 @@
+{
+  "phase": "Daily scale-based delivery",
+  "date": "2026-11-28",
+  "requirements": [
+    {
+      "id": "DAY-01",
+      "requirement": "One office-started daily run with net opening gas and automatic trip/driver defaults",
+      "priority": "P0",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/daily-delivery.ts",
+        "database/migrations/086_daily_delivery.sql",
+        "apps/web/components/daily-delivery.tsx"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY01",
+        "DAY02"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
+      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+    },
+    {
+      "id": "DAY-02",
+      "requirement": "Automatic live-run reservations for incoming paid orders without per-order load issue, supporting multiple assignments and existing same-visit fee/prepayment",
+      "priority": "P0",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/tanker-orders.ts",
+        "apps/web/lib/bulk-lpg-reservation.ts",
+        "apps/web/lib/fleet-constraints.ts",
+        "apps/web/lib/order-visit-stock.ts",
+        "apps/web/lib/dispatch-centre.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY02",
+        "DAY04"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
+      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+    },
+    {
+      "id": "DAY-03",
+      "requirement": "Driver scale before/after readings in kg, paid quantity validation, current visit photo and secure completion",
+      "priority": "P0",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/lib/refill-fulfilment.ts",
+        "apps/web/lib/driver-journey.ts",
+        "apps/web/lib/order-records.ts",
+        "apps/mobile/DailyRefill.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/web/components/daily-refill.tsx",
+        "apps/web/components/driver-lpg-controls.tsx",
+        "apps/web/lib/delivery-photos.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY01",
+        "DAY05",
+        "DDI-PHOTO01",
+        "Browser real private PNG upload"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
+      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+    },
+    {
+      "id": "DAY-04",
+      "requirement": "Office midday loading and closing net weight, actual variance and single Admin reconciliation, safe unfinished-order carry-forward",
+      "priority": "P0",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/lib/dispatch-trip.ts",
+        "apps/web/lib/driver-operations.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY01",
+        "DAY02",
+        "DAY03",
+        "DAY05"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
+      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+    },
+    {
+      "id": "DAY-05",
+      "requirement": "Focused Dispatch and native/web driver experience, preserved forms on error and uncertain-operation recovery",
+      "priority": "P1",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/daily-refill.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/components/dispatch-centre.tsx",
+        "apps/web/components/driver-delivery-controls.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverDeparture.tsx",
+        "apps/mobile/DriverLoadReadiness.tsx",
+        "apps/mobile/DailyRefill.tsx"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY-UI"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-05",
+      "status": "PARTIAL",
+      "reason": "Office and driver browser journey passed through real private photo upload, delivery and office close; actual native form recovery and iOS bundle export pass. Physical iOS/Android camera/scale acceptance remains unverified.",
+      "outstandingWork": "Physical iOS/Android scale/camera/offline acceptance. New signed/TestFlight binary was not requested or built."
+    },
+    {
+      "id": "DAY-06",
+      "requirement": "Scoped roles, denied privilege overrides, current actor/session, immutable records, replay/concurrency/stock integrity",
+      "priority": "P0",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "database/migrations/086_daily_delivery.sql",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/app/api/[action]/route.ts",
+        "daily-delivery-schema-check.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY03",
+        "DAY05",
+        "DAY-PG"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-06",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
+      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+    },
+    {
+      "id": "DAY-07",
+      "requirement": "Retain legacy metered history and operational holds, migration/release guard, manuals and verified traceability",
+      "priority": "P1",
+      "scope": "Daily scale-based gas-only refill delivery; existing product/mixed and historical metered paths preserved",
+      "uiReference": "User-approved one vehicle per day, gas-only opening/closing weights and portable scale before/after refill",
+      "route": [
+        "/admin/deliveries",
+        "/api/daily.*",
+        "Driver \u2192 Deliveries"
+      ],
+      "implementationFiles": [
+        "docs/user-manual/daily-delivery.md",
+        "docs/traceability/daily-delivery-rtm.json",
+        "daily-delivery-schema-check.ts",
+        "release-schema-check.ts",
+        "apps/web/lib/db.ts",
+        "scripts/export-bootstrap.ts",
+        "database/bootstrap.sql"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
+      "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
+      "testFiles": [
+        "tests/daily-delivery.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery-postgres.test.ts"
+      ],
+      "testIds": [
+        "DAY01",
+        "DAY-PG",
+        "schema082\u2013086 gates"
+      ],
+      "negativeTests": [
+        "Wrong role/driver/branch",
+        "Explicit privilege denial",
+        "Stale version",
+        "Mismatching or invalid weights",
+        "Premature/missing photo",
+        "Duplicate requests",
+        "Manager variance cannot impersonate Admin",
+        "Driver cannot bypass office close",
+        "Forced RLS denies a non-server reader even with SELECT",
+        "Server cannot update immutable readings"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/daily-tests.txt",
+        "docs/daily-delivery/evidence/final-feature-tests.txt",
+        "docs/daily-delivery/evidence/web-types.txt",
+        "docs/daily-delivery/evidence/mobile-types.txt",
+        "docs/daily-delivery/evidence/components.txt",
+        "docs/daily-delivery/evidence/postgres-tests.txt",
+        "docs/daily-delivery/evidence/legacy-regression.txt",
+        "docs/daily-delivery/evidence/ui-proof-regression.txt",
+        "docs/daily-delivery/evidence/order-modal-regression.txt",
+        "docs/daily-delivery/evidence/shared-schema-gates.txt",
+        "docs/daily-delivery/evidence/shared-migration086.json",
+        "docs/daily-delivery/evidence/web-build.txt",
+        "docs/daily-delivery/evidence/ios-export.txt",
+        "docs/daily-delivery/evidence/browser-state.json",
+        "docs/daily-delivery/evidence/browser-verification.txt"
+      ],
+      "acceptanceGate": "DAY-G-07",
+      "status": "PARTIAL",
+      "reason": "Shared migration086 applied without changing ten operational tables; restricted-runtime gates082\u2013086 pass; manuals and traceability updated. Deployment verification pending.",
+      "outstandingWork": "Publish bounded source to existing Vercel demo and verify release; preserve production NO-GO and prior native/provider/real-operation gates."
+    }
+  ],
+  "gates": [
+    {
+      "id": "DAY-G-01",
+      "status": "PASSED",
+      "requirement": "DAY-01"
+    },
+    {
+      "id": "DAY-G-02",
+      "status": "PASSED",
+      "requirement": "DAY-02"
+    },
+    {
+      "id": "DAY-G-03",
+      "status": "PASSED",
+      "requirement": "DAY-03"
+    },
+    {
+      "id": "DAY-G-04",
+      "status": "PASSED",
+      "requirement": "DAY-04"
+    },
+    {
+      "id": "DAY-G-05",
+      "status": "OPEN",
+      "requirement": "DAY-05"
+    },
+    {
+      "id": "DAY-G-06",
+      "status": "PASSED",
+      "requirement": "DAY-06"
+    },
+    {
+      "id": "DAY-G-07",
+      "status": "OPEN",
+      "requirement": "DAY-07"
+    }
+  ],
+  "coverage": {
+    "requirements": 7,
+    "implemented": 7,
+    "verified": 5,
+    "partial": 2,
+    "excluded": 0,
+    "criticalRequirements": 5,
+    "criticalVerified": 5,
+    "routesImplemented": 3,
+    "routesVerified": 2,
+    "gates": 7,
+    "gatesPassed": 5
+  },
+  "productionDecision": "NO-GO \u2014 existing commercial/provider/native/import/retention holds remain",
+  "changeLog": [
+    {
+      "date": "2026-11-28",
+      "change": "User supersedes routine metered/order-level loading and driver return declaration with one daily weighed run, before/after customer cylinder readings and office closing reconciliation. Historical data and unrelated holds retained; no existing trips silently converted."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Daily supplied gas now appears in Dispatch totals at measurement time, before pending photo completion. Carry-forward excludes same-visit/mixed physical returns. Existing native source fixes were preserved as prerequisites; no signed binary publication claim."
+    }
+  ]
+}

@@ -1,4 +1,5 @@
 import { availableTanker } from "./tanker-orders";
+import { AppError } from "./auth";
 import { one, type SQL } from "./db";
 import { AssignmentRequirementError } from "./assignment-requirement-error";
 import {
@@ -29,6 +30,8 @@ export async function vehicleReady(
   if (t.vehicle_branch_id !== branchId)
     issues.push(assignmentIssue("VEHICLE_BRANCH_MISMATCH"));
   if (issues.length) throw new AssignmentRequirementError(issues);
+  const day=await one(tx,"SELECT * FROM daily_delivery_runs WHERE trip_id=$1 AND state='active'",[t.id]);
+  if(day){const a=await one(tx,"SELECT * FROM daily_delivery_allocations WHERE order_id=$1 AND state<>'released'",[orderId]);const requested=Number((await one(tx,"SELECT coalesce(sum(grams),0) n FROM order_gas_lines WHERE order_id=$1",[orderId]))?.n);if(a&&a.run_id!==day.id)throw new AppError(409,"This order is reserved on another daily run.");if(!a&&requested>Number(day.opening_grams)+Number(day.added_grams)-Number(day.supplied_grams)-Number(day.committed_grams))throw new AppError(409,"Today’s vehicle does not have enough gas for this order. Record an actual additional load or assign later.");return t;}
   const grams = Number(
     (
       await one(

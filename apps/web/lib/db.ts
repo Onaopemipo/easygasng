@@ -526,6 +526,7 @@ export async function migrate(db: DB) {
       ["083", "database/migrations/083_phone_order_payments.sql"],
       ["084", "database/migrations/084_default_user_branch.sql"],
       ["085", "database/migrations/085_admin_single_approval.sql"],
+      ["086", "database/migrations/086_daily_delivery.sql"],
     ]) {
       if (
         version === "044" &&
@@ -572,7 +573,7 @@ export async function migrate(db: DB) {
     }
   });
 }
-export const localSchemaRevision = 84;
+export const localSchemaRevision = 86;
 export async function getDb() {
   const db = await (globalDb.easygasDb ??= createDatabase());
   // Apply local upgrades once after development hot reload, on the existing DB connection.

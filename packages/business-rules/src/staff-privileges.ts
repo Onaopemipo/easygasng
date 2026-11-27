@@ -52,6 +52,7 @@ export const staffPrivileges: readonly Privilege[] = [
     actions: [
       "order.transition",
       "driver.depart",
+      "daily.refill.record",
       "order.additions",
       "order.addition.quote",
       "order.addition.create",
@@ -74,6 +75,9 @@ export const staffPrivileges: readonly Privilege[] = [
     roles: ["owner", "manager"],
     actions: [
       "dispatch.centre",
+      "daily.start",
+      "daily.add",
+      "daily.close",
       "dispatch.vehicle.options",
       "dispatch.vehicle.assign",
       "dispatch.trip.options",

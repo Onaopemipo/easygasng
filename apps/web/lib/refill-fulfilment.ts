@@ -24,6 +24,8 @@ export async function requireRefillPhoto(
       409,
       "Record arrival at the customer before completing the refill.",
     );
+  const daily=await one(tx,"SELECT f.* FROM daily_delivery_refills f JOIN daily_delivery_allocations a ON a.id=f.allocation_id WHERE f.order_id=$1 AND f.attempt_id=$2 AND f.actor_id=$3 AND a.state='supplied' AND a.supplied_grams=a.grams",[order.id,attempt.id,order.driver_id]);
+  if(daily){const p=await one(tx,"SELECT id FROM delivery_photos WHERE order_id=$1 AND attempt_id=$2 AND actor_id=$3 AND consent=true AND retain_until>now() AND octet_length(data)>0 AND created_at>=$4 AND captured_at>=$4::timestamptz-interval '1 minute' LIMIT 1",[order.id,attempt.id,order.driver_id,daily.recorded_at]);if(!p)throw new AppError(409,"Upload a current-visit photo after recording the scale refill before completing delivery.");return;}
   const photo = await one(
     tx,
     `SELECT p.id FROM delivery_photos p

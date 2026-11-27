@@ -484,6 +484,13 @@ export async function dispatchCentre(
     `SELECT COALESCE(sum((e.detail->>'observedGrams')::bigint) FILTER(WHERE e.kind IN ('return.received','return.recovered')),0) grams,count(*) FILTER(WHERE e.kind='return.discrepancy') discrepancies FROM bulk_lpg_events e JOIN bulk_lpg_loads l ON l.id=e.load_id WHERE e.kind IN ('return.received','return.recovered','return.discrepancy') AND (e.created_at AT TIME ZONE 'Africa/Lagos')::date=$4::date AND ($1::boolean OR l.branch_id=$2) AND ($3='' OR l.branch_id=$3)`,
     [user.role === "owner", user.branch_id, d.branch, d.date],
   );
+  const dailyMass=await one(tx,`SELECT
+ COALESCE((SELECT sum(w.grams) FROM daily_delivery_weights w JOIN daily_delivery_runs r ON r.id=w.run_id WHERE w.kind IN ('opening','addition') AND (w.recorded_at AT TIME ZONE 'Africa/Lagos')::date=$4::date AND ($1::boolean OR r.branch_id=$2) AND ($3='' OR r.branch_id=$3)),0) loaded,
+ COALESCE((SELECT sum(f.supplied_grams) FROM daily_delivery_refills f JOIN daily_delivery_runs r ON r.id=f.run_id WHERE (f.recorded_at AT TIME ZONE 'Africa/Lagos')::date=$4::date AND ($1::boolean OR r.branch_id=$2) AND ($3='' OR r.branch_id=$3)),0) supplied,
+ COALESCE(sum(opening_grams+added_grams-supplied_grams) FILTER(WHERE state='active'),0) remaining,
+ COALESCE(sum(closing_grams) FILTER(WHERE (closed_at AT TIME ZONE 'Africa/Lagos')::date=$4::date),0) returned,
+ count(*) FILTER(WHERE variance_grams<>0 AND (closed_at AT TIME ZONE 'Africa/Lagos')::date=$4::date) discrepancies
+ FROM daily_delivery_runs WHERE ($1::boolean OR branch_id=$2) AND ($3='' OR branch_id=$3)`,[user.role==='owner',user.branch_id,d.branch,d.date]);
   return {
     observedAt: new Date().toISOString(),
     date: d.date,
@@ -553,12 +560,13 @@ export async function dispatchCentre(
     contactNote:
       "Online means foreground contact within90 seconds. Unknown/stale contact is separate from availability and GPS.",
     operations: {
-      loadedGrams: Number(mass?.loaded ?? 0),
-      deliveredGrams: Number(delivered?.grams ?? 0),
-      estimatedRemainingGrams: Number(mass?.remaining ?? 0),
+      loadedGrams: Number(mass?.loaded ?? 0)+Number(dailyMass?.loaded??0),
+      deliveredGrams: Number(delivered?.grams ?? 0)+Number(dailyMass?.supplied??0),
+      dailySuppliedGrams:Number(dailyMass?.supplied??0),
+      estimatedRemainingGrams: Number(mass?.remaining ?? 0)+Number(dailyMass?.remaining??0),
       heldLoads: Number(mass?.held ?? 0),
-      verifiedReturnsGrams: Number(returns?.grams ?? 0),
-      discrepancyEvents: Number(returns?.discrepancies ?? 0),
+      verifiedReturnsGrams: Number(returns?.grams ?? 0)+Number(dailyMass?.returned??0),
+      discrepancyEvents: Number(returns?.discrepancies ?? 0)+Number(dailyMass?.discrepancies??0),
     },
     automaticAssignmentEnabled: false,
   };

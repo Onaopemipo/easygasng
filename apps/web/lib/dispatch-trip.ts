@@ -13,7 +13,7 @@ export async function tripReconciliation(tx: SQL, trip: any) {
     tx,
     `SELECT
     (SELECT count(*)::int FROM vehicle_product_loads WHERE trip_id=$1 AND state<>'reconciled') AS products,
-    (SELECT count(*)::int FROM bulk_lpg_loads WHERE trip_id=$1 AND state<>'reconciled') AS lpg,
+    ((SELECT count(*)::int FROM bulk_lpg_loads WHERE trip_id=$1 AND state<>'reconciled')+(SELECT count(*)::int FROM daily_delivery_runs WHERE trip_id=$1 AND state='active')) AS lpg,
     (SELECT count(*)::int FROM orders WHERE (driver_id=$2 AND status IN ('assigned','out_for_delivery')) OR (status NOT IN ('delivered','cancelled') AND EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id AND l.trip_id=$1))) AS deliveries,
     (SELECT count(*)::int FROM delivery_attempts WHERE driver_id=$2 AND picked_up_at IS NOT NULL AND state NOT IN ('returned','delivered')) AS held`,
     [trip.id, trip.driver_id],

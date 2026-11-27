@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import DailyRefill from "./DailyRefill";
 import {
   Card,
   Copy,
@@ -10,7 +11,7 @@ import {
 import { NativeForm } from "./Workflows";
 
 /** Uses the driver's existing session, orders and online operation receipts. */
-export default function BulkLPG({
+function LegacyBulkLPG({
   api,
   orderId,
 }: {
@@ -205,4 +206,12 @@ export default function BulkLPG({
         })}
     </Card>
   );
+}
+
+export default function BulkLPG({api,orderId,order,onSaved}:{api:CustomerAPI;orderId?:string;order?:any;onSaved?:()=>void}){
+ const [daily,setDaily]=useState<any>(null);
+ useEffect(()=>{let live=true;if(!orderId)api('daily.summary').then(d=>{if(live)setDaily(d.runs.find((r:any)=>r.state==='active')??null);}).catch(()=>{});return()=>{live=false;};},[api,orderId]);
+ if(order?.daily_run)return <DailyRefill key={order.id} api={api} order={order} onSaved={onSaved}/>;
+ if(!orderId&&daily)return <Card><Title>Today’s vehicle</Title><Copy>{daily.label} · {Number(daily.supplied_grams)/1000} kg supplied · {(Number(daily.opening_grams)+Number(daily.added_grams)-Number(daily.supplied_grams))/1000} kg expected remaining.</Copy><Copy>The office records closing gas weight and reconciles the day when you return.</Copy></Card>;
+ return <LegacyBulkLPG api={api} orderId={orderId}/>;
 }

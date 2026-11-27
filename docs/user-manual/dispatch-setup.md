@@ -1,3 +1,5 @@
+> For the single-vehicle, portable-scale workflow, use [Daily weighed gas delivery](daily-delivery.md). The metered custody instructions below apply to earlier/legacy trips.
+
 # Set up Dispatch and assign a driver
 
 Open **Deliveries → Dispatch setup checklist**. Select the fulfilment branch. The four steps show current branch records; **Refresh setup** rechecks them after another person completes a task.

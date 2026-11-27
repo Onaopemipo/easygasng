@@ -52,7 +52,7 @@ export default function DriverDeliveryControls({
           proofRead.current === controller &&
           !controller.signal.aborted
         )
-          setProofReady(result.photos.length > 0);
+          setProofReady(result.photos.some((p:any)=>!order.daily_run || (order.daily_run.supplied_at && new Date(p.captured_at).getTime()>=new Date(order.daily_run.supplied_at).getTime())));
       })
       .catch((e) => {
         if (current && proofRead.current === controller)
@@ -72,7 +72,7 @@ export default function DriverDeliveryControls({
       controller.abort();
       clearTimeout(timeout);
     };
-  }, [order.id, order.attempt?.id, order.attempt?.state, proofRevision]);
+  }, [order.id, order.attempt?.id, order.attempt?.state, order.daily_run?.supplied_at, proofRevision]);
   const uploading = useRef(false);
   const blocked = disabled || photoBusy;
   const refill = isDoorstepRefillOrder(order);
@@ -155,7 +155,7 @@ export default function DriverDeliveryControls({
             className={styles.panel}
             onSubmit={(event) => {
               event.preventDefault();
-              if (!loadConfirmed || blocked || lpg?.pickupReady === false)
+              if ((!order.daily_run && !loadConfirmed) || blocked || lpg?.pickupReady === false)
                 return;
               void write("driver.depart", {
                 ...context,
@@ -164,7 +164,7 @@ export default function DriverDeliveryControls({
               });
             }}
           >
-            <h3>Load for this delivery</h3>
+            <h3>{order.daily_run?"Ready to go":"Load for this delivery"}</h3>
             <ul>
               {(order.manifest?.gas ?? []).map((line: any, index: number) => (
                 <li key={index}>{Number(line.grams) / 1000} kg gas</li>
@@ -183,7 +183,7 @@ export default function DriverDeliveryControls({
                 ))}
             </ul>
             <fieldset disabled={blocked || lpg?.pickupReady === false}>
-              <label data-field-type="checkbox">
+              {!order.daily_run&&<label data-field-type="checkbox">
                 <input
                   type="checkbox"
                   checked={loadConfirmed}
@@ -191,8 +191,8 @@ export default function DriverDeliveryControls({
                   onChange={(e) => setLoadConfirmed(e.target.checked)}
                 />
                 <span>I checked the load for this order.</span>
-              </label>
-              <button className="button" disabled={!loadConfirmed}>
+              </label>}
+              <button className="button" disabled={!order.daily_run&&!loadConfirmed}>
                 Start delivery
               </button>
             </fieldset>
@@ -225,7 +225,7 @@ export default function DriverDeliveryControls({
                 faces and home interiors. Uploading proof does not complete
                 delivery.
               </p>
-              <fieldset disabled={blocked} className={styles.panel}>
+              <fieldset disabled={blocked||(!!order.daily_run&&!lpg?.handoverReady)} className={styles.panel}>
                 <label>
                   <FieldCaption required>Proof photo</FieldCaption>
                   <input

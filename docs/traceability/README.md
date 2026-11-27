@@ -478,3 +478,5 @@ The explicitly approved Admin-only authority change is tracked in [Admin single 
 [Hosted workflow audit](admin-approval-hosted-audit-rtm.md) extends the prior ASA rollout to every approval family. Executed tests, defects, outstanding cases and deployment evidence are tracked explicitly; existing NO-GO and unrelated holds remain.
 
 HAP hosted acceptance completed27 November2026:117/117 retained checks,6/6 requirements and4/4 critical requirements verified. Three disabled handlers were tested separately in removed QA deployments; stable flags and historical NO-GO holds remain. See [the audit matrix](admin-approval-hosted-audit-rtm.md) for source, preservation and cleanup evidence.
+
+Daily scale-based delivery —28 November2026: [matrix](daily-delivery-rtm.md). User-approved daily net gas weights, automatic assignment allocation, portable before/after refill weighing and office reconciliation. Seven requirements retained; historical metered data and production holds preserved.

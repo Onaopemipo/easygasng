@@ -49,6 +49,8 @@ const allowed = new Set([
   "order.transition",
   "tracking.operation",
   "delivery.photos",
+  "daily.summary",
+  "daily.refill.record",
   "bulk.summary",
   "bulk.load.acknowledge",
   "bulk.dispense",

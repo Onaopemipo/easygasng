@@ -19,6 +19,7 @@ import OrderAdditions from "./order-additions";
 import SameVisitOrder from "./same-visit-order";
 import OrderCylinderInspection from "./order-cylinder-inspection";
 import OrderLPGSetup from "./order-lpg-setup";
+import DailyDelivery from "./daily-delivery";
 import { LPGSetupAccess } from "./lpg-setup-access";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
@@ -41,8 +42,8 @@ export type OrderAction = { id: string; label: string };
 export function orderDetailActions(order: any, user: any): OrderAction[] {
   const rows: OrderAction[] = [];
   if (order.gas_lines?.length && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status)) {
-    if (user.role === "owner") rows.push({id: "meter-calibration", label: "Renew meter calibration"});
-    if (["owner", "finance"].includes(user.role)) rows.push({id: "lpg-load", label: "Issue LPG load"});
+    if (!order.daily_run && user.role === "owner") rows.push({id: "meter-calibration", label: "Renew meter calibration"});
+    if (!order.daily_run && ["owner", "finance"].includes(user.role)) rows.push({id: "lpg-load", label: "Issue LPG load"});
   }
   if (
     ["owner", "manager"].includes(user.role) &&
@@ -405,10 +406,13 @@ export default function AdminOrderDetails({
           <div className="aord-tab-content">
             {tab === "overview" && <>
               <OrderOverview order={order} />
-              {order.gas_lines?.length > 0 && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status) && <LPGSetupAccess role={user.role} />}
+              {order.daily_run && <Notice message={`Daily vehicle gas is reserved for this order. ${Number(order.daily_run.supplied_grams)>0 ? 'Scale refill recorded; the driver can upload the photo and complete delivery.' : 'The driver can accept, start delivery and record before/after scale weights at the customer.'}`} />}
+              {!order.daily_run && order.gas_lines?.length>0 && ['owner','manager'].includes(user.role) && !['delivered','cancelled'].includes(order.status) && <DailyDelivery user={user} branch={order.branch_id} onChange={()=>onChanged({keepOpen:true})}/>}
+
+              {!order.daily_run && order.gas_lines?.length > 0 && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status) && <LPGSetupAccess role={user.role} />}
               {actions.some(a => ["meter-calibration", "lpg-load"].includes(a.id)) && <section className="stack panel" aria-label="Vehicle LPG actions">
-                <h3>Vehicle gas readiness</h3>
-                <p>Renew the assigned vehicle’s meter or issue this order’s measured load here.</p>
+                <h3>Earlier metered workflow</h3>
+                <p>Use only for an existing metered trip. For daily weighed delivery, start the day using the actual opening gas weight above.</p>
                 <div className="aord-footer">{actions.filter(a => ["meter-calibration", "lpg-load"].includes(a.id)).map(a =>
                   <button type="button" className="button secondary" key={a.id} onClick={() => setView(a.id)}>{a.label}</button>)}</div>
               </section>}

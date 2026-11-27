@@ -1,3 +1,4 @@
+import { settleDaily, dailyAllocation } from "./daily-delivery";
 import { AppError, id, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 
@@ -9,6 +10,7 @@ export async function bulkReservation(
   grams: number,
   kind: "released" | "fulfilled",
 ) {
+  const daily=await settleDaily(tx,user,orderId,grams,kind);if(daily!==undefined)return daily;
   if (
     await one(
       tx,
@@ -113,6 +115,7 @@ export async function verifyVehicleLPGPickup(tx: SQL, order: any) {
     ))!.n,
   );
   if (!quantity) return;
+  const day=await dailyAllocation(tx,order.id);if(day){if(day.driver_id!==order.driver_id||day.branch_id!==order.branch_id||day.run_state!=="active"||day.state!=="allocated"||Number(day.grams)!==quantity)throw new AppError(409,"Today’s gas allocation changed. Refresh the order.");return;}
   const custody = await one(
     tx,
     "SELECT a.*,l.state AS load_state,l.acknowledged_by,t.driver_id,t.branch_id,t.ended_at FROM bulk_lpg_allocations a JOIN bulk_lpg_loads l ON l.id=a.load_id JOIN driver_trips t ON t.id=l.trip_id WHERE a.order_id=$1 FOR SHARE OF a,l,t",

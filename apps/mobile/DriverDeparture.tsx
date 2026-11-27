@@ -14,7 +14,7 @@ export default function DriverDeparture({
   const [confirmed, setConfirmed] = useState(false);
   return (
     <View style={{ gap: 12 }}>
-      <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+      {!order.daily_run&&<View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
         <Switch
           accessibilityLabel="I checked the load for this order"
           value={confirmed}
@@ -24,12 +24,12 @@ export default function DriverDeparture({
         <View style={{ flex: 1 }}>
           <Copy>I checked the load for this order.</Copy>
         </View>
-      </View>
+      </View>}
       <Button
         label="Start delivery"
-        disabled={disabled || !confirmed}
+        disabled={disabled || (!order.daily_run && !confirmed)}
         onPress={async () => {
-          if (starting.current || disabled || !confirmed) return;
+          if (starting.current || disabled || (!order.daily_run && !confirmed)) return;
           starting.current = true;
           try {
             await onStart({
