@@ -2352,7 +2352,10 @@ export async function professionalServiceAction(
       })
       .strict()
       .parse(input);
-    await technician(tx, user, b);
+    if (user.role === "owner") {
+      allow(user, ["owner"], b.branch_id);
+      recentVerification(user);
+    } else await technician(tx, user, b);
     const due = await balance(tx, b);
     const old = await one(
       tx,

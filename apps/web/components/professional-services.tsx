@@ -2536,7 +2536,7 @@ export function BookingCard({
             }
           />
         )}
-      {tech && !user.technician_service_only && b.billing.dueKobo > 0 && (
+      {(user.role === "owner" || (tech && !user.technician_service_only)) && b.billing.dueKobo > 0 && (
         <ServiceForm
           title="Record cash actually collected"
           fields={[

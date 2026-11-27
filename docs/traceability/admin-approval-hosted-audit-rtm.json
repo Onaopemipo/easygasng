@@ -147,6 +147,35 @@
       "reason": "Deployed saved-draft submission rejects blank routine note although the draft already has its original reason. Local fix and regression pass; deployed verification pending.",
       "testResult": "PASS \u2014 HAP-SUBMIT local regression; hosted recheck pending",
       "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    },
+    {
+      "id": "HAP-06",
+      "requirement": "Admin can record a documented service cash receipt and verify it once, without being signed in as the technician",
+      "priority": "P0",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "apps/web/lib/professional-services.ts",
+        "apps/web/components/professional-services.tsx"
+      ],
+      "testFiles": [
+        "tests/admin-approval-hosted-fixes.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G06",
+      "status": "DEFECTIVE",
+      "reason": "Hosted Admin collection failed403 although own-Admin verification was supported. Server and form now allow current verified Admin; local role/balance/replay/UI regressions pass. Updated deployment verification pending.",
+      "testResult": "PASS \u2014 local HAP-SERVICE-CASH; hosted acceptance pending",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
     }
   ],
   "gates": [
@@ -184,13 +213,20 @@
       "status": "OPEN",
       "criterion": "Submitting a saved Admin request reuses its recorded justification and does not demand another operational note",
       "reason": "Deployed saved-draft submission rejects blank routine note although the draft already has its original reason. Local fix and regression pass; deployed verification pending."
+    },
+    {
+      "id": "HAP-G06",
+      "requirement": "HAP-06",
+      "status": "OPEN",
+      "criterion": "Admin can record a documented service cash receipt and verify it once, without being signed in as the technician",
+      "reason": "Hosted Admin collection failed403 although own-Admin verification was supported. Server and form now allow current verified Admin; local role/balance/replay/UI regressions pass. Updated deployment verification pending."
     }
   ],
   "coverage": {
-    "requirements": 5,
+    "requirements": 6,
     "verified": 0,
     "excluded": 0,
-    "critical": 3,
+    "critical": 4,
     "criticalVerified": 0
   },
   "productionDecision": "NO-GO \u2014 Public Commercial Production; previous import/native/provider/retention holds and broad test gaps remain",
@@ -202,6 +238,10 @@
     {
       "date": "2026-11-27",
       "change": "Retains stable EASYGAS_DOORSTEP_ENABLED=false. Protected QA deployment may exercise that disabled handler using labelled fixtures; this is recorded separately from stable-demo positive coverage. Found saved-draft note validation friction and a Finance-only manifest action."
+    },
+    {
+      "date": "2026-11-27",
+      "change": "Expanded live service tests found Admin cash-record permission/UI gap. Fix preserves approved amount, actual receipt reference, replay, branch, verification and technician-only physical work checks. Recreated the service test booking instead of rewriting a completed failed/settled fixture."
     }
   ]
 }
