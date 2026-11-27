@@ -1,3 +1,4 @@
+import AssignmentResponseActions from "./AssignmentResponseActions";
 import { NextHeader, NextTabs } from "./MobileNextUI";
 import { ScreenTransition } from "./ScreenTransition";
 import { ScreenCanvas, fullWidthScreenContent } from "./ScreenCanvas";
@@ -403,7 +404,7 @@ export default function TechnicianWorkspace({
                     </Copy>
                     <Copy>
                       Arrival authorises assessment only. Chargeable service
-                      requires independent quotation approval, customer
+                      requires quotation approval, customer
                       acceptance and verified payment.
                     </Copy>
                   </Card>
@@ -453,39 +454,16 @@ export default function TechnicianWorkspace({
                     <>
                       {current.status === "assigned" &&
                         current.assignment_response === "pending" && (
-                          <NativeForm
-                            api={(_, v) =>
-                              api("booking.assignment.respond", {
-                                ...v,
-                                bookingId: current.id,
-                                version: current.version,
-                              })
-                            }
+                          <AssignmentResponseActions
+                            key={current.id + ":" + current.version}
+                            api={api}
                             action="booking.assignment.respond"
-                            title="Respond to Assigned Job"
-                            fields={[
-                              {
-                                name: "decision",
-                                label: "Assignment response",
-                                options: [
-                                  {
-                                    value: "acknowledged",
-                                    label: "Accept assignment",
-                                  },
-                                  {
-                                    value: "declined",
-                                    label: "Decline and notify operations",
-                                  },
-                                ],
-                              },
-                              {
-                                name: "reason",
-                                label: "Response reason for operations",
-                              },
-                            ]}
-                            onDone={() =>
-                              refresh().catch((e) => setError(e.message))
-                            }
+                            input={{
+                              bookingId: current.id,
+                              version: current.version,
+                            }}
+                            disabled={busy || !connected}
+                            onDone={refresh}
                           />
                         )}
                       {current.assignment_response === "declined" && (

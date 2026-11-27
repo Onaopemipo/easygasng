@@ -29,7 +29,6 @@ import {
   Title,
   type CustomerAPI,
 } from "./CustomerUI";
-import { FieldCaption, TextInput } from "./typography";
 import { useTheme } from "./theme";
 
 const channelId = "easygas-driver-assignments-v1";
@@ -63,9 +62,9 @@ export default function DriverAssignmentAlerts({
   const [permission, setPermission] =
     useState<Notifications.NotificationPermissionsStatus | null>(null);
   const [alert, setAlert] = useState<AssignmentAlert | "test" | null>(null);
-  const [reason, setReason] = useState("");
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const acceptedVisit = useRef<{ orderId: string; attemptId: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const seen = useRef(new Set<string>());
   const alive = useRef(false),
@@ -160,7 +159,6 @@ export default function DriverAssignmentAlerts({
     const seq = ++generation.current;
     setScope("");
     setAlert(null);
-    setReason("");
     setError("");
     setNotice("");
     seen.current.clear();
@@ -294,7 +292,6 @@ export default function DriverAssignmentAlerts({
     const next = current.find((a) => !seen.current.has(a.key));
     if (!next) return;
     seen.current.add(next.key);
-    setReason("");
     setError("");
     setAlert(next);
     void SecureStore.setItemAsync(
@@ -314,17 +311,9 @@ export default function DriverAssignmentAlerts({
     });
   }, [scope, orders, snapshot, connected, revoked, alert]);
   async function acknowledge() {
-    if (
-      !alert ||
-      alert === "test" ||
-      running.current ||
-      !connected ||
-      revoked ||
-      reason.trim().length < 5
-    )
+    if (!alert || alert === "test" || running.current || !connected || revoked)
       return;
     const candidate = alert,
-      note = reason.trim(),
       seq = generation.current;
     running.current = true;
     setBusy(true);
@@ -346,35 +335,32 @@ export default function DriverAssignmentAlerts({
         throw new Error(
           "Assignment changed. Refresh Orders before responding.",
         );
-      const signature = candidate.key + "|" + candidate.version + "|" + note;
+      const signature = candidate.key + "|" + candidate.version;
       if (!operationKeys.current.has(signature))
         operationKeys.current.set(signature, randomUUID());
       await api("dispatch.respond", {
         orderId: current.id,
         version: current.tracking_version,
         decision: "acknowledged",
-        reason: note,
         operationKey: operationKeys.current.get(signature),
       });
       if (!alive.current || seq !== generation.current) return;
       setAlert(null);
+      acceptedVisit.current = { orderId: current.id, attemptId: current.attempt.id };
       setNotice(
-        "Assignment acknowledged by EasyGas. Pickup and delivery are still separate steps.",
+        "Order accepted. Pickup and delivery are still separate steps.",
       );
       onReview(current);
       try {
         await onRefresh();
       } catch {
         setNotice(
-          "Acknowledgement recorded. Refresh Orders to confirm the latest status.",
+          "Order accepted. Refresh Orders to confirm the latest status.",
         );
       }
     } catch (e: any) {
       if (alive.current && seq === generation.current)
-        setError(
-          e.message ||
-            "Could not confirm acknowledgement. Reconnect and retry.",
-        );
+        setError(e.message || "Could not accept order. Reconnect and retry.");
     } finally {
       running.current = false;
       if (alive.current && seq === generation.current) setBusy(false);
@@ -433,7 +419,11 @@ export default function DriverAssignmentAlerts({
           />
         </Card>
       )}
-      {notice ? <Copy>{notice}</Copy> : null}
+      {notice && orders.some((order) =>
+        order.id === acceptedVisit.current?.orderId &&
+        order.attempt?.id === acceptedVisit.current?.attemptId &&
+        order.status === "assigned" && order.attempt?.state === "assigned"
+      ) ? <Copy>{notice}</Copy> : null}
       {!alert && error ? <Copy>{error}</Copy> : null}
       <ScreenModal
         visible={alert !== null}
@@ -473,7 +463,7 @@ export default function DriverAssignmentAlerts({
                 : alert?.reference}
             </Copy>
             <Copy>
-              Opening or dismissing this alert does not acknowledge a delivery.
+              Tap Accept order to confirm you will fulfil this delivery.
             </Copy>
             {!allowed && (
               <Copy>
@@ -482,29 +472,9 @@ export default function DriverAssignmentAlerts({
             )}
             {alert && alert !== "test" && (
               <>
-                <FieldCaption required>Acknowledgement reason</FieldCaption>
-                <TextInput
-                  accessibilityLabel="Assignment alert acknowledgement reason, required"
-                  value={reason}
-                  onChangeText={setReason}
-                  maxLength={500}
-                  editable={!busy && connected && !revoked}
-                  style={{
-                    color: colors.text,
-                    backgroundColor: colors.input,
-                    padding: 14,
-                    borderRadius: 12,
-                  }}
-                />
                 <Button
-                  label={
-                    busy
-                      ? "Confirming acknowledgement…"
-                      : "Acknowledge assignment"
-                  }
-                  disabled={
-                    busy || !connected || revoked || reason.trim().length < 5
-                  }
+                  label={busy ? "Accepting…" : "Accept order"}
+                  disabled={busy || !connected || revoked}
                   onPress={() => void acknowledge()}
                 />
                 <Button

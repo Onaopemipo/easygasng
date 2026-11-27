@@ -50,7 +50,14 @@ module.exports = {
   ...base.expo,
   name: localDemo ? "EasyGas Local" : base.expo.name,
   plugins: [
-    ...(base.expo.plugins ?? []),
+    ...(base.expo.plugins ?? []).map((plugin) => {
+      if (!Array.isArray(plugin) || plugin[0] !== "expo-image-picker") return plugin;
+      return [plugin[0], {
+        ...plugin[1],
+        cameraPermission: "Photograph the completed delivery or service with customer consent.",
+        photosPermission: "Choose approved delivery or service evidence with customer consent.",
+      }];
+    }),
     "./plugins/with-workmanager-room",
     ["./plugins/with-local-android-network", { enabled: localDemo }],
     ...(iosMapsKey || androidMapsKey
@@ -69,6 +76,7 @@ module.exports = {
   ],
   extra: {
     ...base.expo.extra,
+    driverCameraEnabled: true,
     riderMaps: { ios: Boolean(iosMapsKey), android: Boolean(androidMapsKey) },
     easygasRuntime: localDemo
       ? "local-demo"

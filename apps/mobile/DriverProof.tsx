@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { View, Image, Switch } from "react-native";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
@@ -19,13 +19,17 @@ export default function DriverProof({
   onQueued: () => void;
 }) {
   const { colors } = useTheme();
+  const capturing = useRef(false);
   const [consent, setConsent] = useState(false),
     [alt, setAlt] = useState(""),
     [preview, setPreview] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false);
   async function capture(camera: boolean) {
+    if (capturing.current) return;
+    capturing.current = true;
     setBusy(true);
+    setMessage("");
     try {
       if (!consent || alt.trim().length < 3)
         throw new Error(
@@ -58,7 +62,7 @@ export default function DriverProof({
       const image = result.assets[0];
       try {
         if (!image.base64 || image.base64.length > 5300000)
-          throw new Error("Choose a valid photo under4MB.");
+          throw new Error("Choose a valid photo under 4 MB.");
         await captureFieldEvent(userId, "order:" + order.id, 1, "photo", {
           orderId: order.id,
           attemptId: order.attempt.id,
@@ -89,6 +93,7 @@ export default function DriverProof({
     } catch (error: any) {
       setMessage(error.message);
     } finally {
+      capturing.current = false;
       setBusy(false);
     }
   }

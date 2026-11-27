@@ -197,7 +197,7 @@ export function NativeEasyRewards({
             <Copy>
               {data.policy
                 ? `Approved policy version ${data.policy.version}. Eligible categories: ${data.policy.eligibleCategories.join(", ")}.`
-                : "No EasyRewards policy has been independently approved."}
+                : "No EasyRewards policy has been approved."}
             </Copy>
             <Copy>
               No active expiry or tiers. Pending awards appear in your balance

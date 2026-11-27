@@ -23,6 +23,7 @@ import {
   ownsCustomerOrder,
   canRequestOrderRefund,
 } from "../../packages/business-rules/src/native-order-authority";
+import { customerOrderStage } from "../../packages/business-rules/src/customer-orders";
 import { NativeForm } from "./Workflows";
 export default function MobileNextOrders({
   orders,
@@ -34,6 +35,7 @@ export default function MobileNextOrders({
   token,
   navigate,
   reload,
+  onRepeat,
 }: {
   orders: any[];
   user: any;
@@ -44,7 +46,14 @@ export default function MobileNextOrders({
   token: string | null;
   navigate: (screen: string) => void;
   reload: () => void;
+  onRepeat?: (draft:any) => void | Promise<void>;
 }) {
+  const [repeatBusy,setRepeatBusy] = useState(false), [repeatError,setRepeatError] = useState("");
+  async function repeatOrder(order:any) {
+    if (repeatBusy || !onRepeat) return;
+    setRepeatBusy(true); setRepeatError("");
+    try {await onRepeat(await api("account.repeat-order",{orderId:order.id}));} catch(e:any) {setRepeatError(e.message);} finally {setRepeatBusy(false);}
+  }
   const { colors } = useTheme(),
     [query, setQuery] = useState(""),
     [sheet, setSheet] = useState<string | null>(null);
@@ -95,7 +104,7 @@ export default function MobileNextOrders({
                   }}
                 >
                   <NextIcon name="flame" />
-                  <NextStatus value={o.status} />
+                  <NextStatus value={customerOrderStage(o)} />
                 </View>
                 <NextText kind="heading">
                   {o.gas_lines?.length
@@ -147,10 +156,10 @@ export default function MobileNextOrders({
             ? "Delivered, with care."
             : order.status === "cancelled"
               ? "Your order was cancelled."
-              : "Your refill is in motion."
+              : customerOrderStage(order) + "."
         }
       />
-      <NextStatus value={order.status} />
+      <NextStatus value={customerOrderStage(order)} />
       <NextCard>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <NextText>Order amount</NextText>
@@ -184,7 +193,9 @@ export default function MobileNextOrders({
         onSupport={() => navigate("conversations")}
         compact
       />
+      {repeatError ? <NextText>{repeatError}</NextText> : null}
       <NextList>
+        {onRepeat && ["delivered","cancelled"].includes(order.status) && <NextRow title={repeatBusy?"Preparing checkout…":"Order again"} detail="Review current prices, delivery details and payment" icon="refresh-cw" onPress={()=>repeatOrder(order)} />}
         {canPay && (
           <NextRow
             title="Continue saved payment"

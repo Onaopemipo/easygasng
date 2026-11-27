@@ -1,3 +1,5 @@
+import DeliveryPinPicker from "./DeliveryPinPicker";
+import { confirmedDeliveryPin } from "../../packages/business-rules/src/delivery-pin";
 import { ScreenTransition } from "./ScreenTransition";
 import { TextInput } from "./typography";
 import React, { useEffect, useRef, useState } from "react";
@@ -217,7 +219,9 @@ export default function GasOrder({
     readCheckoutDraft(user.id)
       .then((saved) => {
         if (!live) return;
-        const draft = saved?.draft ?? initialDraft;
+        const repeating = initialDraft?.repeat === true && initialDraft.customerId === user.id;
+        const draft = repeating && !saved?.pending ? {...initialDraft,contact:initialDraft.address,locationId:initialDraft.address.locationId,step:1} : saved?.draft ?? initialDraft;
+        if (repeating && saved?.pending) setError("A previous checkout needs checking. Resolve its saved result before placing this repeat order.");
         if (draft && draft.gasEnabled === gasEnabled) {
           const d = draft;
           restored.current = true;
@@ -230,7 +234,7 @@ export default function GasOrder({
           setWindow(d.window);
           setMethod(d.method);
           setIncludeAppointments(
-            d.linked === linked ? d.includeAppointments : linked,
+            repeating ? false : d.linked === linked ? d.includeAppointments : linked,
           );
           setRewardSelection(d.rewardSelection || {});
           key.current = d.key || key.current;
@@ -247,7 +251,7 @@ export default function GasOrder({
           setPending(saved.pending);
           setStep(2);
         }
-        if (saved?.order) {
+        if (saved?.order && !repeating) {
           completed.current = true;
           setOrder(saved.order);
         }
@@ -363,7 +367,11 @@ export default function GasOrder({
   }
   function patchContact(field: string, value: string) {
     edited.current = true;
-    setContact((c: any) => ({ ...c, [field]: value }));
+    setContact((c: any) => ({
+      ...c,
+      [field]: value,
+      ...(field === "street" ? { deliveryPin: undefined } : {}),
+    }));
   }
   function updateLine(index: number, values: any) {
     setLines((l) =>
@@ -383,6 +391,16 @@ export default function GasOrder({
       if (!area || !hasConfirmedDeliveryCoverage(area.coverage))
         throw Error(
           area ? deliveryCoveragePending : "Choose an available delivery area.",
+        );
+      if (
+        !confirmedDeliveryPin(
+          contact.deliveryPin,
+          contact.street,
+          area?.name ?? "",
+        )
+      )
+        throw Error(
+          "Confirm your delivery map location before reviewing the order.",
         );
       if (!date || date < lagosDate() || !window)
         throw Error(
@@ -986,6 +1004,16 @@ export default function GasOrder({
               value={contact.street}
               onChange={(v) => patchContact("street", v)}
             />
+            <DeliveryPinPicker
+              street={contact.street}
+              zone={area?.name ?? ""}
+              value={contact.deliveryPin}
+              disabled={busy || !ready}
+              onChange={(pin) => {
+                edited.current = true;
+                setContact((c: any) => ({ ...c, deliveryPin: pin }));
+              }}
+            />
             <Pressable
               accessibilityRole="button"
               onPress={() => setOptional(!optional)}
@@ -1359,6 +1387,10 @@ export default function GasOrder({
                         onPress={() => {
                           edited.current = true;
                           setLocationId(a.id);
+                          setContact((c: any) => ({
+                            ...c,
+                            deliveryPin: undefined,
+                          }));
                           setQuote(null);
                           setPicker(null);
                         }}

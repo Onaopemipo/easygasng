@@ -138,7 +138,7 @@ export function FieldNextWork({
         ["Connection state", "connection"],
         ["Vehicle and odometer", "trip"],
         ["Start trip", "trip"],
-        ["Assignment acknowledgement", "orders"],
+        ["Accept assigned orders", "orders"],
         ["Inspected pickup", "orders"],
         ["Travel and arrival", "orders"],
         ["Metered dispensing", "trip"],
@@ -164,7 +164,7 @@ export function FieldNextWork({
     ? [
         ["Set availability", "availability"],
         ["Start a trip", "trip"],
-        ["Acknowledge assignment", "orders"],
+        ["Accept order", "orders"],
         ["Record inspected pickup", "orders"],
         ["Record arrival", "orders"],
         ["Record location and fuel", "trip"],

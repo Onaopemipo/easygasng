@@ -1,3 +1,8 @@
+import DriverDeparture from "./DriverDeparture";
+import DriverLoadReadiness from "./DriverLoadReadiness";
+import {driverLoadScope} from "../../packages/business-rules/src/driver-load-readiness";
+import AssignmentResponseActions from "./AssignmentResponseActions";
+import DriverPickupSummary from "./DriverPickupSummary";
 import { NextHeader, NextTabs, NextText, NextIntro } from "./MobileNextUI";
 import {
   FieldNextHome,
@@ -55,6 +60,7 @@ import {
 } from "./CustomerUI";
 import { NativeForm } from "./Workflows";
 import BulkLPG from "./BulkLPG";
+import { isDoorstepRefillOrder } from "../../packages/business-rules/src/refill-workflow";
 import DriverProof from "./DriverProof";
 import DriverPhotoHistory from "./DriverPhotoHistory";
 import { photoUploader } from "./DriverPhoto";
@@ -98,6 +104,7 @@ export default function DriverWorkspace({
 }) {
   const { colors, dark, preference, setPreference } = useTheme();
   const [tripTab, setTripTab] = useState("Trip");
+  const [loadReadiness, setLoadReadiness] = useState<{key: string; ready: boolean} | null>(null);
   const insets = useSafeAreaInsets();
   const headerGreen = "#004c30";
   const [backgroundPermission, setBackgroundPermission] =
@@ -131,13 +138,13 @@ export default function DriverWorkspace({
     [phase, setPhase] = useState("detail"),
     [orders, setOrders] = useState<any[]>([]),
     [snapshot, setSnapshot] = useState<any>(null),
-    [notes, setNotes] = useState(""),
     [failureNotes, setFailureNotes] = useState(""),
     [reason, setReason] = useState<(typeof deliveryFailureReasons)[number]>(
       deliveryFailureReasons[0],
     ),
     [code, setCode] = useState(""),
     [handover, setHandover] = useState(false),
+    [cashCollected, setCashCollected] = useState(false),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [queue, setQueue] = useState<number | null>(null),
@@ -157,6 +164,11 @@ export default function DriverWorkspace({
   const order =
     orders.find((o) => o.id === selected) ??
     (phase === "completed" ? completed : null);
+  const refill = isDoorstepRefillOrder(order);
+  const collectCOD =
+    refill &&
+    order?.payment_method === "cash_on_delivery" &&
+    order?.payment_status !== "verified";
   const response = snapshot?.responses?.find(
     (r: any) => r.order_id === selected,
   )?.decision;
@@ -358,10 +370,10 @@ export default function DriverWorkspace({
   function open(o: any) {
     setSelected(o.id);
     setPhase("detail");
-    setNotes("");
     setFailureNotes("");
     setCode("");
     setHandover(false);
+    setCashCollected(false);
     setError("");
   }
   async function run(action: string, input: any) {
@@ -390,7 +402,11 @@ export default function DriverWorkspace({
         );
       }
     } catch (e: any) {
-      if (e instanceof TypeError) {
+      if (e instanceof TypeError && action === "driver.depart") {
+        setError(
+          "Starting delivery was not confirmed. Reconnect and refresh before retrying. No offline departure has been queued.",
+        );
+      } else if (e instanceof TypeError) {
         try {
           await captureFieldEvent(
             user.id,
@@ -866,10 +882,7 @@ export default function DriverWorkspace({
                     </Copy>
                     <Copy>
                       {(order.gas_lines ?? [])
-                        .map(
-                          (g: any) =>
-                            `${Number(g.grams) / 1000} kg (${Number(g.capacity_grams) / 1000} kg capacity)`,
-                        )
+                        .map((g: any) => `${Number(g.grams) / 1000} kg gas`)
                         .join(" · ")}
                     </Copy>
                     <Copy>
@@ -891,6 +904,13 @@ export default function DriverWorkspace({
                     />
                   ) : phase === "detail" ? (
                     <>
+                      {order.status === "assigned" && <DriverLoadReadiness
+                        api={api} order={order} tripId={snapshot?.trip?.id ?? null}
+                        onChange={setLoadReadiness}
+                        onReviewLoad={() => {
+                          setError(""); setSelected(null); setTripTab("LPG"); setPage("trip");
+                        }}
+                      />}
                       {order.events?.map((e: any, i: number) => (
                         <View
                           key={i}
@@ -943,21 +963,6 @@ export default function DriverWorkspace({
                       )}
                       {order.status === "assigned" && (
                         <>
-                          <FieldCaption required={true}>
-                            Acknowledgement or decline reason
-                          </FieldCaption>
-                          <TextInput
-                            accessibilityLabel="Acknowledgement or decline reason, required"
-                            placeholder="Acknowledgement / decline reason"
-                            value={notes}
-                            onChangeText={setNotes}
-                            style={{
-                              padding: 13,
-                              color: colors.text,
-                              backgroundColor: colors.input,
-                              borderRadius: 12,
-                            }}
-                          />
                           {!response &&
                             !order.assignment_response_open &&
                             order.attempt?.state === "assigned" && (
@@ -967,78 +972,38 @@ export default function DriverWorkspace({
                               </Copy>
                             )}
                           {!response && order.assignment_response_open && (
-                            <>
-                              <Button
-                                label="Acknowledge Assignment"
-                                disabled={busy || notes.trim().length < 5}
-                                onPress={() =>
-                                  run("dispatch.respond", {
-                                    orderId: order.id,
-                                    version: order.tracking_version,
-                                    decision: "acknowledged",
-                                    reason: notes.trim(),
-                                  })
-                                }
-                              />
-                              <Button
-                                label="Decline and Notify Dispatch"
-                                secondary
-                                disabled={busy || notes.trim().length < 5}
-                                onPress={() =>
-                                  run("dispatch.respond", {
-                                    orderId: order.id,
-                                    version: order.tracking_version,
-                                    decision: "rejected",
-                                    reason: notes.trim(),
-                                  })
-                                }
-                              />
-                            </>
-                          )}
-                          <Copy>
-                            Direct assignment workflow. This is acknowledgement,
-                            not a fabricated offer.
-                          </Copy>
-                          <Copy>
-                            Verify physical items/serials against the canonical
-                            manifest: {JSON.stringify(order.manifest)}
-                          </Copy>
-                          <Button
-                            label="Confirm Inspected Pickup"
-                            disabled={
-                              busy ||
-                              notes.trim().length < 5 ||
-                              response !== "acknowledged" ||
-                              order.attempt?.state === "picked_up"
-                            }
-                            onPress={() =>
-                              run("delivery.pickup", {
+                            <AssignmentResponseActions
+                              key={"accept:" + order.id + ":" + order.tracking_version}
+                              api={api}
+                              onDone={refresh}
+                              action="dispatch.respond"
+                              input={{
                                 orderId: order.id,
                                 version: order.tracking_version,
-                                manifest: order.manifest,
-                                reason: notes.trim(),
-                              })
-                            }
-                          />
-                          {order.attempt?.state === "picked_up" && (
-                            <Button
-                              label="On the Way"
-                              disabled={busy}
-                              onPress={() =>
-                                run("order.transition", {
-                                  id: order.id,
-                                  version: order.tracking_version,
-                                  status: "out_for_delivery",
-                                  note: "Driver confirms verified pickup and departure",
-                                })
-                              }
+                              }}
+                              disabled={busy || !connected || revoked}
                             />
                           )}
+                          <DriverPickupSummary order={order} refill={refill} />
+                          <DriverDeparture
+                            key={"depart:" + order.id + ":" + order.tracking_version}
+                            order={order}
+                            disabled={
+                              busy ||
+                              !connected ||
+                              revoked ||
+                              (!!order.gas_lines?.length &&
+                                (loadReadiness?.key !== driverLoadScope(order, snapshot?.trip?.id ?? null) || !loadReadiness.ready)) ||
+                              (response !== "acknowledged" &&
+                                order.attempt?.state !== "picked_up")
+                            }
+                            onStart={(input) => run("driver.depart", input)}
+                          />
                         </>
                       )}
                       {order.status === "out_for_delivery" && (
                         <Button
-                          label="Update Delivery Status"
+                          label="Continue delivery"
                           onPress={() => setPhase("status")}
                         />
                       )}
@@ -1058,7 +1023,7 @@ export default function DriverWorkspace({
                     <>
                       {order.attempt?.state === "picked_up" && (
                         <Button
-                          label="At Location"
+                          label="I’ve arrived"
                           disabled={busy}
                           onPress={() =>
                             run("delivery.arrived", {
@@ -1072,7 +1037,7 @@ export default function DriverWorkspace({
                       )}
                       {order.attempt?.state === "arrived" && (
                         <Button
-                          label="Continue to Proof of Delivery"
+                          label="Record supply and photo"
                           onPress={() => setPhase("proof")}
                         />
                       )}
@@ -1120,6 +1085,17 @@ export default function DriverWorkspace({
                     </>
                   ) : phase === "proof" ? (
                     <>
+                      {refill && (
+                        <>
+                          <Title>Complete doorstep refill</Title>
+                          <Copy>
+                            Record the gas supplied from your vehicle tank, then
+                            upload a photo of the completed refill. No customer
+                            cylinder registration or handover code is required.
+                          </Copy>
+                          <BulkLPG api={api} orderId={order.id} />
+                        </>
+                      )}
                       <DriverProof
                         userId={user.id}
                         order={order}
@@ -1134,27 +1110,52 @@ export default function DriverWorkspace({
                         secondary
                         onPress={sync}
                       />
-                      <Copy>
-                        Completion requires a verified payment. Contact dispatch
-                        for payment review.
-                      </Copy>
-                      <FieldCaption required={true}>
-                        Customer six-digit handover code
-                      </FieldCaption>
-                      <TextInput
-                        accessibilityLabel="Customer six-digit handover code, required"
-                        placeholder="Customer handover code"
-                        keyboardType="number-pad"
-                        value={code}
-                        maxLength={6}
-                        onChangeText={setCode}
-                        style={{
-                          padding: 14,
-                          color: colors.text,
-                          backgroundColor: colors.input,
-                          borderRadius: 12,
-                        }}
-                      />
+                      {!refill && (
+                        <>
+                          <Copy>
+                            Completion requires a verified payment. Contact
+                            dispatch for payment review.
+                          </Copy>
+                          <FieldCaption required={true}>
+                            Customer six-digit handover code
+                          </FieldCaption>
+                          <TextInput
+                            accessibilityLabel="Customer six-digit handover code, required"
+                            placeholder="Customer handover code"
+                            keyboardType="number-pad"
+                            value={code}
+                            maxLength={6}
+                            onChangeText={setCode}
+                            style={{
+                              padding: 14,
+                              color: colors.text,
+                              backgroundColor: colors.input,
+                              borderRadius: 12,
+                            }}
+                          />
+                        </>
+                      )}
+                      {collectCOD && (
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            gap: 12,
+                            alignItems: "center",
+                          }}
+                        >
+                          <Switch
+                            accessibilityLabel="Cash collected for this refill"
+                            value={cashCollected}
+                            onValueChange={setCashCollected}
+                          />
+                          <Copy>
+                            I actually collected ₦
+                            {(Number(order.total_kobo) / 100).toLocaleString()}{" "}
+                            in cash for this order. Finance reconciliation is
+                            pending.
+                          </Copy>
+                        </View>
+                      )}
                       <View
                         style={{
                           flexDirection: "row",
@@ -1173,21 +1174,25 @@ export default function DriverWorkspace({
                         </FieldCaption>
                       </View>
                       <Button
-                        label="Complete Delivery"
+                        label={refill ? "Complete Refill" : "Complete Delivery"}
                         disabled={
                           busy ||
                           !handover ||
-                          !/^\d{6}$/.test(code) ||
+                          (!refill && !/^\d{6}$/.test(code)) ||
+                          (collectCOD && !cashCollected) ||
                           !["wallet", "card", "cash_on_delivery"].includes(
                             order.payment_method,
                           ) ||
-                          order.payment_status !== "verified"
+                          (!collectCOD && order.payment_status !== "verified")
                         }
                         onPress={() =>
                           run("driver.complete", {
                             orderId: order.id,
                             version: order.tracking_version,
-                            code,
+                            ...(refill ? {} : { code }),
+                            ...(collectCOD
+                              ? { collectedKobo: Number(order.total_kobo) }
+                              : {}),
                             handover: true,
                           })
                         }

@@ -1,3 +1,4 @@
+import AssignmentResponseActions from "./AssignmentResponseActions";
 import React, { useState } from "react";
 import { View, Pressable, Image } from "react-native";
 import { Text } from "./typography";
@@ -81,7 +82,10 @@ export default function OrderVisit({
               ? "Finance review required"
               : "NGN " + Number(invoice.amountDueKobo) / 100}
           </Text>
-          <Text>Payment is confirmed by the recorded ledger. Check the order payment controls for available methods.</Text>
+          <Text>
+            Payment is confirmed by the recorded ledger. Check the order payment
+            controls for available methods.
+          </Text>
         </View>
       )}
       {amendments.map((m) => (
@@ -182,7 +186,7 @@ export default function OrderVisit({
           <Text>
             {m.execution
               ? `Execution: ${m.execution.state}. Invoice debit: ${m.execution.note_state}.`
-              : "Proposal only; inspection, vehicle buffer and independent invoice approval are required."}
+              : "Proposal only; inspection, vehicle buffer and invoice approval are required."}
           </Text>
           {executionEnabled && driver && m.execution?.state === "reserved" && (
             <>
@@ -303,36 +307,11 @@ export default function OrderVisit({
         </View>
       ))}
       {driver && order.status === "assigned" && (
-        <NativeForm
+        <AssignmentResponseActions
+          key={order.id + ":" + order.tracking_version}
           api={api}
           action="dispatch.respond"
-          title="Respond to assignment"
-          fields={[
-            {
-              name: "orderId",
-              label: "Order",
-              value: order.id,
-              type: "hidden",
-            },
-            {
-              name: "version",
-              label: "Current version",
-              value: order.tracking_version,
-              type: "number",
-            },
-            {
-              name: "decision",
-              label: "Decision",
-              options: [
-                { value: "acknowledged", label: "Acknowledge" },
-                {
-                  value: "rejected",
-                  label: "Reject and ask dispatch to review",
-                },
-              ],
-            },
-            { name: "reason", label: "Reason" },
-          ]}
+          input={{ orderId: order.id, version: order.tracking_version }}
           onDone={onDone}
         />
       )}

@@ -1,3 +1,4 @@
+import {readCheckoutDraft} from "./CustomerCheckoutDraft";
 import {
   withAuthDeadline,
   isAuthenticationAction,
@@ -206,6 +207,8 @@ export default function App() {
   const serviceBack = useRef<(() => boolean) | null>(null);
   const pendingServiceSignIn = useRef<string | null>(null);
   const checkoutGuestDraft = useRef<any>(null);
+  const [repeatDraft, setRepeatDraft] = useState<any>(null);
+  useEffect(()=>{if (!["gas-order","checkout"].includes(screen)) setRepeatDraft(null);},[screen]);
   const [initialServiceId, setInitialServiceId] = useState<
     string | undefined
   >();
@@ -349,6 +352,7 @@ export default function App() {
   }
   function clearPrivateState(keepGuestCheckout = false) {
     if (!keepGuestCheckout) checkoutGuestDraft.current = null;
+    setRepeatDraft(null);
     setEntryLink(null);
     setNativeScope({});
     setOwnerScope({ branchId: "", period: "month" });
@@ -1213,7 +1217,7 @@ export default function App() {
                   />
                 ) : screen === "gas-order" ? (
                   <GasOrder
-                    key={user?.id ?? "guest"}
+                    key={(user?.id ?? "guest") + (repeatDraft?.intentId ?? "")}
                     viewServices={() => setScreen("services")}
                     backRef={serviceBack}
                     onSignIn={(draft: any) => {
@@ -1221,21 +1225,22 @@ export default function App() {
                       pendingLink.current = { screen: "gas-order" };
                       setScreen("login");
                     }}
-                    initialDraft={checkoutGuestDraft.current}
+                    initialDraft={repeatDraft ?? checkoutGuestDraft.current}
                     onLinkedRequests={() => setScreen("combined-checkout")}
                     onStageChange={() =>
                       scrollRef.current?.scrollTo({ y: 0, animated: false })
                     }
                     onPlaced={(orderId) => {
-                      setCart([]);
+                      if (!repeatDraft) setCart([]);
                       setOrderFilter(orderId);
                     }}
                     api={api}
                     catalogue={catalogue}
                     user={user}
-                    cart={cart}
+                    cart={repeatDraft?.items ?? cart}
                     done={(orderId) => {
-                      setCart([]);
+                      if (!repeatDraft) setCart([]);
+                      setRepeatDraft(null);
                       if (orderId) setOrderFilter(orderId);
                       setScreen("orders");
                     }}
@@ -1246,7 +1251,7 @@ export default function App() {
                     orderGas={() => setScreen("gas-order")}
                     api={api}
                     user={user}
-                    cart={cart}
+                    cart={repeatDraft?.items ?? cart}
                     catalogue={catalogue}
                     done={(orderId) => {
                       if (orderId) {
@@ -1557,7 +1562,7 @@ export default function App() {
                   />
                 ) : screen === "cart" ? (
                   <NextCart
-                    cart={cart}
+                    cart={repeatDraft?.items ?? cart}
                     products={products}
                     setCart={setCart}
                     art={art}
@@ -1569,12 +1574,12 @@ export default function App() {
                   />
                 ) : screen === "checkout" ? (
                   <GasOrder
-                    key={user?.id + ":cart"}
+                    key={user?.id + ":cart" + (repeatDraft?.intentId ?? "")}
                     api={api}
                     user={user}
                     catalogue={catalogue}
-                    cart={cart}
-                    gasEnabled={cart.some(
+                    cart={repeatDraft?.items ?? cart}
+                    gasEnabled={repeatDraft ? repeatDraft.gasEnabled : cart.some(
                       (item) =>
                         catalogue.products.find(
                           (p: any) => p.id === item.productId,
@@ -1587,18 +1592,19 @@ export default function App() {
                       pendingLink.current = { screen: "checkout" };
                       setScreen("login");
                     }}
-                    initialDraft={checkoutGuestDraft.current}
+                    initialDraft={repeatDraft ?? checkoutGuestDraft.current}
                     onLinkedRequests={() => setScreen("combined-checkout")}
                     onStageChange={() =>
                       scrollRef.current?.scrollTo({ y: 0, animated: false })
                     }
                     viewServices={() => setScreen("services")}
                     onPlaced={(id) => {
-                      setCart([]);
+                      if (!repeatDraft) setCart([]);
                       setOrderFilter(id);
                     }}
                     done={(orderId) => {
-                      setCart([]);
+                      if (!repeatDraft) setCart([]);
+                      setRepeatDraft(null);
                       if (orderId) setOrderFilter(orderId);
                       setScreen("orders");
                     }}
@@ -1619,6 +1625,7 @@ export default function App() {
                     orders={visibleOrders ?? []}
                     user={user}
                     selectedId={orderFilter}
+                    onRepeat={async(draft:any)=>{const prior=await readCheckoutDraft(user.id);if(prior?.pending || prior?.draft) throw Error("A checkout is already saved. Finish or clear your current checkout before ordering again.");setRepeatDraft({...draft,intentId:randomUUID()}); setOrderFilter(null); setScreen(draft.gasEnabled?"gas-order":"checkout");}}
                     onSelect={setOrderFilter}
                     api={api}
                     origin={origin}

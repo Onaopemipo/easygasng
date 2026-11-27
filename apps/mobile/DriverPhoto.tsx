@@ -5,6 +5,8 @@ import { Switch } from "react-native";
 import { View, Pressable } from "./surfaces";
 import * as ImagePicker from "expo-image-picker";
 import * as FileSystem from "expo-file-system/legacy";
+import { File } from "expo-file-system";
+import { fetch as uploadFetch } from "expo/fetch";
 import { FieldCaption, Text, TextInput } from "./typography";
 import { captureFieldEvent, type FieldEvent } from "./field-queue";
 export function DriverPhoto({
@@ -90,17 +92,15 @@ export function photoUploader(origin: string, token: string | null) {
       consent !== true
     )
       throw new Error("Photo metadata needs review.");
-    const temp = FileSystem.cacheDirectory + `easygas-upload-${e.id}.image`;
+    const extension = e.payload.mime === "image/png" ? "png" : e.payload.mime === "image/webp" ? "webp" : "jpg";
+    const temp = FileSystem.cacheDirectory + `easygas-upload-${e.id}.${extension}`;
     try {
       await FileSystem.writeAsStringAsync(temp, base64, {
         encoding: FileSystem.EncodingType.Base64,
       });
       const form = new FormData();
-      form.append("image", {
-        uri: temp,
-        name: "evidence.image",
-        type: String(e.payload.mime ?? "image/jpeg"),
-      } as any);
+      const file = new File(temp);
+      form.append("image", file);
       if (service) {
         form.append("bookingId", String(bookingId));
         form.append("bookingVersion", String(e.payload.bookingVersion));
@@ -108,7 +108,7 @@ export function photoUploader(origin: string, token: string | null) {
       form.append("alt", alt);
       form.append("photoConsent", "on");
       form.append("capturedAt", e.recordedAt);
-      const r = await fetch(origin + "/api/media", {
+      const r = await uploadFetch(origin + "/api/media", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -116,10 +116,14 @@ export function photoUploader(origin: string, token: string | null) {
         },
         body: form,
       });
-      if (!r.ok)
-        throw new Error(
-          "Photo upload needs review or a refreshed session. Encrypted evidence is retained.",
-        );
+      if (!r.ok) {
+        const message = r.status === 409 || r.status === 403 || r.status === 404
+          ? "Photo upload needs dispatch review. Encrypted evidence is retained."
+          : r.status === 401
+            ? "Sign in again, then retry photo synchronisation. Encrypted evidence is retained."
+            : "Photo upload is unavailable. Retry synchronisation; encrypted evidence is retained.";
+        throw Object.assign(new Error(message), { status: r.status });
+      }
       return await r.json();
     } finally {
       await FileSystem.deleteAsync(temp, { idempotent: true });

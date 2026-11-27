@@ -1,3 +1,4 @@
+import { operationNoteRequired } from "../../packages/business-rules/src/operation-notes";
 import { NextRow, NextList, NextIcon } from "./MobileNextUI";
 import { useTheme } from "./theme";
 import {
@@ -208,7 +209,7 @@ export function NativeForm({
               (showOptionalDetails || !collapsedFields.includes(f.name)),
           )
           .map((f) => {
-            const required = f.required ?? f.type !== "checkbox";
+            const required = operationNoteRequired(action, f.name, values, f.required ?? f.type !== "checkbox");
             return (
               <View key={f.name}>
                 <FieldCaption style={s.label} required={required}>
@@ -378,7 +379,7 @@ export function NativeForm({
           try {
             const data = { ...values };
             for (const f of fields.filter((field) => field.type !== "hidden")) {
-              const required = f.required ?? f.type !== "checkbox";
+              const required = operationNoteRequired(action, f.name, values, f.required ?? f.type !== "checkbox");
               const value = data[f.name];
               const empty =
                 value === undefined ||
@@ -432,6 +433,7 @@ export function NativeForm({
                 "manifest.",
                 "dispatch.",
                 "doorstep.",
+                "bulk.",
                 "crm.",
                 "invoice.request.",
                 "invoice.excess.",
