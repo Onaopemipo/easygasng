@@ -1,0 +1,161 @@
+{
+  "phase": "Mobile sign-out \u201428 November2026",
+  "requirements": [
+    {
+      "id": "MSO-01",
+      "priority": "P1",
+      "requirement": "Restore the real App sign-out callback in the Expo Go preview and remove the no-op launcher",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/index.ts"
+      ],
+      "authoritativeData": [
+        "Expo SecureStore easygas.session",
+        "sessions.revoked_at",
+        "Current account/session references"
+      ],
+      "securityControls": "Existing role-specific confirmation and real server revocation retained; test session is disposable.",
+      "testIds": [
+        "SO-IOS"
+      ],
+      "acceptanceGate": "MSO-G1",
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ],
+      "reason": "Normal real-App online driver sign-out and server200, final-source signed-out reload, six cleanup/server tests plus six selected auth regressions and native types verified.",
+      "outstandingWork": "None within user-confirmed Expo Go repair. Fresh post-hardening signed-in native journey, physical offline OS and new signed binary are not claimed."
+    },
+    {
+      "id": "MSO-02",
+      "priority": "P1",
+      "requirement": "Clear visible/local session before bounded network/GPS cleanup, preserving private queued evidence",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "packages/business-rules/src/mobile-sign-out.ts"
+      ],
+      "authoritativeData": [
+        "Expo SecureStore easygas.session",
+        "sessions.revoked_at",
+        "Current account/session references"
+      ],
+      "securityControls": "Captured ending token only; synchronous session/account refs invalidate stale401 responses; no private queue deletion.",
+      "testIds": [
+        "SO-ORDER",
+        "SO-OFFLINE",
+        "SO-STORAGE"
+      ],
+      "acceptanceGate": "MSO-G2",
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ],
+      "reason": "Normal real-App online driver sign-out and server200, final-source signed-out reload, six cleanup/server tests plus six selected auth regressions and native types verified.",
+      "outstandingWork": "None within user-confirmed Expo Go repair. Fresh post-hardening signed-in native journey, physical offline OS and new signed binary are not claimed."
+    },
+    {
+      "id": "MSO-03",
+      "priority": "P1",
+      "requirement": "Verify canonical server revocation and persistent sign-out across reload",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/web/lib/service.ts"
+      ],
+      "authoritativeData": [
+        "Expo SecureStore easygas.session",
+        "sessions.revoked_at",
+        "Current account/session references"
+      ],
+      "securityControls": "No token logged; SecureStore delete with empty-value fallback; explicit storage-failure state.",
+      "testIds": [
+        "SO-SERVER",
+        "SO-IOS-RELOAD"
+      ],
+      "acceptanceGate": "MSO-G3",
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ],
+      "reason": "Normal real-App online driver sign-out and server200, final-source signed-out reload, six cleanup/server tests plus six selected auth regressions and native types verified.",
+      "outstandingWork": "None within user-confirmed Expo Go repair. Fresh post-hardening signed-in native journey, physical offline OS and new signed binary are not claimed."
+    }
+  ],
+  "coverage": {
+    "requirements": 3,
+    "verified": 3,
+    "gates": 3,
+    "gatesPassed": 3,
+    "excluded": 0,
+    "implemented": 3,
+    "criticalRequirements": 2,
+    "criticalVerified": 2,
+    "routeCoverage": "Shared App callback implemented for all callers; actual native driver Profile route observed, other role screens not independently replayed."
+  },
+  "productionDecision": "Prior production NO-GO and unrelated holds retained",
+  "changeLog": [
+    "User confirmed Expo Go/simulator preview; no TestFlight release requested. Old direct DriverWorkspace QA launcher supplied an empty logout callback. Normal App launcher restored.",
+    "Verified normal driver sign-out, canonical revocation, normal index.ts/shared demo origin and guest persistence on final-source reload. Removed unnecessary bootstrap-ref change rather than expand scope; selected native bootstrap regression passes.12 targeted checks pass."
+  ],
+  "gates": [
+    {
+      "id": "MSO-G1",
+      "status": "PASSED",
+      "requirement": "MSO-01",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ]
+    },
+    {
+      "id": "MSO-G2",
+      "status": "PASSED",
+      "requirement": "MSO-02",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ]
+    },
+    {
+      "id": "MSO-G3",
+      "status": "PASSED",
+      "requirement": "MSO-03",
+      "evidence": [
+        "docs/mobile-signout/evidence/tests.txt",
+        "docs/mobile-signout/evidence/regression.txt",
+        "docs/mobile-signout/evidence/native-types.txt",
+        "docs/mobile-signout/evidence/signed-out.png",
+        "docs/mobile-signout/evidence/signed-out-reload-ax.txt",
+        "docs/mobile-signout/evidence/native-server-readback.json",
+        "docs/mobile-signout/evidence/runtime-verification.json"
+      ]
+    }
+  ]
+}

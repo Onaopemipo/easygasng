@@ -1,3 +1,4 @@
+import { signOutMobileSession } from "../../packages/business-rules/src/mobile-sign-out";
 import {readCheckoutDraft} from "./CustomerCheckoutDraft";
 import {
   withAuthDeadline,
@@ -763,10 +764,11 @@ export default function App() {
     }
   }
   const authSubmitting = useRef(false);
+  const signingOut = useRef(false);
   const authController = useRef<AbortController | null>(null);
   useEffect(() => () => authController.current?.abort(), [screen, register]);
   async function login() {
-    if (authSubmitting.current) return;
+    if (authSubmitting.current || signingOut.current) return;
     if (passwordChangeRequired && newPassword.length < PASSWORD_MIN_LENGTH) {
       setLoginError(
         `Use at least ${PASSWORD_MIN_LENGTH} characters for your new password.`,
@@ -836,18 +838,39 @@ export default function App() {
     }
   }
   async function logout() {
-    await stopDriverLocation();
-    pendingLink.current = null;
-    try {
-      await api("logout", {});
-    } finally {
-      await SecureStore.deleteItemAsync("easygas.session");
-      setToken(null);
-      setUser(null);
-      clearPrivateState();
-      setScreen("home");
-    }
+    const endingSession = sessionRef.current;
+    if (!endingSession || signingOut.current) return;
+    signingOut.current = true;
+    setAuthBusy(true);
+    await signOutMobileSession({
+      endLocalSession: () => {
+        authController.current?.abort();
+        sessionRef.current = null;
+        accountRef.current = null;
+        pendingLink.current = null;
+        pendingServiceSignIn.current = null;
+        setToken(null);
+        setUser(null);
+        clearPrivateState();
+        setNewPassword("");
+        setPasswordChangeRequired(false);
+        setScreen("home");
+      },
+      deleteStoredSession: () => SecureStore.deleteItemAsync("easygas.session"),
+      emptyStoredSession: () => SecureStore.setItemAsync("easygas.session", ""),
+      storageSettled: (cleared) => {
+        signingOut.current = false;
+        setAuthBusy(false);
+        if (!cleared) {
+          setScreen("login");
+          setLoginError("Saved sign-in could not be removed. Device storage must be available to finish signing out safely.");
+        }
+      },
+      stopLocation: stopDriverLocation,
+      revokeSession: (signal) => api("logout", {}, endingSession, signal),
+    });
   }
+
   function add(p: any) {
     if (p.category === "Gas refills") {
       setScreen("gas-order");

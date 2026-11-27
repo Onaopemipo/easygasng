@@ -486,3 +486,7 @@ Daily iOS scale delivery acceptance —28 November2026: [focused matrix](daily-i
 Delivery map pin mismatch —28 November2026: [PINAREA matrix](delivery-pin-area-rtm.md). Customer correction and canonical geographic guard; existing operational coverage and production holds preserved.
 
 Delivery map area fix published —28 November2026: [PINAREA matrix](delivery-pin-area-rtm.md) retains4/4 verified requirements/gates, including the existing-demo rollout.24 focused/regression,13 merged-workspace and18 preservation checks pass;507 remote source hashes match21f2a43. Geographic rectangles remain distinct from exact property verification; native signed release and prior production NO-GO remain unchanged.
+
+Mobile sign-out repair —28 November2026: [MSO matrix](mobile-signout-rtm.md). Restore real App wiring in Expo Go and bound session cleanup while preserving encrypted evidence. Existing production holds remain.
+
+Expo Go sign-out repaired —28 November2026: [MSO matrix](mobile-signout-rtm.md) verifies3/3 bounded requirements/gates. Normal App entry and shared demo API restored, actual driver sign-out/server revocation and final-source guest reload observed;12 targeted checks and native types pass. No new signed binary, backend deployment, credential reset or business mutation; prior production holds remain.

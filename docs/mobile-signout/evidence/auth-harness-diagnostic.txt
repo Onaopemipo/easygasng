@@ -1,0 +1,41 @@
+(node:39805) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ AUTH-REQUEST: stalled headers/body settle once; abort, network errors and late success cannot authenticate or replay (33.485959ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ AUTH-NATIVE: real editable forms keep policy, masked/reveal controls, busy state, contextual registration and all entry actions (21.916084ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ AUTH-LINK: manual entry rejects invalid origins and preserves reset/verify/invitation/assisted paths without reading clipboard (6.156333ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ AUTH-RECOVERY: actual web/native forms prevent duplicates, preserve errors and show identical generic confirmation only after server success (13.633708ms)
+✖ AUTH-NATIVE-BOOT: actual native startup restores identity independently of a hung catalogue or malformed cart (0.990625ms)
+✔ AUTH-NATIVE-BACK: actual Back handler exits auth loops, preserves the guest checkout return and retains order drilldown (2.285625ms)
+(node:39806) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ SO-ORDER session visibility ends synchronously before GPS/network work; only auth storage is removed, and normal app entry is retained (7.125959ms)
+✔ SO-OFFLINE GPS rejection and network rejection do not retain the local session (0.258667ms)
+✔ SO-DEADLINE a stalled/abort-ignoring server and GPS settle boundedly without blocking local storage cleanup (20.68425ms)
+✔ SO-STORAGE failed key deletion falls back to an empty stored session so cold-start truthiness cannot restore it (0.205375ms)
+✔ SO-STORAGE-FAIL both secure storage failures are reported as incomplete instead of claiming persistent sign-out (0.152709ms)
+✔ SO-SERVER real authenticated driver sign-out revokes the server session once; replay cannot access me or driver workspace (1159.202084ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 11
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1825.70925
+
+✖ failing tests:
+
+test at tests/auth-redesign.test.ts:35:16615
+✖ AUTH-NATIVE-BOOT: actual native startup restores identity independently of a hung catalogue or malformed cart (0.990625ms)
+  TypeError: Cannot read properties of null (reading 'role')
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/daily-delivery/git-worktree/tests/auth-redesign.test.ts:585:104)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7)
