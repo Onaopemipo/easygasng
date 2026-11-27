@@ -217,7 +217,7 @@ test("MANUI-ROLES: seven role boundaries, driver receipt/return and missing-trip
       );
       assert.equal(!!button(t, "Acknowledge receipt"), role === "driver");
       assert.equal(!!button(t, "Declare return"), role === "driver");
-      assert.equal(!!button(t, "Review discrepancy"), role === "finance");
+      assert.equal(!!button(t, "Review discrepancy"), ["owner", "finance"].includes(role));
       assert.equal(
         calls,
         ["owner", "finance", "manager", "driver"].includes(role) ? 1 : 0,
@@ -361,4 +361,9 @@ test("MANUI-VERIFY: actual issue form clears password, retains draft and operati
     globalThis.FormData = Original;
     await act(async () => t.unmount());
   }
+});
+
+
+test("HAP-MANIFEST-UI: Admin can open the discrepancy review action with the exact current manifest",async()=>{
+ (globalThis as any).manifestUiApi=async()=>fixture();const t=await mount('owner');try{const review=button(t,'Review discrepancy');assert.ok(review,'Admin discrepancy review must be visible');await act(async()=>review.props.onClick());const form=t.root.findByType(mockForm);assert.equal(form.props.action,'manifest.return.review');assert.equal(form.props.requireVerification,true);assert.equal(form.props.fields.find((f:any)=>f.name==='manifestId').value,'manifest-0');}finally{await act(async()=>t.unmount());}
 });

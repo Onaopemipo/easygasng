@@ -471,3 +471,8 @@ Default Lagos user branch — 27 November2026: [matrix](lagos-default-rtm.md), [
 ## Admin single approval (ASA)
 
 The explicitly approved Admin-only authority change is tracked in [Admin single approval](admin-single-approval-rtm.md). Migration085 was applied to the shared demo with 155 canonical table fingerprints preserved. The verified 493-file demo release, candidate/stable acceptance and single Admin audit proof are recorded in the matrix. Historical broad-suite gaps remain counted. Historical production NO-GO and unrelated holds remain.
+
+
+## Deployed Admin approval workflow audit (HAP)
+
+[Hosted workflow audit](admin-approval-hosted-audit-rtm.md) extends the prior ASA rollout to every approval family. Executed tests, defects, outstanding cases and deployment evidence are tracked explicitly; existing NO-GO and unrelated holds remain.

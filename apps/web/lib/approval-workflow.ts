@@ -1,3 +1,4 @@
+import { operationNoteSchema } from "./operation-notes";
 import { validateRewardsCustomer } from "./rewards-customers";
 import { z } from "zod";
 import { one, type SQL } from "./db";
@@ -37,7 +38,7 @@ export async function approvalWorkflowAction(
     .object({
       id: z.string().uuid(),
       value: z.unknown().optional(),
-      reason: z.string().trim().min(5).max(1000),
+      reason: operationNoteSchema(action, input as any, "reason", 1000),
       effectiveAt: z.iso.datetime({ offset: true }).optional(),
     })
     .strict()

@@ -513,7 +513,7 @@ export function VehicleManifestPanel({
                                 >
                                   Receive return
                                 </button>
-                                {user.role === "finance" && (
+                                {["owner", "finance"].includes(user.role) && (
                                   <button
                                     type="button"
                                     className="fleet-text-button"

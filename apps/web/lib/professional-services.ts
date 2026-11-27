@@ -1696,7 +1696,7 @@ export async function professionalServiceAction(
     )
       throw new AppError(
         409,
-        "Independent finance approval of this exact cancellation revision is required.",
+        "Approve this exact cancellation revision before continuing. One Admin approval is final.",
       );
     await releaseMaterials(tx, b);
     await event(

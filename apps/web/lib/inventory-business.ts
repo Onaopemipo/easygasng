@@ -1761,7 +1761,7 @@ export async function inventoryBusiness(
     if (e.status !== (kind === "recorded" ? "approved" : "recorded"))
       throw new AppError(
         409,
-        "Expense must be independently approved, then recorded before payment evidence.",
+        "Approve and record this expense before recording payment evidence. One Admin approval is final.",
       );
     if (user.role !== "owner" && (kind === "paid" && e.requested_by === user.id))
       throw new AppError(

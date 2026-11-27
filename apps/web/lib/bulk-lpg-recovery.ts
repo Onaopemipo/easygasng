@@ -147,7 +147,7 @@ export async function applyBulkRecovery(tx: SQL, user: Actor, op: Row) {
   )
     throw new AppError(
       409,
-      "Held load changed or independent recovery approval is missing.",
+      "Held load changed or the exact recovery approval is missing. One Admin approval is final.",
     );
   await inventoryQualification(
     tx,

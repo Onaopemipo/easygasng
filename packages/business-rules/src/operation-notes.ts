@@ -25,6 +25,9 @@ export function operationNoteMode(
   if (field !== "reason") return undefined;
   if (
     [
+      "approval.submit",
+      "approval.owner_apply",
+      "approval.retry",
       "dispatch.assign",
       "delivery.pickup",
       "delivery.arrived",
@@ -51,6 +54,9 @@ export function operationNoteAuditText(
   if (action === "booking.transition")
     return `Service status updated to ${values.status}`;
   const labels: Record<string, string> = {
+    "approval.submit": "Saved request submitted",
+    "approval.owner_apply": "Admin authorisation recorded",
+    "approval.retry": "Authorised activation retry requested",
     "dispatch.assign": "Driver assignment recorded",
     "delivery.pickup": "Pickup confirmation recorded",
     "delivery.arrived": "Delivery arrival recorded",

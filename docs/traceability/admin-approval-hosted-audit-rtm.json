@@ -1,0 +1,207 @@
+{
+  "phase": "Deployed Admin approval workflow audit",
+  "date": "2026-11-27",
+  "requirements": [
+    {
+      "id": "HAP-01",
+      "requirement": "Exercise every Admin business approval family and each mutable setting on the deployed demo",
+      "priority": "P1",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "scripts/test-admin-approvals-hosted.ts",
+        "scripts/lib/admin-hosted-cases.ts",
+        "scripts/lib/admin-hosted-fixture.ts"
+      ],
+      "testFiles": [
+        "scripts/lib/admin-hosted-cases.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G01",
+      "status": "IN_PROGRESS",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress",
+      "testResult": "UNTESTED \u2014 no comprehensive completion claim",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    },
+    {
+      "id": "HAP-02",
+      "requirement": "Admin can request and complete vehicle manifest discrepancy review without Finance or another Admin",
+      "priority": "P0",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/components/vehicle-manifest-panel.tsx"
+      ],
+      "testFiles": [
+        "scripts/lib/admin-hosted-cases.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G02",
+      "status": "DEFECTIVE",
+      "reason": "Finance-only server allowlist and UI button prevent Admin discrepancy review. Stable module is release-disabled; corrected local test passes and protected hosted verification is pending.",
+      "testResult": "UNTESTED \u2014 no comprehensive completion claim",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    },
+    {
+      "id": "HAP-03",
+      "requirement": "Keep one auditable Admin authorisation, non-Admin restrictions, replay protection and original business records",
+      "priority": "P0",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "scripts/lib/admin-hosted-preservation.ts"
+      ],
+      "testFiles": [
+        "scripts/lib/admin-hosted-cases.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G03",
+      "status": "IN_PROGRESS",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress",
+      "testResult": "UNTESTED \u2014 no comprehensive completion claim",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    },
+    {
+      "id": "HAP-04",
+      "requirement": "Publish verified fixes and update the manual, exact deployment evidence and traceability",
+      "priority": "P1",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "docs/user-manual/admin-approvals.md",
+        "docs/traceability/admin-approval-hosted-audit-rtm.json"
+      ],
+      "testFiles": [
+        "scripts/lib/admin-hosted-cases.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G04",
+      "status": "IN_PROGRESS",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress",
+      "testResult": "UNTESTED \u2014 no comprehensive completion claim",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    },
+    {
+      "id": "HAP-05",
+      "requirement": "Submitting a saved Admin request reuses its recorded justification and does not demand another operational note",
+      "priority": "P0",
+      "scope": "Deployed Admin approval workflow audit",
+      "uiReference": "User request: test all Admin approval workflows on the deployed demo, fix remaining issues and confirm no second approver",
+      "route": [
+        "/admin/approvals",
+        "/admin/deliveries",
+        "/api/[action]"
+      ],
+      "dataSource": "Current deployed API responses and restricted-runtime canonical database readback; labelled QA fixtures isolated by branch/user/entity IDs",
+      "securityControl": "No real customer/order/stock mutations; no DDL or permission changes; synthetic evidence only in labelled QA branch; real qualifications, consent and receipts remain required outside QA; exact Admin authorisation count; sessions revoked after testing",
+      "implementationFiles": [
+        "apps/web/lib/approval-workflow.ts",
+        "packages/business-rules/src/operation-notes.ts"
+      ],
+      "testFiles": [
+        "tests/admin-approval-hosted-fixes.test.ts"
+      ],
+      "testIds": [],
+      "negativeTests": [],
+      "evidence": [],
+      "acceptanceGate": "HAP-G05",
+      "status": "DEFECTIVE",
+      "reason": "Deployed saved-draft submission rejects blank routine note although the draft already has its original reason. Local fix and regression pass; deployed verification pending.",
+      "testResult": "PASS \u2014 HAP-SUBMIT local regression; hosted recheck pending",
+      "outstandingWork": "Execute and reconcile all hosted cases; fix/redeploy any defects; verify audit/security/preservation and cleanup; publish evidence"
+    }
+  ],
+  "gates": [
+    {
+      "id": "HAP-G01",
+      "requirement": "HAP-01",
+      "status": "OPEN",
+      "criterion": "Exercise every Admin business approval family and each mutable setting on the deployed demo",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress"
+    },
+    {
+      "id": "HAP-G02",
+      "requirement": "HAP-02",
+      "status": "OPEN",
+      "criterion": "Admin can request and complete vehicle manifest discrepancy review without Finance or another Admin",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress"
+    },
+    {
+      "id": "HAP-G03",
+      "requirement": "HAP-03",
+      "status": "OPEN",
+      "criterion": "Keep one auditable Admin authorisation, non-Admin restrictions, replay protection and original business records",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress"
+    },
+    {
+      "id": "HAP-G04",
+      "requirement": "HAP-04",
+      "status": "OPEN",
+      "criterion": "Publish verified fixes and update the manual, exact deployment evidence and traceability",
+      "reason": "Test inventory and isolated fixtures prepared; hosted execution and defect verification in progress"
+    },
+    {
+      "id": "HAP-G05",
+      "requirement": "HAP-05",
+      "status": "OPEN",
+      "criterion": "Submitting a saved Admin request reuses its recorded justification and does not demand another operational note",
+      "reason": "Deployed saved-draft submission rejects blank routine note although the draft already has its original reason. Local fix and regression pass; deployed verification pending."
+    }
+  ],
+  "coverage": {
+    "requirements": 5,
+    "verified": 0,
+    "excluded": 0,
+    "critical": 3,
+    "criticalVerified": 0
+  },
+  "productionDecision": "NO-GO \u2014 Public Commercial Production; previous import/native/provider/retention holds and broad test gaps remain",
+  "changeLog": [
+    {
+      "date": "2026-11-27",
+      "change": "Extends prior ASA acceptance from one hosted setting to all Admin approval families. Existing ASA evidence remains historical and is not relabelled as comprehensive deployed coverage."
+    },
+    {
+      "date": "2026-11-27",
+      "change": "Retains stable EASYGAS_DOORSTEP_ENABLED=false. Protected QA deployment may exercise that disabled handler using labelled fixtures; this is recorded separately from stable-demo positive coverage. Found saved-draft note validation friction and a Finance-only manifest action."
+    }
+  ]
+}

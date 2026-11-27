@@ -12,7 +12,7 @@ A staff invitation must first be accepted by its recipient. Its access plan then
 
 A request's approval does not invent actual payment receipts, LPG measurements, delivery photos, customer agreement or qualification evidence. Complete those records when the workflow asks for them. If an authorised change fails to activate, fix the displayed cause and retry it; another approver is not required.
 
-These rules require the Admin single-approval release and migration085. They are prepared locally and have not yet been published to the demo.
+These rules are available on the demo with migration085. The current hosted audit and any remaining release gates are tracked in the requirements matrix.
 
 
 ## Demo availability

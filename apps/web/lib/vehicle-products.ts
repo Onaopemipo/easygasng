@@ -363,7 +363,7 @@ export async function vehicleProducts(
     await checkedSerials(tx, l.branch_id, saleable, Number(l.size_kg));
   const key = `vehicle_return.${l.id}.${l.version}`;
   if (action === "manifest.return.review") {
-    allow(user, ["finance"], l.branch_id);
+    allow(user, ["owner", "finance"], l.branch_id);
     await tx.query(
       "INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,'Inventory','Immutable manifest return loss/quarantine quantities and serial evidence; does not create a cash refund.','owner',4,'vehicle_return_recovery','[\"finance\"]','[\"owner\",\"finance\"]','[\"owner\",\"finance\"]','[\"owner\",\"finance\"]',true) ON CONFLICT(key) DO NOTHING",
       [key, "Vehicle product return " + l.id],
