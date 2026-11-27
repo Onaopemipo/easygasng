@@ -81,12 +81,22 @@
         "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
         "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
         "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
-        "docs/daily-delivery/evidence/start-day-fix/types.txt"
+        "docs/daily-delivery/evidence/start-day-fix/types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/source-verification.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-smoke.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-preservation.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-recovery.json",
+        "docs/daily-delivery/evidence/start-day-fix/browser-verification.txt",
+        "docs/daily-delivery/evidence/start-day-fix/order-ready.png",
+        "docs/daily-delivery/evidence/start-day-fix/deployment.json",
+        "docs/daily-delivery/evidence/start-day-fix/build.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
       ],
       "acceptanceGate": "DAY-G-01",
-      "status": "DEFECTIVE",
-      "reason": "User-reported Start Day failure uses combined vehicle/capacity error without actionable recovery; investigating actual saved capacity. Legacy order-load form is still exposed before daily setup.",
-      "outstandingWork": "Repair startup diagnostics and direct capacity configuration; remove legacy load forms from normal daily order actions and prove the full journey."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Start Day capacity is visible and validated in kg; assigned orders are prioritised.20 focused renderer/workflow tests, real PostgreSQL concurrent recovery/RLS,22 legacy regressions and17 shared-workspace tests pass. Stable demo505-file source match; actual affected order recovered through canonical Admin UI with modal open and Awaiting driver start.",
+      "outstandingWork": "None within bounded startup/reservation repair; actual driver supply must be measured by the driver."
     },
     {
       "id": "DAY-02",
@@ -170,7 +180,17 @@
         "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
         "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
         "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
-        "docs/daily-delivery/evidence/start-day-fix/types.txt"
+        "docs/daily-delivery/evidence/start-day-fix/types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/source-verification.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-smoke.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-preservation.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-recovery.json",
+        "docs/daily-delivery/evidence/start-day-fix/browser-verification.txt",
+        "docs/daily-delivery/evidence/start-day-fix/order-ready.png",
+        "docs/daily-delivery/evidence/start-day-fix/deployment.json",
+        "docs/daily-delivery/evidence/start-day-fix/build.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
       ],
       "acceptanceGate": "DAY-G-02",
       "status": "VERIFIED_COMPLETE",
@@ -421,11 +441,21 @@
         "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
         "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
         "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
-        "docs/daily-delivery/evidence/start-day-fix/types.txt"
+        "docs/daily-delivery/evidence/start-day-fix/types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/source-verification.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-smoke.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-preservation.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-recovery.json",
+        "docs/daily-delivery/evidence/start-day-fix/browser-verification.txt",
+        "docs/daily-delivery/evidence/start-day-fix/order-ready.png",
+        "docs/daily-delivery/evidence/start-day-fix/deployment.json",
+        "docs/daily-delivery/evidence/start-day-fix/build.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
       ],
       "acceptanceGate": "DAY-G-05",
       "status": "PARTIAL",
-      "reason": "Full office/driver browser journey and corrected waiting-action browser check pass. Office live refresh preserves closing form entries, current photo readiness controls completion, and native form recovery/iOS export pass. Physical native-device acceptance remains open.",
+      "reason": "Actual deployed Admin order recovery remains inside the same modal and advances to Awaiting driver start. Daily Start Day/scale form renderers and retry preservation pass. Physical native-device/offline acceptance remains open.",
       "outstandingWork": "Physical iOS/Android camera/scale acceptance; full offline scale/photo queueing is not verified and current scale saves require connectivity. New signed/TestFlight binary was not requested or built."
     },
     {
@@ -513,7 +543,17 @@
         "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
         "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
         "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
-        "docs/daily-delivery/evidence/start-day-fix/types.txt"
+        "docs/daily-delivery/evidence/start-day-fix/types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/source-verification.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-smoke.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-preservation.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-recovery.json",
+        "docs/daily-delivery/evidence/start-day-fix/browser-verification.txt",
+        "docs/daily-delivery/evidence/start-day-fix/order-ready.png",
+        "docs/daily-delivery/evidence/start-day-fix/deployment.json",
+        "docs/daily-delivery/evidence/start-day-fix/build.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
       ],
       "acceptanceGate": "DAY-G-06",
       "status": "VERIFIED_COMPLETE",
@@ -610,18 +650,28 @@
         "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
         "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
         "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
-        "docs/daily-delivery/evidence/start-day-fix/types.txt"
+        "docs/daily-delivery/evidence/start-day-fix/types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/source-verification.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-smoke.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-preservation.json",
+        "docs/daily-delivery/evidence/start-day-fix/hosted-recovery.json",
+        "docs/daily-delivery/evidence/start-day-fix/browser-verification.txt",
+        "docs/daily-delivery/evidence/start-day-fix/order-ready.png",
+        "docs/daily-delivery/evidence/start-day-fix/deployment.json",
+        "docs/daily-delivery/evidence/start-day-fix/build.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
       ],
       "acceptanceGate": "DAY-G-07",
       "status": "VERIFIED_COMPLETE",
-      "reason": "Migration086 and runtime gates082\u2013086 pass; stable demo READY; downloaded deployed source archive matches505/505 tested files; unauthenticated daily operations denied; manuals/traceability and runtime readiness migration coverage pass.",
+      "reason": "Existing schema086 supports repair without permission/schema changes. Stable demo READY,505/505 source files match runtime5545a0f. Full guide, immutable original matrices/evidence and production NO-GO retained.",
       "outstandingWork": "No outstanding bounded release/manual work. Existing production NO-GO, actual operations/provider and signed-device gates remain separately open."
     }
   ],
   "gates": [
     {
       "id": "DAY-G-01",
-      "status": "OPEN",
+      "status": "PASSED",
       "requirement": "DAY-01"
     },
     {
@@ -658,16 +708,15 @@
   "coverage": {
     "requirements": 7,
     "implemented": 7,
-    "verified": 5,
+    "verified": 6,
     "partial": 1,
     "excluded": 0,
     "criticalRequirements": 5,
-    "criticalVerified": 4,
+    "criticalVerified": 5,
     "routesImplemented": 3,
     "routesVerified": 2,
     "gates": 7,
-    "gatesPassed": 5,
-    "defective": 1
+    "gatesPassed": 6
   },
   "productionDecision": "NO-GO \u2014 existing commercial/provider/native/import/retention holds remain",
   "changeLog": [
@@ -694,6 +743,10 @@
     {
       "date": "2026-11-28",
       "change": "Repair verified locally: Start Day exposes correct kg capacity and prioritises assigned orders; daily.order.attach restores accidental unassigned queue commitments and transfers an existing assigned order without changing weights/payments/physical history. Normal daily modal no longer offers meter/load forms, including earlier deep links. Hosted rollout still pending."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Repaired release5545a0f is live as dpl_ZCcZakJ3181b2bBcoMvCimbxsjUM;505/505 uploaded files match. Existing Admin saved login was used through Firefox UI to reserve EG-2026-75ADFA5D on the genuine25kg day; six unassigned queue commitments returned to ordinary branch reservations with audits. Same modal shows Awaiting driver start. Opening/addition/supply/payment values unchanged; no refill or physical evidence invented. Native/device/offline holds remain."
     }
   ]
 }

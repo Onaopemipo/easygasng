@@ -1,0 +1,25 @@
+✔ AORD-SUMMARY: completed order opens one summary dialog with four tabs, no forms, hidden IDs, prep actions or mounted history/invoice (7.858917ms)
+✔ AORD-ACTIONS: status and role determine available workflows; paid/assigned orders cannot offer additions, finance cannot update delivery and only provisional customers expose messaging (0.189667ms)
+✔ AORD-FORMS: status form shows only relevant fields, communications keep context IDs hidden and private history excludes messaging forms (3.101542ms)
+✔ AORD-HISTORY: timeline retains original notes with eight bounded records and lazy visit evidence (1.709834ms)
+✔ AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer's order (1230.842125ms)
+✔ AORD-REFILL-FORM: tanker refill completion requests full supply/photo handover without a customer code or cylinder serial registration (2.726083ms)
+✔ AORD-PRODUCT-FORM: physical product completion retains the required six-digit customer code and full handover (1.351125ms)
+✔ DAY-MODAL: daily office actions wait for driver start, scale supply and current photo without offering unusable pickup actions (4.631042ms)
+✔ DAY-MODAL-SETUP: unlinked assigned orders and old load deep links show only daily setup; actual legacy custody is read-only guidance (3.425792ms)
+✔ DAY01 full paid refill → actual scale stock debit → consented current photo → delivery → office net-weight close (1426.23225ms)
+✔ DAY02 unassigned orders stay in the queue; assignments attach once; arriving new orders/midday gas and cancellation conserve stock (1162.925541ms)
+✔ DAY03 wrong driver/branch, non-Admin variance, stale version, bad/mismatching weights, duplicate day and bypass trip end are denied (1086.779541ms)
+✔ DAY04 daily same-visit phone extra remains fee-free, unassigned until verified payment and reserves daily gas once (1307.550292ms)
+✔ DAY05 revoked privileges, foreign driver/branch, premature photo, unfinished supply, disabled operations and multiple cylinders (1090.870416ms)
+✔ DAY06 existing trip handover requires real reconciliation, then reuses the vehicle without rewriting earlier metered history (1296.393625ms)
+✔ DAY07 startup reports actual vehicle capacity, prioritises assigned orders and leaves the unassigned queue untouched (997.385125ms)
+✔ DAY08 existing assigned order joins the active day, repairs premature queue reservations, preserves real weights and completes without a meter load (1121.853375ms)
+ℹ tests 17
+ℹ suites 0
+ℹ pass 17
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12122.256667
