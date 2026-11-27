@@ -1,0 +1,57 @@
+{
+  "runId": "36a554ec-a6c1-4c87-a079-bccfeb5a3309",
+  "group": "service",
+  "base": "https://easygas-client-demo.vercel.app",
+  "environment": "Deployed Vercel demo; labelled synthetic QA branches only",
+  "cases": [
+    {
+      "id": "ADM-H18-service-config-and-checklist",
+      "status": "PASS",
+      "detail": {
+        "otherApprovers": 0,
+        "branch": "qa-admin-efc071d8-902"
+      }
+    },
+    {
+      "id": "ADM-H19-service-quotation-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "ca800796-6d2c-41e0-b7cd-6beb57d3522c",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H20-service-own-cash-verification",
+      "status": "FAIL",
+      "error": "booking.cash.record: 403 {\"error\":\"Your account does not have permission for this action.\",\"code\":\"FORBIDDEN\"}"
+    },
+    {
+      "id": "ADM-H21-own-service-invoice-correction",
+      "status": "PASS",
+      "detail": {
+        "id": "8745c4af-5d43-4bca-8e4e-6795ddcd6db1",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H22-service-material-recovery",
+      "status": "FAIL",
+      "error": "booking.work.start: 409 {\"error\":\"Reconcile the service invoice and current approved scope before chargeable work.\",\"code\":\"INVALID_REQUEST\"}"
+    },
+    {
+      "id": "ADM-H23-exception-settlement-and-customer-consent",
+      "status": "PASS",
+      "detail": {
+        "requestId": "ec00ba8a-7b27-467f-8584-f3984a78c9cf",
+        "otherApprovers": 0,
+        "customerConsentRecorded": true
+      }
+    }
+  ],
+  "status": "FAIL",
+  "total": 6,
+  "passed": 4,
+  "failed": 2
+}

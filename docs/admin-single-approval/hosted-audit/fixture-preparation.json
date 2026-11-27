@@ -1,0 +1,18 @@
+{
+  "status": "PASS",
+  "branches": [
+    "qa-admin-9d851fa3-ad8",
+    "qa-admin-efc071d8-902",
+    "qa-admin-1a22c83d-a94",
+    "qa-admin-ec002f08-894",
+    "qa-admin-e760341f-ff9"
+  ],
+  "method": "New explicitly labelled synthetic fixtures imported through restricted runtime. Existing IDs excluded. No migration, permission change or existing business data update. Credential-bearing raw diagnostic logs retained privately and not versioned.",
+  "credentialStorage": "Ignored private state; no secrets in published evidence",
+  "physicalEvidence": "Synthetic evidence applies only to QA fixtures; never substituted for actual business measurements",
+  "backgroundJobPolicy": "Standalone QA runtime connections now explicitly disable maintenance jobs. Earlier long-running QA processes used the normal maintenance default; original-record fingerprint comparison reports any resulting metadata differences rather than assuming preservation.",
+  "isolatedInvoiceNumbers": "Imported synthetic invoice numbers use QA-ADMIN plus their new UUID, avoiding collisions with existing real/demo invoice numbers.",
+  "preparationFailures": "Initial import rolled back on a duplicate local invoice number and unresolved foreign keys. No original row was changed. Corrected fixture preparation is retained separately.",
+  "fixtureCount": 5,
+  "trackingFixtureLimit": "Re-importing existing order events advanced the imported QA tracking version. Driver report progression correctly rejected the stale pre-import proposal. Original orders/history were not changed. The financial verification tests instead used an explicitly labelled synthetic receipt precondition; no successful driver report is claimed. Future importer starts new fixture versions at zero and replays ordered events."
+}

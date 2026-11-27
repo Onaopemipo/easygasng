@@ -1,0 +1,43 @@
+(node:73378) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✖ HAP-SUBMIT: Admin submits an already-reasoned draft without typing a second operational note (975.418667ms)
+✖ HAP-MANIFEST: qualified Admin reviews own physical discrepancy once and reconciles exact stock; Manager cannot borrow Admin authority (787.137083ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 0
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2230.049125
+
+✖ failing tests:
+
+test at tests/admin-approval-hosted-fixes.test.ts:1:239
+✖ HAP-SUBMIT: Admin submits an already-reasoned draft without typing a second operational note (975.418667ms)
+  ZodError: [
+    {
+      "origin": "string",
+      "code": "too_small",
+      "minimum": 5,
+      "inclusive": true,
+      "path": [
+        "reason"
+      ],
+      "message": "Too small: expected string to have >=5 characters"
+    }
+  ]
+      at approvalWorkflowAction (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/approval-workflow.ts:44:6)
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/service.ts:811:30)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24)
+
+test at tests/admin-approval-hosted-fixes.test.ts:1:1039
+✖ HAP-MANIFEST: qualified Admin reviews own physical discrepancy once and reconciles exact stock; Manager cannot borrow Admin authority (787.137083ms)
+  Error: Your account does not have permission for this action.
+      at allow (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/auth.ts:75:11)
+      at vehicleProducts (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/vehicle-products.ts:366:5)
+      at async businessOperation (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/business-operation.ts:64:18)
+      at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24) {
+    status: 403,
+    code: 'FORBIDDEN'
+  }

@@ -1,0 +1,34 @@
+{
+  "runId": "36a554ec-a6c1-4c87-a079-bccfeb5a3309",
+  "group": "bulk",
+  "environment": "Deployed Vercel demo; labelled synthetic QA branches only",
+  "cases": [
+    {
+      "id": "ADM-H17-bulk-discrepancy-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c6de3528-91ad-4535-9327-6bc0f7a89133",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H24-physical-payload-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "79b65040-0b38-477c-954f-ee77fe352d18",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H25-manifest-discrepancy-own-admin",
+      "status": "FAIL",
+      "error": "manifest.issue: 503 {\"error\":\"Vehicle product operations require operational release approval.\",\"code\":\"INVALID_REQUEST\"}"
+    }
+  ],
+  "status": "FAIL",
+  "total": 3,
+  "passed": 2,
+  "failed": 1
+}

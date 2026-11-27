@@ -1,5 +1,18 @@
 # Deployed Admin approval workflow audit
 
-This phase extends the prior ASA release with comprehensive hosted acceptance. All four requirements and gates remain in the coverage denominator until their executed proof is recorded.
+117/117 checks pass, with no checks excluded: 76 original settings and41 workflow/security checks. All six requirements and four critical requirements are verified for the bounded Admin business-approval behavior.
 
-[Machine-readable matrix](admin-approval-hosted-audit-rtm.json).
+[Machine-readable matrix](admin-approval-hosted-audit-rtm.json) · [Detailed report](../admin-single-approval/hosted-audit/README.md) · [Manual](../user-manual/admin-approvals.md).
+
+| Requirement | Verified implementation and evidence | Gate |
+| --- | --- | --- |
+| HAP-01 — Exercise every Admin business approval family and each mutable setting on the deployed demo | 117/117 retained checks pass: 76 original settings (70 mutable, six locked) and 41 workflow/security checks. 114 checks use normal release lineage/candidates; three release-disabled handlers use removed temporary authenticated QA deployments. Sensitive settings were scheduled and cancelled, not globally activated. | HAP-G01: PASS |
+| HAP-02 — Admin can request and complete vehicle manifest discrepancy review without Finance or another Admin | Fixed both Finance-only server allowlist and UI action. Qualified Admin completes the exact discrepancy review and receipt with one authorisation. Stable doorstep flag remains false; positive hosted execution used labelled QA records in a removed temporary deployment. | HAP-G02: PASS |
+| HAP-03 — Keep one auditable Admin authorisation, non-Admin restrictions, replay protection and original business records | 43 retained active/scheduled canonical requests each have one Admin authorisation and zero other approvers. Replay, customer/cross-branch denial and own-privilege/technical-qualification guards pass. All original business fingerprints match: 153 tables exactly, with three operational metadata tables reconciled against the original hashes; no original row rewrite is claimed or performed. | HAP-G03: PASS |
+| HAP-04 — Publish verified fixes and update the manual, exact deployment evidence and traceability | Published source069fd9c is pushed and all493 uploaded source SHA1 values match it. Stable Ready alias is verified; both temporary QA deployments removed. Five QA branches and53 users retired, sessions revoked and rejected, immutable history retained. Manual and matrix updated. No new mobile binary. | HAP-G04: PASS |
+| HAP-05 — Submitting a saved Admin request reuses its recorded justification and does not demand another operational note | A saved Admin draft submits and activates without a second routine note; the original business justification remains immutable. Exactly one Admin authorisation is recorded. Hosted recheck passed after the fix and its source is unchanged in the current release. | HAP-G05: PASS |
+| HAP-06 — Admin can record a documented service cash receipt and verify it once, without being signed in as the technician | Verified Admin can record and verify a documented service receipt without a technician login. Hosted current-release candidate and local actual-component rendering pass. Over-collection, other-role attempts, technician impersonation and duplicate payment writes remain blocked. | HAP-G06: PASS |
+
+114 checks ran on the normal demo release lineage/candidates. Three release-disabled handlers ran in temporary authenticated QA deployments that were removed. Settings with global/external effects were scheduled and cancelled before activation. Failed earlier attempts and fixture/authentication corrections remain in the result history.
+
+Public commercial production remains **NO-GO**. Existing import, native, provider, retention, operational holds, historical source-proof gaps and broad-suite skips remain. No new mobile binary or clean full-CI result is claimed.

@@ -1,0 +1,160 @@
+{
+  "runId": "36a554ec-a6c1-4c87-a079-bccfeb5a3309",
+  "group": "base",
+  "base": "https://easygas-client-demo.vercel.app",
+  "environment": "Deployed Vercel demo; labelled synthetic QA branches only",
+  "cases": [
+    {
+      "id": "ADM-H01-inventory-and-policy",
+      "status": "PASS",
+      "detail": {
+        "definitions": 76,
+        "mutable": 70,
+        "locked": [
+          "delivery.zones",
+          "price.refill-12",
+          "price.refill-25",
+          "price.refill-50",
+          "price.refill-6",
+          "security.policy"
+        ]
+      }
+    },
+    {
+      "id": "ADM-H02-direct-setting",
+      "status": "PASS",
+      "detail": {
+        "requestId": "3c6c3214-386c-400c-9186-8f432aa750bd",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H03-draft-edit-submit",
+      "status": "PASS",
+      "detail": {
+        "requestId": "712d9ff5-34c6-44c1-b5bc-6c5d97f7cca2",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H04-staff-request-one-admin-decision",
+      "status": "PASS",
+      "detail": {
+        "requestId": "e6f1a5fc-6ccf-4def-86b9-a99504f0bb4d",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H05-admin-delegation",
+      "status": "PASS",
+      "detail": {
+        "id": "e1ea6f8c-653e-4009-9513-5cec18bff524",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H06-direct-reward-points",
+      "status": "PASS",
+      "detail": {
+        "requestId": "2f99b6b6-2c09-4d14-ad51-b0793017e26f",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H07-reward-reversal",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c90cacbe-ca1a-4690-9fb4-469a61660015",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H08-credit-and-replay",
+      "status": "PASS",
+      "detail": {
+        "id": "96d70aa1-671d-4442-bee9-f53a55d74377",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H09-own-pos-cash-up",
+      "status": "PASS",
+      "detail": {
+        "id": "db0e3273-ba3a-4626-9967-4aae9fd1c639",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H10-own-expense-record-pay-reverse",
+      "status": "PASS",
+      "detail": {
+        "requestId": "deff564d-4cb2-4d6f-8e00-dc31d505aae1",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H11-inventory-correction-stocktake",
+      "status": "FAIL",
+      "error": "inventory.stocktake: 409 {\"error\":\"Adjustment must change stock without consuming active reservations.\",\"code\":\"INVALID_REQUEST\"}"
+    },
+    {
+      "id": "ADM-H12-purchase-and-branch-transfer",
+      "status": "PASS",
+      "detail": {
+        "purchase": "f6fc6e48-4ecf-4a85-83cb-ac797d56ad81",
+        "transfer": "fe4238eb-740c-4b3d-8b1b-cc69e12272db",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H13-campaign-with-no-recipients",
+      "status": "PASS",
+      "detail": {
+        "id": "5a186d59-3a72-48ea-87f1-833a74bcaca2",
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H14-compatibility-own-review",
+      "status": "PASS",
+      "detail": {
+        "id": "f83f5c76-754d-48c9-9463-64413281d247",
+        "otherApprovers": 0,
+        "verifiedCompatibilityNotClaimed": true
+      }
+    },
+    {
+      "id": "ADM-H15-recommendation-own-review",
+      "status": "PASS",
+      "detail": {
+        "id": "fe5627fb-063e-4f91-9da0-f6a7f34bcda4",
+        "otherApprovers": 0,
+        "published": false
+      }
+    },
+    {
+      "id": "ADM-H16-direct-staff-access-and-self-denial",
+      "status": "PASS",
+      "detail": {
+        "requestId": "2bee5b28-797e-4415-bdd8-e845276ab878",
+        "otherApprovers": 0
+      }
+    }
+  ],
+  "status": "FAIL",
+  "total": 16,
+  "passed": 15,
+  "failed": 1
+}

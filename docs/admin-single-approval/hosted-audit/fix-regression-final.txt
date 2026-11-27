@@ -1,0 +1,61 @@
+(node:73599) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ HAP-SUBMIT: Admin submits an already-reasoned draft without typing a second operational note (1061.688459ms)
+✔ HAP-MANIFEST: qualified Admin reviews own physical discrepancy once and reconciles exact stock; Driver cannot borrow Admin authority (920.97125ms)
+(node:73625) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ APC-OWNER: legacy saved Admin requests need one verified Admin approval (1150.62925ms)
+✔ APC-PROGRESS: one Admin approval satisfies high-risk role coverage; revoked authority invalidates its proof (862.02825ms)
+✔ APC-SECURITY: Admin authority cannot be borrowed; expiry, versions and live-payment evidence still block activation (1047.947458ms)
+(node:73640) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed (1143.25975ms)
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission (884.719417ms)
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval (887.557208ms)
+✔ OWNER-AUTO04: approved scope change allows one Admin checklist approval without fabricating operational qualifications (840.0105ms)
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice (828.284417ms)
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions (841.491209ms)
+✔ OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering (901.688542ms)
+✔ OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests (847.14475ms)
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging (1.19125ms)
+(node:73642) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-TASKS: records first, separate dialogs, unique vehicles, password verification and successful refresh (38.279084ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-RECORDS: latest100 label, ten-row pagination, no-match recovery and preserved hidden version context (18.59425ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ MANUI-ROLES: seven role boundaries, driver receipt/return and missing-trip/product prerequisites (6.428417ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-SCOPE: denied and delayed responses remove data/actions on identity change; failed refresh labels last snapshot (22.8095ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ MANUI-VERIFY: actual issue form clears password, retains draft and operation key after failed mutation, and commits once (31.113333ms)
+✔ HAP-MANIFEST-UI: Admin can open the discrepancy review action with the exact current manifest (9.281125ms)
+ℹ tests 20
+ℹ suites 0
+ℹ pass 19
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 13827.417708
+
+✖ failing tests:
+
+test at tests/vehicle-manifest-workspace.test.ts:1:5254
+✖ MANUI-ROLES: seven role boundaries, driver receipt/return and missing-trip/product prerequisites (6.428417ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+
+  true !== false
+
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/tests/vehicle-manifest-workspace.test.ts:220:14)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: true,
+    expected: false,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

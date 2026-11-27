@@ -1,11 +1,62 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {vehicleFixture,restoreVehicleEnv} from './helpers/vehicle-products-fixture';
-import {fixture} from './helpers/order-tracking-fixture';
-import {one} from '../apps/web/lib/db';
-import {id} from '../apps/web/lib/auth';
-test('HAP-SUBMIT: Admin submits an already-reasoned draft without typing a second operational note',async()=>{const f=await fixture();try{await f.call('owner','reauth',{password:'Tracking-fixture-only-123!'});const r=await f.call('owner','setting.propose',{key:'delivery.capacity',scope:'lagos',version:1,value:65,reason:'Explicit original draft justification',draft:true});const result=await f.call('owner','approval.submit',{id:r.id,reason:''});assert.equal(result.status,'active');assert.equal((await one(f.db,'SELECT reason FROM change_requests WHERE id=$1',[r.id]))?.reason,'Explicit original draft justification');assert.equal(Number((await one(f.db,"SELECT count(*) n FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'",[r.id]))?.n),1);}finally{await f.db.close?.();}});
-test('HAP-MANIFEST: qualified Admin reviews own physical discrepancy once and reconciles exact stock; Driver cannot borrow Admin authority',async()=>{const previous={...process.env},f=await vehicleFixture();try{await f.call('dispatcher','technician.qualify',{userId:f.actors.owner.id,code:'inventory_safety',evidence:'Synthetic QA qualification only',expiresAt:new Date(Date.now()+86400000).toISOString()});const common={evidence:'Synthetic measured QA return evidence',reason:'Synthetic QA discrepancy review'};const m=await f.run('owner','manifest.issue',{tripId:f.trip.id,productId:'hose',quantity:3,unitWeightGrams:500,...common});await f.run('driver','manifest.acknowledge',{manifestId:m.id,version:1,quantity:2,serialIds:[],...common});await f.run('driver','manifest.return.declare',{manifestId:m.id,version:2,quantity:2,serialIds:[],...common});const p={manifestId:m.id,version:3,foundQuantity:2,saleableQuantity:1,foundSerialIds:[],saleableSerialIds:[],...common};const reviewed=await f.run('owner','manifest.return.review',p);assert.equal(reviewed.status,'active');assert.equal(Number((await one(f.db,'SELECT count(*) n FROM approval_decisions WHERE request_id=$1',[reviewed.id]))?.n),0);assert.equal(Number((await one(f.db,"SELECT count(*) n FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'",[reviewed.id]))?.n),1);await f.run('owner','manifest.return.receive',p);assert.equal((await one(f.db,'SELECT state FROM vehicle_product_loads WHERE id=$1',[m.id]))?.state,'reconciled');await assert.rejects(()=>f.db.query("UPDATE audit_events SET action='altered' WHERE target=$1",[reviewed.id]),/Append-only/);await assert.rejects(()=>f.run('driver','manifest.return.review',p),/Manifest changed|permission/);}finally{await f.db.close?.();restoreVehicleEnv(previous);}});
-
-
-test('HAP-SERVICE-CASH: Admin records an actual-receipt fixture and verifies once without acquiring technician work authority',async()=>{const {fixture:serviceFixture,begin}=await import('./helpers/service-fixture');const f=await serviceFixture();try{const b=await begin(f);const input={bookingId:b.id,amountKobo:1000,reference:'Synthetic Admin cash receipt',operationKey:id()};await f.call('owner','booking.cash.record',input);const collection=await one(f.db,'SELECT * FROM service_cash_collections WHERE booking_id=$1',[b.id]);assert.equal(collection?.collector_id,f.actors.owner.id);for(let i=0;i<2;i++)await f.call('owner','booking.cash.verify',{bookingId:b.id,collectionId:collection!.id,operationKey:id()});assert.equal((await one(f.db,'SELECT verified_by FROM service_cash_collections WHERE id=$1',[collection!.id]))?.verified_by,f.actors.owner.id);assert.equal(Number((await one(f.db,'SELECT count(*) n FROM verified_payments WHERE booking_id=$1',[b.id]))?.n),1);await assert.rejects(()=>f.call('owner','booking.work.start',{bookingId:b.id,version:1,reason:'Admin is not the assigned technician',operationKey:id()}),/permission|assigned technician/);const {registerHooks}=await import('node:module');registerHooks({load(url,context,next){if(url.endsWith('.css'))return {format:'module',shortCircuit:true,source:'export default {}'};return next(url,context);}});const React=await import('react'),{renderToStaticMarkup}=await import('react-dom/server'),{BookingCard}=await import('../apps/web/components/professional-services');const booking=(await f.call('owner','bookings',{id:b.id}))[0];const html=renderToStaticMarkup(React.createElement(BookingCard,{booking,user:{id:f.actors.owner.id,role:'owner'},done:()=>{}}));assert.match(html,/Record cash actually collected/);}finally{await f.db.close?.();}});
+import { vehicleFixture, restoreVehicleEnv } from './helpers/vehicle-products-fixture';
+import { fixture } from './helpers/order-tracking-fixture';
+import { one } from '../apps/web/lib/db';
+import { id } from '../apps/web/lib/auth';
+test('HAP-SUBMIT: Admin submits an already-reasoned draft without typing a second operational note', async () => { const f = await fixture(); try {
+    await f.call('owner', 'reauth', { password: 'Tracking-fixture-only-123!' });
+    const r = await f.call('owner', 'setting.propose', { key: 'delivery.capacity', scope: 'lagos', version: 1, value: 65, reason: 'Explicit original draft justification', draft: true });
+    const result = await f.call('owner', 'approval.submit', { id: r.id, reason: '' });
+    assert.equal(result.status, 'active');
+    assert.equal((await one(f.db, 'SELECT reason FROM change_requests WHERE id=$1', [r.id]))?.reason, 'Explicit original draft justification');
+    assert.equal(Number((await one(f.db, "SELECT count(*) n FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'", [r.id]))?.n), 1);
+}
+finally {
+    await f.db.close?.();
+} });
+test('HAP-MANIFEST: qualified Admin reviews own physical discrepancy once and reconciles exact stock; Driver cannot borrow Admin authority', async () => { const previous = { ...process.env }, f = await vehicleFixture(); try {
+    await f.call('dispatcher', 'technician.qualify', { userId: f.actors.owner.id, code: 'inventory_safety', evidence: 'Synthetic QA qualification only', expiresAt: new Date(Date.now() + 86400000).toISOString() });
+    const common = { evidence: 'Synthetic measured QA return evidence', reason: 'Synthetic QA discrepancy review' };
+    const m = await f.run('owner', 'manifest.issue', { tripId: f.trip.id, productId: 'hose', quantity: 3, unitWeightGrams: 500, ...common });
+    await f.run('driver', 'manifest.acknowledge', { manifestId: m.id, version: 1, quantity: 2, serialIds: [], ...common });
+    await f.run('driver', 'manifest.return.declare', { manifestId: m.id, version: 2, quantity: 2, serialIds: [], ...common });
+    const p = { manifestId: m.id, version: 3, foundQuantity: 2, saleableQuantity: 1, foundSerialIds: [], saleableSerialIds: [], ...common };
+    const reviewed = await f.run('owner', 'manifest.return.review', p);
+    assert.equal(reviewed.status, 'active');
+    assert.equal(Number((await one(f.db, 'SELECT count(*) n FROM approval_decisions WHERE request_id=$1', [reviewed.id]))?.n), 0);
+    assert.equal(Number((await one(f.db, "SELECT count(*) n FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'", [reviewed.id]))?.n), 1);
+    await f.run('owner', 'manifest.return.receive', p);
+    assert.equal((await one(f.db, 'SELECT state FROM vehicle_product_loads WHERE id=$1', [m.id]))?.state, 'reconciled');
+    await assert.rejects(() => f.db.query("UPDATE audit_events SET action='altered' WHERE target=$1", [reviewed.id]), /Append-only/);
+    await assert.rejects(() => f.run('driver', 'manifest.return.review', p), /Manifest changed|permission/);
+}
+finally {
+    await f.db.close?.();
+    restoreVehicleEnv(previous);
+} });
+test('HAP-SERVICE-CASH: Admin records an actual-receipt fixture and verifies once without acquiring technician work authority', async () => { const { fixture: serviceFixture, begin } = await import('./helpers/service-fixture'); const f = await serviceFixture(); try {
+    const b = await begin(f);
+    const input = { bookingId: b.id, amountKobo: 1000, reference: 'Synthetic Admin cash receipt', operationKey: id() };
+    await assert.rejects(() => f.call('owner', 'booking.cash.record', { ...input, amountKobo: 99999999, operationKey: id() }), /approved unpaid total/);
+    await assert.rejects(() => f.call('service_manager', 'booking.cash.record', input), /permission|technician/);
+    await f.call('owner', 'booking.cash.record', input);
+    await f.call('owner', 'booking.cash.record', input);
+    const collection = await one(f.db, 'SELECT * FROM service_cash_collections WHERE booking_id=$1', [b.id]);
+    assert.equal(collection?.collector_id, f.actors.owner.id);
+    for (let i = 0; i < 2; i++)
+        await f.call('owner', 'booking.cash.verify', { bookingId: b.id, collectionId: collection!.id, operationKey: id() });
+    assert.equal((await one(f.db, 'SELECT verified_by FROM service_cash_collections WHERE id=$1', [collection!.id]))?.verified_by, f.actors.owner.id);
+    assert.equal(Number((await one(f.db, 'SELECT count(*) n FROM verified_payments WHERE booking_id=$1', [b.id]))?.n), 1);
+    await assert.rejects(() => f.call('owner', 'booking.work.start', { bookingId: b.id, version: 1, reason: 'Admin is not the assigned technician', operationKey: id() }), /permission|assigned technician/);
+    const { registerHooks } = await import('node:module');
+    registerHooks({ load(url, context, next) { if (url.endsWith('.css'))
+            return { format: 'module', shortCircuit: true, source: 'export default {}' }; return next(url, context); } });
+    const React = await import('react'), { renderToStaticMarkup } = await import('react-dom/server'), { BookingCard } = await import('../apps/web/components/professional-services');
+    const booking = (await f.call('owner', 'bookings', { id: b.id }))[0];
+    const html = renderToStaticMarkup(React.createElement(BookingCard, { booking, user: { id: f.actors.owner.id, role: 'owner' }, done: () => { } }));
+    assert.match(html, /Record cash actually collected/);
+}
+finally {
+    await f.db.close?.();
+} });

@@ -1,0 +1,83 @@
+Deploying easygas-client-demo
+Uploading [--------------------] (0.0B/178.5KB)
+Uploading [=====---------------] (48.0KB/178.5KB)
+Uploading [==========----------] (96.0KB/178.5KB)
+Uploading [================----] (144.0KB/178.5KB)
+Uploading [====================] (178.5KB/178.5KB)
+  Inspect         https://vercel.com/onaopemipos-projects/easygas-client-demo/Fi7zpG1R5Ex39d1tFyQyFYqseLM4
+▲ Production      https://easygas-client-demo-ourre4jn5-onaopemipos-projects.vercel.app
+Building…
+Building…
+Running build in Washington, D.C., USA (East) – iad1
+Build machine configuration: 4 cores, 8 GB (Standard Build Machine)
+Retrieving list of deployment files...
+Downloading 493 deployment files...
+Restored build cache from previous deployment (HVSuDpUabm6TDXQRWRnhdpiFYu9P)
+Running "vercel build"
+Vercel CLI 66.6.0
+Running "install" command: `cd ../.. && npm ci --include=dev`...
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+added 64 packages, and audited 66 packages in 6s
+10 packages are looking for funding
+run `npm fund` for details
+found 0 vulnerabilities
+npm warn install-scripts 1 package has install scripts not yet covered by allowScripts:
+npm warn install-scripts   esbuild@0.25.12 (postinstall: node install.js)
+npm warn install-scripts
+npm warn install-scripts Run `npm install-scripts ls` to review, or `npm install-scripts approve <pkg>` to allow.
+Detected Next.js version: 16.4.6
+Running "cd ../.. && node --import tsx release-schema-check.ts && npm run build --workspace apps/web"
+(node:75) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Read-only same-visit schema082 and forced row security verified.
+Read-only phone-order schema083/RLS/minimum runtime grants verified.
+Read-only Lagos schema084/default/backfill/restricted-runtime checks passed.
+Read-only Admin schema085, exact review guard, immutable-history and restricted-runtime checks passed.
+npm warn Unknown env config "cache-dir". This will stop working in the next major version of npm. See `npm help npmrc` for supported config options.
+> @easygas/web@0.1.0 build
+> next build --webpack
+▲ Next.js 16.4.6 (webpack)
+Applying modifyConfig from Vercel
+✓ Running next.config.ts took 206ms
+Creating an optimized production build ...
+✓ Compiled successfully in 4.4s
+Running TypeScript ...
+Finished TypeScript in 5.9s ...
+Collecting page data using 3 workers ...
+Generating static pages using 3 workers (0/12) ...
+Generating static pages using 3 workers (3/12)
+Generating static pages using 3 workers (6/12)
+Generating static pages using 3 workers (9/12)
+✓ Generating static pages using 3 workers (12/12) in 1118ms
+Finalizing page optimization ...
+Collecting build traces ...
+Running onBuildComplete from Vercel
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /[...slug]
+├ ƒ /activate
+├ ƒ /admin/[[...section]]
+├ ƒ /api/[action]
+├ ƒ /api/business-live
+├ ƒ /api/invoices/[orderId]
+├ ƒ /api/media
+├ ƒ /api/media/[id]
+├ ƒ /api/messaging/meta
+├ ƒ /api/payments/paystack/[operation]
+├ ƒ /api/phone-orders/[operation]
+├ ƒ /api/receipts
+├ ƒ /api/status
+├ ƒ /api/tracking/stream
+├ ○ /icon.png
+├ ƒ /payment-request
+├ ƒ /payment-return
+├ ƒ /phone-order
+├ ○ /robots.txt
+└ ○ /sitemap.xml
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+Build Completed in /vercel/output [34s]
+Deploying outputs...
+▲ Production      https://easygas-client-demo-ourre4jn5-onaopemipos-projects.vercel.app
+Completing…

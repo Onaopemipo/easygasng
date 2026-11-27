@@ -1,0 +1,112 @@
+{
+  "runId": "36a554ec-a6c1-4c87-a079-bccfeb5a3309",
+  "group": "base",
+  "environment": "Deployed Vercel demo; labelled synthetic QA branches only",
+  "cases": [
+    {
+      "id": "ADM-H01-inventory-and-policy",
+      "status": "PASS",
+      "detail": {
+        "definitions": 76,
+        "mutable": 70,
+        "locked": [
+          "delivery.zones",
+          "price.refill-12",
+          "price.refill-25",
+          "price.refill-50",
+          "price.refill-6",
+          "security.policy"
+        ]
+      }
+    },
+    {
+      "id": "ADM-H02-direct-setting",
+      "status": "PASS",
+      "detail": {
+        "requestId": "9f4bc4eb-0d5c-4a70-927b-5e34c3673a22",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H03-draft-edit-submit",
+      "status": "FAIL",
+      "error": "approval.submit: 400 {\"error\":\"Too small: expected string to have >=5 characters\"}"
+    },
+    {
+      "id": "ADM-H04-staff-request-one-admin-decision",
+      "status": "PASS",
+      "detail": {
+        "requestId": "9586cc1f-d633-449d-8034-28a43549bef0",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      }
+    },
+    {
+      "id": "ADM-H05-admin-delegation",
+      "status": "FAIL",
+      "error": "delegation.request: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H06-direct-reward-points",
+      "status": "FAIL",
+      "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H07-reward-reversal",
+      "status": "FAIL",
+      "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H08-credit-and-replay",
+      "status": "FAIL",
+      "error": "credit.request: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H09-own-pos-cash-up",
+      "status": "FAIL",
+      "error": "pos.verify: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H10-own-expense-record-pay-reverse",
+      "status": "FAIL",
+      "error": "expense.create: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H11-inventory-correction-stocktake",
+      "status": "FAIL",
+      "error": "inventory.adjust: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H12-purchase-and-branch-transfer",
+      "status": "FAIL",
+      "error": "purchase.create: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H13-campaign-with-no-recipients",
+      "status": "FAIL",
+      "error": "campaign.decide: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H14-compatibility-own-review",
+      "status": "FAIL",
+      "error": "compatibility.review: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    },
+    {
+      "id": "ADM-H15-recommendation-own-review",
+      "status": "FAIL",
+      "error": "recommendation.approve: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"77fbbefcf819f21243e0e14c009631eea7d2687ff398779d37d52a1c7bd8be3d\"}"
+    },
+    {
+      "id": "ADM-H16-direct-staff-access-and-self-denial",
+      "status": "FAIL",
+      "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+    }
+  ],
+  "status": "FAIL",
+  "total": 16,
+  "passed": 3,
+  "failed": 13
+}

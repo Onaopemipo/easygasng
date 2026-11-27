@@ -1,0 +1,52 @@
+(node:73919) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ RECOVERY-01: shared independent approval atomically reconciles measured loss and releases only vehicle buffer once (1068.135ms)
+✔ RECOVERY-02: changed balances, stale versions and disabled release cannot activate a stock recovery (779.022583ms)
+✔ RECOVERY-03: future measurements, insufficient reserved stock and expired maker qualifications fail closed (789.07225ms)
+(node:73935) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ F,N: operational dashboard and sales inventory must not expose financial metrics or costs (1263.602625ms)
+✔ A–E,M: governed corrections preserve reservations, stale counts fail and movements cannot be altered (908.227084ms)
+✔ G,H,L,N,O: branch tampering, protected exports, suspended accounts and forged permissions fail closed (858.036916ms)
+✖ I,J,P: expenses require independent approval, real payment evidence and append-only reversal (838.026375ms)
+✔ controlled transfers reserve, dispatch, partially receive and quarantine damage without duplicate effects (914.117125ms)
+✔ supplier purchases do not add stock; independently approved partial receipts cannot overreceive (849.08ms)
+✔ report availability schedules deduplicate, recheck roles and never claim external delivery (818.297709ms)
+✔ K: quarantine release requires current independently documented qualifications; failed qualifications do not change custody (833.643459ms)
+✔ valuation uses an approved method and complete acquisition movements, never selling prices (869.093792ms)
+✔ E: competing corrections cannot apply stale snapshots or lose updates in serialized PGlite (837.155292ms)
+✔ stocktake sessions snapshot categories, generate scoped count sheets, reconcile all counts and reject intervening movements (885.906584ms)
+(node:73951) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ SVC-CANCEL01: late pre-work cancellation uses existing independent finance approval and preserves money (1408.380875ms)
+✔ SVC-CANCEL02: changed booking and chargeable work invalidate pre-work cancellation authority (960.161875ms)
+ℹ tests 16
+ℹ suites 0
+ℹ pass 15
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 16110.108709
+
+✖ failing tests:
+
+test at tests/inventory-finance.test.ts:1:7065
+✖ I,J,P: expenses require independent approval, real payment evidence and append-only reversal (838.026375ms)
+  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /independently/. Input:
+
+  'Error: Approve and record this expense before recording payment evidence. One Admin approval is final.'
+
+      at async TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/tests/inventory-finance.test.ts:328:5)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: Error: Approve and record this expense before recording payment evidence. One Admin approval is final.
+        at inventoryBusiness (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/inventory-business.ts:1762:13)
+        at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/admin-single-approval/git-worktree/apps/web/lib/service.ts:799:31)
+        at async <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/node_modules/@electric-sql/pglite/src/base.ts:494:24),
+    expected: /independently/,
+    operator: 'rejects',
+    diff: 'simple'
+  }

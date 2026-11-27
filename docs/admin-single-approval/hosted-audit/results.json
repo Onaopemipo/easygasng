@@ -1,0 +1,2173 @@
+{
+  "status": "PASS",
+  "scope": "Admin business authorisation; genuine evidence, customer consent and self-privilege/technical-qualification restrictions remain",
+  "total": 117,
+  "passed": 117,
+  "failed": 0,
+  "excluded": 0,
+  "normalReleaseOrCandidateChecks": 114,
+  "temporaryQaChecks": 3,
+  "settingChecks": 76,
+  "mutableSettings": 70,
+  "lockedSettings": 6,
+  "workflowChecks": 41,
+  "activationLimit": "All 70 mutable original settings exercised through scheduled approval and cancellation; sensitive/global settings were not activated. Domain activation separately exercised by workflow cases.",
+  "stableDoorstepEnabled": false,
+  "noSecondBusinessApproverObserved": true,
+  "historicalFailuresRetained": true,
+  "cases": [
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H01-inventory-and-policy",
+      "status": "PASS",
+      "detail": {
+        "definitions": 76,
+        "mutable": 70,
+        "locked": [
+          "delivery.zones",
+          "price.refill-12",
+          "price.refill-25",
+          "price.refill-50",
+          "price.refill-6",
+          "security.policy"
+        ]
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H02-direct-setting",
+      "status": "PASS",
+      "detail": {
+        "requestId": "3c6c3214-386c-400c-9186-8f432aa750bd",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "normal-candidate-final.json",
+      "deploymentUrl": "https://easygas-client-demo-occ826c81-onaopemipos-projects.vercel.app",
+      "id": "ADM-H03-draft-edit-submit",
+      "status": "PASS",
+      "detail": {
+        "requestId": "7cabf3dc-17be-4271-b00a-b659c26532f9",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H03-draft-edit-submit",
+          "status": "FAIL",
+          "error": "approval.submit: 400 {\"error\":\"Too small: expected string to have >=5 characters\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H04-staff-request-one-admin-decision",
+      "status": "PASS",
+      "detail": {
+        "requestId": "e6f1a5fc-6ccf-4def-86b9-a99504f0bb4d",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H05-admin-delegation",
+      "status": "PASS",
+      "detail": {
+        "id": "e1ea6f8c-653e-4009-9513-5cec18bff524",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H05-admin-delegation",
+          "status": "FAIL",
+          "error": "delegation.request: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H06-direct-reward-points",
+      "status": "PASS",
+      "detail": {
+        "requestId": "2f99b6b6-2c09-4d14-ad51-b0793017e26f",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H06-direct-reward-points",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H07-reward-reversal",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c90cacbe-ca1a-4690-9fb4-469a61660015",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H07-reward-reversal",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H08-credit-and-replay",
+      "status": "PASS",
+      "detail": {
+        "id": "96d70aa1-671d-4442-bee9-f53a55d74377",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H08-credit-and-replay",
+          "status": "FAIL",
+          "error": "credit.request: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H09-own-pos-cash-up",
+      "status": "PASS",
+      "detail": {
+        "id": "db0e3273-ba3a-4626-9967-4aae9fd1c639",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H09-own-pos-cash-up",
+          "status": "FAIL",
+          "error": "pos.verify: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H10-own-expense-record-pay-reverse",
+      "status": "PASS",
+      "detail": {
+        "requestId": "deff564d-4cb2-4d6f-8e00-dc31d505aae1",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H10-own-expense-record-pay-reverse",
+          "status": "FAIL",
+          "error": "expense.create: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-stocktake-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H11-inventory-correction-stocktake",
+      "status": "PASS",
+      "detail": {
+        "requestId": "042f08e7-0326-40eb-9f16-fc1236d415ef",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H11-inventory-correction-stocktake",
+          "status": "FAIL",
+          "error": "inventory.adjust: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        },
+        {
+          "report": "base-final.json",
+          "id": "ADM-H11-inventory-correction-stocktake",
+          "status": "FAIL",
+          "error": "inventory.stocktake: 409 {\"error\":\"Adjustment must change stock without consuming active reservations.\",\"code\":\"INVALID_REQUEST\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H12-purchase-and-branch-transfer",
+      "status": "PASS",
+      "detail": {
+        "purchase": "f6fc6e48-4ecf-4a85-83cb-ac797d56ad81",
+        "transfer": "fe4238eb-740c-4b3d-8b1b-cc69e12272db",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H12-purchase-and-branch-transfer",
+          "status": "FAIL",
+          "error": "purchase.create: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H13-campaign-with-no-recipients",
+      "status": "PASS",
+      "detail": {
+        "id": "5a186d59-3a72-48ea-87f1-833a74bcaca2",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H13-campaign-with-no-recipients",
+          "status": "FAIL",
+          "error": "campaign.decide: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H14-compatibility-own-review",
+      "status": "PASS",
+      "detail": {
+        "id": "f83f5c76-754d-48c9-9463-64413281d247",
+        "otherApprovers": 0,
+        "verifiedCompatibilityNotClaimed": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H14-compatibility-own-review",
+          "status": "FAIL",
+          "error": "compatibility.review: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "base-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H15-recommendation-own-review",
+      "status": "PASS",
+      "detail": {
+        "id": "fe5627fb-063e-4f91-9da0-f6a7f34bcda4",
+        "otherApprovers": 0,
+        "published": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H15-recommendation-own-review",
+          "status": "FAIL",
+          "error": "recommendation.approve: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"77fbbefcf819f21243e0e14c009631eea7d2687ff398779d37d52a1c7bd8be3d\"}"
+        }
+      ]
+    },
+    {
+      "report": "normal-candidate-final.json",
+      "deploymentUrl": "https://easygas-client-demo-occ826c81-onaopemipos-projects.vercel.app",
+      "id": "ADM-H16-direct-staff-access-and-self-denial",
+      "status": "PASS",
+      "detail": {
+        "requestId": "0d10d3d5-b5f9-4442-8d92-7bde8f3ff033",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "base.json",
+          "id": "ADM-H16-direct-staff-access-and-self-denial",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\",\"verificationContext\":\"a91cf8750441d5628ffde8a6122f1285ec82630ba383c57924cc29b6f7c1c362\"}"
+        }
+      ]
+    },
+    {
+      "report": "bulk.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H17-bulk-discrepancy-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c6de3528-91ad-4535-9327-6bc0f7a89133",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "service-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H18-service-config-and-checklist",
+      "status": "PASS",
+      "detail": {
+        "otherApprovers": 0,
+        "branch": "qa-admin-efc071d8-902"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "service-fresh-quote.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H19-service-quotation-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "e2564630-7213-4aca-bceb-2e93bd540ffd",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "service-cash-candidate-v3.json",
+      "deploymentUrl": "https://easygas-client-demo-ourre4jn5-onaopemipos-projects.vercel.app",
+      "id": "ADM-H20-service-own-cash-verification",
+      "status": "PASS",
+      "detail": {
+        "id": "17c9aeb3-4253-4557-bd18-2c724229a652",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "service-final.json",
+          "id": "ADM-H20-service-own-cash-verification",
+          "status": "FAIL",
+          "error": "booking.cash.record: 403 {\"error\":\"Your account does not have permission for this action.\",\"code\":\"FORBIDDEN\"}"
+        }
+      ]
+    },
+    {
+      "report": "service-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H21-own-service-invoice-correction",
+      "status": "PASS",
+      "detail": {
+        "id": "8745c4af-5d43-4bca-8e4e-6795ddcd6db1",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "service-recovery-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H22-service-material-recovery",
+      "status": "PASS",
+      "detail": {
+        "requestId": "44f78cbc-cf6f-43b9-be1d-208c97970710",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "service-final.json",
+          "id": "ADM-H22-service-material-recovery",
+          "status": "FAIL",
+          "error": "booking.work.start: 409 {\"error\":\"Reconcile the service invoice and current approved scope before chargeable work.\",\"code\":\"INVALID_REQUEST\"}"
+        }
+      ]
+    },
+    {
+      "report": "service-recovery-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H23-exception-settlement-and-customer-consent",
+      "status": "PASS",
+      "detail": {
+        "requestId": "89d07416-baf0-404b-aef3-0696bc00e37b",
+        "otherApprovers": 0,
+        "customerConsentRecorded": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "bulk.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H24-physical-payload-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "79b65040-0b38-477c-954f-ee77fe352d18",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "manifest-protected-qa-final.json",
+      "deploymentUrl": "https://easygas-client-demo-1zneiiijk-onaopemipos-projects.vercel.app",
+      "id": "ADM-H25-manifest-discrepancy-own-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "75509258-7116-49df-b0ba-cf7ae05774f7",
+        "otherApprovers": 0
+      },
+      "environment": "Temporary authenticated QA deployment; stable feature remains disabled",
+      "priorFailures": [
+        {
+          "report": "bulk.json",
+          "id": "ADM-H25-manifest-discrepancy-own-admin",
+          "status": "FAIL",
+          "error": "manifest.issue: 503 {\"error\":\"Vehicle product operations require operational release approval.\",\"code\":\"INVALID_REQUEST\"}"
+        }
+      ]
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H26-direct-reward-operation-and-replay",
+      "status": "PASS",
+      "detail": {
+        "entryId": "7f697a09-5cf5-4f2b-8808-eadd0c8c77da",
+        "otherApprovers": 0,
+        "replayCreatesSecondEntry": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H27-direct-staff-privileges",
+      "status": "PASS",
+      "detail": {
+        "userId": "d8e695d8-d4c1-481b-8ab5-d501c02ef7cd",
+        "otherApprovers": 0,
+        "restoredRoleDefaults": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H28-accepted-invitation-one-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "22f6d0cb-a9b0-4845-bb5c-159afc8854fb",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "recipientAcceptedBeforeApproval": true,
+        "invitationPreparedWithoutSendingEmail": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H29-own-order-invoice-credit-note",
+      "status": "PASS",
+      "detail": {
+        "noteId": "7f804abf-c9a5-4ae2-9b02-6afc9ff5643e",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H30-own-order-cash-reconciliation",
+      "status": "PASS",
+      "detail": {
+        "collectionId": "45a3c788-2d68-48de-8252-ecc0927166ce",
+        "otherApprovers": 0,
+        "precondition": "Labelled synthetic cash collection and delivered fixture; no actual delivery claimed"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H31-testimonial-moderation-one-admin",
+      "status": "PASS",
+      "detail": {
+        "id": "2160d3e5-6c8b-4bef-b6d2-2c80beebd902",
+        "otherApprovers": 0,
+        "publiclyPublished": false,
+        "customerConsentWithdrawnAfterTest": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H32-refund-one-admin-and-replay",
+      "status": "PASS",
+      "detail": {
+        "id": "206dfc2b-5555-4cb5-a4e2-ae7dd04cc377",
+        "otherApprovers": 0,
+        "customerRequestedWalletCredit": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H33-prework-cancellation-own-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c23389d4-cad6-493e-b6c3-8a5c048c07c2",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H34-incident-resolution-one-admin",
+      "status": "PASS",
+      "detail": {
+        "id": "07ecf56e-6638-4266-89e5-c588dc82f18f",
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H35-referral-risk-hold-clear",
+      "status": "PASS",
+      "detail": {
+        "reviews": [
+          {
+            "requestId": "d02689a9-cba2-4626-b415-cea3a3be8da5",
+            "status": "active",
+            "adminAuthorisations": 1,
+            "otherApprovers": 0
+          },
+          {
+            "requestId": "2cc283d0-8344-4617-867b-0825a6179470",
+            "status": "active",
+            "adminAuthorisations": 1,
+            "otherApprovers": 0
+          }
+        ],
+        "otherApprovers": 0,
+        "noReferralAwardIssued": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H36-quarantine-release-own-admin",
+      "status": "PASS",
+      "detail": {
+        "requestId": "55376ba5-af11-4918-8ee1-c3e42d0b40c6",
+        "status": "active",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H37-batch-stocktake-one-admin",
+      "status": "PASS",
+      "detail": {
+        "id": "5f9e9d36-8b63-47a2-b29a-8e3504d2890b",
+        "proofs": [
+          {
+            "requestId": "1141f9c3-63c3-412f-b1a3-5c445132728b",
+            "status": "active",
+            "adminAuthorisations": 1,
+            "otherApprovers": 0
+          }
+        ],
+        "otherApprovers": 0
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "supplemental-initial.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H38-qualification-record-and-self-elevation-guard",
+      "status": "PASS",
+      "detail": {
+        "id": "6baca1de-acd9-466b-8939-4b315a4c5d67",
+        "otherApprovers": 0,
+        "adminCannotInventOwnPhysicalQualification": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "security-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-H39-unauthenticated-and-cross-branch-denials",
+      "status": "PASS",
+      "detail": {
+        "anonymousDenied": true,
+        "nonAdminCrossBranchDenied": true,
+        "customerCannotAddPoints": true
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "doorstep-final.json",
+      "deploymentUrl": "https://easygas-client-demo-de8x6pj0g-onaopemipos-projects.vercel.app",
+      "id": "ADM-H40-doorstep-gas-cash-one-admin",
+      "status": "PASS",
+      "detail": {
+        "amendmentId": "ae29cc0c-b0e0-497b-9cce-92a610cbfa28",
+        "noteId": "7d81e6f6-7b91-41eb-a4a1-668ef3f5b343",
+        "otherApprovers": 0,
+        "temporaryQaDeploymentOnly": true,
+        "stableReleaseFlagUnchanged": true,
+        "receiptPrecondition": "Clearly labelled synthetic fixture prepared through restricted SQL; driver report not claimed successful",
+        "idempotentVerification": true
+      },
+      "environment": "Temporary authenticated QA deployment; stable feature remains disabled",
+      "priorFailures": [
+        {
+          "report": "doorstep-initial.json",
+          "id": "ADM-H40-doorstep-gas-cash-one-admin",
+          "status": "FAIL",
+          "error": "doorstep.collection.report: 409 {\"error\":\"Current arrived visit and unchanged assignment/version required.\",\"code\":\"INVALID_REQUEST\"}"
+        }
+      ]
+    },
+    {
+      "report": "doorstep-final.json",
+      "deploymentUrl": "https://easygas-client-demo-de8x6pj0g-onaopemipos-projects.vercel.app",
+      "id": "ADM-H41-doorstep-products-cash-one-admin",
+      "status": "PASS",
+      "detail": {
+        "amendmentId": "ae2c0024-b3e1-4992-a1c8-9d0c34b70567",
+        "noteId": "f0b04805-0e5e-486b-83c4-f4924ba387a2",
+        "otherApprovers": 0,
+        "temporaryQaDeploymentOnly": true,
+        "stableReleaseFlagUnchanged": true,
+        "receiptPrecondition": "Clearly labelled synthetic fixture prepared through restricted SQL; driver report not claimed successful",
+        "idempotentVerification": true
+      },
+      "environment": "Temporary authenticated QA deployment; stable feature remains disabled",
+      "priorFailures": [
+        {
+          "report": "doorstep-initial.json",
+          "id": "ADM-H41-doorstep-products-cash-one-admin",
+          "status": "FAIL",
+          "error": "doorstep.products.collection.report: 409 {\"error\":\"Current unchanged arrived assignment is required.\",\"code\":\"INVALID_REQUEST\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-business.hours",
+      "status": "PASS",
+      "detail": {
+        "requestId": "23131b6c-0131-401d-9c20-c274eb04766d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "business.hours",
+        "valueType": "text",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-checklist.cooker-installation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "72a4a0a9-0def-4f45-9b51-4ed4cfed95b0",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "checklist.cooker-installation",
+        "valueType": "checklist",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-checklist.cooker-installation",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-checklist.cooker-servicing",
+      "status": "PASS",
+      "detail": {
+        "requestId": "acd7128c-43ae-444d-ba25-5ab1afd9794a",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "checklist.cooker-servicing",
+        "valueType": "checklist",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-checklist.cooker-servicing",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-checklist.cylinder-installation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "550d2ae9-05da-43fe-a5bb-05a146656453",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "checklist.cylinder-installation",
+        "valueType": "checklist",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-checklist.cylinder-installation",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-checklist.cylinder-maintenance",
+      "status": "PASS",
+      "detail": {
+        "requestId": "e13a49c6-aae8-4504-986a-a2b21c6b760d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "checklist.cylinder-maintenance",
+        "valueType": "checklist",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-checklist.cylinder-maintenance",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-checklist.gas-safety-check",
+      "status": "PASS",
+      "detail": {
+        "requestId": "cc59a1bd-34a4-4dc4-9992-acbc11a536f1",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "checklist.gas-safety-check",
+        "valueType": "checklist",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-checklist.gas-safety-check",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-crm.retention",
+      "status": "PASS",
+      "detail": {
+        "requestId": "49ebfd80-014f-4947-b9b9-896cacf61581",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "crm.retention",
+        "valueType": "crm_retention",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-delivery.capacity",
+      "status": "PASS",
+      "detail": {
+        "requestId": "f81e9795-265e-4bb0-8347-513d7387b636",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "delivery.capacity",
+        "valueType": "integer",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-delivery.enabled",
+      "status": "PASS",
+      "detail": {
+        "requestId": "b212f57f-688c-49ab-9cd0-7f4a2a2fffbd",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "delivery.enabled",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-delivery.fee",
+      "status": "PASS",
+      "detail": {
+        "requestId": "8a747116-de8a-4d18-9a42-b3a68563210b",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "delivery.fee",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-delivery.windows",
+      "status": "PASS",
+      "detail": {
+        "requestId": "55dfe800-6080-451e-bd26-08d7c2b7b0dc",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "delivery.windows",
+        "valueType": "text",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-delivery.zones",
+      "status": "PASS",
+      "detail": {
+        "key": "delivery.zones",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-dispatch.routing",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c25b9ade-6c89-4d80-8dc0-cf8f397d4166",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "dispatch.routing",
+        "valueType": "dispatch_routing",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-document.identity",
+      "status": "PASS",
+      "detail": {
+        "requestId": "8c1e7c86-e33a-45b7-9596-8d15c553407f",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "document.identity",
+        "valueType": "document_identity",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-document.identity",
+          "status": "FAIL",
+          "error": "setting.propose: 400 {\"error\":\"Invalid input: expected object, received null\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-gas.price_per_kg",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c6d52eb9-bba9-4ad0-b38c-37d3b3750e8d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "gas.price_per_kg",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-gas.quantity_policy",
+      "status": "PASS",
+      "detail": {
+        "requestId": "fd8ee66f-fcbb-434f-bf71-b83e3486149f",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "gas.quantity_policy",
+        "valueType": "gas_policy",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-inventory.valuation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "ead8f0a2-9d11-43a0-a0cf-f20decfd7a60",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "inventory.valuation",
+        "valueType": "inventory_valuation",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.cancellation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "d92bd770-42e4-4b13-99c1-658480329c20",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.cancellation",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.delivery",
+      "status": "PASS",
+      "detail": {
+        "requestId": "8f584572-377e-4d20-848d-59a68855a6da",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.delivery",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.loyalty",
+      "status": "PASS",
+      "detail": {
+        "requestId": "086c34e0-c94f-4b33-8081-9126cc89b867",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.loyalty",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.privacy",
+      "status": "PASS",
+      "detail": {
+        "requestId": "6402cf2c-229a-4587-9e66-7435d4eb7fc2",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.privacy",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.purchase-credit",
+      "status": "PASS",
+      "detail": {
+        "requestId": "57b6a3d3-11b1-4c49-9383-96e6d91847ce",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.purchase-credit",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.refund",
+      "status": "PASS",
+      "detail": {
+        "requestId": "102b7b8a-6d63-47be-bd76-e74ce55c2f1c",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.refund",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.service-booking",
+      "status": "PASS",
+      "detail": {
+        "requestId": "b8a3903a-d4e3-4f3c-824b-d7591fa3d68a",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.service-booking",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.terms",
+      "status": "PASS",
+      "detail": {
+        "requestId": "4910d79f-06cf-40ec-af24-0098371dfce7",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.terms",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-legal.warranty",
+      "status": "PASS",
+      "detail": {
+        "requestId": "4b26df20-3376-4209-b5f4-b65ec5083dba",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "legal.warranty",
+        "valueType": "legal",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-location.qa-admin-9d851fa3-ad8-ajah",
+      "status": "PASS",
+      "detail": {
+        "requestId": "5b7b8628-e583-41d1-b840-4b351d2b9bde",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "location.qa-admin-9d851fa3-ad8-ajah",
+        "valueType": "location",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-location.qa-admin-9d851fa3-ad8-island",
+      "status": "PASS",
+      "detail": {
+        "requestId": "f83e64e2-81a4-458d-909b-f52e8744c741",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "location.qa-admin-9d851fa3-ad8-island",
+        "valueType": "location",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-location.qa-admin-9d851fa3-ad8-lekki",
+      "status": "PASS",
+      "detail": {
+        "requestId": "4445a442-f273-4517-8fda-075476c6022d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "location.qa-admin-9d851fa3-ad8-lekki",
+        "valueType": "location",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-location.qa-admin-9d851fa3-ad8-victoria-island",
+      "status": "PASS",
+      "detail": {
+        "requestId": "9bc9e85b-ae15-4bce-a074-1c4121f4a0b8",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "location.qa-admin-9d851fa3-ad8-victoria-island",
+        "valueType": "location",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.adjustment",
+      "status": "PASS",
+      "detail": {
+        "requestId": "76e63d4f-517d-456c-9dfd-293ad3944b08",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.adjustment",
+        "valueType": "rewards_adjustment",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.credit_per_point",
+      "status": "PASS",
+      "detail": {
+        "requestId": "1c53e0e6-16b7-4a77-ac7e-c1d84efdce2c",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.credit_per_point",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.enabled",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c5343f6f-036f-4d8a-aae8-1c9c036a906d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.enabled",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.policy",
+      "status": "PASS",
+      "detail": {
+        "requestId": "a2175358-8219-42c3-bf0f-76844e4171fa",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.policy",
+        "valueType": "rewards_policy",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.referral_review",
+      "status": "PASS",
+      "detail": {
+        "requestId": "f8deb1e3-13f7-4739-904a-3506a9898ce6",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.referral_review",
+        "valueType": "referral_review",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-loyalty.spend_per_point",
+      "status": "PASS",
+      "detail": {
+        "requestId": "01bf00f4-73b6-4e2f-bad9-fddd0c97251c",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "loyalty.spend_per_point",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-payment.cod",
+      "status": "PASS",
+      "detail": {
+        "requestId": "d2e8c81e-40ca-497c-b65b-2a3542dd573f",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "payment.cod",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-payment.gateway",
+      "status": "PASS",
+      "detail": {
+        "requestId": "491b5cb3-a111-4836-b940-cd7325b99531",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "payment.gateway",
+        "valueType": "payment_gateway",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-payment.gateway",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-payment.integration",
+      "status": "PASS",
+      "detail": {
+        "requestId": "4d3d2c77-91e0-48e6-911e-247b29bfca5e",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "payment.integration",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-payment.settlement",
+      "status": "PASS",
+      "detail": {
+        "requestId": "31bc9a9f-7953-47c6-8c62-c4f46f02483d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "payment.settlement",
+        "valueType": "bank",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.burner",
+      "status": "PASS",
+      "detail": {
+        "requestId": "a8f5aef4-861c-4df1-94ea-121efca92a9b",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.burner",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.cylinder-empty-12",
+      "status": "PASS",
+      "detail": {
+        "requestId": "5bf099f9-264f-4f52-855b-a196f7d677f3",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.cylinder-empty-12",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.cylinder-empty-25",
+      "status": "PASS",
+      "detail": {
+        "requestId": "63f7a2ef-316e-4eb8-94be-ec25a0a26ac6",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.cylinder-empty-25",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.cylinder-empty-50",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c8119298-e8bc-454a-9256-9a8be251cad7",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.cylinder-empty-50",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.cylinder-empty-6",
+      "status": "PASS",
+      "detail": {
+        "requestId": "44ddc8c8-4cde-4526-92ab-bcc3753b6a25",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.cylinder-empty-6",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.hose",
+      "status": "PASS",
+      "detail": {
+        "requestId": "e2128619-b273-47b9-b115-09453b506e87",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.hose",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.kit",
+      "status": "PASS",
+      "detail": {
+        "requestId": "142067ce-b3e9-4bb7-ac97-b30f02f913ba",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.kit",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.refill-12",
+      "status": "PASS",
+      "detail": {
+        "key": "price.refill-12",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.refill-25",
+      "status": "PASS",
+      "detail": {
+        "key": "price.refill-25",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.refill-50",
+      "status": "PASS",
+      "detail": {
+        "key": "price.refill-50",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.refill-6",
+      "status": "PASS",
+      "detail": {
+        "key": "price.refill-6",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-price.regulator",
+      "status": "PASS",
+      "detail": {
+        "requestId": "06a49c94-5503-4280-bb3a-43bb94961bc7",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "price.regulator",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.burner",
+      "status": "PASS",
+      "detail": {
+        "requestId": "a9e7a59b-3ae3-4803-86b9-ebb8ac8e9581",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.burner",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.cylinder-empty-12",
+      "status": "PASS",
+      "detail": {
+        "requestId": "6dccb51d-eae5-4808-a52e-126ae553d349",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.cylinder-empty-12",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.cylinder-empty-25",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c8d9d68e-9049-4e35-a9be-bddbd17b6436",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.cylinder-empty-25",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.cylinder-empty-50",
+      "status": "PASS",
+      "detail": {
+        "requestId": "665b1b58-ed37-4543-b236-895ce9037d8d",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.cylinder-empty-50",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.cylinder-empty-6",
+      "status": "PASS",
+      "detail": {
+        "requestId": "3ac59144-6a13-482c-853c-6ef1f3e90331",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.cylinder-empty-6",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.hose",
+      "status": "PASS",
+      "detail": {
+        "requestId": "ba9dfc68-2407-48da-831e-88c7b6cadc58",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.hose",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.kit",
+      "status": "PASS",
+      "detail": {
+        "requestId": "5c70dd56-3ad3-43e1-b127-0c09d35bf520",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.kit",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.refill-12",
+      "status": "PASS",
+      "detail": {
+        "requestId": "7602a4bc-ee6b-48fc-aee1-f34e356a9f53",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.refill-12",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.refill-25",
+      "status": "PASS",
+      "detail": {
+        "requestId": "811e8119-e2f9-4f53-b844-c23c4fec5aca",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.refill-25",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.refill-50",
+      "status": "PASS",
+      "detail": {
+        "requestId": "7dc0015c-2d6d-481c-92e3-3ec5c9065cfc",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.refill-50",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.refill-6",
+      "status": "PASS",
+      "detail": {
+        "requestId": "2b70a650-5787-4ea4-b99d-5a61c124ea80",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.refill-6",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-publish.regulator",
+      "status": "PASS",
+      "detail": {
+        "requestId": "55c1cc85-e548-4512-972e-ff11c0993f61",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "publish.regulator",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-security.permissions",
+      "status": "PASS",
+      "detail": {
+        "requestId": "76536675-6a76-4167-ada0-568c34651d7a",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "security.permissions",
+        "valueType": "access",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-security.permissions",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-security.policy",
+      "status": "PASS",
+      "detail": {
+        "key": "security.policy",
+        "locked": true,
+        "secondApproverRequired": false
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-service.cooker-installation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "c3f43dc4-efe8-43ed-b3b7-d6ae448bac4b",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "service.cooker-installation",
+        "valueType": "service",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-service.cooker-installation",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-service.cooker-servicing",
+      "status": "PASS",
+      "detail": {
+        "requestId": "5f354bbc-f1bb-41b2-accd-7c5430f094f4",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "service.cooker-servicing",
+        "valueType": "service",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-service.cooker-servicing",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-service.cylinder-installation",
+      "status": "PASS",
+      "detail": {
+        "requestId": "a502924d-2b43-4045-8d7f-fe5cf7a9509c",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "service.cylinder-installation",
+        "valueType": "service",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-service.cylinder-installation",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-service.cylinder-maintenance",
+      "status": "PASS",
+      "detail": {
+        "requestId": "acf82ada-52d5-45f5-b87b-9fa9267a6d6f",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "service.cylinder-maintenance",
+        "valueType": "service",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-service.cylinder-maintenance",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-service.gas-safety-check",
+      "status": "PASS",
+      "detail": {
+        "requestId": "d1928df9-486a-4d04-966a-df4636bc4f2c",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "service.gas-safety-check",
+        "valueType": "service",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-service.gas-safety-check",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-subscription.enabled",
+      "status": "PASS",
+      "detail": {
+        "requestId": "bb4b11ea-992c-4195-8673-5b9fcd5849bf",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "subscription.enabled",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-testimonials.policy",
+      "status": "PASS",
+      "detail": {
+        "requestId": "a4da2a0d-c418-4ecb-8ef1-168c58744e2f",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "testimonials.policy",
+        "valueType": "testimonial_policy",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-testimonials.policy",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-wallet.enabled",
+      "status": "PASS",
+      "detail": {
+        "requestId": "84a0a5a1-d8b9-45ee-98dd-b79e879672e8",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "wallet.enabled",
+        "valueType": "boolean",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-wallet.maximum",
+      "status": "PASS",
+      "detail": {
+        "requestId": "8b9775d1-24cf-43f9-9654-0e63a57aa639",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "wallet.maximum",
+        "valueType": "money",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": []
+    },
+    {
+      "report": "settings-recheck-final.json",
+      "deploymentUrl": "https://easygas-client-demo.vercel.app",
+      "id": "ADM-SETTING-website.content",
+      "status": "PASS",
+      "detail": {
+        "requestId": "7404cf7c-fa0c-4b8b-b309-f266720ae495",
+        "status": "scheduled",
+        "adminAuthorisations": 1,
+        "otherApprovers": 0,
+        "key": "website.content",
+        "valueType": "website_content",
+        "domainActivated": false,
+        "test": "One Admin schedules; immediately cancelled before any operational/global side effect"
+      },
+      "environment": "Normal demo release / same-source candidate",
+      "priorFailures": [
+        {
+          "report": "settings.json",
+          "id": "ADM-SETTING-website.content",
+          "status": "FAIL",
+          "error": "setting.propose: 403 {\"error\":\"Verify your password again before this sensitive action.\",\"code\":\"REAUTH_REQUIRED\"}"
+        }
+      ]
+    }
+  ],
+  "productionDecision": "NO-GO; prior import/native/provider/retention and other holds retained",
+  "releaseLineage": {
+    "initialDemo085": "dpl_Ccmz2843ctyDHaYJkTSsHZtAwjNT",
+    "normalFixV2": "dpl_HVSuDpUabm6TDXQRWRnhdpiFYu9P",
+    "currentNormalV3": "dpl_Fi7zpG1R5Ex39d1tFyQyFYqseLM4",
+    "manifestQaRemoved": "dpl_2whRpv2MSvPazat3GBUdYAD3t6Zk",
+    "doorstepQaRemoved": "dpl_GEERQfqwF3qZi85NSm2o46k2ZGh1"
+  },
+  "releaseEvidenceLimit": "Checks span the verified demo085 release lineage. Every discovered defect was rechecked after its fix. The shared approval policy and unchanged handlers carry into the latest release; this is not a claim that every historical check reran after each copy-only change.",
+  "canonicalAuthorisationProof": "canonical-authority.json"
+}
