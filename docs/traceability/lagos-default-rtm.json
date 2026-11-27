@@ -37,16 +37,24 @@
         "docs/lagos-default/evidence/build.txt",
         "docs/lagos-default/evidence/operator-migration-test.txt",
         "docs/lagos-default/evidence/local-browser.json",
-        "docs/lagos-default/evidence/release-source.json"
+        "docs/lagos-default/evidence/release-source.json",
+        "docs/lagos-default/evidence/migration-verification.json",
+        "docs/lagos-default/evidence/migration-result.json",
+        "docs/lagos-default/evidence/hosted-build.txt",
+        "docs/lagos-default/evidence/candidate-hosted.json",
+        "docs/lagos-default/evidence/stable-hosted.json",
+        "docs/lagos-default/evidence/pushed-source-tests.txt",
+        "docs/lagos-default/evidence/git-push.json",
+        "docs/lagos-default/evidence/pushed-regression.txt"
       ],
       "negativeTests": [
         "LAG-REGISTER forged branch/role and inactive Lagos rejected",
         "LAG-CREATE cross-branch Manager default rejected"
       ],
       "acceptanceGate": "LAG-G01",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
-      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "55 regression cases, actual isolated Admin UI save/reopen/default forms, guarded shared084 commit, exact490-file upload and candidate/stable hosted acceptance pass.",
+      "outstandingWork": "None within this bounded demo branch-default phase. Whole-system production holds remain."
     },
     {
       "id": "LAG-02",
@@ -80,16 +88,24 @@
         "docs/lagos-default/evidence/build.txt",
         "docs/lagos-default/evidence/operator-migration-test.txt",
         "docs/lagos-default/evidence/local-browser.json",
-        "docs/lagos-default/evidence/release-source.json"
+        "docs/lagos-default/evidence/release-source.json",
+        "docs/lagos-default/evidence/migration-verification.json",
+        "docs/lagos-default/evidence/migration-result.json",
+        "docs/lagos-default/evidence/hosted-build.txt",
+        "docs/lagos-default/evidence/candidate-hosted.json",
+        "docs/lagos-default/evidence/stable-hosted.json",
+        "docs/lagos-default/evidence/pushed-source-tests.txt",
+        "docs/lagos-default/evidence/git-push.json",
+        "docs/lagos-default/evidence/pushed-regression.txt"
       ],
       "negativeTests": [
         "LAG-GUARD inactive Lagos aborts without false audits",
         "LAG-OPERATOR changed target count and duplicate application abort"
       ],
       "acceptanceGate": "LAG-G02",
-      "status": "PARTIAL",
-      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
-      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "55 regression cases, actual isolated Admin UI save/reopen/default forms, guarded shared084 commit, exact490-file upload and candidate/stable hosted acceptance pass.",
+      "outstandingWork": "None within this bounded demo branch-default phase. Whole-system production holds remain."
     },
     {
       "id": "LAG-03",
@@ -125,16 +141,24 @@
         "docs/lagos-default/evidence/build.txt",
         "docs/lagos-default/evidence/operator-migration-test.txt",
         "docs/lagos-default/evidence/local-browser.json",
-        "docs/lagos-default/evidence/release-source.json"
+        "docs/lagos-default/evidence/release-source.json",
+        "docs/lagos-default/evidence/migration-verification.json",
+        "docs/lagos-default/evidence/migration-result.json",
+        "docs/lagos-default/evidence/hosted-build.txt",
+        "docs/lagos-default/evidence/candidate-hosted.json",
+        "docs/lagos-default/evidence/stable-hosted.json",
+        "docs/lagos-default/evidence/pushed-source-tests.txt",
+        "docs/lagos-default/evidence/git-push.json",
+        "docs/lagos-default/evidence/pushed-regression.txt"
       ],
       "negativeTests": [
         "LAG-EDIT Manager cross-branch move, inactive/unknown destination, NULL branch and staff-account edit rejected",
         "STAFF-PRIV role/branch changes invalidate grants"
       ],
       "acceptanceGate": "LAG-G03",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
-      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "55 regression cases, actual isolated Admin UI save/reopen/default forms, guarded shared084 commit, exact490-file upload and candidate/stable hosted acceptance pass.",
+      "outstandingWork": "None within this bounded demo branch-default phase. Whole-system production holds remain."
     },
     {
       "id": "LAG-04",
@@ -168,45 +192,53 @@
         "docs/lagos-default/evidence/build.txt",
         "docs/lagos-default/evidence/operator-migration-test.txt",
         "docs/lagos-default/evidence/local-browser.json",
-        "docs/lagos-default/evidence/release-source.json"
+        "docs/lagos-default/evidence/release-source.json",
+        "docs/lagos-default/evidence/migration-verification.json",
+        "docs/lagos-default/evidence/migration-result.json",
+        "docs/lagos-default/evidence/hosted-build.txt",
+        "docs/lagos-default/evidence/candidate-hosted.json",
+        "docs/lagos-default/evidence/stable-hosted.json",
+        "docs/lagos-default/evidence/pushed-source-tests.txt",
+        "docs/lagos-default/evidence/git-push.json",
+        "docs/lagos-default/evidence/pushed-regression.txt"
       ],
       "negativeTests": [
         "Operator gate prevents publishing before schema084; hosted check pending"
       ],
       "acceptanceGate": "LAG-G04",
-      "status": "PARTIAL",
-      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
-      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "55 regression cases, actual isolated Admin UI save/reopen/default forms, guarded shared084 commit, exact490-file upload and candidate/stable hosted acceptance pass.",
+      "outstandingWork": "None within this bounded demo branch-default phase. Whole-system production holds remain."
     }
   ],
   "gates": [
     {
       "id": "LAG-G01",
-      "status": "PENDING",
+      "status": "PASS",
       "criterion": "New supported account creation defaults Lagos, explicit branch preserved, published behaviour verified",
       "localStatus": "PASS",
-      "reason": "Hosted migration and rollout pending action-time confirmation"
+      "reason": "Executed local and published API/schema/source evidence satisfies the bounded gate."
     },
     {
       "id": "LAG-G02",
-      "status": "PENDING",
+      "status": "PASS",
       "criterion": "Six existing missing customer branches filled with audits, all other data preserved atomically",
       "localStatus": "PASS",
-      "reason": "Hosted migration and rollout pending action-time confirmation"
+      "reason": "Executed local and published API/schema/source evidence satisfies the bounded gate."
     },
     {
       "id": "LAG-G03",
-      "status": "PENDING",
+      "status": "PASS",
       "criterion": "Admin branch editing and staff governance pass scoped negative tests and published readback",
       "localStatus": "PASS",
-      "reason": "Hosted migration and rollout pending action-time confirmation"
+      "reason": "Executed local and published API/schema/source evidence satisfies the bounded gate."
     },
     {
       "id": "LAG-G04",
-      "status": "PENDING",
+      "status": "PASS",
       "criterion": "Exact bounded candidate/stable rollout, manuals and matrices verified",
       "localStatus": "PASS",
-      "reason": "Hosted migration and rollout pending action-time confirmation"
+      "reason": "Executed local and published API/schema/source evidence satisfies the bounded gate."
     }
   ],
   "productionDecision": "Previous production NO-GO, physical/provider/native/import/retain-all decisions and unrelated work remain.",
@@ -218,38 +250,55 @@
     {
       "date": "2026-11-27",
       "change": "55 regression cases pass, local Customers and staff-invitation browser acceptance and build pass. Default is a managing branch, not delivery coverage. Scope leaves explicit branch assignments intact and staff approvals unchanged. Shared084 and rollout remain pending."
+    },
+    {
+      "date": "2026-11-27",
+      "change": "User approved migration and push/deploy at action time.084 committed, six missing customer branches filled with audits and guarded data preservation. Source9951623 pushed, exact490-file candidate/stable acceptance verified. No points credited, existing branch assignments retained, previous approval policies/production NO-GO and other holds unchanged."
     }
   ],
   "coverage": {
     "total": 4,
     "implemented": 4,
-    "verified": 0,
-    "partial": 2,
-    "implementedUnverified": 2,
+    "verified": 4,
+    "partial": 0,
+    "implementedUnverified": 0,
     "excluded": 0,
     "criticalTotal": 3,
-    "criticalVerified": 0,
+    "criticalVerified": 3,
     "totalGates": 4,
-    "verifiedGates": 0,
+    "verifiedGates": 4,
     "totalRoutes": 5,
     "routesMapped": 5,
     "localBrowserRoutesVerified": 2,
     "hostedBrowserRoutesVerified": 0,
     "regressionCases": 55,
     "regressionPassed": 55,
-    "regressionSkipped": 0
+    "regressionSkipped": 0,
+    "hostedApiChecks": 8,
+    "pushedSourceCases": 11,
+    "pushedSourcePassed": 11,
+    "pushedRegressionPassed": 55,
+    "traceabilityCases": 6
   },
-  "pendingRelease": {
+  "validationEvidence": "docs/lagos-default/evidence/traceability-tests.txt",
+  "release": {
     "baselineDeployment": "dpl_Coy1nPuwgY6Zt9xADSu8AZGQYqsE",
+    "deploymentId": "dpl_3YuDqESnCgxz2Wc1zQ57uwLHdxpe",
+    "demoUrl": "https://easygas-client-demo.vercel.app",
     "sourceFiles": 490,
     "changedExisting": 9,
     "added": 3,
     "unchanged": 478,
-    "sharedMigration": "084 pending",
-    "expectedBackfill": 6,
+    "sharedMigration": "084 applied",
+    "backfilledCustomers": 6,
     "nativeBuild": false,
-    "businessMessages": 0,
-    "migrationStagedNotRun": true
+    "environmentChanges": false,
+    "hostedBusinessProbeWrites": 0,
+    "branch": "codex/lagos-default",
+    "sourceCommit": "9951623"
   },
-  "validationEvidence": "docs/lagos-default/evidence/traceability-tests.txt"
+  "supersedes": [
+    "RADD-RELEASE/RSEL-RELEASE current source bytes for Lagos defaults only",
+    "RSEL-02 missing-branch setup is no longer needed for supported new accounts and the six backfilled demo customers; explicit branches and approval rules unchanged"
+  ]
 }

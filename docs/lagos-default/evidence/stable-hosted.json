@@ -1,0 +1,45 @@
+{
+  "mode": "stable",
+  "base": "https://easygas-client-demo.vercel.app",
+  "checks": [
+    {
+      "id": "LAG-H-DEFAULT",
+      "status": "PASS",
+      "detail": "All existing customer branches are assigned; GY is Lagos; Admin edit capability and active Lagos are advertised."
+    },
+    {
+      "id": "LAG-H-EDIT-GUARDS",
+      "status": "PASS",
+      "detail": "Unauthenticated, Finance, Manager transfer, invalid/empty/null destination requests are rejected without moving a customer."
+    },
+    {
+      "id": "LAG-H-LOOKUP",
+      "status": "PASS",
+      "detail": "Rewards lookup resolves GY in Lagos without initial branch setup; public sign-up rejects forged branch/role input."
+    },
+    {
+      "id": "LAG-H-PRESERVE",
+      "status": "PASS",
+      "detail": "Customer identities/branches, rewards, orders, bookings, stock, finance ledger, fleet, LPG custody, approvals and settings unchanged by acceptance probes; COD remains off."
+    }
+  ],
+  "businessWrites": 0,
+  "status": "PASS",
+  "customer": {
+    "publicReference": "EGC-F67BF504D0CE49B8A9C4ADD61A1EA5D6",
+    "branchBefore": "lagos",
+    "branchAfter": "lagos"
+  },
+  "preservation": {
+    "orders": "a1f5f6da684ad5ba1916da96dfab60c70396f0c1b608f7641cdc1180db5d1d21",
+    "bookings": "13b66bf6b7cecece50b01629bc0b51465d9071cebcd9684dbf80cffc170c9a1f",
+    "inventory": "b87bfcf6d4dfba4f552b6ef5b6c6642efbf7476544ddff5f8f423ed2a16d0a91",
+    "finance.ledger": "8348851b81073c3694417407afd194d247ac721c09e018bd3fe04cd54871245c",
+    "fleet.summary": "24074d98e9d10d91a8b86fe44b0d26a71bbf4072ab64a99ca58f3f8b8c197754",
+    "bulk.summary": "537b2327fb6a3804b00bbf0e0a3ed3928d40af797d98e26c28250cad55bab0d9"
+  },
+  "rewardsHash": "0e4c25153aedf5a37d5565c458c30c7e0e05ae5c29ee35c192d436a1208c5074",
+  "settingsHash": "22d25bb15257b4eaf808714ad56d0b370adf949704bd9cb07856683ed311b0b4",
+  "deploymentId": "dpl_3YuDqESnCgxz2Wc1zQ57uwLHdxpe",
+  "sessionsRevoked": 3
+}

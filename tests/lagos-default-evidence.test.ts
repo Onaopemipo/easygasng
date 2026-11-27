@@ -9,5 +9,6 @@ test('LAG-TRACE: all four stable requirements retain implementation, security, n
 });
 test('LAG-SOURCE: only the twelve reviewed paths differ from the last exact demo source; all 490 dry-run files match their on-disk hashes',async()=>{
  const m=await read('docs/lagos-default/evidence/release-source.json');assert.equal(m.baselineDeployment,'dpl_Coy1nPuwgY6Zt9xADSu8AZGQYqsE');assert.equal(m.expectedSourceFiles,490);assert.equal(m.changedExistingFiles.length,9);assert.equal(m.addedFiles.length,3);assert.equal(m.unchangedSourceFiles,478);assert.equal(m.dryRunSha1Match,true);assert.equal(m.nativeBuild,false);
- const release='.data/lagos-default/release/source/';for(const [p,h]of Object.entries(m.sourceSha256)){assert.equal(createHash('sha256').update(await readFile(release+p)).digest('hex'),h,p);if(!['vercel.json','default-user-branch-schema-check.ts'].includes(p))assert.equal(createHash('sha256').update(await readFile(p)).digest('hex'),h,p+' current workspace');}
+ const dry=await read('docs/lagos-default/evidence/source-files.json');assert.equal(dry.fileCount,490);assert.equal(dry.files.length,490);assert.equal(new Set(dry.files.map((f:any)=>f.path)).size,490);
+ for(const [p,h]of Object.entries(m.sourceSha256)){assert.equal(createHash('sha256').update(await readFile(p)).digest('hex'),h,p+' current source');const listed=dry.files.find((f:any)=>f.path===p);assert(listed,p);assert.equal(createHash('sha1').update(await readFile(p)).digest('hex'),listed.sha,p+' upload hash');}
 });

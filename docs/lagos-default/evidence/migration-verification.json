@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "schemaVersion": "084",
+  "backfilledCustomers": 6,
+  "missingBranches": 0,
+  "default": "'lagos'::text",
+  "project": "silent-sun-90759854",
+  "database": "neondb",
+  "role": "neondb_owner",
+  "script": "docs/lagos-default/apply-migration084.sql",
+  "scriptSha256": "c9a6768d097222dcd0499e0372cd859bfbcec399c0d2bb44053b28a79e3205ce",
+  "assertions": [
+    "exactly six missing customer branches",
+    "no target privilege overrides",
+    "active Lagos",
+    "identity and explicit-branch preservation",
+    "all other business-table fingerprints unchanged",
+    "six per-account audit records",
+    "COMMIT completed"
+  ],
+  "firstAttempt": "Duplicated editor batch aborted before backfill; explicitly rolled back. Exact single script then verified ignoring display whitespace and committed."
+}

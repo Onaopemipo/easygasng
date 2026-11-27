@@ -620,3 +620,6 @@ This manual follows current source rather than relying on route existence. The a
 Current companion guides: [Settings navigation](admin-settings-navigation.md), [Settings acceptance](admin-settings-acceptance.md), [change review](settings-change-update.md), [payments](wallet-payments-update.md), [Dispatch setup](dispatch-setup.md), [order-to-delivery](order-to-delivery.md), [testimonials](testimonials.md), [authentication](authentication.md).
 
 Audit and traceability: [audit report](../owner-settings-audit/README.md), [77-key machine-readable register](../owner-settings-audit/setting-register.json), [OSM matrix](../traceability/owner-settings-manual-rtm.md). Earlier PDF/Word user manuals remain historical; this is the current dedicated Owner configuration edition.
+
+
+27 November2026: Lagos is the default for new accounts and existing missing branches. Admin can change a customer branch in Customers → Edit customer → Branch. [Configuration and staff branch workflow](default-user-branch.md). Existing explicit branch assignments, balances, orders and staff approvals are preserved.
