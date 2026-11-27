@@ -17,3 +17,7 @@ Initial versioned guards are **coarse locality rectangles**, not legal boundarie
 Actual browser verification mounted the **real picker** in a disposable loopback harness. The saved overseas pin showed the Victoria Island correction warning and a disabled checkbox/confirmation. Entering6.43,3.42 and explicitly confirming enabled continuation. This is focused picker browser acceptance, not a hosted full checkout or a fresh physical-native test. [Outside screenshot](evidence/outside.jpg), [corrected screenshot](evidence/corrected.jpg), [test results](evidence/tests.txt), [matrix](../traceability/delivery-pin-area-rtm.md).
 
 No real customer orders, balances, gas weights, operational settings or provider activation were changed. Historical production NO-GO and unrelated physical/native/offline/import/provider holds remain. Native source is updated; no new signed/TestFlight binary is included in this phase.
+
+## Existing-demo rollout
+
+Runtime21f2a43 is Ready on [the existing demo](https://easygas-client-demo.vercel.app/gas-order), deployment`dpl_5M6LnCtYVxv7CHoRy7Lb3rn9Rqru`. All507 deployed file hashes match the tested release; the geographic guard was also downloaded and compared byte-for-byte. Stable status/catalogue/gas-order responses and unauthenticated checkout401 pass. No hosted positive order/payment/address/configuration was submitted.13 merged-workspace checks and18 daily-delivery/Admin-approval preservation tests also pass. Source, deployment and smoke evidence are in`evidence/`.

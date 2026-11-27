@@ -16,7 +16,11 @@
         "apps/web/components/delivery-pin-picker.tsx",
         "apps/mobile/DeliveryPinPicker.tsx",
         "apps/web/components/gas-order.tsx",
-        "apps/mobile/GasOrder.tsx"
+        "apps/mobile/GasOrder.tsx",
+        "apps/web/components/checkout-delivery-fields.tsx",
+        "apps/web/components/combined-checkout.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/phone-order-payment.tsx"
       ],
       "authoritativeData": [
         "delivery_locations",
@@ -37,7 +41,8 @@
         "docs/delivery-pin-area/evidence/outside.jpg",
         "docs/delivery-pin-area/evidence/corrected.jpg",
         "docs/delivery-pin-area/evidence/outside-ax.txt",
-        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
       ],
       "acceptanceGate": "PINAREA-G1",
       "status": "VERIFIED_COMPLETE",
@@ -80,7 +85,8 @@
         "docs/delivery-pin-area/evidence/outside.jpg",
         "docs/delivery-pin-area/evidence/corrected.jpg",
         "docs/delivery-pin-area/evidence/outside-ax.txt",
-        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
       ],
       "acceptanceGate": "PINAREA-G2",
       "status": "VERIFIED_COMPLETE",
@@ -121,7 +127,8 @@
         "docs/delivery-pin-area/evidence/outside.jpg",
         "docs/delivery-pin-area/evidence/corrected.jpg",
         "docs/delivery-pin-area/evidence/outside-ax.txt",
-        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
       ],
       "acceptanceGate": "PINAREA-G3",
       "status": "VERIFIED_COMPLETE",
@@ -146,24 +153,96 @@
       "testIds": [
         "PIN-DEPLOY"
       ],
-      "evidence": [],
+      "evidence": [
+        "docs/delivery-pin-area/evidence/deployment.json",
+        "docs/delivery-pin-area/evidence/source-verification.json",
+        "docs/delivery-pin-area/evidence/stable-smoke.json",
+        "docs/delivery-pin-area/evidence/traceability.txt"
+      ],
       "acceptanceGate": "PINAREA-G4",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Preparing exact-source deployment after local acceptance.",
-      "outstandingWork": "Demo readiness and source/smoke verification pending."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Ready demo deployment dpl_5M6LnCtYVxv7CHoRy7Lb3rn9Rqru; all507 remote source hashes plus downloaded geographic guard match tested21f2a43. Stable health, catalogue, gas-order and401 checkout denial pass.",
+      "outstandingWork": "None for bounded existing-demo rollout. No new signed mobile release or change to original production NO-GO."
     }
   ],
   "coverage": {
     "requirements": 4,
-    "verified": 3,
+    "verified": 4,
     "excluded": 0,
     "gates": 4,
-    "gatesPassed": 3
+    "gatesPassed": 4,
+    "implemented": 4,
+    "criticalRequirements": 2,
+    "criticalVerified": 2,
+    "routes": 4,
+    "routesWithExecutedEvidence": 4
   },
   "productionDecision": "Existing production NO-GO and unrelated holds preserved",
   "scope": "Geographic rectangle guard, not reverse-geocoding, polygon or street-level coverage proof.",
   "changeLog": [
     "Initial scope: reject mismatched selected pin and explain correction; preserve absent-pin legacy records and prior safety/coverage checks.",
-    "Added explicit same-demo deployment gate; retained coarse-boundary precision limit and existing NO-GO."
+    "Added explicit same-demo deployment gate; retained coarse-boundary precision limit and existing NO-GO.",
+    "21f2a43 published to existing demo after exact-source verification.24 focused/regression,13 merged-workspace and18 daily/Admin preservation checks pass; one traceability validation retained separately. Native source only, no signed binary."
+  ],
+  "gates": [
+    {
+      "id": "PINAREA-G1",
+      "requirement": "PINAREA-01",
+      "status": "PASSED",
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
+      ]
+    },
+    {
+      "id": "PINAREA-G2",
+      "requirement": "PINAREA-02",
+      "status": "PASSED",
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
+      ]
+    },
+    {
+      "id": "PINAREA-G3",
+      "requirement": "PINAREA-03",
+      "status": "PASSED",
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt",
+        "docs/delivery-pin-area/evidence/traceability.txt"
+      ]
+    },
+    {
+      "id": "PINAREA-G4",
+      "requirement": "PINAREA-04",
+      "status": "PASSED",
+      "evidence": [
+        "docs/delivery-pin-area/evidence/deployment.json",
+        "docs/delivery-pin-area/evidence/source-verification.json",
+        "docs/delivery-pin-area/evidence/stable-smoke.json",
+        "docs/delivery-pin-area/evidence/traceability.txt"
+      ]
+    }
   ]
 }

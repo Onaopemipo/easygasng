@@ -484,3 +484,5 @@ Daily scale-based delivery —28 November2026: [matrix](daily-delivery-rtm.md). 
 Daily iOS scale delivery acceptance —28 November2026: [focused matrix](daily-ios-rtm.json) extends DAY-05. Simulator acceptance/scale/photo-retry/completion and removal of normal meter/load shortcuts are recorded; physical camera, signed-device and offline acceptance remain in the original denominator.
 
 Delivery map pin mismatch —28 November2026: [PINAREA matrix](delivery-pin-area-rtm.md). Customer correction and canonical geographic guard; existing operational coverage and production holds preserved.
+
+Delivery map area fix published —28 November2026: [PINAREA matrix](delivery-pin-area-rtm.md) retains4/4 verified requirements/gates, including the existing-demo rollout.24 focused/regression,13 merged-workspace and18 preservation checks pass;507 remote source hashes match21f2a43. Geographic rectangles remain distinct from exact property verification; native signed release and prior production NO-GO remain unchanged.
