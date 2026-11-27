@@ -18,9 +18,7 @@ import OrderInvoice from "./order-invoice";
 import OrderAdditions from "./order-additions";
 import SameVisitOrder from "./same-visit-order";
 import OrderCylinderInspection from "./order-cylinder-inspection";
-import OrderLPGSetup from "./order-lpg-setup";
 import DailyDelivery from "./daily-delivery";
-import { LPGSetupAccess } from "./lpg-setup-access";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import {
@@ -41,10 +39,15 @@ export type OrderAction = { id: string; label: string };
 /** Presentation choices only. Every write still passes the original server controls. */
 export function orderDetailActions(order: any, user: any): OrderAction[] {
   const rows: OrderAction[] = [];
-  if (order.gas_lines?.length && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status)) {
-    if (!order.daily_run && user.role === "owner") rows.push({id: "meter-calibration", label: "Renew meter calibration"});
-    if (!order.daily_run && ["owner", "finance"].includes(user.role)) rows.push({id: "lpg-load", label: "Issue LPG load"});
-  }
+  if (
+    order.gas_lines?.length &&
+    !order.items?.length &&
+    !order.daily_run &&
+    !order.legacy_lpg &&
+    ["owner", "manager"].includes(user.role) &&
+    ["assigned", "out_for_delivery"].includes(order.status)
+  )
+    rows.push({ id: "daily-setup", label: "Set up daily delivery" });
   if (
     ["owner", "manager"].includes(user.role) &&
     ["assigned", "out_for_delivery"].includes(order.status) &&
@@ -168,13 +171,16 @@ export default function AdminOrderDetails({
   initialAction?: string;
 }) {
   const [tab, setTab] = useState("overview"),
-    [view, setView] = useState(initialAction),
+    [view, setView] = useState(
+      ["meter-calibration", "lpg-load"].includes(initialAction)
+        ? "daily-setup"
+        : initialAction,
+    ),
     [dirty, setDirty] = useState(false),
     [notice, setNotice] = useState("");
   const heading = useRef<HTMLHeadingElement>(null);
   const actionBody = useRef<HTMLDivElement>(null);
   const [lpgPending, setLpgPending] = useState(false);
-  const [lpgRefresh, setLpgRefresh] = useState(0);
   const [extraOrder, setExtraOrder] = useState<any>(null);
   const actions = orderDetailActions(order, user);
   const next = (orderTransitions[order.status] ?? []).find(
@@ -182,10 +188,20 @@ export default function AdminOrderDetails({
   );
   const primary =
     actions.find((a) => a.id === "phone-payment") ??
+    actions.find((a) => a.id === "daily-setup") ??
     actions.find((a) => a.id === "complete") ??
     (next ? actions.find((a) => a.id === "transition") : undefined);
-  const awaitingDriver = Boolean(order.daily_run && ((order.status === 'assigned' && order.attempt?.state!=='picked_up') || (order.status === 'out_for_delivery' && !order.daily_run.photo_ready)));
-  const waitingLabel = order.status === 'assigned' ? 'Awaiting driver start' : Number(order.daily_run?.supplied_grams)>0 ? 'Awaiting refill photo' : 'Awaiting driver refill';
+  const awaitingDriver = Boolean(
+    order.daily_run &&
+      ((order.status === "assigned" && order.attempt?.state !== "picked_up") ||
+        (order.status === "out_for_delivery" && !order.daily_run.photo_ready)),
+  );
+  const waitingLabel =
+    order.status === "assigned"
+      ? "Awaiting driver start"
+      : Number(order.daily_run?.supplied_grams) > 0
+        ? "Awaiting refill photo"
+        : "Awaiting driver refill";
   const action = actions.find((a) => a.id === view);
   const title = view === "invoice" ? "Order invoice" : action?.label;
   function statusUpdated(status: string) {
@@ -206,7 +222,11 @@ export default function AdminOrderDetails({
     onChanged({ keepOpen: true });
   }
   async function back(nextView = "") {
-    if (lpgPending || actionBody.current?.querySelector('[data-submit-pending="true"]')) return;
+    if (
+      lpgPending ||
+      actionBody.current?.querySelector('[data-submit-pending="true"]')
+    )
+      return;
     if (
       dirty &&
       !(await confirmAction(
@@ -221,7 +241,11 @@ export default function AdminOrderDetails({
     )
       return;
     setDirty(false);
-    setView(nextView);
+    setView(
+      ["meter-calibration", "lpg-load"].includes(nextView)
+        ? "daily-setup"
+        : nextView,
+    );
   }
   useEffect(() => {
     if (view) heading.current?.focus();
@@ -256,13 +280,30 @@ export default function AdminOrderDetails({
       <div className="aord-status">
         <span className={`status ${order.status}`}>{text(order.status)}</span>
         <span className="aord-total">{money(order.total_kobo)}</span>
-        <button type="button" className="button secondary" disabled={lpgPending} onClick={async () => {
-          if (lpgPending) return;
-          const lpg = ["meter-calibration", "lpg-load"].includes(view);
-          if (lpg && dirty && !(await confirmAction("Discard the unsaved LPG details and refresh this order?", {title: "Discard unsaved changes?", confirmLabel: "Discard and refresh", destructive: true}))) return;
-          if (lpg) { setDirty(false); setLpgRefresh(n => n + 1); }
-          onChanged({ keepOpen: true });
-        }}>
+        <button
+          type="button"
+          className="button secondary"
+          disabled={lpgPending}
+          onClick={async () => {
+            if (lpgPending) return;
+            const lpg = view === "daily-setup";
+            if (
+              lpg &&
+              dirty &&
+              !(await confirmAction(
+                "Discard the unsaved LPG details and refresh this order?",
+                {
+                  title: "Discard unsaved changes?",
+                  confirmLabel: "Discard and refresh",
+                  destructive: true,
+                },
+              ))
+            )
+              return;
+            if (lpg) setDirty(false);
+            onChanged({ keepOpen: true });
+          }}
+        >
           Refresh order
         </button>
       </div>
@@ -310,22 +351,22 @@ export default function AdminOrderDetails({
               order={order}
               drivers={drivers}
               onResolveOrder={(action) => void back(action)}
-              lpgActions={actions.filter(a => ["meter-calibration", "lpg-load"].includes(a.id))}
+              lpgActions={actions.filter((a) => a.id === "daily-setup")}
               onDone={statusUpdated}
             />
           )}
-          {(view === "meter-calibration" || view === "lpg-load") && (
-            <OrderLPGSetup key={JSON.stringify([order.id, order.branch_id, order.driver_id, order.tracking_version, lpgRefresh])}
-              order={order} user={user} mode={view === "meter-calibration" ? "calibration" : "load"}
-              onAction={(action) => void back(action)} onPendingChange={setLpgPending}
-              onDraftReset={() => setDirty(false)}
-              onSaved={(kind) => {
+          {view === "daily-setup" && !order.legacy_lpg && (
+            <DailyDelivery
+              user={user}
+              branch={order.branch_id}
+              order={order}
+              onChange={() => {
                 setDirty(false);
-                setNotice(kind === "calibration" ? "Meter calibration renewed. Record the actual LPG load below."
-                  : "LPG load issued. The driver must check its actual measurements and confirm receipt before starting delivery.");
-                if (kind === "calibration") setView("lpg-load");
-                onChanged({keepOpen: true});
-              }} />
+                setView("");
+                setTab("overview");
+                onChanged({ keepOpen: true });
+              }}
+            />
           )}
           {view === "complete" && (
             <DeliveryCompletion
@@ -406,19 +447,33 @@ export default function AdminOrderDetails({
             ]}
           />
           <div className="aord-tab-content">
-            {tab === "overview" && <>
-              <OrderOverview order={order} />
-              {order.daily_run && <Notice message={`Daily vehicle gas is reserved for this order. ${order.status==='assigned' ? 'The driver accepts and starts delivery in their app. Refresh this order to see their progress.' : order.daily_run.photo_ready ? 'Scale refill and current photo are recorded. Delivery can be completed.' : Number(order.daily_run.supplied_grams)>0 ? 'Scale refill recorded; waiting for the driver to upload the refill photo.' : 'The driver records before/after scale weights at the customer, then uploads the refill photo.'}`} />}
-              {!order.daily_run && order.gas_lines?.length>0 && ['owner','manager'].includes(user.role) && !['delivered','cancelled'].includes(order.status) && <DailyDelivery user={user} branch={order.branch_id} onChange={()=>onChanged({keepOpen:true})}/>}
+            {tab === "overview" && (
+              <>
+                <OrderOverview order={order} />
+                {order.daily_run && (
+                  <Notice
+                    message={`Daily vehicle gas is reserved for this order. ${order.status === "assigned" ? "The driver accepts and starts delivery in their app. Refresh this order to see their progress." : order.daily_run.photo_ready ? "Scale refill and current photo are recorded. Delivery can be completed." : Number(order.daily_run.supplied_grams) > 0 ? "Scale refill recorded; waiting for the driver to upload the refill photo." : "The driver records before/after scale weights at the customer, then uploads the refill photo."}`}
+                  />
+                )}
+                {!order.daily_run &&
+                  !order.legacy_lpg &&
+                  !order.items?.length &&
+                  order.gas_lines?.length > 0 &&
+                  ["owner", "manager"].includes(user.role) &&
+                  !["delivered", "cancelled"].includes(order.status) && (
+                    <DailyDelivery
+                      user={user}
+                      branch={order.branch_id}
+                      order={order}
+                      onChange={() => onChanged({ keepOpen: true })}
+                    />
+                  )}
 
-              {!order.daily_run && order.gas_lines?.length > 0 && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status) && <LPGSetupAccess role={user.role} />}
-              {actions.some(a => ["meter-calibration", "lpg-load"].includes(a.id)) && <section className="stack panel" aria-label="Vehicle LPG actions">
-                <h3>Earlier metered workflow</h3>
-                <p>Use only for an existing metered trip. For daily weighed delivery, start the day using the actual opening gas weight above.</p>
-                <div className="aord-footer">{actions.filter(a => ["meter-calibration", "lpg-load"].includes(a.id)).map(a =>
-                  <button type="button" className="button secondary" key={a.id} onClick={() => setView(a.id)}>{a.label}</button>)}</div>
-              </section>}
-            </>}
+                {order.legacy_lpg && !order.daily_run && (
+                  <Notice message="This order has an earlier recorded LPG handover. Review its existing custody under Dispatch → LPG custody; do not issue another load for daily delivery." />
+                )}
+              </>
+            )}
             {tab === "items" && (
               <section>
                 <h3>Order items</h3>
@@ -495,8 +550,16 @@ export default function AdminOrderDetails({
                 </button>
               )}
               {primary && (
-                <button className="button" disabled={awaitingDriver} onClick={() => setView(primary.id)}>
-                  {awaitingDriver ? waitingLabel : primary.id === "transition" ? labels[next!] : primary.label}
+                <button
+                  className="button"
+                  disabled={awaitingDriver}
+                  onClick={() => setView(primary.id)}
+                >
+                  {awaitingDriver
+                    ? waitingLabel
+                    : primary.id === "transition"
+                      ? labels[next!]
+                      : primary.label}
                 </button>
               )}
               <select
@@ -700,24 +763,63 @@ export function OrderStatusAction({
           </select>
         </label>
       )}
-      {status === "out_for_delivery" && lpgActions.length > 0 && <section className="stack" aria-label="Resolve vehicle gas readiness">
-        <p>Set up the vehicle’s gas load without closing this order.</p>
-        <div className="aord-footer">{lpgActions.map(a => <button type="button" className="button secondary" key={a.id}
-          disabled={busy} onClick={() => onResolveOrder?.(a.id)}>{a.label}</button>)}</div>
-      </section>}
+      {status === "out_for_delivery" && lpgActions.length > 0 && (
+        <section className="stack" aria-label="Resolve vehicle gas readiness">
+          <p>
+            Set up the delivery day or reserve gas on today’s vehicle without
+            closing this order.
+          </p>
+          <div className="aord-footer">
+            {lpgActions.map((a) => (
+              <button
+                type="button"
+                className="button secondary"
+                key={a.id}
+                disabled={busy}
+                onClick={() => onResolveOrder?.(a.id)}
+              >
+                {a.label}
+              </button>
+            ))}
+          </div>
+        </section>
+      )}
       <label>
-        <FieldCaption required={operationNoteRequired("order.transition", "note", {status})}>
-          {["cancelled", "delivery_failed"].includes(status) ? "Reason and next-step details" : "Operational note"}
+        <FieldCaption
+          required={operationNoteRequired("order.transition", "note", {
+            status,
+          })}
+        >
+          {["cancelled", "delivery_failed"].includes(status)
+            ? "Reason and next-step details"
+            : "Operational note"}
         </FieldCaption>
-        <FormInput name="note" required={operationNoteRequired("order.transition", "note", {status})} minLength={operationNoteRequired("order.transition", "note", {status}) ? 5 : undefined} maxLength={500} />
+        <FormInput
+          name="note"
+          required={operationNoteRequired("order.transition", "note", {
+            status,
+          })}
+          minLength={
+            operationNoteRequired("order.transition", "note", { status })
+              ? 5
+              : undefined
+          }
+          maxLength={500}
+        />
       </label>
       {error && <Notice type="error" message={error} />}
-      {order.daily_run && status==='out_for_delivery' && order.attempt?.state!=='picked_up' && <Notice message="The driver accepts and starts delivery in their app. Refresh this order after they start."/>}
+      {order.daily_run &&
+        status === "out_for_delivery" &&
+        order.attempt?.state !== "picked_up" && (
+          <Notice message="The driver accepts and starts delivery in their app. Refresh this order after they start." />
+        )}
       <button
         className="button"
         disabled={
           busy ||
-          (order.daily_run && status==='out_for_delivery' && order.attempt?.state!=='picked_up') ||
+          (order.daily_run &&
+            status === "out_for_delivery" &&
+            order.attempt?.state !== "picked_up") ||
           (status === "assigned" && (candidates.loading || !driverReady))
         }
       >
@@ -767,7 +869,8 @@ function DeliveryCompletion({
         {refill
           ? "Confirm the full ordered gas quantity was supplied at the customer's address and the driver uploaded a current-visit refill photo."
           : "Ask for the customer's code after handing over every item."}{" "}
-        Cash collection remains unverified until an independent finance officer reconciles it.
+        Cash collection remains unverified until an independent finance officer
+        reconciles it.
       </p>
       <Link className="button secondary" href="/admin/deliveries">
         Open dispatch and pickup verification
@@ -780,17 +883,21 @@ function DeliveryCompletion({
             : "I checked all quantities and cylinder serials and handed over every item."}
         </FieldCaption>
       </label>
-      {!refill && <label>
-        <FieldCaption required={true}>Customer confirmation code</FieldCaption>
-        <FormInput
-          name="code"
-          inputMode="numeric"
-          pattern="[0-9]{6}"
-          maxLength={6}
-          required
-          autoComplete="off"
-        />
-      </label>}
+      {!refill && (
+        <label>
+          <FieldCaption required={true}>
+            Customer confirmation code
+          </FieldCaption>
+          <FormInput
+            name="code"
+            inputMode="numeric"
+            pattern="[0-9]{6}"
+            maxLength={6}
+            required
+            autoComplete="off"
+          />
+        </label>
+      )}
       <label>
         {["wallet", "card"].includes(order.payment_method) ? (
           "Prepaid order — collect no cash"

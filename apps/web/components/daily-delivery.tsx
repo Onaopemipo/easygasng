@@ -6,13 +6,16 @@ export default function DailyDelivery({
   branch,
   onChange,
   refreshToken,
+  order,
 }: {
   user: any;
   branch: string;
   onChange: () => void;
   refreshToken?: string;
+  order?: any;
 }) {
   const [loaded, setData] = useState<any>(null),
+    [vehicleId, setVehicleId] = useState(""),
     [loadedOptions, setOptions] = useState<any>(null),
     [readError, setReadError] = useState(""),
     [optionsError, setOptionsError] = useState(""),
@@ -32,6 +35,7 @@ export default function DailyDelivery({
     setMode("");
     setReadError("");
     setOptionsError("");
+    setVehicleId("");
   }, [scope]);
   const options = loadedOptions?.scope === scope ? loadedOptions.data : null;
   const cannotWrite = Boolean(readError || optionsError);
@@ -81,36 +85,67 @@ export default function DailyDelivery({
         Number(run.supplied_grams)) /
       1000
     : 0;
+  const selectedVehicle =
+    vehicles.find((v: any) => v.id === vehicleId) ??
+    (vehicles.length === 1 ? vehicles[0] : null);
+  const attachOrder = Boolean(
+    run && order && !order.daily_run && order.status === "assigned" && !mode,
+  );
+  const orderKg =
+    (order?.gas_lines ?? []).reduce(
+      (n: number, g: any) => n + Number(g.grams),
+      0,
+    ) / 1000;
+  const availableKg = run
+    ? expected -
+      Number(run.committed_grams) / 1000 +
+      Number(run.queued_grams ?? 0) / 1000
+    : 0;
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (pending.current) return;
     const form = e.currentTarget,
       f = new FormData(form),
       action = run
-        ? mode === "add"
-          ? "daily.add"
-          : "daily.close"
+        ? attachOrder
+          ? "daily.order.attach"
+          : mode === "add"
+            ? "daily.add"
+            : "daily.close"
         : "daily.start";
-    const input: any = run
-      ? {
-          runId: run.id,
-          version: Number(run.version),
-          kg: Number(f.get("kg")),
-          reason: String(f.get("reason") || ""),
-          ...(action === "daily.close"
-            ? {
-                carryForward: f.get("carryForward") === "on",
-                endOdometer: Number(f.get("odometer")),
-              }
-            : {}),
-        }
-      : {
-          driverId: f.get("driver"),
-          vehicleId: f.get("vehicle"),
-          openingKg: Number(f.get("kg")),
-          startOdometer: Number(f.get("odometer")),
-          scaleReference: String(f.get("scale") || ""),
-        };
+    const input: any = attachOrder
+      ? { orderId: order.id, version: Number(order.tracking_version) }
+      : run
+        ? {
+            runId: run.id,
+            version: Number(run.version),
+            kg: Number(f.get("kg")),
+            reason: String(f.get("reason") || ""),
+            ...(action === "daily.close"
+              ? {
+                  carryForward: f.get("carryForward") === "on",
+                  endOdometer: Number(f.get("odometer")),
+                }
+              : {}),
+          }
+        : {
+            driverId: f.get("driver"),
+            vehicleId: f.get("vehicle"),
+            openingKg: Number(f.get("kg")),
+            startOdometer: Number(f.get("odometer")),
+            scaleReference: String(f.get("scale") || ""),
+          };
+    if (!run) {
+      const chosen = vehicles.find((v: any) => v.id === input.vehicleId);
+      if (!chosen || input.openingKg > Number(chosen.capacity_grams) / 1000) {
+        setError(
+          chosen
+            ? `${chosen.label} has a saved gas capacity of ${Number(chosen.capacity_grams) / 1000} kg. Your opening weight is ${input.openingKg} kg. Choose a vehicle with sufficient approved capacity; keep the actual measured weight.`
+            : "Choose an available LPG-suitable vehicle.",
+        );
+        return;
+      }
+    }
     const signature = JSON.stringify([action, input]);
     if (operation.current.signature !== signature)
       operation.current = { signature, key: crypto.randomUUID() };
@@ -208,9 +243,24 @@ export default function DailyDelivery({
           · Difference {Number(last.variance_grams) / 1000} kg.
         </p>
       )}
-      {data && options && (!run || mode) && (
+      {run && order && !order.daily_run && order.status === "assigned" && (
+        <Notice
+          message={
+            order.driver_id !== run.driver_id
+              ? "This order has a different driver. Reassign it to today’s driver to use this vehicle."
+              : `${order.reference} needs ${orderKg} kg. ${availableKg} kg is available for assignment on today’s vehicle. Unassigned queued orders keep their ordinary branch reservations.`
+          }
+        />
+      )}
+      {run &&
+        order &&
+        !order.daily_run &&
+        order.status === "out_for_delivery" && (
+          <Notice message="This delivery already started before daily setup. Contact Dispatch to resolve the existing physical handover; do not create a second load." />
+        )}
+      {data && options && (!run || mode || attachOrder) && (
         <form
-          key={`${run?.id ?? "start"}:${mode}`}
+          key={`${run?.id ?? "start"}:${mode}:${attachOrder ? order.id : ""}`}
           onSubmit={submit}
           className="stack"
         >
@@ -223,9 +273,11 @@ export default function DailyDelivery({
           <h3>
             {!run
               ? "Start delivery day"
-              : mode === "add"
-                ? "Additional gas loaded"
-                : "Closing reconciliation"}
+              : attachOrder
+                ? "Reserve gas for this order"
+                : mode === "add"
+                  ? "Additional gas loaded"
+                  : "Closing reconciliation"}
           </h3>
           <fieldset
             disabled={busy || cannotWrite || !data.enabled}
@@ -253,32 +305,54 @@ export default function DailyDelivery({
                   <select
                     name="vehicle"
                     required
-                    defaultValue={vehicles.length === 1 ? vehicles[0].id : ""}
+                    value={selectedVehicle?.id ?? ""}
+                    onChange={(e) => setVehicleId(e.target.value)}
                   >
                     <option value="">Choose vehicle</option>
                     {vehicles.map((v: any) => (
                       <option key={v.id} value={v.id}>
-                        {v.label}
+                        {v.label} · {Number(v.capacity_grams) / 1000} kg gas
+                        capacity
                       </option>
                     ))}
                   </select>
                 </label>
+                {selectedVehicle && (
+                  <p>
+                    Saved gas capacity:{" "}
+                    <strong>
+                      {Number(selectedVehicle.capacity_grams) / 1000} kg
+                    </strong>
+                    . Enter gas only, excluding the vehicle and tank weight.
+                    Choose a vehicle with sufficient approved capacity.
+                  </p>
+                )}
+                {!vehicles.length && (
+                  <Notice message="No LPG-suitable vehicle is registered in this branch. An Admin must register the actual vehicle and its approved gas capacity in Fleet & trips." />
+                )}
               </>
             )}
-            <label>
-              {!run
-                ? "Opening gas-only weight (kg)"
-                : mode === "add"
-                  ? "Additional gas loaded (kg)"
-                  : "Measured remaining gas-only weight (kg)"}
-              <input
-                name="kg"
-                type="number"
-                min={!run || mode === "add" ? "0.001" : "0"}
-                step="0.001"
-                required
-              />
-            </label>
+            {!attachOrder && (
+              <label>
+                {!run
+                  ? "Opening gas-only weight (kg)"
+                  : mode === "add"
+                    ? "Additional gas loaded (kg)"
+                    : "Measured remaining gas-only weight (kg)"}
+                <input
+                  name="kg"
+                  type="number"
+                  min={!run || mode === "add" ? "0.001" : "0"}
+                  step="0.001"
+                  max={
+                    !run && selectedVehicle
+                      ? Number(selectedVehicle.capacity_grams) / 1000
+                      : undefined
+                  }
+                  required
+                />
+              </label>
+            )}
             {run && mode === "close" && (
               <>
                 <p>
@@ -326,16 +400,30 @@ export default function DailyDelivery({
                 required
               />
             </label>
-            <button className="button">
+            <button
+              className="button"
+              disabled={
+                attachOrder &&
+                (order.driver_id !== run.driver_id || availableKg < orderKg)
+              }
+            >
               {busy
                 ? "Saving…"
                 : !run
                   ? "Start day"
-                  : mode === "add"
-                    ? "Record additional gas"
-                    : "Confirm and close day"}
+                  : attachOrder
+                    ? "Reserve gas for this order"
+                    : mode === "add"
+                      ? "Record additional gas"
+                      : "Confirm and close day"}
             </button>
-            {run && (
+            {attachOrder && availableKg < orderKg && (
+              <Notice
+                type="error"
+                message={`Record at least ${Math.round((orderKg - availableKg) * 1000) / 1000} kg of actual additional gas using Add gas, within the vehicle capacity. Do not change measurements to fit an order.`}
+              />
+            )}
+            {run && !attachOrder && (
               <button
                 type="button"
                 className="button secondary"

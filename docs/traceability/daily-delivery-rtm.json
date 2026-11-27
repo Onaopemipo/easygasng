@@ -16,7 +16,10 @@
       "implementationFiles": [
         "apps/web/lib/daily-delivery.ts",
         "database/migrations/086_daily_delivery.sql",
-        "apps/web/components/daily-delivery.tsx"
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/lib/order-records.ts",
+        "packages/business-rules/src/staff-privileges.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -28,7 +31,12 @@
       "testIds": [
         "DAY01",
         "DAY02",
-        "DAY06"
+        "DAY06",
+        "DAY07",
+        "DAY08",
+        "DAY-UI-SETUP",
+        "DAY-MODAL-SETUP",
+        "DAY-PG concurrent attach"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -69,12 +77,16 @@
         "docs/daily-delivery/evidence/root-mobile-types.txt",
         "docs/daily-delivery/evidence/root-workflow-tests.txt",
         "docs/daily-delivery/evidence/final-hosted-verification.txt",
-        "docs/daily-delivery/evidence/root-daily-final-tests.txt"
+        "docs/daily-delivery/evidence/root-daily-final-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
+        "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
+        "docs/daily-delivery/evidence/start-day-fix/types.txt"
       ],
       "acceptanceGate": "DAY-G-01",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Executed service, renderer, PostgreSQL security/concurrency and existing-flow regressions pass. Actual physical/native-device acceptance remains separate.",
-      "outstandingWork": "None within the bounded server workflow; actual business measurements and production acceptance are not fabricated."
+      "status": "DEFECTIVE",
+      "reason": "User-reported Start Day failure uses combined vehicle/capacity error without actionable recovery; investigating actual saved capacity. Legacy order-load form is still exposed before daily setup.",
+      "outstandingWork": "Repair startup diagnostics and direct capacity configuration; remove legacy load forms from normal daily order actions and prove the full journey."
     },
     {
       "id": "DAY-02",
@@ -92,7 +104,12 @@
         "apps/web/lib/bulk-lpg-reservation.ts",
         "apps/web/lib/fleet-constraints.ts",
         "apps/web/lib/order-visit-stock.ts",
-        "apps/web/lib/dispatch-centre.ts"
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/lib/order-records.ts",
+        "packages/business-rules/src/staff-privileges.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -103,7 +120,12 @@
       ],
       "testIds": [
         "DAY02",
-        "DAY04"
+        "DAY04",
+        "DAY07",
+        "DAY08",
+        "DAY-UI-SETUP",
+        "DAY-MODAL-SETUP",
+        "DAY-PG concurrent attach"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -144,7 +166,11 @@
         "docs/daily-delivery/evidence/root-mobile-types.txt",
         "docs/daily-delivery/evidence/root-workflow-tests.txt",
         "docs/daily-delivery/evidence/final-hosted-verification.txt",
-        "docs/daily-delivery/evidence/root-daily-final-tests.txt"
+        "docs/daily-delivery/evidence/root-daily-final-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
+        "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
+        "docs/daily-delivery/evidence/start-day-fix/types.txt"
       ],
       "acceptanceGate": "DAY-G-02",
       "status": "VERIFIED_COMPLETE",
@@ -330,7 +356,9 @@
         "apps/mobile/DriverDeparture.tsx",
         "apps/mobile/DriverLoadReadiness.tsx",
         "apps/mobile/DailyRefill.tsx",
-        "apps/web/lib/order-records.ts"
+        "apps/web/lib/order-records.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "packages/business-rules/src/staff-privileges.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -343,7 +371,12 @@
       "testIds": [
         "DAY-UI",
         "DAY-MODAL",
-        "DAY-UI live day refresh"
+        "DAY-UI live day refresh",
+        "DAY07",
+        "DAY08",
+        "DAY-UI-SETUP",
+        "DAY-MODAL-SETUP",
+        "DAY-PG concurrent attach"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -384,7 +417,11 @@
         "docs/daily-delivery/evidence/root-mobile-types.txt",
         "docs/daily-delivery/evidence/root-workflow-tests.txt",
         "docs/daily-delivery/evidence/final-hosted-verification.txt",
-        "docs/daily-delivery/evidence/root-daily-final-tests.txt"
+        "docs/daily-delivery/evidence/root-daily-final-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
+        "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
+        "docs/daily-delivery/evidence/start-day-fix/types.txt"
       ],
       "acceptanceGate": "DAY-G-05",
       "status": "PARTIAL",
@@ -410,7 +447,11 @@
         "apps/web/app/api/[action]/route.ts",
         "daily-delivery-schema-check.ts",
         "apps/web/lib/operations.ts",
-        "apps/web/lib/delivery-photos.ts"
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/lib/order-records.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -422,7 +463,12 @@
       "testIds": [
         "DAY03",
         "DAY05",
-        "DAY-PG"
+        "DAY-PG",
+        "DAY07",
+        "DAY08",
+        "DAY-UI-SETUP",
+        "DAY-MODAL-SETUP",
+        "DAY-PG concurrent attach"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -463,7 +509,11 @@
         "docs/daily-delivery/evidence/root-mobile-types.txt",
         "docs/daily-delivery/evidence/root-workflow-tests.txt",
         "docs/daily-delivery/evidence/final-hosted-verification.txt",
-        "docs/daily-delivery/evidence/root-daily-final-tests.txt"
+        "docs/daily-delivery/evidence/root-daily-final-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
+        "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
+        "docs/daily-delivery/evidence/start-day-fix/types.txt"
       ],
       "acceptanceGate": "DAY-G-06",
       "status": "VERIFIED_COMPLETE",
@@ -489,7 +539,12 @@
         "apps/web/lib/db.ts",
         "scripts/export-bootstrap.ts",
         "database/bootstrap.sql",
-        "apps/web/lib/release-checks.ts"
+        "apps/web/lib/release-checks.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/admin-order-details.tsx",
+        "apps/web/lib/order-records.ts",
+        "packages/business-rules/src/staff-privileges.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -505,7 +560,12 @@
         "schema082\u2013086 gates",
         "PR-SCHEMA-01",
         "PR-02",
-        "DAY06"
+        "DAY06",
+        "DAY07",
+        "DAY08",
+        "DAY-UI-SETUP",
+        "DAY-MODAL-SETUP",
+        "DAY-PG concurrent attach"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -546,7 +606,11 @@
         "docs/daily-delivery/evidence/root-mobile-types.txt",
         "docs/daily-delivery/evidence/root-workflow-tests.txt",
         "docs/daily-delivery/evidence/final-hosted-verification.txt",
-        "docs/daily-delivery/evidence/root-daily-final-tests.txt"
+        "docs/daily-delivery/evidence/root-daily-final-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/workflow-tests.txt",
+        "docs/daily-delivery/evidence/start-day-fix/postgres.txt",
+        "docs/daily-delivery/evidence/start-day-fix/legacy.txt",
+        "docs/daily-delivery/evidence/start-day-fix/types.txt"
       ],
       "acceptanceGate": "DAY-G-07",
       "status": "VERIFIED_COMPLETE",
@@ -557,7 +621,7 @@
   "gates": [
     {
       "id": "DAY-G-01",
-      "status": "PASSED",
+      "status": "OPEN",
       "requirement": "DAY-01"
     },
     {
@@ -594,15 +658,16 @@
   "coverage": {
     "requirements": 7,
     "implemented": 7,
-    "verified": 6,
+    "verified": 5,
     "partial": 1,
     "excluded": 0,
     "criticalRequirements": 5,
-    "criticalVerified": 5,
+    "criticalVerified": 4,
     "routesImplemented": 3,
     "routesVerified": 2,
     "gates": 7,
-    "gatesPassed": 6
+    "gatesPassed": 5,
+    "defective": 1
   },
   "productionDecision": "NO-GO \u2014 existing commercial/provider/native/import/retention holds remain",
   "changeLog": [
@@ -621,6 +686,14 @@
     {
       "date": "2026-11-28",
       "change": "Verified explicit handover on an existing trip: unresolved earlier custody blocks start; fully reconciled metered history remains immutable while the daily run reuses the vehicle/trip. No artificial failure/reassignment is needed just to replace the accounting model."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Reopened daily startup/order-routing acceptance after user found an opaque capacity rejection and the legacy load form offered without an actual daily run. Repair in progress; original history and physical/native holds retained."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Repair verified locally: Start Day exposes correct kg capacity and prioritises assigned orders; daily.order.attach restores accidental unassigned queue commitments and transfers an existing assigned order without changing weights/payments/physical history. Normal daily modal no longer offers meter/load forms, including earlier deep links. Hosted rollout still pending."
     }
   ]
 }

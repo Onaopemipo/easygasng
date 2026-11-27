@@ -76,6 +76,7 @@ export const staffPrivileges: readonly Privilege[] = [
     actions: [
       "dispatch.centre",
       "daily.start",
+      "daily.order.attach",
       "daily.add",
       "daily.close",
       "dispatch.vehicle.options",

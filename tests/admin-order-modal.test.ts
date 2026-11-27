@@ -196,3 +196,17 @@ test('DAY-MODAL: daily office actions wait for driver start, scale supply and cu
  const view=(status:string,supplied:number,photo:boolean)=>render(React.createElement(AdminOrderDetails,{order:{...order,status,driver_id:'driver',daily_run:{grams:6000,supplied_grams:supplied,photo_ready:photo}},user:owner,onClose(){},onChanged(){}}));
  assert.match(view('assigned',0,false),/disabled=""[^>]*>Awaiting driver start/);assert.match(view('out_for_delivery',0,false),/disabled=""[^>]*>Awaiting driver refill/);assert.match(view('out_for_delivery',6000,false),/disabled=""[^>]*>Awaiting refill photo/);assert.match(view('out_for_delivery',6000,true),/>Confirm delivery<\/button>/);assert.doesNotMatch(view('assigned',0,false),/Renew meter calibration|Issue LPG load/);
 });
+
+test('DAY-MODAL-SETUP: unlinked assigned orders and old load deep links show only daily setup; actual legacy custody is read-only guidance',()=>{
+ const assigned={...order,status:'assigned',driver_id:'D'};
+ const actions=orderDetailActions(assigned,owner);
+ assert(actions.some(a=>a.id==='daily-setup'));
+ assert(!actions.some(a=>['meter-calibration','lpg-load'].includes(a.id)));
+ for(const initialAction of ['', 'lpg-load','meter-calibration']){
+  const html=render(React.createElement(AdminOrderDetails,{order:assigned,user:owner,initialAction,onClose(){},onChanged(){}}));
+  assert.doesNotMatch(html,/Issue vehicle LPG load|Calibrated mass meter|Renew meter calibration|Current cumulative mass meter|Earlier metered workflow/);
+  assert.match(html,/Today’s deliveries|Set up daily delivery/);
+ }
+ const legacy=render(React.createElement(AdminOrderDetails,{order:{...assigned,legacy_lpg:true},user:owner,onClose(){},onChanged(){}}));
+ assert.match(legacy,/earlier recorded LPG handover/);assert.doesNotMatch(legacy,/Issue vehicle LPG load|Start delivery day/);
+});

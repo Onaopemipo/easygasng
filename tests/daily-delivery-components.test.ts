@@ -83,12 +83,19 @@ test("DAY-UI office defaults, loading, stale branch/actor reads and denied recov
       pending[0].resolve({ enabled: true, runs: [] });
       pending[1].resolve({
         drivers: [{ id: "D", name: "Daily driver", branch_id: "lagos" }],
-        vehicles: [{ id: "V", label: "Daily vehicle", branch_id: "lagos" }],
+        vehicles: [
+          {
+            id: "V",
+            label: "Daily vehicle",
+            branch_id: "lagos",
+            capacity_grams: 30000,
+          },
+        ],
       });
     });
     const selects = t.root.findAllByType("select");
     assert.deepEqual(
-      selects.map((x: any) => x.props.defaultValue),
+      selects.map((x: any) => x.props.value ?? x.props.defaultValue),
       ["D", "V"],
     );
     assert.match(text(t), /gas-only/);
@@ -305,6 +312,137 @@ test("DAY-UI live day refresh keeps the same closing form, updates supply totals
     assert.notEqual(t.root.findByType("form"), form);
     assert.equal(t.root.findByType("fieldset").props.disabled, false);
   } finally {
+    if (t) await act(async () => t.unmount());
+    delete (globalThis as any).dailyAPI;
+  }
+});
+
+test("DAY-UI-SETUP capacity is visible and invalid opening weights never reauthenticate; existing order reservation uses the active day", async () => {
+  const requests: any[] = [];
+  let t: any;
+  const props = {
+    user: { id: "owner", role: "owner", branchId: "lagos" },
+    branch: "lagos",
+    onChange() {
+      requests.push(["changed"]);
+    },
+  };
+  (globalThis as any).dailyAPI = async (action: string, input: any) => {
+    requests.push([action, input]);
+    return action.startsWith("daily.summary")
+      ? { enabled: true, runs: [] }
+      : action.startsWith("dispatch.vehicle.options")
+        ? {
+            drivers: [{ id: "D", name: "Daily driver", branch_id: "lagos" }],
+            vehicles: [
+              {
+                id: "V",
+                label: "Vehicle 30",
+                branch_id: "lagos",
+                capacity_grams: 30000,
+              },
+            ],
+          }
+        : { message: "Gas reserved" };
+  };
+  const Original = globalThis.FormData;
+  try {
+    await act(async () => {
+      t = create(React.createElement(Day, props));
+    });
+    assert.match(text(t), /30.*kg/);
+    assert.equal(
+      t.root.findAllByType("input").find((n: any) => n.props.name === "kg")
+        .props.max,
+      30,
+    );
+    (globalThis as any).FormData = class {
+      get(k: string) {
+        return (
+          {
+            driver: "D",
+            vehicle: "V",
+            kg: "100",
+            odometer: "1",
+            password: "synthetic",
+          } as any
+        )[k];
+      }
+    };
+    const form = {
+      elements: {
+        namedItem() {
+          return { value: "synthetic" };
+        },
+      },
+    };
+    await act(async () =>
+      t.root
+        .findByType("form")
+        .props.onSubmit({ preventDefault() {}, currentTarget: form }),
+    );
+    assert.match(text(t), /capacity of 30 kg/);
+    assert(!requests.some((r) => r[0] === "reauth" || r[0] === "daily.start"));
+    await act(async () => t.unmount());
+    (globalThis as any).dailyAPI = async (action: string, input: any) => {
+      requests.push([action, input]);
+      return action.startsWith("daily.summary")
+        ? {
+            enabled: true,
+            runs: [
+              {
+                id: "RUN",
+                state: "active",
+                driver_id: "D",
+                label: "Vehicle 30",
+                opening_grams: 25000,
+                added_grams: 0,
+                supplied_grams: 0,
+                committed_grams: 23000,
+                queued_grams: 23000,
+                version: 1,
+              },
+            ],
+          }
+        : action.startsWith("dispatch.vehicle.options")
+          ? { drivers: [], vehicles: [] }
+          : { message: "Gas reserved" };
+    };
+    await act(async () => {
+      t = create(
+        React.createElement(Day, {
+          ...props,
+          order: {
+            id: "ORDER",
+            reference: "EG-test",
+            status: "assigned",
+            driver_id: "D",
+            tracking_version: 7,
+            gas_lines: [{ grams: 12500 }],
+          },
+        }),
+      );
+    });
+    assert.match(text(t), /25 kg is available/);
+    assert(
+      !t.root.findAllByType("input").some((n: any) => n.props.name === "kg"),
+    );
+    await act(async () =>
+      t.root
+        .findByType("form")
+        .props.onSubmit({ preventDefault() {}, currentTarget: form }),
+    );
+    const request = requests.find((r) => r[0] === "daily.order.attach");
+    assert(request);
+    assert.deepEqual(Object.keys(request[1]).sort(), [
+      "operationKey",
+      "orderId",
+      "version",
+    ]);
+    assert.equal(request[1].version, 7);
+    assert(requests.some((r) => r[0] === "changed"));
+  } finally {
+    globalThis.FormData = Original;
     if (t) await act(async () => t.unmount());
     delete (globalThis as any).dailyAPI;
   }

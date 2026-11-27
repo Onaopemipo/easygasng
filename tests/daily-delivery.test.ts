@@ -11,7 +11,10 @@ test("DAY01 full paid refill → actual scale stock debit → consented current 
     const r = await f.start(),
       o = await f.make();
     await f.assign(o);
-    await assert.rejects(()=>f.transition(o,"out_for_delivery"),/driver.*Start delivery/i);
+    await assert.rejects(
+      () => f.transition(o, "out_for_delivery"),
+      /driver.*Start delivery/i,
+    );
     let current = await f.arrive(o);
     assert(current.daily_run);
     assert.equal(Number((await f.summary()).committed_grams), 6000);
@@ -113,12 +116,12 @@ test("DAY01 full paid refill → actual scale stock debit → consented current 
     await f.db.close?.();
   }
 });
-test("DAY02 existing reservations attach once; arriving new orders/midday gas and cancellation conserve stock", async () => {
+test("DAY02 unassigned orders stay in the queue; assignments attach once; arriving new orders/midday gas and cancellation conserve stock", async () => {
   const f = await setup();
   try {
     const before = await f.make(),
       r = await f.start();
-    assert.equal(Number((await f.summary()).committed_grams), 6000);
+    assert.equal(Number((await f.summary()).committed_grams), 0);
     assert.equal(
       Number(
         (
@@ -128,7 +131,7 @@ test("DAY02 existing reservations attach once; arriving new orders/midday gas an
           )
         )?.reserved_grams,
       ),
-      100000,
+      106000,
     );
     const o = await f.make();
     await f.assign(before);
@@ -460,11 +463,301 @@ test("DAY05 revoked privileges, foreign driver/branch, premature photo, unfinish
   }
 });
 
-test('DAY06 existing trip handover requires real reconciliation, then reuses the vehicle without rewriting earlier metered history',async()=>{
- const {phonePaymentFixture}=await import('./helpers/phone-order-payment-fixture');const p=await phonePaymentFixture();const f=await setup(p.db,p);try{
- const trip=await p.start();const load=await p.run('inventory','bulk.load.issue',{tripId:trip.id,meterId:p.meter.id,grams:6000,meterReadingGrams:100000,orderIds:[],reason:'Synthetic earlier load'});await p.run('driver','bulk.load.acknowledge',{loadId:load.id,version:1,returnGrams:6000,meterReadingGrams:100000,reason:'Synthetic earlier weight confirmed'});
- const start={driverId:f.actors.driver.id,vehicleId:p.vehicle.id,openingKg:20};await assert.rejects(()=>f.run('owner','daily.start',start),/Reconcile.*custody/);
- await p.run('driver','bulk.return.declare',{loadId:load.id,version:2,returnGrams:6000,reason:'Synthetic actual earlier load returned'});await p.run('inventory','bulk.return.receive',{loadId:load.id,version:3,returnGrams:6000,reason:'Synthetic actual earlier return received'});
- const before=await one(f.db,'SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1',[load.id]);const day=await f.run('owner','daily.start',start);assert.equal((await f.summary()).trip_id,trip.id);const order=await f.make();await f.assign(order);const c=await f.arrive(order);await f.run('driver','daily.refill.record',{orderId:order.id,version:c.tracking_version,readings:[{beforeKg:8,afterKg:14}]});const driver=await actor(f.db,f.actors.driver.token);await f.db.transaction(tx=>attachDeliveryPhoto(tx,driver,order.id,Buffer.from([1,2,3,4,5,6,7,8,9,10,11,12]),'Synthetic daily refill evidence',true,new Date().toISOString()));await f.run('driver','driver.complete',{orderId:order.id,version:c.tracking_version,handover:true});await f.run('owner','daily.close',{runId:day.id,version:Number((await f.summary()).version),kg:14,endOdometer:125});assert.deepEqual((await one(f.db,'SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1',[load.id]))?.snapshot,before?.snapshot);assert.equal(Number((await one(f.db,"SELECT grams FROM gas_stock WHERE branch_id='lagos'"))?.grams),494000);
- }finally{await f.db.close?.();}
+test("DAY06 existing trip handover requires real reconciliation, then reuses the vehicle without rewriting earlier metered history", async () => {
+  const { phonePaymentFixture } = await import(
+    "./helpers/phone-order-payment-fixture"
+  );
+  const p = await phonePaymentFixture();
+  const f = await setup(p.db, p);
+  try {
+    const trip = await p.start();
+    const load = await p.run("inventory", "bulk.load.issue", {
+      tripId: trip.id,
+      meterId: p.meter.id,
+      grams: 6000,
+      meterReadingGrams: 100000,
+      orderIds: [],
+      reason: "Synthetic earlier load",
+    });
+    await p.run("driver", "bulk.load.acknowledge", {
+      loadId: load.id,
+      version: 1,
+      returnGrams: 6000,
+      meterReadingGrams: 100000,
+      reason: "Synthetic earlier weight confirmed",
+    });
+    const start = {
+      driverId: f.actors.driver.id,
+      vehicleId: p.vehicle.id,
+      openingKg: 20,
+    };
+    await assert.rejects(
+      () => f.run("owner", "daily.start", start),
+      /Reconcile.*custody/,
+    );
+    await p.run("driver", "bulk.return.declare", {
+      loadId: load.id,
+      version: 2,
+      returnGrams: 6000,
+      reason: "Synthetic actual earlier load returned",
+    });
+    await p.run("inventory", "bulk.return.receive", {
+      loadId: load.id,
+      version: 3,
+      returnGrams: 6000,
+      reason: "Synthetic actual earlier return received",
+    });
+    const before = await one(
+      f.db,
+      "SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1",
+      [load.id],
+    );
+    const day = await f.run("owner", "daily.start", start);
+    assert.equal((await f.summary()).trip_id, trip.id);
+    const order = await f.make();
+    await f.assign(order);
+    const c = await f.arrive(order);
+    await f.run("driver", "daily.refill.record", {
+      orderId: order.id,
+      version: c.tracking_version,
+      readings: [{ beforeKg: 8, afterKg: 14 }],
+    });
+    const driver = await actor(f.db, f.actors.driver.token);
+    await f.db.transaction((tx) =>
+      attachDeliveryPhoto(
+        tx,
+        driver,
+        order.id,
+        Buffer.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        "Synthetic daily refill evidence",
+        true,
+        new Date().toISOString(),
+      ),
+    );
+    await f.run("driver", "driver.complete", {
+      orderId: order.id,
+      version: c.tracking_version,
+      handover: true,
+    });
+    await f.run("owner", "daily.close", {
+      runId: day.id,
+      version: Number((await f.summary()).version),
+      kg: 14,
+      endOdometer: 125,
+    });
+    assert.deepEqual(
+      (
+        await one(
+          f.db,
+          "SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1",
+          [load.id],
+        )
+      )?.snapshot,
+      before?.snapshot,
+    );
+    assert.equal(
+      Number(
+        (await one(f.db, "SELECT grams FROM gas_stock WHERE branch_id='lagos'"))
+          ?.grams,
+      ),
+      494000,
+    );
+  } finally {
+    await f.db.close?.();
+  }
+});
+
+test("DAY07 startup reports actual vehicle capacity, prioritises assigned orders and leaves the unassigned queue untouched", async () => {
+  const f = await setup();
+  try {
+    await f.db.query(
+      "UPDATE driver_vehicles SET capacity_grams=30000 WHERE id=$1",
+      [f.v.id],
+    );
+    await assert.rejects(
+      () =>
+        f.run("owner", "daily.start", {
+          driverId: f.actors.driver.id,
+          vehicleId: f.v.id,
+          openingKg: 100,
+          startOdometer: 10,
+        }),
+      /30 kg.*100 kg/,
+    );
+    assert.equal(
+      Number(
+        (await one(f.db, "SELECT count(*) n FROM daily_delivery_runs"))?.n,
+      ),
+      0,
+    );
+    await f.run("owner", "dispatch.vehicle.assign", {
+      driverId: f.actors.driver.id,
+      vehicleId: f.v.id,
+      startOdometer: 10,
+      makeAvailable: true,
+    });
+    const queued = await f.make(10),
+      assigned = await f.make(12.5);
+    await f.assign(assigned);
+    await f.run("owner", "daily.start", {
+      driverId: f.actors.driver.id,
+      vehicleId: f.v.id,
+      openingKg: 25,
+      startOdometer: 10,
+    });
+    assert.equal(Number((await f.summary()).committed_grams), 12500);
+    assert((await f.snapshot(assigned.id)).daily_run);
+    assert.equal((await f.snapshot(queued.id)).daily_run, null);
+    assert.equal(
+      Number(
+        (await one(f.db, "SELECT grams FROM gas_stock WHERE branch_id='lagos'"))
+          ?.grams,
+      ),
+      500000,
+    );
+  } finally {
+    await f.db.close?.();
+  }
+});
+
+test("DAY08 existing assigned order joins the active day, repairs premature queue reservations, preserves real weights and completes without a meter load", async () => {
+  const f = await setup();
+  try {
+    await f.run("owner", "dispatch.vehicle.assign", {
+      driverId: f.actors.driver.id,
+      vehicleId: f.v.id,
+      startOdometer: 10,
+      makeAvailable: true,
+    });
+    const queued = await f.make(10),
+      o = await f.make(12.5);
+    await f.assign(o);
+    const day = await f.run("owner", "daily.start", {
+      driverId: f.actors.driver.id,
+      vehicleId: f.v.id,
+      openingKg: 25,
+      startOdometer: 10,
+    });
+    // Reproduce the already-deployed pre-fix shape: a queued order was allocated,
+    // while the assigned order was left as its ordinary branch reservation.
+    await f.db.query(
+      "UPDATE daily_delivery_allocations SET state='released' WHERE order_id=$1",
+      [o.id],
+    );
+    await f.db.query(
+      "INSERT INTO daily_delivery_allocations(id,run_id,order_id,grams) VALUES($1,$2,$3,10000)",
+      [id(), day.id, queued.id],
+    );
+    await f.db.query(
+      "UPDATE daily_delivery_runs SET committed_grams=10000,version=version+1 WHERE id=$1",
+      [day.id],
+    );
+    await f.db.query(
+      "UPDATE gas_stock SET reserved_grams=reserved_grams+2500 WHERE branch_id='lagos'",
+    );
+    const current = await f.snapshot(o.id),
+      request = {
+        orderId: o.id,
+        version: current.tracking_version,
+        operationKey: id(),
+      };
+    await assert.rejects(
+      () => f.call("driver", "daily.order.attach", request),
+      /permission|limited/,
+    );
+    await assert.rejects(
+      () =>
+        f.run("owner", "daily.order.attach", {
+          ...request,
+          version: current.tracking_version - 1,
+        }),
+      /Refresh/,
+    );
+    const result = await f.call("owner", "daily.order.attach", request);
+    assert.match(result.message, /reserved/);
+    await f.call("owner", "daily.order.attach", request);
+    assert.equal(Number((await f.summary()).opening_grams), 25000);
+    assert.equal(Number((await f.summary()).committed_grams), 12500);
+    assert.equal((await f.snapshot(queued.id)).daily_run, null);
+    assert((await f.snapshot(o.id)).daily_run);
+    assert.equal(
+      Number(
+        (
+          await one(
+            f.db,
+            "SELECT reserved_grams FROM gas_stock WHERE branch_id='lagos'",
+          )
+        )?.reserved_grams,
+      ),
+      35000,
+    );
+    assert.equal(
+      Number(
+        (
+          await one(
+            f.db,
+            "SELECT count(*) n FROM daily_delivery_allocations WHERE order_id=$1 AND state<>'released'",
+            [o.id],
+          )
+        )?.n,
+      ),
+      1,
+    );
+    assert.equal(
+      Number(
+        (
+          await one(
+            f.db,
+            "SELECT count(*) n FROM audit_events WHERE action='daily.queued_order_unlinked' AND target=$1",
+            [queued.id],
+          )
+        )?.n,
+      ),
+      1,
+    );
+    const c = await f.arrive(o);
+    await f.run("driver", "daily.refill.record", {
+      orderId: o.id,
+      version: c.tracking_version,
+      readings: [{ beforeKg: 8, afterKg: 20.5 }],
+    });
+    const driver = await actor(f.db, f.actors.driver.token);
+    await f.db.transaction((tx) =>
+      attachDeliveryPhoto(
+        tx,
+        driver,
+        o.id,
+        Buffer.from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+        "Synthetic daily photo",
+        true,
+        new Date().toISOString(),
+      ),
+    );
+    await f.run("driver", "driver.complete", {
+      orderId: o.id,
+      version: c.tracking_version,
+      handover: true,
+    });
+    await f.run("owner", "daily.close", {
+      runId: day.id,
+      version: Number((await f.summary()).version),
+      kg: 12.5,
+      endOdometer: 20,
+    });
+    assert.equal((await f.snapshot(o.id)).status, "delivered");
+    assert.equal((await f.summary()).state, "closed");
+    assert.equal(
+      Number(
+        (await one(f.db, "SELECT grams FROM gas_stock WHERE branch_id='lagos'"))
+          ?.grams,
+      ),
+      487500,
+    );
+    assert.equal(
+      Number((await one(f.db, "SELECT count(*) n FROM bulk_lpg_loads"))?.n),
+      0,
+    );
+  } finally {
+    await f.db.close?.();
+  }
 });

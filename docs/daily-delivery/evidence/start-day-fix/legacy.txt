@@ -1,0 +1,36 @@
+(node:27153) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ DRF-JOURNEY: self-service COD refill has no cylinder registry/inspection or OTP, uses actual mass and photo, reconciles cash/tanker and ends trip once (1420.355125ms)
+✔ DRF-NEG: wrong roles, partial or excess mass, missing/stale proof, revoked COD and unverified prepaid cannot complete or consume gas (1081.074167ms)
+✔ DRF-EXTRA: extra gas on an active customer visit reuses current destination evidence, assigns the same tanker driver and adds no delivery fee or cylinder record (1071.392334ms)
+✔ DRF-TANK: an incoming order reserves acknowledged preloaded tanker gas once and cancellation restores its buffer without releasing physical custody (887.376292ms)
+✔ DRF-TANK-DEPOT: assignment uses existing driver tanker buffer without double-counting capacity or reserving both depot and tanker gas (901.868167ms)
+(node:27161) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ PPAY-JOURNEY: first-time phone customer completes scoped profile/address, pays, is confirmed once and receives tanker refill with photo before reconciliation/trip end (1427.388667ms)
+✔ PPAY-SECURITY: anonymous link cannot target another order/wallet, claim an account, alter scope/area or bypass incomplete profile, unpaid policy, expiry, revocation or changed source (989.167208ms)
+✔ PPAY-MESSAGES: encrypted email and WhatsApp requests are retry-safe, honestly queued while disabled, and revoked email links are never delivered (912.623292ms)
+✔ PPAY-VERIFY: pending, mismatched, or browser-asserted payment never confirms an order; exact verified provider evidence posts only once (921.168667ms)
+✔ PPAY-EXTRA: a same-visit extra phone order charges no second delivery fee, stays unassigned until payment and then rejoins the original active driver (1030.809ms)
+✔ PPAY-LEGACY: already-paid pre-migration phone orders remain paid; unpaid legacy COD requests convert explicitly to card without dispatch bypass (872.623416ms)
+✔ PPAY-ADDRESS: a customer address correction invalidates the prior coverage confirmation and still requires actual current address review (1011.2435ms)
+✔ PPAY-ORIGIN: foreign origins and oversized or missing capabilities cannot access the private customer order (859.616709ms)
+(node:27195) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ VISIT-CREATE: an active driver takes a separate fee-free order on the same visit, retaining original totals and idempotency (1413.844167ms)
+✔ VISIT-GAS: ready busy drivers can receive same-visit gas without a customer cylinder gate (1014.613375ms)
+✔ VISIT-NEG: roles, revoked privileges, client scope/fee overrides, closed visits and stale price/visit are rejected (983.5925ms)
+✔ VISIT-CAPACITY: one visit consumes one stop while gas/vehicle demand and normal delivery fees stay authoritative (1056.779667ms)
+✔ VISIT-JOURNEY: an extra order placed at the customer shares the active trip, has independent proof/payment and reconciles both deliveries before trip end (1243.394583ms)
+✔ VISIT-STOCK: missing or unacknowledged custody, stale load quotes and insufficient mass cannot promise an extra order (939.223917ms)
+✔ VISIT-CANCEL: cancellation returns an unpicked extra reservation to vehicle custody exactly once; protected parent, immutable links and role revocations remain (1354.873125ms)
+✔ VISIT-LPG: an extra gas order uses acknowledged buffer once, still requires its own acknowledgement, metering and proof without cylinder registration (1151.402083ms)
+✔ VISIT-SERIAL: extra empty cylinders retain exact acknowledged vehicle serials through allocation and customer handover (1065.34125ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 25000.119583

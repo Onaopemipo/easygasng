@@ -47,7 +47,7 @@ test(
         readings: [{ beforeKg: 8, afterKg: 14 }],
         operationKey: id(),
       };
-      const second={...input,operationKey:id()};
+      const second = { ...input, operationKey: id() };
       const both = await Promise.allSettled([
         f.call("driver", "daily.refill.record", input),
         f.call("driver", "daily.refill.record", second),
@@ -73,10 +73,64 @@ test(
         1,
       );
       const winning = both[0].status === "fulfilled" ? input : second;
-        assert.equal(
-          (await f.call("driver", "daily.refill.record", winning)).replayed,
-          true,
-        );
+      assert.equal(
+        (await f.call("driver", "daily.refill.record", winning)).replayed,
+        true,
+      );
+      const pendingOrder = await f.make();
+      await f.assign(pendingOrder);
+      const day = await f.summary();
+      await db.query(
+        "UPDATE daily_delivery_allocations SET state='released' WHERE order_id=$1",
+        [pendingOrder.id],
+      );
+      await db.query(
+        "UPDATE daily_delivery_runs SET committed_grams=committed_grams-6000,version=version+1 WHERE id=$1",
+        [day.id],
+      );
+      await db.query(
+        "UPDATE gas_stock SET reserved_grams=reserved_grams+6000 WHERE branch_id='lagos'",
+      );
+      const attach = {
+        orderId: pendingOrder.id,
+        version: (await f.snapshot(pendingOrder.id)).tracking_version,
+        operationKey: id(),
+      };
+      const concurrentAttach = await Promise.allSettled([
+        f.call("owner", "daily.order.attach", attach),
+        f.call("owner", "daily.order.attach", {
+          ...attach,
+          operationKey: id(),
+        }),
+      ]);
+      assert(concurrentAttach.every((r) => r.status === "fulfilled"));
+      assert.equal(
+        Number(
+          (
+            await one(
+              db,
+              "SELECT count(*) n FROM daily_delivery_allocations WHERE order_id=$1 AND state<>'released'",
+              [pendingOrder.id],
+            )
+          )?.n,
+        ),
+        1,
+      );
+      assert.equal(
+        Number(
+          (
+            await one(
+              db,
+              "SELECT reserved_grams FROM gas_stock WHERE branch_id='lagos'",
+            )
+          )?.reserved_grams,
+        ),
+        94000,
+      );
+      assert.equal(
+        (await f.call("owner", "daily.order.attach", attach)).replayed,
+        true,
+      );
       await db.exec(
         "GRANT USAGE ON SCHEMA easygas_private TO " +
           reader +

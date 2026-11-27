@@ -15,7 +15,13 @@ This is the routine workflow for the business’s single delivery vehicle. It re
 
 Open **Dispatch → Today’s deliveries**. Choose the driver and vehicle (each is selected automatically when there is only one), enter actual opening gas-only kg and starting odometer, and confirm with your password. The driver is marked on duty; GPS consent is not enabled automatically.
 
-Start the day once. Incoming orders use this same vehicle throughout the day. You can also open the daily setup card within a gas order’s **Overview**, without closing the order modal. Existing order reservations that fit are attached automatically; other orders can be assigned when gas is available. Actual available stock and vehicle capacity remain enforced.
+The vehicle dropdown shows its saved gas capacity in **kg**. Opening weight must not exceed that approved capacity. For example, a 30kg vehicle accepts an actual 25kg opening; it cannot accept 100kg. Never reduce a real measurement to bypass a limit. Select the correctly configured vehicle; an Admin registers the actual approved capacity in Fleet & trips.
+
+If a day is already open and an earlier assigned order has no daily allocation, open that order → **Set up daily delivery → Reserve gas for this order**, then confirm your password. The modal remains open. The system safely restores ordinary branch reservations for unassigned queue entries accidentally linked by the earlier release, then reserves this assigned order exactly once. It does not alter the recorded opening weight, payments or supplied gas. It checks current payment/branch/driver/custody and stock again. If genuinely insufficient gas remains, record an actual additional load within capacity; do not invent a load. Different-driver orders must use the existing reassignment controls first.
+
+Normal gas orders do not expose meter renewal or per-order LPG load forms. An order with an actual earlier metered allocation retains read-only guidance to its existing custody under Dispatch; physical history cannot be silently converted.
+
+Start the day once. Incoming orders use this same vehicle throughout the day. You can also open the daily setup card within a gas order’s **Overview**, without closing the order modal. Already assigned orders for the selected driver are attached first when gas is available. Unassigned queued orders keep their ordinary branch reservations; they do not consume the day’s allocation just because the day was opened. Actual available stock and vehicle capacity remain enforced.
 
 If an earlier metered/product trip has open custody, finish its genuine reconciliation before starting the new day. Expand **Branch setup & earlier vehicle trips** for those management actions. Existing measurements are never invented, converted or erased. A current trip can be reused once all earlier custody is genuinely reconciled; its history remains unchanged.
 
