@@ -332,7 +332,7 @@ test("I,J,P: expenses require independent approval, real payment evidence and ap
           reference: "RECORD-BEFORE-APPROVAL",
           reason: "Attempt premature posting",
         }),
-      /independently/,
+      /Approve and record/,
     );
     await approve(f, e.requestId);
     await f.call("finance", "expense.record", {

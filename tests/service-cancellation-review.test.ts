@@ -20,7 +20,7 @@ test("SVC-CANCEL01: late pre-work cancellation uses existing independent finance
     );
     await assert.rejects(
       () => mutate(f, "owner", "booking.cancel.execute_review", input),
-      /finance approval/,
+      /Approve this exact cancellation revision/,
     );
     const r = await mutate(f, "owner", "booking.cancel.request_review", input);
     assert.equal(r.status,"active");

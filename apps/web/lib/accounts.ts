@@ -185,7 +185,7 @@ export async function accountAction(
         400,
         "The temporary password does not match this invitation.",
       );
-    // Invitations create an unprivileged account. Staff access still requires the existing independent dual approval.
+    // Recipient acceptance creates an unprivileged account; one Admin business approval grants the exact selected access.
     const uid = id();
     const created = await one(
       tx,
@@ -978,7 +978,7 @@ export async function accountAction(
       ok: true,
       invitationId: iid,
       message: access
-        ? "Invitation email queued. The selected access will go for independent approval after acceptance."
+        ? "Invitation email queued. After acceptance, one Admin approval grants the selected access."
         : "Invitation email queued. The recipient has 48 hours to accept and use their temporary password.",
     };
   }

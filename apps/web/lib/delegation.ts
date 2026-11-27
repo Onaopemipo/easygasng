@@ -164,7 +164,7 @@ export async function delegationAction(
     if (a.delegate_id === user.id)
       throw new AppError(
         403,
-        "A separate business owner must review the delegation.",
+        "You cannot approve delegation to your own account.",
       );
     if (a.status !== "pending" || Date.parse(a.expires_at) <= Date.now())
       throw new AppError(409, "This delegation is no longer awaiting review.");
