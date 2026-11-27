@@ -16,6 +16,9 @@ function Fields({ value }: { value: Record<string, any> }) {
 }
 export default function SettingSummary({ value, type }: { value: any; type?: string }) {
   if (value && typeof value === "object" && !Array.isArray(value)) {
+    if (type === "rewards_adjustment" && value.customerPublicId) {
+      return <Fields value={{ customer: value.customerPublicId, points: value.points, ...(value.assignBranchId ? { initialBranch: value.assignBranchId, branchAssignment: "On approval, together with points" } : {}), reason: value.reason, evidence: value.evidence }} />;
+    }
     if (type === "location") {
       const coverage = typeof value.coverage === "string" ? value.coverage.trim() : "";
       const known = ["name", "city", "state", "country", "active", "visible", "archived", "branchId", "coverage", "description", "displayOrder", "requiresAddressConfirmation"];

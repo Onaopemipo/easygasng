@@ -548,9 +548,17 @@ form.support-dialog-form label[data-field-type="boolean-hidden"] { display: none
 .driver-assignment-toolbar button {min-height:44px;white-space:nowrap}
 .driver-assignment-options {min-width:0;border:0!important;padding:0!important;margin:0!important;display:grid;gap:12px}
 .driver-assignment-options legend {font-size:14px;color:var(--muted);margin-bottom:10px}
-.driver-assignment-driver {border:1px solid var(--border);border-radius:12px;padding:14px;background:var(--surface);min-width:0}
-.driver-assignment-choice {display:flex;align-items:flex-start;gap:10px;cursor:pointer;margin:0}
-.driver-assignment-choice input {width:18px!important;height:18px;margin:3px 0 0!important;flex-shrink:0}
+.driver-assignment-driver {--driver-card-padding:14px;border:2px solid var(--border);border-radius:12px;padding:var(--driver-card-padding);background:var(--surface);min-width:0}
+.driver-assignment-driver.is-selected {border-color:var(--green);box-shadow:0 0 0 1px var(--green)}
+.driver-assignment-choice {display:flex;align-items:center;gap:14px;cursor:pointer;margin:calc(-1 * var(--driver-card-padding));padding:var(--driver-card-padding);min-height:64px;border-radius:10px}
+.driver-assignment-choice>span {min-width:0;flex:1}
+.driver-assignment-choice input[type="radio"] {appearance:none;-webkit-appearance:none;width:26px!important;height:26px!important;min-width:26px!important;min-height:26px!important;max-width:26px!important;max-height:26px!important;margin:0!important;padding:0!important;flex-shrink:0;border:2px solid var(--green);border-radius:50%;background-color:var(--surface);box-shadow:none;cursor:pointer;opacity:1;accent-color:var(--green)}
+.driver-assignment-choice input[type="radio"]:checked {border-color:var(--green);background-image:radial-gradient(circle,var(--green) 0 46%,transparent 50%)}
+.driver-assignment-choice input[type="radio"]:focus-visible {outline:3px solid var(--primary);outline-offset:4px}
+.driver-assignment-choice:has(input:disabled) {cursor:not-allowed}
+.driver-assignment-choice input[type="radio"]:disabled {border-color:var(--muted);background-color:var(--raised);cursor:not-allowed}
+.driver-assignment-selected {display:inline-block;margin-left:10px;padding:3px 8px;border-radius:6px;background:var(--green);color:var(--surface);font-size:12px;line-height:1.4;font-weight:700}
+@media(forced-colors:active){.driver-assignment-choice input[type="radio"]{appearance:auto;-webkit-appearance:auto}.driver-assignment-driver.is-selected{border-color:Highlight}.driver-assignment-selected{border:1px solid ButtonText}}
 .driver-assignment-choice small {display:block;font-size:14px;margin-top:3px;color:var(--muted)}
 .driver-assignment-issues {margin:14px 0 0;padding-left:20px;display:grid;gap:12px;font-size:14px}
 .driver-assignment-issues p {margin:4px 0 0;line-height:1.55;color:var(--muted)}
@@ -558,7 +566,7 @@ form.support-dialog-form label[data-field-type="boolean-hidden"] { display: none
 .driver-assignment-help {display:block;margin:12px 0 0;text-decoration:underline;text-underline-offset:3px;min-height:32px;color:var(--foreground)}
 .driver-assignment-blocked {margin:0;padding:12px;border:1px solid var(--border);border-radius:10px;background:var(--raised);line-height:1.5}
 .driver-assignment-dialog {padding-bottom:108px!important}
-@media(max-width:600px) {.driver-assignment-toolbar>div,.driver-assignment-toolbar button{width:100%}.driver-assignment-driver{padding:12px}.driver-assignment-dialog{padding:20px 16px 140px!important}}
+@media(max-width:600px) {.driver-assignment-toolbar>div,.driver-assignment-toolbar button{width:100%}.driver-assignment-driver{--driver-card-padding:12px}.driver-assignment-dialog{padding:20px 16px 140px!important}}
 @media(max-width:360px) {.driver-assignment-dialog{padding-bottom:164px!important}}
 /* The persistent demo notice must not cover Orders assignment actions. */
 body:has(.client-demo-notice) .admin-order-dialog:has(.driver-assignment-workspace) {align-items:flex-start;padding-top:16px;}
@@ -599,7 +607,7 @@ body:has(.client-demo-notice) .compact-dialog.testimonial-dialog .modal {max-hei
 .dispatch-setup-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:18px}.dispatch-setup-grid article{padding:18px;border:1px solid var(--border);border-radius:12px;min-width:0;background:var(--background);overflow-wrap:anywhere}
 .dispatch-setup-step{display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-size:13px}.dispatch-setup-step>svg{flex-shrink:0;color:var(--muted)}.dispatch-setup-step strong{font-size:15px}.dispatch-setup-step .setup-ready,.dispatch-setup-step .setup-missing{margin-left:auto;font-size:12px;font-weight:650}.setup-ready{color:var(--foreground)}.setup-missing{color:var(--foreground)}
 .dispatch-setup-actions{display:grid;gap:8px}.dispatch-setup-actions a,.dispatch-setup-actions button{display:inline-flex;align-items:center;justify-content:flex-start;text-align:left;min-height:44px;font-size:14px;font-weight:650;text-decoration:underline;text-underline-offset:3px;white-space:normal;color:var(--foreground)}.dispatch-setup-actions ul{margin:0;padding-left:19px;font-size:14px;line-height:1.7}.dispatch-setup-actions p{margin:0}.dispatch-setup-footnote{border-top:1px solid var(--border);padding-top:14px;margin-bottom:0}
-.driver-assignment-blocked-group{border:1px solid var(--border);border-radius:12px;padding:0;min-width:0}.driver-assignment-blocked-group>summary{cursor:pointer;min-height:48px;padding:14px;font-weight:650;line-height:1.5}.driver-assignment-blocked-group>summary span{display:block;color:var(--muted);font-size:13px;font-weight:400}.driver-assignment-blocked-list{display:grid;gap:10px;padding:0 12px 12px}.driver-assignment-blocked-list .driver-assignment-driver{padding:12px}.driver-assignment-blocked-list .driver-assignment-issues{font-size:13px;gap:8px}
+.driver-assignment-blocked-group{border:1px solid var(--border);border-radius:12px;padding:0;min-width:0}.driver-assignment-blocked-group>summary{cursor:pointer;min-height:48px;padding:14px;font-weight:650;line-height:1.5}.driver-assignment-blocked-group>summary span{display:block;color:var(--muted);font-size:13px;font-weight:400}.driver-assignment-blocked-list{display:grid;gap:10px;padding:0 12px 12px}.driver-assignment-blocked-list .driver-assignment-driver{--driver-card-padding:12px}.driver-assignment-blocked-list .driver-assignment-issues{font-size:13px;gap:8px}
 .dispatch-vehicle-launch{display:flex;justify-content:flex-end;margin:0 0 16px}.dispatch-vehicle-dialog .modal{width:min(560px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto}.dispatch-vehicle-dialog .product-form{border:0;box-shadow:none;background:transparent;padding:16px 0 0;gap:16px;display:grid;grid-template-columns:minmax(0,1fr)}.dispatch-vehicle-dialog .product-form>h3{display:none}.dispatch-vehicle-dialog label{display:grid;gap:8px;min-width:0}.dispatch-vehicle-dialog input,.dispatch-vehicle-dialog select{width:100%;min-width:0;max-width:100%;min-height:44px}.dispatch-vehicle-dialog label[data-field-type="checkbox"]{display:flex;align-items:flex-start;gap:10px}.dispatch-vehicle-dialog input[type="checkbox"]{width:20px;height:20px;min-height:20px;flex-shrink:0}.dispatch-vehicle-toolbar{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}.dispatch-vehicle-toolbar label{flex:1;min-width:140px}.dispatch-vehicle-existing{margin-top:20px;border-top:1px solid var(--border);padding-top:12px}.dispatch-vehicle-existing summary{min-height:44px;cursor:pointer;padding:10px 0}.dispatch-vehicle-existing ul{padding-left:20px}.dispatch-vehicle-existing p{color:var(--muted);font-size:13px}.dispatch-vehicle-dialog .fleet-dialog-intro{margin-bottom:20px}@media(max-width:700px){.dispatch-vehicle-launch .button{width:100%}.dispatch-vehicle-dialog .modal{padding:20px}.dispatch-vehicle-toolbar{align-items:stretch}.dispatch-vehicle-toolbar .button{flex-shrink:0}}
 @media(max-width:700px){.dispatch-setup{padding:16px}.dispatch-setup-grid{grid-template-columns:1fr}.dispatch-setup-controls{width:100%}.dispatch-setup-controls label{flex:1;min-width:0}.dispatch-setup-controls select{width:100%;max-width:100%}.dispatch-setup-controls button{flex:1}.dispatch-setup-step .setup-ready,.dispatch-setup-step .setup-missing{margin-left:0}}
 
@@ -608,3 +616,15 @@ body:has(.client-demo-notice) .compact-dialog.testimonial-dialog .modal {max-hei
 .dispatch-vehicle-toolbar .button{align-self:flex-end;height:44px;min-height:44px;margin:0}
 .dispatch-vehicle-existing>button{display:flex;justify-content:flex-start;width:100%;min-height:44px;padding:8px 0;border:0;background:transparent;color:inherit;box-shadow:none;text-align:left}
 .dispatch-vehicle-launch{gap:12px;flex-wrap:wrap}.dispatch-vehicle-existing li{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0}.dispatch-vehicle-existing li .button{flex-shrink:0;min-height:44px}.dispatch-trip-dialog [hidden]{display:none!important}.dispatch-trip-selectors{display:grid;grid-template-columns:minmax(100px,1fr) minmax(0,2fr);gap:12px}.dispatch-trip-refresh{margin:12px 0}.dispatch-trip-reading{margin:8px 0 12px;font-size:13px;color:var(--muted)}.dispatch-trip-modes{display:flex;gap:12px;margin:12px 0}.dispatch-trip-modes .button{flex:1;min-height:44px}.dispatch-trip-dialog .product-form>label[data-field-type="number"]{grid-column:auto}.dispatch-trip-blockers{border:1px solid var(--border);border-radius:12px;padding:14px;margin:12px 0}.dispatch-trip-blockers h3{font-size:16px;margin:0 0 12px}.dispatch-trip-blockers article{display:grid;gap:8px;margin:12px 0}.dispatch-trip-blockers p,.dispatch-trip-dialog .muted{font-size:13px;color:var(--muted);margin:10px 0}.dispatch-trip-blockers .button{justify-self:start}@media(max-width:600px){.dispatch-trip-selectors{grid-template-columns:minmax(0,1fr)}.dispatch-trip-dialog .product-form>label[data-field-type="number"]{grid-column:1/-1}}
+
+/* Keep order preparation separate from the driver's trip and availability. */
+.assignment-preparation{padding:16px;border:1px solid var(--border);border-radius:12px;background:var(--surface);display:grid;gap:8px;min-width:0;overflow-wrap:anywhere}
+.assignment-preparation p{margin:0;line-height:1.5;color:var(--muted)}
+.assignment-preparation .service-actions{display:flex;flex-wrap:wrap;gap:8px}
+.assignment-preparation button{min-height:44px}
+.same-visit-order fieldset{min-width:0;margin:0;padding:0;border:0}
+.same-visit-order .service-actions{display:flex;flex-wrap:wrap;gap:12px;align-items:end}
+.same-visit-order .service-actions>label{flex:1 1 180px;min-width:0}
+.same-visit-order input,.same-visit-order select,.same-visit-order textarea{width:100%;min-height:44px}
+.same-visit-order textarea{min-height:90px}
+@media(max-width:600px){.same-visit-order .service-actions>label{flex-basis:100%}.assignment-preparation .service-actions>button{width:100%}}

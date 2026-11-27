@@ -77,6 +77,11 @@ export function earnedPoints(eligibleKobo: bigint, spendPerPointKobo: number) {
 export const rewardsAdjustment = z
   .object({
     customerId: z.string().uuid(),
+    customerPublicId: z
+      .string()
+      .regex(/^EGC-[A-F0-9]{32}$/)
+      .optional(),
+    assignBranchId: z.string().min(1).max(100).optional(),
     points: z
       .number()
       .int()

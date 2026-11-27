@@ -1,4 +1,6 @@
 "use client";
+import { operationNoteRequired } from "../../../packages/business-rules/src/operation-notes";
+
 import { DialogDraft, RecordPages, WorkspaceDialog } from "./compact-workspace";
 import {
   ServiceRequestLauncher,
@@ -68,6 +70,7 @@ type Field = {
 };
 export function ServiceForm({
   title,
+  action = "",
   fields,
   send,
   done,
@@ -80,6 +83,7 @@ export function ServiceForm({
   bookingAreas,
 }: {
   title: string;
+  action?: string;
   fields: Field[];
   send: (v: any) => Promise<any>;
   done?: () => void;
@@ -94,6 +98,8 @@ export function ServiceForm({
   const [reviewValues, setReviewValues] = useState<Record<string, any> | null>(
     null,
   );
+  const [fieldValues, setFieldValues] = useState<Record<string, any>>(() => Object.fromEntries(fields.map(f => [f.name, f.value ?? (f.type === "checkbox" ? false : "")])));
+  const fieldRequired = (f: Field) => operationNoteRequired(action, f.name, fieldValues, f.required !== false);
   const [dirty, setDirty] = useState(false);
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
@@ -156,7 +162,7 @@ export function ServiceForm({
     <form
       className="surface workflow-form service-form product-form"
       data-unsaved={dirty ? "true" : undefined}
-      onChange={() => setDirty(true)}
+      onChange={(e) => { const target = e.target as HTMLInputElement; setFieldValues(v => ({...v, [target.name]: target.type === "checkbox" ? target.checked : target.value})); setDirty(true); }}
       onSubmit={save}
     >
       <h3>{title}</h3>
@@ -204,7 +210,7 @@ export function ServiceForm({
                   required={
                     f.type === "checkbox"
                       ? f.needsConsent === true
-                      : f.required !== false
+                      : fieldRequired(f)
                   }
                 >
                   {f.label}
@@ -214,7 +220,7 @@ export function ServiceForm({
                 <select
                   name={f.name}
                   defaultValue={f.value ?? ""}
-                  required={f.required !== false}
+                  required={fieldRequired(f)}
                 >
                   <option value="">Choose…</option>
                   {f.options.map((o) => (
@@ -227,7 +233,7 @@ export function ServiceForm({
                 <textarea
                   name={f.name}
                   defaultValue={f.value ?? ""}
-                  required={f.required !== false}
+                  required={fieldRequired(f)}
                   maxLength={2000}
                 />
               ) : (
@@ -244,7 +250,7 @@ export function ServiceForm({
                   defaultChecked={
                     f.type === "checkbox" ? Boolean(f.value) : undefined
                   }
-                  required={f.type !== "checkbox" && f.required !== false}
+                  required={f.type !== "checkbox" && fieldRequired(f)}
                   min={f.type === "number" ? 0 : undefined}
                   maxLength={2000}
                 />
@@ -2412,6 +2418,7 @@ export function BookingCard({
               {customer && i === 0 && s.accepted === null && (
                 <ServiceForm
                   title="Review this exact settlement"
+        action="booking.settlement.consent"
                   fields={[
                     {
                       name: "accepted",
@@ -2490,6 +2497,7 @@ export function BookingCard({
           {customer && b.status === "awaiting_acknowledgement" && (
             <ServiceForm
               title="Acknowledge your service report"
+              action="booking.acknowledge"
               fields={[
                 {
                   name: "accepted",
@@ -2663,6 +2671,7 @@ function Reschedule({ b, done }: { b: any; done: () => void }) {
     return (
       <ServiceForm
         title="Change preferred visit time"
+        action="booking.reschedule"
         fields={[
           {
             name: "preferredStart",
@@ -2685,6 +2694,7 @@ function Reschedule({ b, done }: { b: any; done: () => void }) {
   return slots.length ? (
     <ServiceForm
       title="Reschedule with an available technician"
+        action="booking.reschedule"
       fields={[
         {
           name: "slotId",

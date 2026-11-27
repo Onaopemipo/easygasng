@@ -1,4 +1,5 @@
 "use client";
+import { isDoorstepRefillOrder } from "../../../packages/business-rules/src/refill-workflow";
 import React from "react";
 import { FieldCaption } from "./field-caption";
 import { Notice } from "./ui";
@@ -47,10 +48,11 @@ export default function DriverLPGControls({
   function submit(e: React.FormEvent<HTMLFormElement>, action: string) {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
+    if (action === "bulk.dispense" && form.get("supplied") !== "on") return;
     void write(action, {
       loadId: load.id,
       version: Number(load.version),
-      reason: String(form.get("reason")),
+      reason: action === "bulk.dispense" ? "Driver explicitly confirmed full allocated supply and recorded the observed cumulative meter reading" : String(form.get("reason")),
       ...(action === "bulk.collection.record"
         ? {
             orderId: order.id,
@@ -69,26 +71,13 @@ export default function DriverLPGControls({
   return (
     <section className={styles.panel} aria-label="Vehicle LPG custody">
       <h3>Vehicle LPG</h3>
-      {order &&
-        (order.manifest?.serials?.length > 0 ? (
-          <div>
-            <strong>Verify cylinder serial</strong>
-            <ul>
-              {order.manifest.serials.map((serial: string) => (
-                <li key={serial}>{serial}</li>
-              ))}
-            </ul>
-            <p>
-              Match the marked serial to the physical cylinder before
-              dispensing. If it differs, stop and contact dispatch.
-            </p>
-          </div>
-        ) : (
-          <Notice
-            type="error"
-            message="The order has no linked cylinder serial. Contact dispatch to verify the correct cylinder before dispensing."
-          />
-        ))}
+      {order && (
+        <p>
+          Fill the customer's cylinder at their address with the ordered gas
+          amount. No customer-cylinder serial registration is required. Record
+          the quantity supplied, then take the refill photo.
+        </p>
+      )}
 
       {!load ? (
         <Notice
@@ -155,6 +144,7 @@ export default function DriverLPGControls({
             </p>
           )}
           {order &&
+            !isDoorstepRefillOrder(order) &&
             order.payment_method === "cash_on_delivery" &&
             order.payment_status !== "verified" &&
             load.state === "active" &&
@@ -166,9 +156,9 @@ export default function DriverLPGControls({
                   onSubmit={(e) => submit(e, "bulk.collection.record")}
                 >
                   <p>
-                    Record actual collection only. Finance must independently
-                    verify it before dispensing; do not collect again if a
-                    payment is under review.
+                    Record actual collection only. Finance reconciles it
+                    independently after delivery. Do not collect again if a
+                    payment is already recorded or under review.
                   </p>
                   <fieldset
                     disabled={disabled || !bulk.enabled}
@@ -214,8 +204,8 @@ export default function DriverLPGControls({
                 <p>
                   Record the actual cumulative mass reading after dispensing
                   this order. The difference must equal its authorised
-                  allocation. Payment, inspection and current meter calibration
-                  are checked on save.
+                  allocation. The approved payment policy and current meter
+                  calibration are checked on save.
                 </p>
                 <fieldset
                   disabled={disabled || !bulk.enabled}
@@ -233,20 +223,11 @@ export default function DriverLPGControls({
                       required
                     />
                   </label>
-                  <label>
-                    <FieldCaption required>Dispensing evidence</FieldCaption>
-                    <textarea
-                      name="reason"
-                      minLength={10}
-                      maxLength={500}
-                      required
-                    />
-                  </label>
                   <label data-field-type="checkbox">
-                    <input type="checkbox" required />
+                    <input type="checkbox" name="supplied" required />
                     <span>
-                      I verified the cylinder and physically dispensed the full
-                      authorised quantity.
+                      I physically dispensed the full ordered gas quantity at
+                      the customer’s address.
                     </span>
                   </label>
                   <button className="button">Save metered dispensing</button>

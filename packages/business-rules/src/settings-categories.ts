@@ -166,6 +166,7 @@ export function settingsApprovalBadge(
   d: {
     propose_roles: string[];
     owner_auto_approval?: boolean;
+    admin_reward_add?: boolean;
     risk: number;
     value_type?: string;
   },

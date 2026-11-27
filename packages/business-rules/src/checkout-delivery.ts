@@ -1,3 +1,7 @@
+import {
+  confirmedDeliveryPin,
+  type ConfirmedDeliveryPin,
+} from "./delivery-pin";
 import { bookingPhone } from "./booking-contact";
 
 export type CheckoutAddress = {
@@ -9,11 +13,22 @@ export type CheckoutAddress = {
   is_default?: boolean;
   location_available?: boolean;
   location_id?: string | null;
-  details?: { recipient?: string; building?: string; landmark?: string; directions?: string };
+  details?: {
+    deliveryPin?: ConfirmedDeliveryPin;
+    recipient?: string;
+    building?: string;
+    landmark?: string;
+    directions?: string;
+  };
 };
 
 export type CheckoutProfile = {
-  user?: { id: string; name?: string; contact_phone?: string | null; delivery_phone?: string | null };
+  user?: {
+    id: string;
+    name?: string;
+    contact_phone?: string | null;
+    delivery_phone?: string | null;
+  };
   addresses?: CheckoutAddress[];
   deliveryLocations?: { id: string; name: string }[];
 };
@@ -21,7 +36,12 @@ export type CheckoutProfile = {
 export type CheckoutDetailsOffer = {
   version: string;
   phone: string | null;
-  address: { street: string; zone: string; recipient: string; phone: string } | null;
+  address: {
+    street: string;
+    zone: string;
+    recipient: string;
+    phone: string;
+  } | null;
 };
 
 export function checkoutAddresses(profile?: CheckoutProfile | null) {
@@ -32,7 +52,9 @@ export function checkoutAddresses(profile?: CheckoutProfile | null) {
         ? address.location_id === area.id
         : address.zone.trim().toLowerCase() === area.name.trim().toLowerCase(),
     );
-    return location ? [{ ...address, location_id: location.id, zone: location.name }] : [];
+    return location
+      ? [{ ...address, location_id: location.id, zone: location.name }]
+      : [];
   });
 }
 
@@ -46,21 +68,37 @@ export function checkoutDelivery(
   accountName = "",
 ) {
   const deliveryPhone = bookingPhone(profile?.user?.delivery_phone ?? "");
-  const preferredAddress = profile?.addresses && defaultCheckoutAddress(
-    profile.deliveryLocations ? checkoutAddresses(profile) : profile.addresses,
-  );
+  const preferredAddress =
+    profile?.addresses &&
+    defaultCheckoutAddress(
+      profile.deliveryLocations
+        ? checkoutAddresses(profile)
+        : profile.addresses,
+    );
   return {
-    name: address?.details?.recipient?.trim() || profile?.user?.name || accountName,
-    phone: (address?.is_default || (address && address.id === preferredAddress?.id) ? deliveryPhone : null)
-      ?? bookingPhone(address?.phone ?? "")
-      ?? deliveryPhone
-      ?? bookingPhone(profile?.user?.contact_phone ?? "")
-      ?? "",
+    name:
+      address?.details?.recipient?.trim() || profile?.user?.name || accountName,
+    phone:
+      (address?.is_default || (address && address.id === preferredAddress?.id)
+        ? deliveryPhone
+        : null) ??
+      bookingPhone(address?.phone ?? "") ??
+      deliveryPhone ??
+      bookingPhone(profile?.user?.contact_phone ?? "") ??
+      "",
     street: address?.street ?? "",
     zone: address?.zone ?? "",
     locationId: address?.location_id ?? "",
     building: address?.details?.building ?? "",
     landmark: address?.details?.landmark ?? "",
     directions: address?.details?.directions ?? "",
+    ...(address &&
+    confirmedDeliveryPin(
+      address.details?.deliveryPin,
+      address.street,
+      address.zone,
+    )
+      ? { deliveryPin: address.details?.deliveryPin }
+      : {}),
   };
 }

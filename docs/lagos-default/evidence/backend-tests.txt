@@ -1,0 +1,15 @@
+✔ LAG-MIGRATE: missing branches across all user roles are filled once, explicit assignments and identity/ledger history stay unchanged, with per-user audit (1416.456833ms)
+✔ LAG-REGISTER: public sign-up persists Lagos, cannot choose an unauthorised role/branch, and is rejected safely if the default branch is inactive (922.479917ms)
+✔ LAG-CREATE: backend customer creation defaults Lagos, preserves an explicit active branch, and retains Manager branch isolation (918.850334ms)
+✔ LAG-EDIT: Admin edits customer branch with audit; Manager cannot move branches, staff identities cannot be changed through customer editing, histories are retained (817.30825ms)
+✔ LAG-GUARD: inactive Lagos stops backfill/default migration without changing missing accounts or emitting false audit records (826.552ms)
+✔ LAG-REWARD: a newly registered customer is already in Lagos and Admin can add points directly without initial-branch setup (906.589167ms)
+✔ LAG-CHOICE: form defaults choose Lagos over alphabetical order and preserve explicit existing assignments/authorised single-branch scope (0.199584ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6528.825625

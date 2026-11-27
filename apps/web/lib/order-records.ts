@@ -13,6 +13,8 @@ export async function hydrateOrderRecords(
 ) {
   if (!orders.length) return orders;
   const ids = orders.map((o) => o.id);
+  const visitLinks=(await tx.query("SELECT l.order_id,l.parent_order_id,p.reference AS parent_reference,c.reference,c.status FROM order_visit_links l JOIN orders p ON p.id=l.parent_order_id JOIN orders c ON c.id=l.order_id WHERE l.order_id=ANY($1::text[]) OR l.parent_order_id=ANY($1::text[])",[ids])).rows;
+  for(const o of orders){o.visit_link=visitLinks.find(l=>l.order_id===o.id)??null;o.extra_orders=visitLinks.filter(l=>l.parent_order_id===o.id).map(l=>({id:l.order_id,reference:l.reference,status:l.status}));}
   const gas = (
     await tx.query(
       "SELECT * FROM order_gas_lines WHERE order_id=ANY($1::text[])",

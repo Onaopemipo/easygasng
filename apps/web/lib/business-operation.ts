@@ -99,6 +99,8 @@ export function validateServiceOperationRequest(
     action.startsWith("booking.") ||
     action.startsWith("service.material.") ||
     [
+      "rewards.add",
+      "driver.depart",
       "order.transition",
       "delivery.complete",
       "delivery.pickup",
@@ -117,7 +119,8 @@ export function validateServiceOperationRequest(
       );
     if (
       [
-        "order.transition",
+        "driver.depart",
+      "order.transition",
         "delivery.complete",
         "delivery.pickup",
         "delivery.arrived",

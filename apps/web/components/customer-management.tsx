@@ -1,4 +1,6 @@
 "use client";
+import { initialUserBranch } from "../../../packages/business-rules/src/user-branch";
+import PhoneOrderPaymentActions from "./phone-order-payment-actions";
 import { FieldCaption } from "./field-caption";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "./workspace-link";
@@ -30,7 +32,10 @@ function positionActions(panel: HTMLElement) {
   const below = anchor.bottom + gap;
   const above = anchor.top - height - gap;
   const top = below + height <= viewport.clientHeight - gap ? below : above;
-  const left = Math.min(anchor.right - width, viewport.clientWidth - width - gap);
+  const left = Math.min(
+    anchor.right - width,
+    viewport.clientWidth - width - gap,
+  );
   panel.style.left = `${Math.max(gap, left)}px`;
   panel.style.top = `${Math.max(gap, Math.min(top, viewport.clientHeight - height - gap))}px`;
 }
@@ -60,6 +65,10 @@ export default function CustomerManagement() {
   }
   useEffect(() => {
     load();
+    const customerId = new URLSearchParams(window.location.search).get(
+      "customerId",
+    );
+    if (customerId) void detail(customerId);
   }, []);
   useEffect(() => {
     const dismissActions = (event: Event) => {
@@ -163,7 +172,11 @@ export default function CustomerManagement() {
       const result = await api(
         modal.id ? "customers.update" : "customers.create",
         modal.id
-          ? { id: modal.id, name: f.get("name") }
+          ? {
+              id: modal.id,
+              name: f.get("name"),
+              ...(f.has("branchId") ? { branchId: f.get("branchId") } : {}),
+            }
           : {
               name: f.get("name"),
               email: f.get("email"),
@@ -207,105 +220,108 @@ export default function CustomerManagement() {
           <button onClick={load}>Retry</button>
         </>
       )}
-      {data && <div className="cm-metrics">
-        {[
-          [
-            UsersRound,
-            "Total Customers",
-            customers.length,
-            "All registered customers",
-          ],
-          [
-            ShoppingBag,
-            "Active Customers",
-            customers.filter((c) => c.active && c.orders > 0).length,
-            "Placed at least one order",
-          ],
-          [
-            Clock,
-            "New Customers",
-            customers.filter(
-              (c) =>
-                Date.now() - new Date(c.created_at).getTime() < 30 * 86400000,
-            ).length,
-            "In the last 30 days",
-          ],
-          [
-            UserRoundX,
-            "Inactive Customers",
-            customers.filter((c) => c.active && !c.orders).length,
-            "No orders yet",
-          ],
-        ].map(([Icon, title, count, caption]: any, i) => (
-          <div className="cm-metric" key={title}>
-            <span className={"cm-icon tone-" + i}>
-              <Icon size={29} />
-            </span>
-            <div>
-              <span>{title}</span>
-              <strong>{count}</strong>
-              <small>{caption}</small>
+      {data && (
+        <div className="cm-metrics">
+          {[
+            [
+              UsersRound,
+              "Total Customers",
+              customers.length,
+              "All registered customers",
+            ],
+            [
+              ShoppingBag,
+              "Active Customers",
+              customers.filter((c) => c.active && c.orders > 0).length,
+              "Placed at least one order",
+            ],
+            [
+              Clock,
+              "New Customers",
+              customers.filter(
+                (c) =>
+                  Date.now() - new Date(c.created_at).getTime() < 30 * 86400000,
+              ).length,
+              "In the last 30 days",
+            ],
+            [
+              UserRoundX,
+              "Inactive Customers",
+              customers.filter((c) => c.active && !c.orders).length,
+              "No orders yet",
+            ],
+          ].map(([Icon, title, count, caption]: any, i) => (
+            <div className="cm-metric" key={title}>
+              <span className={"cm-icon tone-" + i}>
+                <Icon size={29} />
+              </span>
+              <div>
+                <span>{title}</span>
+                <strong>{count}</strong>
+                <small>{caption}</small>
+              </div>
             </div>
-          </div>
-        ))}
-      </div>}
-      {data ? <section className="cm-directory">
-        <div className="cm-filters">
-          <label className="cm-search">
-            <Search size={20} />
-            <input
-              aria-label="Search customers"
-              placeholder="Search customers…"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-            />
-          </label>
-          <select
-            aria-label="Customer status"
-            value={status}
-            onChange={(e) => setStatus(e.target.value)}
-          >
-            {["all", "Active", "Inactive", "Suspended"].map((v) => (
-              <option key={v} value={v}>
-                {v === "all" ? "All statuses" : v}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Customer location"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          >
-            <option value="all">All locations</option>
-            {data?.branches.map((b: any) => (
-              <option key={b.id} value={b.id}>
-                {b.name}
-              </option>
-            ))}
-          </select>
-          <select
-            aria-label="Sort customers"
-            value={sort}
-            onChange={(e) => setSort(e.target.value)}
-          >
-            <option value="newest">Join date (newest)</option>
-            <option value="oldest">Join date (oldest)</option>
-            <option value="name">Name (A–Z)</option>
-          </select>
-          <button
-            className="button secondary"
-            onClick={() => {
-              setQuery("");
-              setStatus("all");
-              setLocation("all");
-              setSort("newest");
-              setPage(1);
-              setSelected([]);
-            }}
-          >
-            Reset
-          </button>
+          ))}
         </div>
+      )}
+      {data ? (
+        <section className="cm-directory">
+          <div className="cm-filters">
+            <label className="cm-search">
+              <Search size={20} />
+              <input
+                aria-label="Search customers"
+                placeholder="Search customers…"
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+            </label>
+            <select
+              aria-label="Customer status"
+              value={status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              {["all", "Active", "Inactive", "Suspended"].map((v) => (
+                <option key={v} value={v}>
+                  {v === "all" ? "All statuses" : v}
+                </option>
+              ))}
+            </select>
+            <select
+              aria-label="Customer location"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+            >
+              <option value="all">All locations</option>
+              {data?.branches.map((b: any) => (
+                <option key={b.id} value={b.id}>
+                  {b.name}
+                </option>
+              ))}
+            </select>
+            <select
+              aria-label="Sort customers"
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+            >
+              <option value="newest">Join date (newest)</option>
+              <option value="oldest">Join date (oldest)</option>
+              <option value="name">Name (A–Z)</option>
+            </select>
+            <button
+              className="button secondary"
+              onClick={() => {
+                setQuery("");
+                setStatus("all");
+                setLocation("all");
+                setSort("newest");
+                setPage(1);
+                setSelected([]);
+              }}
+            >
+              Reset
+            </button>
+          </div>
           <div className="table-scroll">
             <table>
               <thead>
@@ -460,42 +476,45 @@ export default function CustomerManagement() {
               <p className="cm-empty">No customers match these filters.</p>
             )}
           </div>
-        <div className="cm-pagination">
-          <span>
-            Showing {rows.length ? (current - 1) * size + 1 : 0}–
-            {Math.min(current * size, rows.length)} of {rows.length} customers
-            {selected.length ? ` · ${selected.length} selected` : ""}
-          </span>
-          <div>
-            <button
-              aria-label="Previous page"
-              disabled={current === 1}
-              onClick={() => setPage(current - 1)}
-            >
-              <ChevronLeft size={18} />
-            </button>
-            <span className="cm-page">{current}</span>
-            <button
-              aria-label="Next page"
-              disabled={current === pages}
-              onClick={() => setPage(current + 1)}
-            >
-              <ChevronRight size={18} />
-            </button>
-            <select
-              aria-label="Customers per page"
-              value={size}
-              onChange={(e) => setSize(Number(e.target.value))}
-            >
-              {[10, 25, 50].map((n) => (
-                <option key={n} value={n}>
-                  {n} per page
-                </option>
-              ))}
-            </select>
+          <div className="cm-pagination">
+            <span>
+              Showing {rows.length ? (current - 1) * size + 1 : 0}–
+              {Math.min(current * size, rows.length)} of {rows.length} customers
+              {selected.length ? ` · ${selected.length} selected` : ""}
+            </span>
+            <div>
+              <button
+                aria-label="Previous page"
+                disabled={current === 1}
+                onClick={() => setPage(current - 1)}
+              >
+                <ChevronLeft size={18} />
+              </button>
+              <span className="cm-page">{current}</span>
+              <button
+                aria-label="Next page"
+                disabled={current === pages}
+                onClick={() => setPage(current + 1)}
+              >
+                <ChevronRight size={18} />
+              </button>
+              <select
+                aria-label="Customers per page"
+                value={size}
+                onChange={(e) => setSize(Number(e.target.value))}
+              >
+                {[10, 25, 50].map((n) => (
+                  <option key={n} value={n}>
+                    {n} per page
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-        </div>
-      </section> : !error && <Loading page label="Loading customer records" />}
+        </section>
+      ) : (
+        !error && <Loading page label="Loading customer records" />
+      )}
       <div className="cm-shortcuts">
         {[
           [
@@ -567,14 +586,34 @@ export default function CustomerManagement() {
                 Verified payments: {money(modal.detail.customer.spent_kobo)}.
                 Refunds are reported separately in Finance.
               </p>
-              {modal.detail.latestDeliveryPhoto&&<figure><img style={{maxWidth:240}} src={"/api/media/"+modal.detail.latestDeliveryPhoto.id} alt={modal.detail.latestDeliveryPhoto.alt}/><figcaption>Latest eligible delivery photo · {modal.detail.latestDeliveryPhoto.reference}. Earlier photos remain with their orders under retention policy.</figcaption></figure>}
+              {modal.detail.latestDeliveryPhoto && (
+                <figure>
+                  <img
+                    style={{ maxWidth: 240 }}
+                    src={"/api/media/" + modal.detail.latestDeliveryPhoto.id}
+                    alt={modal.detail.latestDeliveryPhoto.alt}
+                  />
+                  <figcaption>
+                    Latest eligible delivery photo ·{" "}
+                    {modal.detail.latestDeliveryPhoto.reference}. Earlier photos
+                    remain with their orders under retention policy.
+                  </figcaption>
+                </figure>
+              )}
               <h3>Recent orders</h3>
               {modal.detail.orders.length ? (
                 modal.detail.orders.map((o: any) => (
-                  <p key={o.reference}>
-                    {o.reference} · {o.status} · {o.payment_status} ·{" "}
-                    {money(o.total_kobo)}
-                  </p>
+                  <div key={o.reference}>
+                    <p>
+                      {o.reference} · {o.status} · {o.payment_status} ·{" "}
+                      {money(o.total_kobo)}
+                    </p>
+                    {o.order_source === "PHONE_ASSISTED" &&
+                      o.payment_status !== "verified" &&
+                      !["delivered", "cancelled", "delivery_failed"].includes(
+                        o.status,
+                      ) && <PhoneOrderPaymentActions orderId={o.id} />}
+                  </div>
                 ))
               ) : (
                 <p>No orders yet.</p>
@@ -601,22 +640,42 @@ export default function CustomerManagement() {
                     <FieldCaption required={true}>Email</FieldCaption>
                     <input name="email" type="email" required maxLength={200} />
                   </label>
-                  <label>
-                    <FieldCaption required={true}>Branch</FieldCaption>
-                    <select name="branchId" required>
-                      <option value="">Choose branch</option>
-                      {data?.branches.map((b: any) => (
-                        <option key={b.id} value={b.id}>
-                          {b.name}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
                   <p>
                     The customer will receive an acceptance link and a temporary
-                    password. They’ll choose their own password at first sign-in.
+                    password. They’ll choose their own password at first
+                    sign-in.
                   </p>
                 </>
+              )}
+              {(!modal.id || data?.canChangeBranch) && (
+                <label>
+                  <FieldCaption required={true}>Branch</FieldCaption>
+                  <select
+                    name="branchId"
+                    required
+                    defaultValue={
+                      modal.id && modal.branch_id
+                        ? modal.branch_id
+                        : initialUserBranch(data?.branches ?? [])
+                    }
+                  >
+                    <option value="">Choose branch</option>
+                    {modal.id &&
+                      modal.branch_id &&
+                      !data?.branches.some(
+                        (b: any) => b.id === modal.branch_id,
+                      ) && (
+                        <option value={modal.branch_id}>
+                          Current branch (inactive)
+                        </option>
+                      )}
+                    {data?.branches.map((b: any) => (
+                      <option key={b.id} value={b.id}>
+                        {b.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
               )}
               {message && <Notice type="error" message={message} />}
               <button disabled={busy} className="button">

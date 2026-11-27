@@ -1,0 +1,13 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile,stat} from 'node:fs/promises';import {createHash} from 'node:crypto';
+const read=async(p:string)=>JSON.parse(await readFile(p,'utf8'));
+test('LAG-TRACE: all four stable requirements retain implementation, security, negative tests, executed evidence, outstanding rollout and original NO-GO',async()=>{
+ const m=await read('docs/traceability/lagos-default-rtm.json');assert.deepEqual(m.requirements.map((r:any)=>r.id),['LAG-01','LAG-02','LAG-03','LAG-04']);assert.equal(m.coverage.total,4);assert.equal(m.coverage.excluded,0);assert.equal(m.coverage.criticalTotal,3);assert.match(m.productionDecision,/NO-GO/);
+ for(const r of m.requirements){assert(r.dataSource&&r.securityControl&&r.reason);assert(r.implementationFiles.length&&r.testFiles.length&&r.evidence.length&&r.negativeTests.length);for(const p of [...r.implementationFiles,...r.testFiles,...r.evidence])assert((await stat(p)).size>0,p);const g=m.gates.find((g:any)=>g.id===r.acceptanceGate);assert(g?.criterion&&g.localStatus==='PASS');if(r.status!=='VERIFIED_COMPLETE')assert(r.outstandingWork);}
+ assert.equal(m.coverage.verified,m.requirements.filter((r:any)=>r.status==='VERIFIED_COMPLETE').length);assert.equal(m.coverage.verifiedGates,m.gates.filter((g:any)=>g.status==='PASS').length);
+ const log=await readFile('docs/lagos-default/evidence/regression.txt','utf8');for(const s of ['tests 55','pass 55','fail 0','skipped 0'])assert(log.includes(s),s);
+ const local=await read('docs/lagos-default/evidence/local-browser.json');assert.equal(local.status,'PASS');assert.equal(local.syntheticLocalOnly,true);assert.equal(local.sharedBusinessWrites,0);for(const p of local.images)assert((await stat('docs/lagos-default/evidence/'+p)).size>10000);
+});
+test('LAG-SOURCE: only the twelve reviewed paths differ from the last exact demo source; all 490 dry-run files match their on-disk hashes',async()=>{
+ const m=await read('docs/lagos-default/evidence/release-source.json');assert.equal(m.baselineDeployment,'dpl_Coy1nPuwgY6Zt9xADSu8AZGQYqsE');assert.equal(m.expectedSourceFiles,490);assert.equal(m.changedExistingFiles.length,9);assert.equal(m.addedFiles.length,3);assert.equal(m.unchangedSourceFiles,478);assert.equal(m.dryRunSha1Match,true);assert.equal(m.nativeBuild,false);
+ const release='.data/lagos-default/release/source/';for(const [p,h]of Object.entries(m.sourceSha256)){assert.equal(createHash('sha256').update(await readFile(release+p)).digest('hex'),h,p);if(!['vercel.json','default-user-branch-schema-check.ts'].includes(p))assert.equal(createHash('sha256').update(await readFile(p)).digest('hex'),h,p+' current workspace');}
+});

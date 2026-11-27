@@ -1,8 +1,17 @@
 "use client";
+import DeliveryPinPicker from "./delivery-pin-picker";
+import {
+  confirmedDeliveryPin,
+  type ConfirmedDeliveryPin,
+} from "../../../packages/business-rules/src/delivery-pin";
 import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
 import { FieldCaption } from "./field-caption";
-import { checkoutAddresses, checkoutDelivery, defaultCheckoutAddress } from "../../../packages/business-rules/src/checkout-delivery";
+import {
+  checkoutAddresses,
+  checkoutDelivery,
+  defaultCheckoutAddress,
+} from "../../../packages/business-rules/src/checkout-delivery";
 import { bookingPhone } from "../../../packages/business-rules/src/booking-contact";
 import { useCheckoutProfile } from "./checkout-delivery-fields";
 import { OrderCardPayment } from "./hosted-payment";
@@ -72,7 +81,7 @@ export default function GasOrder({
     [appointments, setAppointments] = useState<any[]>([]),
     [includeAppointments, setIncludeAppointments] = useState(false),
     [key] = useState(() => crypto.randomUUID());
-  const [address, setAddress] = useState({
+  const [address, setAddress] = useState<ReturnType<typeof checkoutDelivery>>({
       name: user?.name ?? "",
       phone: "",
       street: "",
@@ -81,14 +90,18 @@ export default function GasOrder({
       building: "",
       landmark: "",
       directions: "",
+      deliveryPin: undefined as ConfirmedDeliveryPin | undefined,
     }),
     [date, setDate] = useState(""),
     [window, setWindow] = useState(catalogue?.windows?.[0] ?? ""),
     [method, setMethod] = useState("cash_on_delivery");
+  const [repeatItems,setRepeatItems] = useState<any[] | null>(null);
   const [compactKg, setCompactKg] = useState("");
   const [pricingBranch, setPricingBranch] = useState<string | null>(null);
   const [pricingFailed, setPricingFailed] = useState<string | null>(null);
-  const { profile, loading: loadingDelivery } = useCheckoutProfile(compact ? undefined : user?.id);
+  const { profile, loading: loadingDelivery } = useCheckoutProfile(
+    compact ? undefined : user?.id,
+  );
   const saved = checkoutAddresses(profile);
   const deliveryEdited = useRef(false);
   const automaticLocationId = useRef("");
@@ -97,7 +110,7 @@ export default function GasOrder({
   const details = useRef<HTMLDetailsElement>(null);
   const quoteKey = JSON.stringify([
     lines,
-    items,
+    repeatItems ?? items,
     address,
     date,
     window,
@@ -199,10 +212,10 @@ export default function GasOrder({
       if (draft && (!draft.customerId || draft.customerId === user?.id)) {
         if (
           Array.isArray(draft.lines) &&
-          draft.lines.length &&
           draft.lines.length <= 10
         )
           setLines(draft.lines);
+        if (draft.repeat === true && Array.isArray(draft.items)) {setRepeatItems(draft.items); deliveryEdited.current = true;}
         if (typeof draft.date === "string") setDate(draft.date);
         if (typeof draft.window === "string") setWindow(draft.window);
         if (typeof draft.method === "string") setMethod(draft.method);
@@ -219,10 +232,16 @@ export default function GasOrder({
     const addresses = checkoutAddresses(profile);
     setAddress((current) => {
       const selected = current.street
-        ? addresses.find((a) => a.street === current.street && a.location_id === current.locationId)
-        : defaultCheckoutAddress(current.locationId
-          ? addresses.filter((a) => a.location_id === current.locationId)
-          : addresses);
+        ? addresses.find(
+            (a) =>
+              a.street === current.street &&
+              a.location_id === current.locationId,
+          )
+        : defaultCheckoutAddress(
+            current.locationId
+              ? addresses.filter((a) => a.location_id === current.locationId)
+              : addresses,
+          );
       const defaults = checkoutDelivery(profile, selected, user?.name);
       if (!current.street && selected) return defaults;
       return {
@@ -259,7 +278,9 @@ export default function GasOrder({
     ],
   );
   const chosenLocationId =
-    address.locationId === automaticLocationId.current ? "" : address.locationId;
+    address.locationId === automaticLocationId.current
+      ? ""
+      : address.locationId;
   const { message: addressHint } = selectAddressLocation(
     address.street,
     config?.locations ?? [],
@@ -277,6 +298,7 @@ export default function GasOrder({
     setAddress((a) => ({
       ...a,
       street,
+      deliveryPin: undefined,
       building: "",
       landmark: "",
       directions: "",
@@ -288,10 +310,13 @@ export default function GasOrder({
   function chooseDeliveryLocation(locationId: string) {
     deliveryEdited.current = true;
     automaticLocationId.current = "";
-    const location = config.locations.find((entry: any) => entry.id === locationId);
+    const location = config.locations.find(
+      (entry: any) => entry.id === locationId,
+    );
     setAddress((current) => ({
       ...current,
       locationId,
+      deliveryPin: undefined,
       zone: location?.name ?? "",
       building: "",
       landmark: "",
@@ -340,7 +365,7 @@ export default function GasOrder({
     ) : (
       <Loading page={!compact} />
     );
-  const physical = items.filter(
+  const physical = (repeatItems ?? items).filter(
     (i) =>
       catalogue.products.find((p: any) => p.id === i.productId)?.category !==
       "Gas refills",
@@ -375,7 +400,7 @@ export default function GasOrder({
         ).subtotalKobo,
       0,
     );
-    estimateValid = estimated > 0;
+    estimateValid = estimated > 0 || (!lines.length && physical.length > 0 && extra > 0);
   } catch (e: any) {
     estimateError = e.message;
   }
@@ -384,7 +409,8 @@ export default function GasOrder({
     ["minimumKg", "maximumKg", "incrementKg", "precision"].every(
       (k) => config.policy[k] != null,
     );
-  const pricingLoading = pricingBranch !== requestedBranch && pricingFailed !== requestedBranch;
+  const pricingLoading =
+    pricingBranch !== requestedBranch && pricingFailed !== requestedBranch;
   const priceReady =
     pricingBranch === requestedBranch &&
     Number.isSafeInteger(config.priceKobo) &&
@@ -406,12 +432,14 @@ export default function GasOrder({
     !loadingDelivery &&
     !!areaBranch &&
     !coveragePending &&
-    configured &&
+    (!lines.length || configured) &&
     estimateValid &&
-    priceReady &&
+    (!lines.length || priceReady) &&
     feeReady &&
     catalogue.orderingEnabled &&
-    !!method && paymentAvailable;
+    !!method &&
+    paymentAvailable &&
+    !!confirmedDeliveryPin(address.deliveryPin, address.street, address.zone);
 
   function editOrder(section: string) {
     setQuote(null);
@@ -467,7 +495,13 @@ export default function GasOrder({
     }
   }
   async function confirm() {
-    if (coveragePending || !currentQuote || !paymentAvailable || requestLock.current) return;
+    if (
+      coveragePending ||
+      !currentQuote ||
+      !paymentAvailable ||
+      requestLock.current
+    )
+      return;
     requestLock.current = true;
     setBusy(true);
     setError("");
@@ -481,7 +515,10 @@ export default function GasOrder({
           policyVersion: currentQuote.policyVersion,
           totalKobo: currentQuote.totalKobo,
         },
-        address: { ...address, phone: bookingPhone(address.phone) ?? address.phone },
+        address: {
+          ...address,
+          phone: bookingPhone(address.phone) ?? address.phone,
+        },
         date,
         window,
         ...(rewardPoints ? { rewardPoints } : {}),
@@ -510,7 +547,7 @@ export default function GasOrder({
       if (includeAppointments)
         sessionStorage.removeItem("easygas.serviceDrafts." + user.id);
       setOrder(o);
-      onDone?.();
+      if (!repeatItems) onDone?.();
     } catch (e: any) {
       setQuote(null);
       setError(orderError(e));
@@ -574,9 +611,13 @@ export default function GasOrder({
             <Tag aria-hidden="true" />
             <span>
               <strong>
-                {pricingLoading ? <ActionLoadingIndicator label="Loading gas price" /> : pricingReady && config.priceKobo > 0
-                  ? money(config.priceKobo) + "/kg"
-                  : "Unavailable"}
+                {pricingLoading ? (
+                  <ActionLoadingIndicator label="Loading gas price" />
+                ) : pricingReady && config.priceKobo > 0 ? (
+                  money(config.priceKobo) + "/kg"
+                ) : (
+                  "Unavailable"
+                )}
               </strong>
               <small>Gas price</small>
             </span>
@@ -585,9 +626,13 @@ export default function GasOrder({
             <Truck aria-hidden="true" />
             <span>
               <strong>
-                {pricingLoading ? <ActionLoadingIndicator label="Loading delivery fee" /> : pricingReady && feeReady
-                  ? money(config.deliveryKobo)
-                  : "Unavailable"}
+                {pricingLoading ? (
+                  <ActionLoadingIndicator label="Loading delivery fee" />
+                ) : pricingReady && feeReady ? (
+                  money(config.deliveryKobo)
+                ) : (
+                  "Unavailable"
+                )}
               </strong>
               <small>Flat delivery</small>
             </span>
@@ -647,7 +692,9 @@ export default function GasOrder({
           }}
         >
           <fieldset disabled={busy}>
-            <label htmlFor="compact-capacity"><FieldCaption required={true}>Cylinder capacity</FieldCaption></label>
+            <label htmlFor="compact-capacity">
+              <FieldCaption required={true}>Cylinder capacity</FieldCaption>
+            </label>
             <div className="compact-gas-control">
               <Cylinder aria-hidden="true" />
               <select
@@ -667,7 +714,9 @@ export default function GasOrder({
                 ))}
               </select>
             </div>
-            <label htmlFor="compact-kg"><FieldCaption required={true}>Gas quantity (kg)</FieldCaption></label>
+            <label htmlFor="compact-kg">
+              <FieldCaption required={true}>Gas quantity (kg)</FieldCaption>
+            </label>
             <div className="quantity-stepper compact-gas-stepper">
               <button
                 type="button"
@@ -700,7 +749,9 @@ export default function GasOrder({
                 +
               </button>
             </div>
-            <label htmlFor="compact-location"><FieldCaption required={true}>Delivery location</FieldCaption></label>
+            <label htmlFor="compact-location">
+              <FieldCaption required={true}>Delivery location</FieldCaption>
+            </label>
             <div className="compact-gas-control">
               <MapPin aria-hidden="true" />
               <select
@@ -720,7 +771,10 @@ export default function GasOrder({
               </select>
             </div>
             {coveragePending && <CoverageHelp />}
-            <label htmlFor="compact-address"><FieldCaption required={true}>House address</FieldCaption></label>
+
+            <label htmlFor="compact-address">
+              <FieldCaption required={true}>House address</FieldCaption>
+            </label>
             <div className="compact-gas-control">
               <House aria-hidden="true" />
               <input
@@ -851,7 +905,11 @@ export default function GasOrder({
               return (
                 <fieldset key={i} className="gas-cylinder-line">
                   <legend>Cylinder {i + 1}</legend>
-                  <p id={`gas-capacity-${i}`}><FieldCaption required={true}>Cylinder capacity guidance</FieldCaption></p>
+                  <p id={`gas-capacity-${i}`}>
+                    <FieldCaption required={true}>
+                      Cylinder capacity guidance
+                    </FieldCaption>
+                  </p>
                   <div
                     className="gas-capacity-tiles"
                     role="group"
@@ -883,8 +941,10 @@ export default function GasOrder({
                     ))}
                   </div>
                   <label>
-                    <FieldCaption required={true}>Requested gas (kg)</FieldCaption>
-                  <input
+                    <FieldCaption required={true}>
+                      Requested gas (kg)
+                    </FieldCaption>
+                    <input
                       type="number"
                       min={config.policy.minimumKg ?? undefined}
                       max={Math.min(
@@ -1012,8 +1072,11 @@ export default function GasOrder({
                   type="checkbox"
                   checked={includeAppointments}
                   onChange={(e) => setIncludeAppointments(e.target.checked)}
-                /><FieldCaption required={false}>{" "}
-                Include my separately configured service appointments</FieldCaption>
+                />
+                <FieldCaption required={false}>
+                  {" "}
+                  Include my separately configured service appointments
+                </FieldCaption>
               </label>
               {appointments.map((a, i) => (
                 <p key={i}>
@@ -1035,24 +1098,35 @@ export default function GasOrder({
             <h2>
               <span>2</span> Delivery details
             </h2>
-            {loadingDelivery && <ActionLoadingIndicator label="Loading your delivery details" />}
+            {loadingDelivery && (
+              <ActionLoadingIndicator label="Loading your delivery details" />
+            )}
             {saved.length > 0 && (
               <label>
                 <FieldCaption required={false}>Saved address</FieldCaption>
                 <select
-                  value={saved.find((a) => a.street === address.street && a.location_id === address.locationId)?.id ?? ""}
+                  value={
+                    saved.find(
+                      (a) =>
+                        a.street === address.street &&
+                        a.location_id === address.locationId,
+                    )?.id ?? ""
+                  }
                   onChange={(e) => {
                     deliveryEdited.current = true;
                     automaticLocationId.current = "";
-                    setAddress(checkoutDelivery(profile, saved.find((a) => a.id === e.target.value), user?.name));
+                    setAddress(
+                      checkoutDelivery(
+                        profile,
+                        saved.find((a) => a.id === e.target.value),
+                        user?.name,
+                      ),
+                    );
                   }}
                 >
                   <option value="">Use a different address</option>
                   {saved.map((a) => (
-                    <option
-                      key={a.id}
-                      value={a.id}
-                    >
+                    <option key={a.id} value={a.id}>
                       {a.label} · {a.zone}
                     </option>
                   ))}
@@ -1081,19 +1155,36 @@ export default function GasOrder({
               <div>{completeAddress}</div>
             </div>
             {coveragePending && <CoverageHelp />}
+            <DeliveryPinPicker
+              street={address.street}
+              zone={address.zone}
+              value={address.deliveryPin}
+              disabled={busy}
+              onChange={(pin) => {
+                deliveryEdited.current = true;
+                setAddress((a) => ({ ...a, deliveryPin: pin }));
+                setQuote(null);
+              }}
+            />
             <details ref={details} className="gas-delivery-details">
               <summary>Recipient and delivery notes</summary>
-              <p className="muted">You can edit these details for this order.</p>
+              <p className="muted">
+                You can edit these details for this order.
+              </p>
               <div className="gas-address-grid">
-                {([
-                  ["name", "Recipient name"],
-                  ["phone", "Recipient phone"],
-                  ["building", "Building / house number"],
-                  ["landmark", "Estate / landmark"],
-                  ["directions", "Additional directions"],
-                ] as const).map(([k, label]) => (
+                {(
+                  [
+                    ["name", "Recipient name"],
+                    ["phone", "Recipient phone"],
+                    ["building", "Building / house number"],
+                    ["landmark", "Estate / landmark"],
+                    ["directions", "Additional directions"],
+                  ] as const
+                ).map(([k, label]) => (
                   <label key={k}>
-                    <FieldCaption required={k === "name" || k === "phone"}>{label}</FieldCaption>
+                    <FieldCaption required={k === "name" || k === "phone"}>
+                      {label}
+                    </FieldCaption>
                     <input
                       type={k === "phone" ? "tel" : "text"}
                       value={address[k]}
@@ -1140,9 +1231,14 @@ export default function GasOrder({
               onOfferChange={setRewardOfferId}
             />
             <div id="gas-order-payment">
-              <CheckoutPaymentMethods userId={user?.id} branchId={requestedBranch} value={method} onChange={setMethod}
+              <CheckoutPaymentMethods
+                userId={user?.id}
+                branchId={requestedBranch}
+                value={method}
+                onChange={setMethod}
                 onAvailabilityChange={setPaymentAvailable}
-                amountKobo={!rewardPoints ? currentQuote?.totalKobo : undefined} />
+                amountKobo={!rewardPoints ? currentQuote?.totalKobo : undefined}
+              />
             </div>
           </section>
         </fieldset>
@@ -1157,7 +1253,13 @@ export default function GasOrder({
             <div>
               <dt>Gas price</dt>
               <dd>
-                {pricingLoading ? <ActionLoadingIndicator label="Loading gas price" /> : priceReady ? money(config.priceKobo) + " / kg" : "Unavailable"}
+                {pricingLoading ? (
+                  <ActionLoadingIndicator label="Loading gas price" />
+                ) : priceReady ? (
+                  money(config.priceKobo) + " / kg"
+                ) : (
+                  "Unavailable"
+                )}
               </dd>
             </div>
             <div>
@@ -1194,9 +1296,13 @@ export default function GasOrder({
             <div>
               <dt>Delivery fee</dt>
               <dd>
-                {pricingLoading ? <ActionLoadingIndicator label="Loading delivery fee" /> : feeReady
-                  ? money(currentQuote?.deliveryKobo ?? config.deliveryKobo)
-                  : "Unavailable"}
+                {pricingLoading ? (
+                  <ActionLoadingIndicator label="Loading delivery fee" />
+                ) : feeReady ? (
+                  money(currentQuote?.deliveryKobo ?? config.deliveryKobo)
+                ) : (
+                  "Unavailable"
+                )}
               </dd>
             </div>
             <div className="gas-summary-total">
@@ -1240,7 +1346,9 @@ export default function GasOrder({
                       date,
                       window,
                       method,
-                      automaticLocation: Boolean(address.locationId && !chosenLocationId),
+                      automaticLocation: Boolean(
+                        address.locationId && !chosenLocationId,
+                      ),
                     }),
                   );
                 } catch {}

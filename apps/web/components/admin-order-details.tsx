@@ -1,4 +1,9 @@
 "use client";
+import { operationNoteRequired } from "../../../packages/business-rules/src/operation-notes";
+
+import { isDoorstepRefillOrder } from "../../../packages/business-rules/src/refill-workflow";
+import ConfirmDeliveryAddress from "./confirm-delivery-address";
+import PhoneOrderPaymentActions from "./phone-order-payment-actions";
 import React, { useEffect, useRef, useState } from "react";
 import Link from "./workspace-link";
 import { Check } from "lucide-react";
@@ -11,7 +16,10 @@ import { ActionForm } from "./workflows";
 import { OrderOperations, OrderCommunication } from "./order-operations";
 import OrderInvoice from "./order-invoice";
 import OrderAdditions from "./order-additions";
+import SameVisitOrder from "./same-visit-order";
 import OrderCylinderInspection from "./order-cylinder-inspection";
+import OrderLPGSetup from "./order-lpg-setup";
+import { LPGSetupAccess } from "./lpg-setup-access";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import {
@@ -32,6 +40,16 @@ export type OrderAction = { id: string; label: string };
 /** Presentation choices only. Every write still passes the original server controls. */
 export function orderDetailActions(order: any, user: any): OrderAction[] {
   const rows: OrderAction[] = [];
+  if (order.gas_lines?.length && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status)) {
+    if (user.role === "owner") rows.push({id: "meter-calibration", label: "Renew meter calibration"});
+    if (["owner", "finance"].includes(user.role)) rows.push({id: "lpg-load", label: "Issue LPG load"});
+  }
+  if (
+    ["owner", "manager"].includes(user.role) &&
+    ["assigned", "out_for_delivery"].includes(order.status) &&
+    !order.visit_link
+  )
+    rows.push({ id: "extra-visit", label: "Extra order for this visit" });
   if (
     ["owner", "manager"].includes(user.role) &&
     (orderTransitions[order.status] ?? []).some((s) => s !== "delivered")
@@ -56,12 +74,6 @@ export function orderDetailActions(order: any, user: any): OrderAction[] {
     if (order.gas_lines?.length)
       rows.push({ id: "coverage", label: "Confirm address coverage" });
   }
-  if (["owner", "finance"].includes(user.role) && early.includes(order.status))
-    for (const line of order.gas_lines ?? [])
-      rows.push({
-        id: "inspection:" + line.id,
-        label: `Inspect ${Number(line.grams) / 1000} kg cylinder`,
-      });
   if (
     ["owner", "manager"].includes(user.role) &&
     order.customer_provisional === true
@@ -70,6 +82,13 @@ export function orderDetailActions(order: any, user: any): OrderAction[] {
       { id: "consent", label: "Record messaging consent" },
       { id: "invite", label: "Send account completion link" },
     );
+  if (
+    ["owner", "manager"].includes(user.role) &&
+    order.order_source === "PHONE_ASSISTED" &&
+    order.payment_status !== "verified" &&
+    !["delivered", "cancelled", "delivery_failed"].includes(order.status)
+  )
+    rows.unshift({ id: "phone-payment", label: "Send payment link" });
   return rows;
 }
 const text = (v: any) => String(v ?? "Not recorded").replaceAll("_", " ");
@@ -138,27 +157,53 @@ export default function AdminOrderDetails({
   drivers = [],
   onClose,
   onChanged,
+  initialAction = "",
 }: {
   order: any;
   user: any;
   drivers?: any[];
   onClose: () => void;
-  onChanged: () => void;
+  onChanged: (options?: { keepOpen?: boolean }) => void;
+  initialAction?: string;
 }) {
   const [tab, setTab] = useState("overview"),
-    [view, setView] = useState(""),
-    [dirty, setDirty] = useState(false);
+    [view, setView] = useState(initialAction),
+    [dirty, setDirty] = useState(false),
+    [notice, setNotice] = useState("");
   const heading = useRef<HTMLHeadingElement>(null);
+  const actionBody = useRef<HTMLDivElement>(null);
+  const [lpgPending, setLpgPending] = useState(false);
+  const [lpgRefresh, setLpgRefresh] = useState(0);
+  const [extraOrder, setExtraOrder] = useState<any>(null);
   const actions = orderDetailActions(order, user);
   const next = (orderTransitions[order.status] ?? []).find(
     (s) => s !== "delivered" && s !== "cancelled",
   );
   const primary =
+    actions.find((a) => a.id === "phone-payment") ??
     actions.find((a) => a.id === "complete") ??
     (next ? actions.find((a) => a.id === "transition") : undefined);
   const action = actions.find((a) => a.id === view);
   const title = view === "invoice" ? "Order invoice" : action?.label;
-  async function back() {
+  function statusUpdated(status: string) {
+    setDirty(false);
+    setView("");
+    setTab("overview");
+    setNotice(
+      status === "assigned"
+        ? "Driver assigned. You can continue with this order."
+        : status === "out_for_delivery"
+          ? "Delivery started. You can continue with this order."
+          : status === "delivered"
+            ? "Delivery completed."
+            : status === "cancelled"
+              ? "Order cancelled."
+              : `Order status updated to ${text(status)}.`,
+    );
+    onChanged({ keepOpen: true });
+  }
+  async function back(nextView = "") {
+    if (lpgPending || actionBody.current?.querySelector('[data-submit-pending="true"]')) return;
     if (
       dirty &&
       !(await confirmAction(
@@ -173,27 +218,75 @@ export default function AdminOrderDetails({
     )
       return;
     setDirty(false);
-    setView("");
+    setView(nextView);
   }
   useEffect(() => {
     if (view) heading.current?.focus();
   }, [view]);
+  if (extraOrder)
+    return (
+      <AdminOrderDetails
+        order={extraOrder}
+        user={user}
+        drivers={drivers}
+        onClose={() => {
+          setExtraOrder(null);
+          onChanged();
+        }}
+        onChanged={(options) => {
+          void api("orders?id=" + encodeURIComponent(extraOrder.id)).then(
+            (rows) => {
+              if (rows[0]) setExtraOrder(rows[0]);
+            },
+          );
+          onChanged(options);
+        }}
+      />
+    );
   return (
     <Modal
       title={order.reference}
       className="admin-order-dialog"
       onClose={onClose}
+      busy={lpgPending}
     >
       <div className="aord-status">
         <span className={`status ${order.status}`}>{text(order.status)}</span>
         <span className="aord-total">{money(order.total_kobo)}</span>
+        <button type="button" className="button secondary" disabled={lpgPending} onClick={async () => {
+          if (lpgPending) return;
+          const lpg = ["meter-calibration", "lpg-load"].includes(view);
+          if (lpg && dirty && !(await confirmAction("Discard the unsaved LPG details and refresh this order?", {title: "Discard unsaved changes?", confirmLabel: "Discard and refresh", destructive: true}))) return;
+          if (lpg) { setDirty(false); setLpgRefresh(n => n + 1); }
+          onChanged({ keepOpen: true });
+        }}>
+          Refresh order
+        </button>
       </div>
+      {notice && <Notice message={notice} />}
+      {order.visit_link && (
+        <div className="assignment-preparation">
+          <strong>Extra order for {order.visit_link.parent_reference}</strong>
+          <p>
+            Same customer visit · no additional delivery fee · original driver
+            and trip retained.
+          </p>
+        </div>
+      )}
+      {order.extra_orders?.length > 0 && (
+        <p>
+          {order.extra_orders.length} linked extra order(s):{" "}
+          {order.extra_orders.map((o: any) => o.reference).join(", ")}
+        </p>
+      )}
       {order.operational_review &&
+        view !== "transition" &&
         !["delivered", "cancelled"].includes(order.status) && (
           <Notice type="error" message={order.operational_review} />
         )}
       {view ? (
         <div
+          ref={actionBody}
           className="aord-action-view"
           data-unsaved={dirty ? "true" : undefined}
           onChangeCapture={() => setDirty(true)}
@@ -201,6 +294,7 @@ export default function AdminOrderDetails({
           <button
             className="text-link aord-back"
             type="button"
+            disabled={lpgPending}
             onClick={() => void back()}
           >
             ← Back to order
@@ -212,11 +306,29 @@ export default function AdminOrderDetails({
             <OrderStatusAction
               order={order}
               drivers={drivers}
-              onDone={onChanged}
+              onResolveOrder={(action) => void back(action)}
+              lpgActions={actions.filter(a => ["meter-calibration", "lpg-load"].includes(a.id))}
+              onDone={statusUpdated}
             />
           )}
+          {(view === "meter-calibration" || view === "lpg-load") && (
+            <OrderLPGSetup key={JSON.stringify([order.id, order.branch_id, order.driver_id, order.tracking_version, lpgRefresh])}
+              order={order} user={user} mode={view === "meter-calibration" ? "calibration" : "load"}
+              onAction={(action) => void back(action)} onPendingChange={setLpgPending}
+              onDraftReset={() => setDirty(false)}
+              onSaved={(kind) => {
+                setDirty(false);
+                setNotice(kind === "calibration" ? "Meter calibration renewed. Record the actual LPG load below."
+                  : "LPG load issued. The driver must check its actual measurements and confirm receipt before starting delivery.");
+                if (kind === "calibration") setView("lpg-load");
+                onChanged({keepOpen: true});
+              }} />
+          )}
           {view === "complete" && (
-            <DeliveryCompletion order={order} onDone={onChanged} />
+            <DeliveryCompletion
+              order={order}
+              onDone={() => statusUpdated("delivered")}
+            />
           )}
           {view === "additions" && (
             <OrderAdditions
@@ -226,23 +338,25 @@ export default function AdminOrderDetails({
               onChanged={onChanged}
             />
           )}
+          {view === "extra-visit" && (
+            <SameVisitOrder
+              order={order}
+              onCreated={async (id) => {
+                const rows = await api("orders?id=" + encodeURIComponent(id));
+                if (!rows[0])
+                  throw new Error("Extra order unavailable. Refresh Orders.");
+                setDirty(false);
+                setExtraOrder(rows[0]);
+              }}
+            />
+          )}
           {view === "coverage" && (
-            <ActionForm
-              action="delivery.coverage.confirm"
-              title="Confirm actual address coverage"
-              fields={[
-                {
-                  name: "orderId",
-                  label: "Order",
-                  type: "hidden",
-                  value: order.id,
-                },
-                {
-                  name: "reason",
-                  label: "Verified address, boundary and operational evidence",
-                },
-              ]}
-              onDone={onChanged}
+            <ConfirmDeliveryAddress
+              order={order}
+              onDone={() => {
+                setDirty(false);
+                onChanged({ keepOpen: true });
+              }}
             />
           )}
           {view.startsWith("inspection:") && (
@@ -259,6 +373,12 @@ export default function AdminOrderDetails({
               kind={view}
               contextual
               onDone={() => setDirty(false)}
+            />
+          )}
+          {view === "phone-payment" && (
+            <PhoneOrderPaymentActions
+              orderId={order.id}
+              onSaved={() => setDirty(false)}
             />
           )}
           {view === "invoice" && (
@@ -283,7 +403,16 @@ export default function AdminOrderDetails({
             ]}
           />
           <div className="aord-tab-content">
-            {tab === "overview" && <OrderOverview order={order} />}
+            {tab === "overview" && <>
+              <OrderOverview order={order} />
+              {order.gas_lines?.length > 0 && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status) && <LPGSetupAccess role={user.role} />}
+              {actions.some(a => ["meter-calibration", "lpg-load"].includes(a.id)) && <section className="stack panel" aria-label="Vehicle LPG actions">
+                <h3>Vehicle gas readiness</h3>
+                <p>Renew the assigned vehicle’s meter or issue this order’s measured load here.</p>
+                <div className="aord-footer">{actions.filter(a => ["meter-calibration", "lpg-load"].includes(a.id)).map(a =>
+                  <button type="button" className="button secondary" key={a.id} onClick={() => setView(a.id)}>{a.label}</button>)}</div>
+              </section>}
+            </>}
             {tab === "items" && (
               <section>
                 <h3>Order items</h3>
@@ -292,7 +421,7 @@ export default function AdminOrderDetails({
                     ...(order.gas_lines ?? []).map((g: any) => ({
                       id: g.id,
                       name: `Gas refill · ${Number(g.grams) / 1000} kg`,
-                      detail: `${Number(g.capacity_grams) / 1000} kg cylinder · ${money(g.unit_price_kobo)}/kg · Inspection ${g.inspected_at ? "recorded" : "required before dispatch"}`,
+                      detail: `${Number(g.capacity_grams) / 1000} kg cylinder · ${money(g.unit_price_kobo)}/kg · Supplied at the customer’s address from the vehicle tank`,
                       amount: g.subtotal_kobo,
                     })),
                     ...(order.items ?? []).map((i: any) => ({
@@ -350,6 +479,15 @@ export default function AdminOrderDetails({
           </div>
           {actions.length > 0 && (
             <footer className="aord-footer">
+              {actions.some((a) => a.id === "extra-visit") && (
+                <button
+                  type="button"
+                  className="button secondary"
+                  onClick={() => setView("extra-visit")}
+                >
+                  Extra order for this visit
+                </button>
+              )}
               {primary && (
                 <button className="button" onClick={() => setView(primary.id)}>
                   {primary.id === "transition" ? labels[next!] : primary.label}
@@ -440,10 +578,14 @@ export function OrderStatusAction({
   order,
   drivers,
   onDone,
+  onResolveOrder,
+  lpgActions = [],
 }: {
   order: any;
   drivers: any[];
-  onDone: () => void;
+  onDone: (status: string) => void;
+  onResolveOrder?: (action: string) => void;
+  lpgActions?: OrderAction[];
 }) {
   const allowed = (orderTransitions[order.status] ?? []).filter(
     (s) => s !== "delivered",
@@ -484,7 +626,7 @@ export function OrderStatusAction({
                 ? candidates.data!.version
                 : Number(order.tracking_version),
             status,
-            note: String(f.get("note")),
+            note: String(f.get("note") ?? ""),
             ...(status === "assigned"
               ? { driverId: String(f.get("driverId")) }
               : {}),
@@ -492,7 +634,7 @@ export function OrderStatusAction({
               ? { failureReason: String(f.get("failureReason")) }
               : {}),
           });
-          onDone();
+          onDone(status);
         } catch (e: any) {
           setError(e.message);
           if (status === "assigned") {
@@ -526,6 +668,7 @@ export function OrderStatusAction({
         <>
           <input type="hidden" name="driverId" value={selectedDriver} />
           <DriverAssignmentChoices
+            onResolveOrder={onResolveOrder}
             data={candidates.data}
             loading={candidates.loading}
             error={candidates.error}
@@ -551,9 +694,16 @@ export function OrderStatusAction({
           </select>
         </label>
       )}
+      {status === "out_for_delivery" && lpgActions.length > 0 && <section className="stack" aria-label="Resolve vehicle gas readiness">
+        <p>Set up the vehicle’s gas load without closing this order.</p>
+        <div className="aord-footer">{lpgActions.map(a => <button type="button" className="button secondary" key={a.id}
+          disabled={busy} onClick={() => onResolveOrder?.(a.id)}>{a.label}</button>)}</div>
+      </section>}
       <label>
-        <FieldCaption required>Operational note</FieldCaption>
-        <FormInput name="note" required minLength={5} maxLength={500} />
+        <FieldCaption required={operationNoteRequired("order.transition", "note", {status})}>
+          {["cancelled", "delivery_failed"].includes(status) ? "Reason and next-step details" : "Operational note"}
+        </FieldCaption>
+        <FormInput name="note" required={operationNoteRequired("order.transition", "note", {status})} minLength={operationNoteRequired("order.transition", "note", {status}) ? 5 : undefined} maxLength={500} />
       </label>
       {error && <Notice type="error" message={error} />}
       <button
@@ -575,6 +725,7 @@ function DeliveryCompletion({
   order: any;
   onDone: () => void;
 }) {
+  const refill = isDoorstepRefillOrder(order);
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   return (
@@ -590,7 +741,7 @@ function DeliveryCompletion({
             operationKey: crypto.randomUUID(),
             version: order.tracking_version,
             handover: d.handover === "on",
-            code: d.code,
+            ...(refill ? {} : { code: d.code }),
             collectedKobo: ["wallet", "card"].includes(order.payment_method)
               ? 0
               : Math.round(Number(d.amount) * 100),
@@ -605,9 +756,10 @@ function DeliveryCompletion({
     >
       <h3>Confirm delivery</h3>
       <p>
-        Ask for the customer's code after handing over every item. Cash
-        collection remains unverified until an independent finance officer
-        reconciles it.
+        {refill
+          ? "Confirm the full ordered gas quantity was supplied at the customer's address and the driver uploaded a current-visit refill photo."
+          : "Ask for the customer's code after handing over every item."}{" "}
+        Cash collection remains unverified until an independent finance officer reconciles it.
       </p>
       <Link className="button secondary" href="/admin/deliveries">
         Open dispatch and pickup verification
@@ -615,11 +767,12 @@ function DeliveryCompletion({
       <label>
         <FormInput type="checkbox" name="handover" required />
         <FieldCaption required={true}>
-          I checked all quantities and cylinder serials and handed over every
-          item.
+          {refill
+            ? "I confirmed the full ordered gas quantity was supplied and current-visit photo evidence was recorded."
+            : "I checked all quantities and cylinder serials and handed over every item."}
         </FieldCaption>
       </label>
-      <label>
+      {!refill && <label>
         <FieldCaption required={true}>Customer confirmation code</FieldCaption>
         <FormInput
           name="code"
@@ -629,7 +782,7 @@ function DeliveryCompletion({
           required
           autoComplete="off"
         />
-      </label>
+      </label>}
       <label>
         {["wallet", "card"].includes(order.payment_method) ? (
           "Prepaid order — collect no cash"

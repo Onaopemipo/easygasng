@@ -889,13 +889,14 @@ function Settings({
                         {settingsApprovalBadge(d, user.role).label}
                       </span>
                     </div>
-                    <div className="setting-value-row">
-                      <div>
-                        <small>ACTIVE VALUE · VERSION {d.version}</small>
-                        <SettingSummary value={d.value} type={d.value_type} />
+                    <div className="setting-value-row" style={d.admin_reward_add ? { flexWrap: "wrap", alignItems: "flex-start" } : undefined}>
+                      <div style={d.admin_reward_add ? { flex: "1 1 260px", maxWidth: "100%" } : undefined}>
+                        <small>{d.admin_reward_add ? "ADMIN REWARD POINTS" : `ACTIVE VALUE · VERSION ${d.version}`}</small>
+                        {d.admin_reward_add ? <p>Add points directly to a selected customer. Every addition appears in Audit History.</p> : <SettingSummary value={d.value} type={d.value_type} />}
                       </div>
-                      <div className="setting-actions">
-                        <button
+                      <div className="setting-actions" style={d.admin_reward_add ? { flexWrap: "wrap", flex: "1 1 260px", minWidth: 0 } : undefined}>
+                        {d.admin_reward_add && <Link href="/admin/audit" className="button secondary">View points audit trail</Link>}
+                        {!d.admin_reward_add && <button
                           className="icon-button"
                           aria-label={`View ${settingsDisplay(d).label} history`}
                           onClick={async () => {
@@ -914,7 +915,7 @@ function Settings({
                           }}
                         >
                           <History size={17} />
-                        </button>
+                        </button>}
                         {d.propose_roles.includes(user.role) && (
                           <button
                             className="button secondary"
@@ -929,7 +930,7 @@ function Settings({
                               } else setEditing(settingsDisplay(d));
                             }}
                           >
-                            {d.key === "payment.integration" && d.value !== true ? "Open online payment settings" : d.risk === 1 ? "Edit Setting" : "Propose Change"}
+                            {d.admin_reward_add ? "Add reward points" : d.key === "payment.integration" && d.value !== true ? "Open online payment settings" : d.risk === 1 ? "Edit Setting" : "Propose Change"}
                             <ArrowRight size={14} />
                           </button>
                         )}
@@ -938,7 +939,9 @@ function Settings({
                     <div className="setting-owner">
                       <LockKeyhole size={12} />
                       Owner: {d.owner_role} ·{" "}
-                      {d.owner_auto_approval
+                      {d.admin_reward_add
+                        ? "Admin additions apply directly with an audit trail; reversals retain approval checks"
+                        : d.owner_auto_approval
                         ? "Admin requests: automatic approval; activation checks remain"
                         : d.risk === 4
                           ? "Two distinct authorised approvers + identity verification"
@@ -980,6 +983,8 @@ function Settings({
                     ? "Draft saved. It is not active until submitted."
                     : result?.awaitingQualifiedReview
                       ? "Owner approval recorded automatically. An independent qualified safety review is still required before activation."
+                      : result?.rewardAdded
+                        ? `Added ${result.pointsAdded} points to ${result.customerPublicId}. New balance: ${result.balance} points. Audit history recorded.`
                       : result?.autoApproved
                         ? result.status === "scheduled"
                           ? "Automatically approved. It will apply on the selected effective date once activation checks pass."
@@ -2010,7 +2015,11 @@ function Records({
       {section === "orders" &&
         ["owner", "manager"].includes(user.role) && (
           <div className="orders-assisted-action">
-            <AssistedOrder user={user} onCreated={onChange} />
+            <AssistedOrder user={user} onCreated={onChange} onOpenOrder={async (id) => {
+              const rows = await api("orders?id=" + encodeURIComponent(id));
+              if (!rows[0]) throw new Error("This order is unavailable in your authorised scope.");
+              setSelected(rows[0]);
+            }} />
           </div>
         )}
       {section === "finance" && (
@@ -2211,7 +2220,21 @@ function Records({
         <CylinderForm user={user} onDone={() => { setSelected(null); onChange(); }} />
       </Modal>}
       {selected && !selected.newCylinder && <AdminOrderDetails key={selected.id} order={selected} user={user}
-        drivers={staff.data ?? []} onClose={() => setSelected(null)} onChanged={() => { setSelected(null); onChange(); }} />}
+        drivers={staff.data ?? []} onClose={() => setSelected(null)} onChanged={(options) => {
+          if (options?.keepOpen) {
+            const orderId = selected.id;
+            void api("orders?id=" + encodeURIComponent(orderId))
+              .then((rows) => {
+                if (rows[0]) setSelected((current: any) =>
+                  current?.id === orderId ? rows[0] : current,
+                );
+              })
+              .catch((error) => setMessage(error.message));
+          } else {
+            setSelected(null);
+          }
+          onChange();
+        }} />}
 
     </>
   );

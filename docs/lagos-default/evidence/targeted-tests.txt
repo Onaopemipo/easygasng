@@ -1,0 +1,33 @@
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ LAG-UI-CUSTOMER: real edit form preserves existing branch and submits an Admin-selected branch; Manager has no branch edit control; create form preselects Lagos (49.699667ms)
+✔ LAG-UI-STAFF: new invitation chooses Lagos before operator/alphabetical defaults and sends the explicitly selected alternative (3.010666ms)
+✔ LAG-MIGRATE: missing branches across all user roles are filled once, explicit assignments and identity/ledger history stay unchanged, with per-user audit (1295.995084ms)
+✔ LAG-REGISTER: public sign-up persists Lagos, cannot choose an unauthorised role/branch, and is rejected safely if the default branch is inactive (898.615958ms)
+✔ LAG-CREATE: backend customer creation defaults Lagos, preserves an explicit active branch, and retains Manager branch isolation (827.148084ms)
+✔ LAG-EDIT: Admin edits customer branch with audit; Manager cannot move branches, staff identities cannot be changed through customer editing, histories are retained (787.915459ms)
+✔ LAG-GUARD: inactive Lagos stops backfill/default migration without changing missing accounts or emitting false audit records (774.059791ms)
+✔ LAG-REWARD: a newly registered customer is already in Lagos and Admin can add points directly without initial-branch setup (835.467167ms)
+✔ LAG-CHOICE: form defaults choose Lagos over alphabetical order and preserve explicit existing assignments/authorised single-branch scope (0.167042ms)
+✔ LAG-STAFF: new staff invitation defaults Lagos while explicit backend branch choice and access approvals remain intact (850.016125ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 9
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6921.601333
+
+✖ failing tests:
+
+test at tests/lagos-default-ui.test.ts:1:2120
+✖ LAG-UI-CUSTOMER: real edit form preserves existing branch and submits an Admin-selected branch; Manager has no branch edit control; create form preselects Lagos (49.699667ms)
+  TypeError: Cannot read properties of undefined (reading 'props')
+      at <anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/lagos-default-ui.test.ts:14:195)
+      at process.env.NODE_ENV.exports.act (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/native-renderer/node_modules/react/cjs/react.development.js:814:22)
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/tests/lagos-default-ui.test.ts:14:102)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3)

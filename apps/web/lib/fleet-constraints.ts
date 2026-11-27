@@ -1,3 +1,4 @@
+import { availableTanker } from "./tanker-orders";
 import { one, type SQL } from "./db";
 import { AssignmentRequirementError } from "./assignment-requirement-error";
 import {
@@ -37,7 +38,7 @@ export async function vehicleReady(
       )
     )?.n ?? 0,
   );
-  const extraCustody = Number(
+  let extraCustody = Number(
     (
       await one(
         tx,
@@ -46,6 +47,35 @@ export async function vehicleReady(
       )
     )?.n ?? 0,
   );
+  const allocation = await one(
+    tx,
+    "SELECT a.*,l.trip_id FROM bulk_lpg_allocations a JOIN bulk_lpg_loads l ON l.id=a.load_id WHERE a.order_id=$1 AND a.state IN ('allocated','dispensed')",
+    [orderId],
+  );
+  if (allocation && allocation.trip_id !== t.id)
+    throw new AssignmentRequirementError([
+      {
+        code: "TANKER_CUSTODY_MISMATCH",
+        title: "This order’s gas is reserved on another tanker",
+        resolution:
+          "Choose the driver on the tanker carrying this order’s gas, or reconcile the existing tank allocation before changing vehicles.",
+        responsible: "Dispatch",
+        help: "fleet",
+      },
+    ]);
+  const requested = Number(
+    (await one(
+      tx,
+      "SELECT COALESCE(sum(grams),0) n FROM order_gas_lines WHERE order_id=$1",
+      [orderId],
+    ))!.n,
+  );
+  if (
+    !allocation &&
+    requested &&
+    (await availableTanker(tx, branchId, requested, driverId))
+  )
+    extraCustody -= requested;
   if (grams + extraCustody > Number(t.capacity_grams))
     throw new AssignmentRequirementError([
       {

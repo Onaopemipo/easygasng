@@ -1,3 +1,5 @@
+import { DEFAULT_USER_BRANCH_ID } from "../../../packages/business-rules/src/user-branch";
+import { createPhonePaymentLink } from "./phone-order-payments";
 import { gasQuote } from "./gas-delivery";
 import { randomBytes } from "node:crypto";
 import { z } from "zod";
@@ -33,7 +35,7 @@ export async function assistedOrdering(
       );
     const rows = (
       await tx.query(
-        `SELECT DISTINCT u.id,u.public_customer_id,u.name,u.contact_phone,u.provisional FROM users u
+        `SELECT DISTINCT u.id,u.public_customer_id,u.name,u.contact_phone,u.provisional,u.email FROM users u
       WHERE u.active=true AND u.role IN ('customer','commercial') AND
       ($1::boolean OR u.branch_id=$2 OR EXISTS(SELECT 1 FROM orders o WHERE o.customer_id=u.id AND o.branch_id=$2)) AND
       (($3::text IS NOT NULL AND u.public_customer_id=$3) OR ($4::text IS NOT NULL AND (u.contact_phone=$4 OR EXISTS(
@@ -42,6 +44,18 @@ export async function assistedOrdering(
         [user.role === "owner", user.branch_id, publicId, phone],
       )
     ).rows;
+    if (rows.length) {
+      const addresses = (
+        await tx.query(
+          "SELECT a.customer_id,a.id,a.label,a.street,a.zone,a.phone,a.location_id,a.is_default,a.details FROM account_addresses a JOIN delivery_locations l ON l.id=a.location_id JOIN branches b ON b.id=l.branch_id WHERE a.customer_id=ANY($1::text[]) AND a.archived=false AND l.active=true AND l.visible=true AND NOT l.archived AND b.active=true AND ($2::boolean OR l.branch_id=$3) ORDER BY a.is_default DESC,a.created_at,a.id",
+          [rows.map((c) => c.id), user.role === "owner", user.branch_id],
+        )
+      ).rows;
+      for (const customer of rows)
+        customer.addresses = addresses
+          .filter((a) => a.customer_id === customer.id)
+          .map(({ customer_id, ...a }) => a);
+    }
     await audit(tx, user, action, "customer-lookup", "success", {
       matches: rows.length,
     });
@@ -56,7 +70,12 @@ export async function assistedOrdering(
       .object({
         name: z.string().trim().min(2).max(120),
         phone: z.string().max(40),
-        branchId: z.string().min(1).max(100),
+        email: z
+          .email()
+          .max(200)
+          .transform((v) => v.toLowerCase())
+          .optional(),
+        branchId: z.string().min(1).max(100).default(DEFAULT_USER_BRANCH_ID),
       })
       .strict()
       .parse(input);
@@ -85,14 +104,22 @@ export async function assistedOrdering(
         409,
         "This phone already has a customer record. Use lookup or ask an authorised owner to review it; records have not been merged.",
       );
+    if (
+      d.email &&
+      (await one(tx, "SELECT id FROM users WHERE lower(email)=$1", [d.email]))
+    )
+      throw new AppError(
+        409,
+        "This email already has a customer record. Use lookup or ask an authorised owner to review it; profiles have not been merged.",
+      );
     const uid = id();
     const created = await one(
       tx,
-      `INSERT INTO users(id,name,email,password_hash,role,branch_id,contact_phone,provisional) VALUES($1,$2,$3,$4,'customer',$5,$6,true) RETURNING id,public_customer_id,name,provisional`,
+      `INSERT INTO users(id,name,email,password_hash,role,branch_id,contact_phone,provisional) VALUES($1,$2,$3,$4,'customer',$5,$6,true) RETURNING id,public_customer_id,name,provisional,email,contact_phone`,
       [
         uid,
         d.name,
-        `provisional-${uid}@identity.invalid`,
+        d.email ?? `provisional-${uid}@identity.invalid`,
         hashPassword(randomBytes(48).toString("hex")),
         d.branchId,
         phone,
@@ -128,14 +155,32 @@ export async function assistedOrdering(
       })
       .strict()
       .parse(input);
-    const order = await checkout(tx, user, d.checkout, {
-      customerId: d.customerId,
-      reason: d.reason,
-    });
+    if (
+      d.checkout.paymentMethod === "wallet" ||
+      d.checkout.rewardOfferId ||
+      d.checkout.rewardPoints
+    )
+      throw new AppError(
+        403,
+        "Assisted orders cannot spend customer credit or rewards without customer authorisation.",
+      );
+    const order = await checkout(
+      tx,
+      user,
+      { ...d.checkout, paymentMethod: "card" },
+      {
+        customerId: d.customerId,
+        reason: d.reason,
+        prepaid: true,
+      },
+    );
     const safe = { ...order };
     delete safe.delivery_code_hash;
     delete safe.delivery_code_expires_at;
-    return safe;
+    return {
+      ...safe,
+      paymentLink: await createPhonePaymentLink(tx, user, order!.id),
+    };
   }
   throw new AppError(404, "Unknown assisted ordering action.");
 }

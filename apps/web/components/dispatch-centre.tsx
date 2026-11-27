@@ -23,6 +23,7 @@ import {
 import { api, Notice, Loading, money } from "./ui";
 import { ActionLoadingIndicator } from "./easygas-loader";
 import DispatchTracking from "./order-tracking";
+import AdminOrderDetails from "./admin-order-details";
 import { OperationsExtensions } from "./operations-completion";
 import DispatchSetup from "./dispatch-setup";
 import DispatchVehicleAssignment from "./dispatch-vehicle";
@@ -51,17 +52,27 @@ export default function DispatchCentre({ user }: { user: any }) {
     [selected, setSelected] = useState(""),
     [working, setWorking] = useState(false);
   const [operationsView, setOperationsView] = useState("fleet");
-  const [vehicleOpen, setVehicleOpen] = useState(false), [setupRevision, setSetupRevision] = useState(0), [vehicleMessage, setVehicleMessage] = useState("");
-  const [managedTrip, setManagedTrip] = useState<{id?: string} | null>(null);
+  const [vehicleOpen, setVehicleOpen] = useState(false),
+    [setupRevision, setSetupRevision] = useState(0),
+    [vehicleMessage, setVehicleMessage] = useState("");
+  const [managedTrip, setManagedTrip] = useState<{ id?: string } | null>(null);
   function closeVehicle() {
     setVehicleOpen(false);
-    if (window.location.hash === "#assign-vehicle") window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
+    if (window.location.hash === "#assign-vehicle")
+      window.history.replaceState(
+        window.history.state,
+        "",
+        window.location.pathname + window.location.search,
+      );
   }
   const [candidateLoading, setCandidateLoading] = useState(false);
   const [assignmentError, setAssignmentError] = useState("");
   useEffect(() => {
     const openFleet = () => {
-      if (window.location.hash === "#assign-vehicle") { setCandidate(null); setVehicleOpen(true); }
+      if (window.location.hash === "#assign-vehicle") {
+        setCandidate(null);
+        setVehicleOpen(true);
+      }
       if (window.location.hash === "#driver-fleet") {
         setOperationsView("fleet");
         setView("operations");
@@ -112,6 +123,7 @@ export default function DispatchCentre({ user }: { user: any }) {
     });
   }, [data, fleetLocationsVisible, mapDriver, mapFreshness]);
   const [focusedOrderId, setFocusedOrderId] = useState("");
+  const [preparationOrder, setPreparationOrder] = useState<any>(null);
   const [status, setStatus] = useState(""),
     [sort, setSort] = useState("oldest");
   const sequence = useRef(0),
@@ -211,7 +223,9 @@ export default function DispatchCentre({ user }: { user: any }) {
           "button:not(:disabled),input:not(:disabled),textarea:not(:disabled),select:not(:disabled),a[href]",
         ) ?? [],
       );
-      const visibleNodes = nodes.filter((node) => node.getClientRects().length > 0);
+      const visibleNodes = nodes.filter(
+        (node) => node.getClientRects().length > 0,
+      );
       const first = visibleNodes[0],
         last = visibleNodes[visibleNodes.length - 1];
       if (event.shiftKey && document.activeElement === first) {
@@ -299,7 +313,11 @@ export default function DispatchCentre({ user }: { user: any }) {
         orderId: candidate.orderId,
         driverId: selected,
         version: candidate.version,
-        reason,
+        reason:
+          candidate.action === "dispatch.reassign"
+            ? reason
+            : "Dispatcher selected an eligible driver for this order",
+        ...(candidate.action === "dispatch.assign" ? { prepare: true } : {}),
         operationKey: pendingAssignment.current!.key,
       });
       pendingAssignment.current = null;
@@ -332,9 +350,19 @@ export default function DispatchCentre({ user }: { user: any }) {
     );
   }
   function operations(label: string) {
-    setOperationsView(label === "Vehicle product" ? "manifests" : label === "Bulk LPG" ? "lpg" : "fleet");
+    setOperationsView(
+      label === "Vehicle product"
+        ? "manifests"
+        : label === "Bulk LPG"
+          ? "lpg"
+          : "fleet",
+    );
     setView("operations");
-    requestAnimationFrame(() => document.getElementById("dispatch-operations")?.scrollIntoView({ behavior: "smooth" }));
+    requestAnimationFrame(() =>
+      document
+        .getElementById("dispatch-operations")
+        ?.scrollIntoView({ behavior: "smooth" }),
+    );
   }
   const cards = [
     {
@@ -390,692 +418,843 @@ export default function DispatchCentre({ user }: { user: any }) {
             stock
           </p>
         </div>
-        {view === "centre" && <div className="dc-heading-controls">
-          <span className="dc-contact" aria-live="polite">
-            <span className={error || !data ? "dc-dot stale" : "dc-dot"} />
-            {busy ? (
-              <ActionLoadingIndicator label="Refreshing dispatch records" />
-            ) : error ? (
-              "Updates unavailable"
-            ) : data ? (
-              "Auto-refresh on"
-            ) : (
-              "Waiting for update"
-            )}
-            <small>
-              {data
-                ? "Updated " +
-                  new Date(data.observedAt).toLocaleTimeString("en-NG", {
-                    timeZone: "Africa/Lagos",
-                  })
-                : "Waiting for first update"}
-            </small>
-          </span>
-          <label className="sr-only" htmlFor="dispatch-date">
-            Operations date (Lagos)
-          </label>
-          <input
-            id="dispatch-date"
-            type="date"
-            value={date}
-            onChange={(e) => {
-              setDate(e.target.value);
-              setPage(1);
-            }}
-          />
-          <button
-            className="dc-icon"
-            aria-label="Refresh dispatch"
-            onClick={refresh}
-          >
-            <RefreshCw size={19} />
-          </button>
-        </div>
-        }
+        {view === "centre" && (
+          <div className="dc-heading-controls">
+            <span className="dc-contact" aria-live="polite">
+              <span className={error || !data ? "dc-dot stale" : "dc-dot"} />
+              {busy ? (
+                <ActionLoadingIndicator label="Refreshing dispatch records" />
+              ) : error ? (
+                "Updates unavailable"
+              ) : data ? (
+                "Auto-refresh on"
+              ) : (
+                "Waiting for update"
+              )}
+              <small>
+                {data
+                  ? "Updated " +
+                    new Date(data.observedAt).toLocaleTimeString("en-NG", {
+                      timeZone: "Africa/Lagos",
+                    })
+                  : "Waiting for first update"}
+              </small>
+            </span>
+            <label className="sr-only" htmlFor="dispatch-date">
+              Operations date (Lagos)
+            </label>
+            <input
+              id="dispatch-date"
+              type="date"
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+                setPage(1);
+              }}
+            />
+            <button
+              className="dc-icon"
+              aria-label="Refresh dispatch"
+              onClick={refresh}
+            >
+              <RefreshCw size={19} />
+            </button>
+          </div>
+        )}
       </header>
-      <div className="dispatch-vehicle-launch"><button className="button secondary" onClick={() => { setVehicleMessage(""); setManagedTrip({}); }}>Manage trips</button><button className="button" onClick={() => { setVehicleMessage(""); setVehicleOpen(true); }}><Truck size={18}/> Assign vehicle to driver</button></div>
-      {vehicleMessage && <Notice message={vehicleMessage}/>}
-      <DispatchSetup key={setupRevision} user={user} branch={branch} onAssignVehicle={() => setVehicleOpen(true)} onBranch={(id) => { setBranch(id); setPage(1); }} onFleet={() => {
-        setOperationsView("fleet"); setView("operations"); setCandidate(null);
-        window.requestAnimationFrame(() => document.getElementById("dispatch-operations")?.scrollIntoView({ behavior: "smooth", block: "start" }));
-      }} />
-      {vehicleOpen && <DispatchVehicleAssignment key={viewerScope} branch={branch} onClose={closeVehicle} onManageTrip={id => { closeVehicle(); setManagedTrip({id}); }} onDone={result => { closeVehicle(); setVehicleMessage(result.message); setSetupRevision(n => n + 1); void refresh(); }}/>}
-      {managedTrip && <DispatchTripManagement key={viewerScope} branch={branch} initialTripId={managedTrip.id} onClose={() => setManagedTrip(null)} onDone={result => { setManagedTrip(null); setVehicleMessage(result.message); setSetupRevision(n => n + 1); void refresh(); }} onResolve={destination => { setManagedTrip(null); if (destination === "tracking") setView("history"); else { setView("operations"); setOperationsView(destination); } }}/ >}
+      <div className="dispatch-vehicle-launch">
+        <button
+          className="button secondary"
+          onClick={() => {
+            setVehicleMessage("");
+            setManagedTrip({});
+          }}
+        >
+          Manage trips
+        </button>
+        <button
+          className="button"
+          onClick={() => {
+            setVehicleMessage("");
+            setVehicleOpen(true);
+          }}
+        >
+          <Truck size={18} /> Assign vehicle to driver
+        </button>
+      </div>
+      {vehicleMessage && <Notice message={vehicleMessage} />}
+      <DispatchSetup
+        key={setupRevision}
+        user={user}
+        branch={branch}
+        onAssignVehicle={() => setVehicleOpen(true)}
+        onBranch={(id) => {
+          setBranch(id);
+          setPage(1);
+        }}
+        onFleet={() => {
+          setOperationsView("fleet");
+          setView("operations");
+          setCandidate(null);
+          window.requestAnimationFrame(() =>
+            document
+              .getElementById("dispatch-operations")
+              ?.scrollIntoView({ behavior: "smooth", block: "start" }),
+          );
+        }}
+      />
+      {vehicleOpen && (
+        <DispatchVehicleAssignment
+          key={viewerScope}
+          branch={branch}
+          onClose={closeVehicle}
+          onManageTrip={(id) => {
+            closeVehicle();
+            setManagedTrip({ id });
+          }}
+          onDone={(result) => {
+            closeVehicle();
+            setVehicleMessage(result.message);
+            setSetupRevision((n) => n + 1);
+            void refresh();
+          }}
+        />
+      )}
+      {managedTrip && (
+        <DispatchTripManagement
+          key={viewerScope}
+          branch={branch}
+          initialTripId={managedTrip.id}
+          onClose={() => setManagedTrip(null)}
+          onDone={(result) => {
+            setManagedTrip(null);
+            setVehicleMessage(result.message);
+            setSetupRevision((n) => n + 1);
+            void refresh();
+          }}
+          onResolve={(destination) => {
+            setManagedTrip(null);
+            if (destination === "tracking") setView("history");
+            else {
+              setView("operations");
+              setOperationsView(destination);
+            }
+          }}
+        />
+      )}
       {error && <Notice type="error" message={error} />}
       {!data ? (
         (!error || busy) && <Loading page label="Loading dispatch records" />
       ) : (
         <>
-      <div className="dc-workspace-tabs">
-        <button
-          aria-pressed={view === "centre"}
-          className={view === "centre" ? "active" : ""}
-          onClick={() => {
-            setView("centre");
-            refresh();
-          }}
-        >
-          Dispatch overview
-        </button>
-        <button
-          aria-pressed={view === "operations"}
-          className={view === "operations" ? "active" : ""}
-          onClick={() => setView("operations")}
-        >
-          Fleet &amp; stock
-        </button>
-        <button
-          aria-pressed={view === "history"}
-          className={view === "history" ? "active" : ""}
-          onClick={() => {
-            setFocusedOrderId("");
-            setView("history");
-          }}
-        >
-          Order tracking
-        </button>
-      </div>
-      {view === "centre" && <>
-      <div className="dc-kpis">
-        {cards.map((c) => (
-          <button
-            key={c.label}
-            className={"dc-kpi " + c.tone}
-            title={
-              c.label === "Drivers Online"
-                ? data?.contactNote
-                : c.label === "Ready for Dispatch"
-                  ? data?.readinessNote
-                  : "Selected Lagos date and filters"
-            }
-            onClick={() =>
-              c.tab
-                ? changeTab(
-                    c.tab as DispatchTab,
-                    c.label === "Assigned"
-                      ? "assigned"
-                      : c.label === "In Transit"
-                        ? "out_for_delivery"
-                        : "",
-                  )
-                : showDrivers()
-            }
-          >
-            <span className="dc-kpi-icon">
-              <c.icon size={27} />
-            </span>
-            <span>
-              <strong>{c.value ?? "—"}</strong>
-              <span>
-                {c.label === "Delivered Today" && date !== lagosDate()
-                  ? "Delivered on Date"
-                  : c.label}
-              </span>
-            </span>
-            <span aria-hidden>›</span>
-          </button>
-        ))}
-      </div>
-      {data?.kpis.ready === null && (
-        <Notice type="error" message={data.readinessNote} />
-      )}
-      </>}
-      {view === "operations" ? (
-        <section id="dispatch-operations">
-          <OperationsExtensions section="deliveries" user={user} initialView={operationsView} />
-        </section>
-      ) : view === "history" ? (
-        <DispatchTracking user={user} orderId={focusedOrderId} />
-      ) : (
-        <>
-          <div className="dc-layout">
+          <div className="dc-workspace-tabs">
+            <button
+              aria-pressed={view === "centre"}
+              className={view === "centre" ? "active" : ""}
+              onClick={() => {
+                setView("centre");
+                refresh();
+              }}
+            >
+              Dispatch overview
+            </button>
+            <button
+              aria-pressed={view === "operations"}
+              className={view === "operations" ? "active" : ""}
+              onClick={() => setView("operations")}
+            >
+              Fleet &amp; stock
+            </button>
+            <button
+              aria-pressed={view === "history"}
+              className={view === "history" ? "active" : ""}
+              onClick={() => {
+                setFocusedOrderId("");
+                setView("history");
+              }}
+            >
+              Order tracking
+            </button>
+          </div>
+          {preparationOrder && (
+            <AdminOrderDetails
+              key={preparationOrder.order.id + preparationOrder.action}
+              order={preparationOrder.order}
+              user={user}
+              initialAction={preparationOrder.action}
+              onClose={() => {
+                setPreparationOrder(null);
+                void refresh();
+              }}
+              onChanged={() => {
+                void api(
+                  "orders?id=" + encodeURIComponent(preparationOrder.order.id),
+                ).then((rows) => {
+                  if (rows[0])
+                    setPreparationOrder((previous: any) =>
+                      previous ? { ...previous, order: rows[0] } : null,
+                    );
+                });
+                void refresh();
+              }}
+            />
+          )}
+          {view === "centre" && (
+            <>
+              <div className="dc-kpis">
+                {cards.map((c) => (
+                  <button
+                    key={c.label}
+                    className={"dc-kpi " + c.tone}
+                    title={
+                      c.label === "Drivers Online"
+                        ? data?.contactNote
+                        : c.label === "Ready for Dispatch"
+                          ? data?.readinessNote
+                          : "Selected Lagos date and filters"
+                    }
+                    onClick={() =>
+                      c.tab
+                        ? changeTab(
+                            c.tab as DispatchTab,
+                            c.label === "Assigned"
+                              ? "assigned"
+                              : c.label === "In Transit"
+                                ? "out_for_delivery"
+                                : "",
+                          )
+                        : showDrivers()
+                    }
+                  >
+                    <span className="dc-kpi-icon">
+                      <c.icon size={27} />
+                    </span>
+                    <span>
+                      <strong>{c.value ?? "—"}</strong>
+                      <span>
+                        {c.label === "Delivered Today" && date !== lagosDate()
+                          ? "Delivered on Date"
+                          : c.label}
+                      </span>
+                    </span>
+                    <span aria-hidden>›</span>
+                  </button>
+                ))}
+              </div>
+              {data?.kpis.ready === null && (
+                <Notice type="error" message={data.readinessNote} />
+              )}
+            </>
+          )}
+          {view === "operations" ? (
+            <section id="dispatch-operations">
+              <OperationsExtensions
+                section="deliveries"
+                user={user}
+                initialView={operationsView}
+              />
+            </section>
+          ) : view === "history" ? (
+            <DispatchTracking user={user} orderId={focusedOrderId} />
+          ) : (
+            <>
+              <div className="dc-layout">
                 <section
                   className="dc-panel dc-queue"
                   aria-label="Dispatch orders"
                 >
-              <div
-                className="dc-tabs"
-                role="tablist"
-                aria-label="Delivery queues"
-              >
-                {(
-                  [
-                    ["queue", "Dispatch Queue"],
-                    ["live", "Live Deliveries"],
-                    ["completed", "Completed"],
-                    ["exceptions", "Exceptions"],
-                  ] as const
-                ).map(([id, label]) => (
-                  <button
-                    key={id}
-                    role="tab"
-                    aria-selected={tab === id}
-                    className={tab === id ? "active" : ""}
-                    onClick={() => changeTab(id)}
+                  <div
+                    className="dc-tabs"
+                    role="tablist"
+                    aria-label="Delivery queues"
                   >
-                    {label} ({data?.counts[id] ?? "—"})
-                  </button>
-                ))}
-              </div>
-              <div className="dc-filters">
-                <label className="dc-search">
-                  <Search size={18} />
-                  <input
-                    aria-label="Search orders"
-                    placeholder="Search by order ID, customer or address…"
-                    value={q}
-                    onChange={(e) => {
-                      setQ(e.target.value);
-                      setPage(1);
-                    }}
-                  />
-                </label>
-                <select
-                  aria-label="Branch"
-                  value={branch}
-                  onChange={(e) => {
-                    setBranch(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="">All Branches</option>
-                  {data?.branches.map((b: any) => (
-                    <option key={b.id} value={b.id}>
-                      {b.name}
-                      {b.active ? "" : " (inactive)"}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Area"
-                  value={area}
-                  onChange={(e) => {
-                    setArea(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="">All Areas</option>
-                  {data?.areas.map((a: string) => (
-                    <option key={a}>{a}</option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Priority"
-                  value={priority}
-                  onChange={(e) => {
-                    setPriority(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="">Priority</option>
-                  <option>Overdue</option>
-                  <option>Normal</option>
-                </select>
-                <select
-                  aria-label="Delivery window"
-                  value={windowFilter}
-                  onChange={(e) => {
-                    setWindow(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="">All Windows</option>
-                  {data?.windows.map((w: string) => (
-                    <option key={w}>{w}</option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Delivery status"
-                  value={status}
-                  onChange={(e) => {
-                    setStatus(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="">All Statuses</option>
-                  {[
-                    "accepted",
-                    "preparing",
-                    "assigned",
-                    "out_for_delivery",
-                    "delivered",
-                    "delivery_failed",
-                  ].map((s) => (
-                    <option key={s} value={s}>
-                      {s.replaceAll("_", " ")}
-                    </option>
-                  ))}
-                </select>
-                <select
-                  aria-label="Sort deliveries"
-                  value={sort}
-                  onChange={(e) => {
-                    setSort(e.target.value);
-                    setPage(1);
-                  }}
-                >
-                  <option value="oldest">Oldest first</option>
-                  <option value="newest">Newest first</option>
-                  <option value="customer">Customer name</option>
-                </select>
-              </div>
-              <>
-                  <div className="dc-table-scroll">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Order ID</th>
-                          <th>Customer</th>
-                          <th>Address</th>
-                          <th>Order</th>
-                          <th>Payment</th>
-                          <th>Priority</th>
-                          <th>Action</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {data.rows.map((o: any) => (
-                          <tr key={o.id}>
-                            <td>
-                              <strong>{o.reference}</strong>
-                              <small>{o.delivery_window}</small>
-                              <small>{o.status.replaceAll("_", " ")}</small>
-                            </td>
-                            <td>{o.customer_name}</td>
-                            <td>
-                              <MapPin size={15} />
-                              {o.address?.street}
-                              <small>{o.address?.zone}</small>
-                            </td>
-                            <td>
-                              {Number(o.gas_grams) > 0 && (
-                                <span>{Number(o.gas_grams) / 1000} kg</span>
-                              )}
-                              {o.items?.map((i: any) => (
-                                <small key={i.name}>
-                                  {i.name} × {i.quantity}
-                                </small>
-                              ))}
-                            </td>
-                            <td>
-                              <span
-                                className={
-                                  "dc-badge " +
-                                  (o.paymentLabel === "Paid"
-                                    ? "green"
-                                    : "amber")
-                                }
-                              >
-                                {o.paymentLabel}
-                              </span>
-                            </td>
-                            <td>
-                              <span
-                                className={
-                                  "dc-badge " +
-                                  (o.priority === "Overdue" ? "red" : "green")
-                                }
-                              >
-                                {o.priority}
-                              </span>
-                            </td>
-                            <td>
-                              {tab === "queue" ? (
-                                <>
+                    {(
+                      [
+                        ["payment", "Awaiting payment"],
+                        ["queue", "Ready to assign"],
+                        ["live", "On the way"],
+                        ["completed", "Completed"],
+                        ["exceptions", "Needs attention"],
+                      ] as const
+                    ).map(([id, label]) => (
+                      <button
+                        key={id}
+                        role="tab"
+                        aria-selected={tab === id}
+                        className={tab === id ? "active" : ""}
+                        onClick={() => changeTab(id)}
+                      >
+                        {label} ({data?.counts[id] ?? "—"})
+                      </button>
+                    ))}
+                  </div>
+                  <div className="dc-filters">
+                    <label className="dc-search">
+                      <Search size={18} />
+                      <input
+                        aria-label="Search orders"
+                        placeholder="Search by order ID, customer or address…"
+                        value={q}
+                        onChange={(e) => {
+                          setQ(e.target.value);
+                          setPage(1);
+                        }}
+                      />
+                    </label>
+                    <select
+                      aria-label="Branch"
+                      value={branch}
+                      onChange={(e) => {
+                        setBranch(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="">All Branches</option>
+                      {data?.branches.map((b: any) => (
+                        <option key={b.id} value={b.id}>
+                          {b.name}
+                          {b.active ? "" : " (inactive)"}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      aria-label="Area"
+                      value={area}
+                      onChange={(e) => {
+                        setArea(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="">All Areas</option>
+                      {data?.areas.map((a: string) => (
+                        <option key={a}>{a}</option>
+                      ))}
+                    </select>
+                    <select
+                      aria-label="Priority"
+                      value={priority}
+                      onChange={(e) => {
+                        setPriority(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="">Priority</option>
+                      <option>Overdue</option>
+                      <option>Normal</option>
+                    </select>
+                    <select
+                      aria-label="Delivery window"
+                      value={windowFilter}
+                      onChange={(e) => {
+                        setWindow(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="">All Windows</option>
+                      {data?.windows.map((w: string) => (
+                        <option key={w}>{w}</option>
+                      ))}
+                    </select>
+                    <select
+                      aria-label="Delivery status"
+                      value={status}
+                      onChange={(e) => {
+                        setStatus(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="">All Statuses</option>
+                      {[
+                        "accepted",
+                        "preparing",
+                        "assigned",
+                        "out_for_delivery",
+                        "delivered",
+                        "delivery_failed",
+                      ].map((s) => (
+                        <option key={s} value={s}>
+                          {s.replaceAll("_", " ")}
+                        </option>
+                      ))}
+                    </select>
+                    <select
+                      aria-label="Sort deliveries"
+                      value={sort}
+                      onChange={(e) => {
+                        setSort(e.target.value);
+                        setPage(1);
+                      }}
+                    >
+                      <option value="oldest">Oldest first</option>
+                      <option value="newest">Newest first</option>
+                      <option value="customer">Customer name</option>
+                    </select>
+                  </div>
+                  <>
+                    <div className="dc-table-scroll">
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Address</th>
+                            <th>Order</th>
+                            <th>Payment</th>
+                            <th>Priority</th>
+                            <th>Action</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {data.rows.map((o: any) => (
+                            <tr key={o.id}>
+                              <td>
+                                <strong>{o.reference}</strong>
+                                <small>{o.delivery_window}</small>
+                                <small>{o.status.replaceAll("_", " ")}</small>
+                              </td>
+                              <td>{o.customer_name}</td>
+                              <td>
+                                <MapPin size={15} />
+                                {o.address?.street}
+                                <small>{o.address?.zone}</small>
+                              </td>
+                              <td>
+                                {Number(o.gas_grams) > 0 && (
+                                  <span>{Number(o.gas_grams) / 1000} kg</span>
+                                )}
+                                {o.items?.map((i: any) => (
+                                  <small key={i.name}>
+                                    {i.name} × {i.quantity}
+                                  </small>
+                                ))}
+                              </td>
+                              <td>
+                                <span
+                                  className={
+                                    "dc-badge " +
+                                    (o.paymentLabel === "Paid"
+                                      ? "green"
+                                      : "amber")
+                                  }
+                                >
+                                  {o.paymentLabel}
+                                </span>
+                              </td>
+                              <td>
+                                <span
+                                  className={
+                                    "dc-badge " +
+                                    (o.priority === "Overdue" ? "red" : "green")
+                                  }
+                                >
+                                  {o.priority}
+                                </span>
+                              </td>
+                              <td>
+                                {tab === "payment" ? (
                                   <button
                                     className="dc-assign"
-                                    onClick={() =>
-                                      o.canAssign
-                                        ? choose(o)
-                                        : openOrderActions(o.id)
-                                    }
+                                    onClick={async () => {
+                                      try {
+                                        const rows = await api(
+                                          "orders?id=" +
+                                            encodeURIComponent(o.id),
+                                        );
+                                        if (rows[0])
+                                          setPreparationOrder({
+                                            order: rows[0],
+                                            action:
+                                              o.order_source ===
+                                              "PHONE_ASSISTED"
+                                                ? "phone-payment"
+                                                : "invoice",
+                                          });
+                                      } catch (e: any) {
+                                        setError(e.message);
+                                      }
+                                    }}
                                   >
-                                    {o.canAssign
-                                      ? "Assign Driver"
-                                      : "Review preparation"}
+                                    {o.order_source === "PHONE_ASSISTED"
+                                      ? "Send payment link"
+                                      : "Review payment"}
                                   </button>
+                                ) : o.needsAddressReview ? (
                                   <button
-                                    className="dc-text"
-                                    onClick={() => openOrderActions(o.id)}
+                                    className="dc-assign"
+                                    onClick={async () => {
+                                      try {
+                                        const rows = await api(
+                                          "orders?id=" +
+                                            encodeURIComponent(o.id),
+                                        );
+                                        if (rows[0])
+                                          setPreparationOrder({
+                                            order: rows[0],
+                                            action: "coverage",
+                                          });
+                                      } catch (e: any) {
+                                        setError(e.message);
+                                      }
+                                    }}
                                   >
-                                    View details
+                                    Confirm delivery address
                                   </button>
-                                  {o.readiness.ready === false && (
-                                    <small
-                                      className="dc-blocked"
-                                      title={o.readiness.reasons.join(" ")}
-                                    >
-                                      Blocked · review
-                                    </small>
-                                  )}
-                                </>
-                              ) : (
-                                <>
-                                  <span>{o.driver_name ?? "Unassigned"}</span>
-                                  {o.exception && (
-                                    <small className="dc-blocked">
-                                      {o.exception}
-                                    </small>
-                                  )}
-                                  {o.status === "assigned" && (
+                                ) : tab === "queue" ? (
+                                  <>
                                     <button
                                       className="dc-assign"
-                                      onClick={() => choose(o)}
+                                      onClick={() =>
+                                        o.canAssign
+                                          ? choose(o)
+                                          : openOrderActions(o.id)
+                                      }
                                     >
-                                      Reassign Driver
+                                      {o.canAssign
+                                        ? "Assign Driver"
+                                        : "Review preparation"}
                                     </button>
-                                  )}
-                                  <button
-                                    className="dc-text"
-                                    onClick={() => openOrderActions(o.id)}
-                                  >
-                                    View tracking
-                                  </button>
-                                </>
-                              )}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                    {!data.rows.length && (
-                      <div className="dc-empty">
-                        No deliveries match this date and filters.
-                      </div>
-                    )}
-                  </div>
-                  <footer className="dc-pagination">
-                    <span>
-                      {data.total
-                        ? `Showing ${(data.page - 1) * data.pageSize + 1}–${Math.min(data.page * data.pageSize, data.total)} of ${data.total} orders`
-                        : "0 orders"}
-                    </span>
-                    <div>
-                      <button
-                        aria-label="Previous page"
-                        disabled={data.page <= 1}
-                        onClick={() => setPage(data.page - 1)}
-                      >
-                        <ChevronLeft size={17} />
-                      </button>
-                      <span>{data.page}</span>
-                      <button
-                        aria-label="Next page"
-                        disabled={data.page * data.pageSize >= data.total}
-                        onClick={() => setPage(data.page + 1)}
-                      >
-                        <ChevronRight size={17} />
-                      </button>
+                                    <button
+                                      className="dc-text"
+                                      onClick={() => openOrderActions(o.id)}
+                                    >
+                                      View details
+                                    </button>
+                                    {o.readiness.ready === false && (
+                                      <small
+                                        className="dc-blocked"
+                                        title={o.readiness.reasons.join(" ")}
+                                      >
+                                        Blocked · review
+                                      </small>
+                                    )}
+                                  </>
+                                ) : (
+                                  <>
+                                    <span>{o.driver_name ?? "Unassigned"}</span>
+                                    {o.exception && (
+                                      <small className="dc-blocked">
+                                        {o.exception}
+                                      </small>
+                                    )}
+                                    {o.status === "assigned" && (
+                                      <button
+                                        className="dc-assign"
+                                        onClick={() => choose(o)}
+                                      >
+                                        Reassign Driver
+                                      </button>
+                                    )}
+                                    <button
+                                      className="dc-text"
+                                      onClick={() => openOrderActions(o.id)}
+                                    >
+                                      View tracking
+                                    </button>
+                                  </>
+                                )}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                      {!data.rows.length && (
+                        <div className="dc-empty">
+                          No deliveries match this date and filters.
+                        </div>
+                      )}
                     </div>
-                  </footer>
-              </>
-            </section>
-            <aside className="dc-panel dc-map">
-              <h2>Delivery map</h2>
-              <p className="dc-muted">
-                Recorded rider locations. Arrival estimates are unavailable
-                here.
-              </p>
-              <div className="dc-filters">
-                <label>
-                  Driver
-                  <select
-                    value={mapDriver}
-                    onChange={(event) => setMapDriver(event.target.value)}
-                  >
-                    <option value="">All visible drivers</option>
-                    {data?.drivers
+                    <footer className="dc-pagination">
+                      <span>
+                        {data.total
+                          ? `Showing ${(data.page - 1) * data.pageSize + 1}–${Math.min(data.page * data.pageSize, data.total)} of ${data.total} orders`
+                          : "0 orders"}
+                      </span>
+                      <div>
+                        <button
+                          aria-label="Previous page"
+                          disabled={data.page <= 1}
+                          onClick={() => setPage(data.page - 1)}
+                        >
+                          <ChevronLeft size={17} />
+                        </button>
+                        <span>{data.page}</span>
+                        <button
+                          aria-label="Next page"
+                          disabled={data.page * data.pageSize >= data.total}
+                          onClick={() => setPage(data.page + 1)}
+                        >
+                          <ChevronRight size={17} />
+                        </button>
+                      </div>
+                    </footer>
+                  </>
+                </section>
+                <aside className="dc-panel dc-map">
+                  <h2>Delivery map</h2>
+                  <p className="dc-muted">
+                    Recorded rider locations. Arrival estimates are unavailable
+                    here.
+                  </p>
+                  <div className="dc-filters">
+                    <label>
+                      Driver
+                      <select
+                        value={mapDriver}
+                        onChange={(event) => setMapDriver(event.target.value)}
+                      >
+                        <option value="">All visible drivers</option>
+                        {data?.drivers
                           .filter(
                             (driver: any) => Number(driver.active_stops) > 0,
                           )
-                      .map((driver: any) => (
-                        <option key={driver.id} value={driver.id}>
-                          {driver.name}
-                        </option>
-                      ))}
-                  </select>
-                </label>
-                <label>
-                  Location status
-                  <select
-                    value={mapFreshness}
+                          .map((driver: any) => (
+                            <option key={driver.id} value={driver.id}>
+                              {driver.name}
+                            </option>
+                          ))}
+                      </select>
+                    </label>
+                    <label>
+                      Location status
+                      <select
+                        value={mapFreshness}
                         onChange={(event) =>
                           setMapFreshness(event.target.value)
                         }
-                  >
-                    <option value="">All recorded locations</option>
-                    <option value="recent_observation">
-                      Recent observations
-                    </option>
-                    <option value="last_known_only">Last known only</option>
-                  </select>
-                </label>
-              </div>
-              <RiderMap key={viewerScope} points={mapPoints.slice(0, 50)} />
-              {mapPoints.length > 50 && (
-                <p className="dc-muted">
-                  Showing 50 map points. Select a driver to narrow the map.
-                </p>
-              )}
-              <div id="dispatch-drivers">
-                <h2>Active Drivers ({data?.drivers.length ?? "—"})</h2>
-                <p className="dc-muted">{data?.contactNote}</p>
-                {data?.drivers.map((driver: any) => {
-                  const d = fleetLocationsVisible
-                    ? driver
-                    : { ...driver, location: null };
-                  return (
-                    <div className="dc-driver" key={d.id}>
+                      >
+                        <option value="">All recorded locations</option>
+                        <option value="recent_observation">
+                          Recent observations
+                        </option>
+                        <option value="last_known_only">Last known only</option>
+                      </select>
+                    </label>
+                  </div>
+                  <RiderMap key={viewerScope} points={mapPoints.slice(0, 50)} />
+                  {mapPoints.length > 50 && (
+                    <p className="dc-muted">
+                      Showing 50 map points. Select a driver to narrow the map.
+                    </p>
+                  )}
+                  <div id="dispatch-drivers">
+                    <h2>Active Drivers ({data?.drivers.length ?? "—"})</h2>
+                    <p className="dc-muted">{data?.contactNote}</p>
+                    {data?.drivers.map((driver: any) => {
+                      const d = fleetLocationsVisible
+                        ? driver
+                        : { ...driver, location: null };
+                      return (
+                        <div className="dc-driver" key={d.id}>
                           <span className="dc-avatar">
                             {d.name.slice(0, 1)}
                           </span>
-                      <div>
-                        <strong>{d.name}</strong>
-                        <small>
-                          {d.driver_available
-                            ? "Available for assignment"
-                            : "Unavailable"}{" "}
-                          ·{" "}
-                          {d.contact === "recent_contact"
-                            ? "Recent contact"
-                            : d.contact === "stale"
-                              ? "Stale contact"
-                              : "Contact unknown"}
-                        </small>
-                        <small>
-                          {d.driver_last_seen_at
-                            ? "Last contact " +
-                              new Date(
-                                d.driver_last_seen_at,
-                              ).toLocaleTimeString("en-NG", {
-                                timeZone: "Africa/Lagos",
-                              })
-                            : "No contact recorded"}
-                        </small>
-                      </div>
-                      <span className="dc-badge green">
-                        {d.active_stops} deliveries
-                      </span>
-                      {d.location?.lastKnown && (
-                        <small className="dc-location">
-                          <a
-                            href={
-                              "https://www.google.com/maps/search/?api=1&query=" +
-                              encodeURIComponent(
-                                d.location.lastKnown.lat +
-                                  "," +
-                                  d.location.lastKnown.lng,
-                              )
-                            }
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {d.location.status === "recent_observation" &&
-                            !error &&
-                            Date.now() -
-                              Date.parse(d.location.lastKnown.recordedAt) <
-                              120000
-                              ? "Recent GPS observation"
-                              : "Last known GPS · stale"}
-                          </a>{" "}
-                          ·{" "}
-                          {Math.max(
-                            0,
-                            Math.floor(
-                              (Date.now() -
+                          <div>
+                            <strong>{d.name}</strong>
+                            <small>
+                              {d.driver_available
+                                ? "Available for assignment"
+                                : "Unavailable"}{" "}
+                              ·{" "}
+                              {d.contact === "recent_contact"
+                                ? "Recent contact"
+                                : d.contact === "stale"
+                                  ? "Stale contact"
+                                  : "Contact unknown"}
+                            </small>
+                            <small>
+                              {d.driver_last_seen_at
+                                ? "Last contact " +
+                                  new Date(
+                                    d.driver_last_seen_at,
+                                  ).toLocaleTimeString("en-NG", {
+                                    timeZone: "Africa/Lagos",
+                                  })
+                                : "No contact recorded"}
+                            </small>
+                          </div>
+                          <span className="dc-badge green">
+                            {d.active_stops} deliveries
+                          </span>
+                          {d.location?.lastKnown && (
+                            <small className="dc-location">
+                              <a
+                                href={
+                                  "https://www.google.com/maps/search/?api=1&query=" +
+                                  encodeURIComponent(
+                                    d.location.lastKnown.lat +
+                                      "," +
+                                      d.location.lastKnown.lng,
+                                  )
+                                }
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {d.location.status === "recent_observation" &&
+                                !error &&
+                                Date.now() -
+                                  Date.parse(d.location.lastKnown.recordedAt) <
+                                  120000
+                                  ? "Recent GPS observation"
+                                  : "Last known GPS · stale"}
+                              </a>{" "}
+                              ·{" "}
+                              {Math.max(
+                                0,
+                                Math.floor(
+                                  (Date.now() -
                                     Date.parse(
                                       d.location.lastKnown.recordedAt,
                                     )) /
-                                1000,
-                            ),
+                                    1000,
+                                ),
+                              )}
+                              s old · ±{d.location.lastKnown.accuracy}m
+                            </small>
                           )}
-                          s old · ±{d.location.lastKnown.accuracy}m
-                        </small>
-                      )}
                           {!d.location?.lastKnown && (
                             <small>GPS unavailable</small>
                           )}
-                      <details
-                        className="dc-driver-details"
-                        id={`dispatch-driver-${d.id}`}
-                      >
-                        <summary>View status details</summary>
-                        <p>
-                          Last authenticated contact:{" "}
-                          {d.driver_last_seen_at
+                          <details
+                            className="dc-driver-details"
+                            id={`dispatch-driver-${d.id}`}
+                          >
+                            <summary>View status details</summary>
+                            <p>
+                              Last authenticated contact:{" "}
+                              {d.driver_last_seen_at
                                 ? new Date(
                                     d.driver_last_seen_at,
                                   ).toLocaleString("en-NG", {
                                     timeZone: "Africa/Lagos",
                                   }) + " (Lagos)"
-                            : "Unknown"}
-                        </p>
-                        {d.location?.lastKnown ? (
-                          <>
-                            <p>
-                              GPS captured:{" "}
-                              {new Date(
-                                d.location.lastKnown.recordedAt,
-                              ).toLocaleString("en-NG", {
-                                timeZone: "Africa/Lagos",
-                              })}{" "}
-                              (Lagos)
-                            </p>
-                            <p>
-                              GPS received:{" "}
-                              {d.location.lastKnown.receivedAt
-                                ? new Date(
-                                    d.location.lastKnown.receivedAt,
-                                  ).toLocaleString("en-NG", {
-                                    timeZone: "Africa/Lagos",
-                                  })
                                 : "Unknown"}
                             </p>
-                            <p>
-                              Accuracy: ±{d.location.lastKnown.accuracy} m.{" "}
-                              {d.location.lastKnown.delayedUpload
-                                ? "Delayed upload; capture time determines freshness."
-                                : "Capture and receipt times are recorded separately."}
-                            </p>
-                          </>
-                        ) : (
-                          <p>
+                            {d.location?.lastKnown ? (
+                              <>
+                                <p>
+                                  GPS captured:{" "}
+                                  {new Date(
+                                    d.location.lastKnown.recordedAt,
+                                  ).toLocaleString("en-NG", {
+                                    timeZone: "Africa/Lagos",
+                                  })}{" "}
+                                  (Lagos)
+                                </p>
+                                <p>
+                                  GPS received:{" "}
+                                  {d.location.lastKnown.receivedAt
+                                    ? new Date(
+                                        d.location.lastKnown.receivedAt,
+                                      ).toLocaleString("en-NG", {
+                                        timeZone: "Africa/Lagos",
+                                      })
+                                    : "Unknown"}
+                                </p>
+                                <p>
+                                  Accuracy: ±{d.location.lastKnown.accuracy} m.{" "}
+                                  {d.location.lastKnown.delayedUpload
+                                    ? "Delayed upload; capture time determines freshness."
+                                    : "Capture and receipt times are recorded separately."}
+                                </p>
+                              </>
+                            ) : (
+                              <p>
                                 No authorised GPS observation is available.
                                 Location is shown only during an active,
                                 consented delivery trip.
-                          </p>
-                        )}
-                      </details>
-                    </div>
-                  );
-                })}
-                {data && !data.drivers.length && (
-                  <p>No active driver accounts in this scope.</p>
-                )}
-              </div>
-            </aside>
-          </div>
-          <div className="dc-bottom">
-            <section className="dc-panel dc-operations">
-              <h2>
-                {date === lagosDate()
-                  ? "Today’s Operations"
-                  : "Operations on " + date}
-              </h2>
-              <div>
-                <img src="/assets/cylinder-illustration.png" alt="" />
-                <dl>
-                  <div>
-                    <dt>Gas Loaded (Out)</dt>
-                    <dd>
-                      {data ? data.operations.loadedGrams / 1000 : "—"} kg
-                    </dd>
+                              </p>
+                            )}
+                          </details>
+                        </div>
+                      );
+                    })}
+                    {data && !data.drivers.length && (
+                      <p>No active driver accounts in this scope.</p>
+                    )}
                   </div>
+                </aside>
+              </div>
+              <div className="dc-bottom">
+                <section className="dc-panel dc-operations">
+                  <h2>
+                    {date === lagosDate()
+                      ? "Today’s Operations"
+                      : "Operations on " + date}
+                  </h2>
                   <div>
-                    <dt>Gas Delivered</dt>
-                    <dd>
+                    <img src="/assets/cylinder-illustration.png" alt="" />
+                    <dl>
+                      <div>
+                        <dt>Gas Loaded (Out)</dt>
+                        <dd>
+                          {data ? data.operations.loadedGrams / 1000 : "—"} kg
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Gas Delivered</dt>
+                        <dd>
                           {data ? data.operations.deliveredGrams / 1000 : "—"}{" "}
                           kg
-                    </dd>
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>Gas Remaining (Est.)</dt>
+                        <dd>
+                          {data
+                            ? data.operations.estimatedRemainingGrams / 1000
+                            : "—"}{" "}
+                          kg
+                        </dd>
+                      </div>
+                    </dl>
                   </div>
-                  <div>
-                    <dt>Gas Remaining (Est.)</dt>
-                    <dd>
-                      {data
-                        ? data.operations.estimatedRemainingGrams / 1000
-                        : "—"}{" "}
-                      kg
-                    </dd>
-                  </div>
-                </dl>
-              </div>
-              <p className="dc-muted">
+                  <p className="dc-muted">
                     Branch scope; loading, deliveries and verified returns use
                     the selected Lagos date. Order search filters do not
                     partition vehicle mass. Remaining is current open-load
                     custody, including held loads; it is not a physical stock
                     verification. Held loads:{" "}
-                {data?.operations.heldLoads ?? "—"}. Verified returns:{" "}
+                    {data?.operations.heldLoads ?? "—"}. Verified returns:{" "}
                     {data ? data.operations.verifiedReturnsGrams / 1000 : "—"}{" "}
                     kg. Return discrepancies recorded:{" "}
-                {data?.operations.discrepancyEvents ?? "—"}.
-              </p>
-            </section>
-            <section className="dc-panel dc-quick">
-              <h2>Quick Actions</h2>
-              <div>
-                {[
-                  {
-                    label: "Vehicle manifests",
-                    icon: Truck,
-                    open: "Vehicle product",
-                  },
-                  {
-                    label: "LPG loading",
-                    icon: ClipboardList,
-                    open: "Bulk LPG",
-                  },
-                  {
-                    label: "Trips & fuel records",
-                    icon: Fuel,
-                    open: "Driver trips",
-                  },
-                  {
-                    label: "Returns & reconciliation",
-                    icon: ArrowLeftRight,
-                    open: "Bulk LPG",
-                  },
-                ].map((a) => (
-                  <button key={a.label} onClick={() => operations(a.open)}>
-                    <a.icon size={30} />
-                    <strong>{a.label}</strong>
-                  </button>
-                ))}
+                    {data?.operations.discrepancyEvents ?? "—"}.
+                  </p>
+                </section>
+                <section className="dc-panel dc-quick">
+                  <h2>Quick Actions</h2>
+                  <div>
+                    {[
+                      {
+                        label: "Vehicle manifests",
+                        icon: Truck,
+                        open: "Vehicle product",
+                      },
+                      {
+                        label: "LPG loading",
+                        icon: ClipboardList,
+                        open: "Bulk LPG",
+                      },
+                      {
+                        label: "Trips & fuel records",
+                        icon: Fuel,
+                        open: "Driver trips",
+                      },
+                      {
+                        label: "Returns & reconciliation",
+                        icon: ArrowLeftRight,
+                        open: "Bulk LPG",
+                      },
+                    ].map((a) => (
+                      <button key={a.label} onClick={() => operations(a.open)}>
+                        <a.icon size={30} />
+                        <strong>{a.label}</strong>
+                      </button>
+                    ))}
+                  </div>
+                </section>
               </div>
-            </section>
-          </div>
-        </>
-      )}
+            </>
+          )}
         </>
       )}
       {candidate && (
@@ -1107,27 +1286,45 @@ export default function DispatchCentre({ user }: { user: any }) {
               again when you submit.
             </p>
             <DriverAssignmentChoices
+              onResolveOrder={async (action) => {
+                try {
+                  const rows = await api(
+                    "orders?id=" + encodeURIComponent(candidate.orderId),
+                  );
+                  if (!rows[0])
+                    throw new Error("Order unavailable. Refresh Dispatch.");
+                  setPreparationOrder({ order: rows[0], action });
+                  setCandidate(null);
+                } catch (e: any) {
+                  setAssignmentError(e.message);
+                }
+              }}
               data={candidate.eligibilityUnavailable ? null : candidate}
               loading={candidateLoading}
               error={assignmentError}
               selected={selected}
               onSelect={setSelected}
               disabled={working}
-              onAssignVehicle={() => { setCandidate(null); setVehicleOpen(true); }}
+              onAssignVehicle={() => {
+                setCandidate(null);
+                setVehicleOpen(true);
+              }}
               onRefresh={() => {
                 setAssignmentError("");
                 void refreshCandidates();
               }}
-                  />
-            <label>
-              <FieldCaption required={true}>Assignment reason</FieldCaption>
-              <textarea
-                value={reason}
-                onChange={(e) => setReason(e.target.value)}
-                minLength={10}
-                maxLength={500}
-              />
-            </label>
+            />
+            {candidate.action === "dispatch.reassign" && (
+              <label>
+                <FieldCaption required={true}>Reassignment reason</FieldCaption>
+                <textarea
+                  value={reason}
+                  onChange={(e) => setReason(e.target.value)}
+                  minLength={10}
+                  maxLength={500}
+                />
+              </label>
+            )}
             <button
               className="primary"
               disabled={
@@ -1138,11 +1335,12 @@ export default function DispatchCentre({ user }: { user: any }) {
                 !candidate.candidates.some(
                   (d: any) => d.id === selected && d.readiness.ready === true,
                 ) ||
-                reason.trim().length < 10
+                (candidate.action === "dispatch.reassign" &&
+                  reason.trim().length < 10)
               }
               onClick={assign}
             >
-              {working ? "Assigning…" : "Confirm manual assignment"}
+              {working ? "Assigning…" : "Assign driver"}
             </button>
           </section>
         </div>

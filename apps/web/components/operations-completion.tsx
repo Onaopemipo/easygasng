@@ -1,7 +1,10 @@
 "use client";
+import { operationNoteRequired } from "../../../packages/business-rules/src/operation-notes";
+
 import { FieldCaption } from "./field-caption";
 import { FormInput } from "./password-input";
 import LPGLoadIssue from "./lpg-load-issue";
+import { LPGSetupAccess } from "./lpg-setup-access";
 import { FleetWorkspace } from "./fleet-workspace";
 import { VehicleManifestPanel } from "./vehicle-manifest-panel";
 import React, { useEffect, useRef, useState, type FormEvent } from "react";
@@ -14,6 +17,7 @@ export function OperationForm({
   onDone,
   mapRequest,
   requireVerification = false,
+  onPendingChange,
 }: {
   action: string;
   title: string;
@@ -28,10 +32,13 @@ export function OperationForm({
   onDone?: (r: any) => void;
   mapRequest?: (data: Record<string, any>) => Record<string, any>;
   requireVerification?: boolean;
+  onPendingChange?: (pending: boolean) => void;
 }) {
   const [error, setError] = useState(""),
     [result, setResult] = useState<any>(null),
     [busy, setBusy] = useState(false);
+  const [fieldValues, setFieldValues] = useState<Record<string, any>>(() => Object.fromEntries(fields.map(f => [f.name, f.value ?? (f.type === "checkbox" ? false : "")])));
+  const fieldRequired = (f: typeof fields[number]) => operationNoteRequired(action, f.name, fieldValues, !f.optional);
   const [dirty, setDirty] = useState(false);
   const [needsVerification, setNeedsVerification] =
     useState(requireVerification);
@@ -42,6 +49,7 @@ export function OperationForm({
     e.preventDefault();
     if (inFlight.current) return;
     inFlight.current = true;
+    onPendingChange?.(true);
     setBusy(true);
     setError("");
     const f = new FormData(e.currentTarget),
@@ -49,7 +57,7 @@ export function OperationForm({
     try {
       for (const field of fields) {
         const raw = String(f.get(field.name) ?? "");
-        if (field.optional && raw === "") continue;
+        if (!fieldRequired(field) && raw === "") continue;
         data[field.name] =
           field.type === "csv"
             ? raw
@@ -88,6 +96,7 @@ export function OperationForm({
       if (e.code === "REAUTH_REQUIRED") setNeedsVerification(true);
     } finally {
       inFlight.current = false;
+      onPendingChange?.(false);
       setBusy(false);
     }
   }
@@ -95,7 +104,9 @@ export function OperationForm({
     <form
       className="panel stack product-form"
       onSubmit={submit}
-      onChange={() => {
+      onChange={(e) => {
+        const target = e.target as HTMLInputElement;
+        setFieldValues(v => ({...v, [target.name]: target.type === "checkbox" ? target.checked : target.value}));
         setDirty(true);
         setResult(null);
       }}
@@ -110,7 +121,7 @@ export function OperationForm({
           data-field-type={f.type ?? "text"}
         >
           {f.type !== "hidden" && (
-            <FieldCaption required={f.type !== "checkbox" && !f.optional}>
+            <FieldCaption required={f.type !== "checkbox" && fieldRequired(f)}>
               {f.label}
             </FieldCaption>
           )}
@@ -119,7 +130,7 @@ export function OperationForm({
               name={f.name}
               disabled={busy}
               defaultValue={typeof f.value === "boolean" ? undefined : f.value}
-              required={!f.optional}
+              required={fieldRequired(f)}
             >
               {f.options.map((o) => (
                 <option key={o.value} value={o.value}>
@@ -136,7 +147,7 @@ export function OperationForm({
                 f.type === "checkbox" ? Boolean(f.value) : undefined
               }
               defaultValue={typeof f.value === "boolean" ? undefined : f.value}
-              required={f.type !== "checkbox" && !f.optional}
+              required={f.type !== "checkbox" && fieldRequired(f)}
               step={f.type === "number" ? "any" : undefined}
             />
           )}
@@ -324,6 +335,7 @@ export function BulkLPGPanel({
   return (
     <details className="panel" open={expanded || undefined}>
       <summary>Bulk LPG loading, dispensing and returns</summary>
+      <LPGSetupAccess role={user.role} />
       <button type="button" className="button secondary" onClick={refresh}>
         Refresh LPG records
       </button>

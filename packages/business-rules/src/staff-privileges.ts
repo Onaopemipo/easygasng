@@ -51,9 +51,18 @@ export const staffPrivileges: readonly Privilege[] = [
     roles: ["owner", "manager", "driver"],
     actions: [
       "order.transition",
+      "driver.depart",
       "order.additions",
       "order.addition.quote",
       "order.addition.create",
+      "order.visit.context",
+      "order.visit.quote",
+      "order.visit.create",
+      "order.assisted.create",
+      "order.assisted.quote",
+      "order.phone.payment.create",
+      "order.phone.payment.send",
+      "order.phone.payment.revoke",
     ],
   },
   {
@@ -215,7 +224,15 @@ export const staffPrivileges: readonly Privilege[] = [
     description: "Reply to and update accessible support requests.",
     roles: ["owner", "manager"],
     grantRole: "manager",
-    actions: ["support.reply", "support.update", "support.attachment", "support.sla.enroll", "support.sla.save", "support.sla.policy", "support.sla.scan"],
+    actions: [
+      "support.reply",
+      "support.update",
+      "support.attachment",
+      "support.sla.enroll",
+      "support.sla.save",
+      "support.sla.policy",
+      "support.sla.scan",
+    ],
   },
   {
     id: "reports.view",
@@ -272,7 +289,8 @@ export const staffPrivileges: readonly Privilege[] = [
     id: "audit.view",
     label: "View Audit History",
     group: "Finance & reporting",
-    description: "Review business-wide audit history as an owner, or scoped finance and inventory activity in your branch.",
+    description:
+      "Review business-wide audit history as an owner, or scoped finance and inventory activity in your branch.",
     roles: ["owner", "finance"],
     actions: ["audit"],
     routes: ["audit"],
@@ -286,6 +304,9 @@ export const staffPrivileges: readonly Privilege[] = [
     roles: ["owner", "manager", "finance"],
     actions: [
       "settings",
+      "rewards.customers",
+      "rewards.add",
+      "rewards.add.operation",
       "setting.history",
       "setting.propose",
       "setting.rollback",
@@ -349,6 +370,8 @@ export function canGrantStaffPrivilege(
   role: string,
   branchId: string | null,
 ) {
-  return privilege.roles.includes(role) ||
-    Boolean(privilege.grantRole && isBusinessStaff(role) && branchId);
+  return (
+    privilege.roles.includes(role) ||
+    Boolean(privilege.grantRole && isBusinessStaff(role) && branchId)
+  );
 }

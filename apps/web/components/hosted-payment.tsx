@@ -30,13 +30,18 @@ export function HostedPayment({
   orderId,
   bookingId,
   amountKobo,
+  transport,
+  onVerified,
 }: {
   purpose: "invoice" | "wallet" | "service" | "order";
   invoiceId?: string;
   orderId?: string;
   bookingId?: string;
   amountKobo?: number;
+  transport?: (action: string, input?: any) => Promise<any>;
+  onVerified?: () => Promise<void>;
 }) {
+  const request = transport ?? pay;
   const [config, setConfig] = useState<any>(null),
     [quote, setQuote] = useState<any>(null),
     [accepted, setAccepted] = useState(false),
@@ -46,13 +51,15 @@ export function HostedPayment({
   const key = useRef<string | null>(null);
   useEffect(() => {
     let live = true;
-    pay(purpose === "wallet" ? "configuration?purpose=wallet" : "configuration")
+    request(
+      purpose === "wallet" ? "configuration?purpose=wallet" : "configuration",
+    )
       .then((c) => live && setConfig(c))
       .catch(() => {});
     return () => {
       live = false;
     };
-  }, [purpose]);
+  }, [purpose, transport]);
   if (!config?.available || (purpose === "wallet" && !config.walletFunding))
     return null;
   async function review() {
@@ -60,7 +67,7 @@ export function HostedPayment({
     setError("");
     try {
       key.current ??= crypto.randomUUID();
-      const q = await pay("quote", {
+      const q = await request("quote", {
         purpose,
         ...(invoiceId ? { invoiceId } : {}),
         ...(orderId ? { orderId } : {}),
@@ -82,7 +89,7 @@ export function HostedPayment({
     setBusy(true);
     setError("");
     try {
-      const r = await pay("initialize", {
+      const r = await request("initialize", {
         intentId: quote.id,
         acceptedGrossKobo: quote.quote.grossKobo,
         acceptedPolicyVersion: quote.quote.gatewayPolicyVersion,
@@ -102,7 +109,8 @@ export function HostedPayment({
   async function verify() {
     setBusy(true);
     try {
-      const r = await pay("verify", { intentId: quote.id });
+      const r = await request("verify", { intentId: quote.id });
+      if (r.status === "paid") await onVerified?.();
       setError(
         r.status === "paid"
           ? "Sandbox payment verified. Refresh your ledger to see the posted principal."
@@ -157,7 +165,10 @@ export function HostedPayment({
               disabled={pending}
               onChange={(e) => setAccepted(e.target.checked)}
             />
-            <FieldCaption required={true}>I accept this amount and the separately disclosed processing charge.</FieldCaption>
+            <FieldCaption required={true}>
+              I accept this amount and the separately disclosed processing
+              charge.
+            </FieldCaption>
           </label>
           {pending ? (
             <>
@@ -343,10 +354,14 @@ export function WalletFunding() {
             required
           />
         </label>
-        {!ready ? <ActionLoadingIndicator label="Loading payment methods" /> : reason && (
-          <p className="muted" role="status">
-            {reason}
-          </p>
+        {!ready ? (
+          <ActionLoadingIndicator label="Loading payment methods" />
+        ) : (
+          reason && (
+            <p className="muted" role="status">
+              {reason}
+            </p>
+          )
         )}
         {branchUnavailable && (
           <a className="text-link" href="/support">
@@ -402,7 +417,9 @@ export function WalletFunding() {
               <input name="sender" required minLength={2} maxLength={150} />
             </label>
             <label>
-              <FieldCaption required={true}>Bank transaction reference</FieldCaption>
+              <FieldCaption required={true}>
+                Bank transaction reference
+              </FieldCaption>
               <input
                 name="reference"
                 required
@@ -452,17 +469,23 @@ export function WalletFunding() {
 }
 function paymentDestination(purpose: string) {
   switch (purpose) {
-    case "wallet": return { href: "/wallet", label: "Go to my wallet" };
-    case "service": return { href: "/bookings", label: "Go to my appointments" };
+    case "wallet":
+      return { href: "/wallet", label: "Go to my wallet" };
+    case "service":
+      return { href: "/bookings", label: "Go to my appointments" };
     case "order":
-    case "invoice": return { href: "/orders", label: "Go to my orders" };
-    default: return { href: "/", label: "Return to EasyGas website" };
+    case "invoice":
+      return { href: "/orders", label: "Go to my orders" };
+    default:
+      return { href: "/", label: "Return to EasyGas website" };
   }
 }
 
 export function PaymentReturn() {
   const [intent, setIntent] = useState(""),
-    [result, setResult] = useState<{ status: string; purpose: string } | null>(null),
+    [result, setResult] = useState<{ status: string; purpose: string } | null>(
+      null,
+    ),
     [error, setError] = useState(""),
     [busy, setBusy] = useState(false),
     [stay, setStay] = useState(false),
@@ -472,7 +495,8 @@ export function PaymentReturn() {
     const v = query.get("intent");
     setNativeReturn(query.get("client") === "native");
     setStay(query.get("client") === "native");
-    if (v && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v)) setIntent(v);
+    if (v && /^[a-f0-9]{8}(?:-[a-f0-9]{4}){3}-[a-f0-9]{12}$/i.test(v))
+      setIntent(v);
     else setError("Open the original payment return link.");
   }, []);
   async function check() {
@@ -493,18 +517,33 @@ export function PaymentReturn() {
   const destination = paymentDestination(paid ? result.purpose : "");
   useEffect(() => {
     if (!paid || stay) return;
-    const timer = window.setTimeout(() => window.location.replace(destination.href), 6000);
+    const timer = window.setTimeout(
+      () => window.location.replace(destination.href),
+      6000,
+    );
     return () => window.clearTimeout(timer);
   }, [paid, stay, destination.href]);
 
-  if (nativeReturn && intent) return (
-    <main className="container page payment-return">
-      <h1>Continue in EasyGas</h1>
-      <p>Your payment attempt is saved. Return to the app to check its status securely using your signed-in account.</p>
-      <a className="button" href={"easygas://payment?intentId=" + encodeURIComponent(intent)}>Return to EasyGas app</a>
-      <p className="muted">If the app does not open, reopen EasyGas. Do not pay again while verification is pending.</p>
-    </main>
-  );
+  if (nativeReturn && intent)
+    return (
+      <main className="container page payment-return">
+        <h1>Continue in EasyGas</h1>
+        <p>
+          Your payment attempt is saved. Return to the app to check its status
+          securely using your signed-in account.
+        </p>
+        <a
+          className="button"
+          href={"easygas://payment?intentId=" + encodeURIComponent(intent)}
+        >
+          Return to EasyGas app
+        </a>
+        <p className="muted">
+          If the app does not open, reopen EasyGas. Do not pay again while
+          verification is pending.
+        </p>
+      </main>
+    );
   return (
     <main className="container page payment-return">
       <h1>Payment verification</h1>
@@ -523,7 +562,9 @@ export function PaymentReturn() {
         </a>
         {!paid && intent && (
           <button className="button secondary" disabled={busy} onClick={check}>
-            {busy && <ActionLoadingIndicator label="Verifying payment with provider" />}
+            {busy && (
+              <ActionLoadingIndicator label="Verifying payment with provider" />
+            )}
             {busy ? "Verifying payment…" : "Verify payment status"}
           </button>
         )}

@@ -1,8 +1,5 @@
 "use client";
-import { RecoveryRequest } from "./auth-recovery-request";
-import { AuthShell } from "./auth-presentation";
-import { authRequest } from "./auth-request";
-import { safeCustomerReturn, customerAuthHref } from "../../../packages/business-rules/src/customer-navigation";
+import { operationNoteRequired } from "../../../packages/business-rules/src/operation-notes";
 import { FieldCaption } from "./field-caption";
 import { WorkspaceDialog, WorkspaceTabs } from "./compact-workspace";
 import { CampaignRecords } from "./engagement-records";
@@ -48,7 +45,6 @@ export function ActionForm({
   submit = "Save",
   confirm,
   contextual = false,
-  request = api,
 }: {
   action: string;
   title: string;
@@ -58,11 +54,12 @@ export function ActionForm({
   submit?: string;
   confirm?: string;
   contextual?: boolean;
-  request?: typeof api;
 }) {
   const [busy, setBusy] = useState(false),
     [error, setError] = useState(""),
     [success, setSuccess] = useState("");
+  const [fieldValues, setFieldValues] = useState<Record<string, any>>(() => Object.fromEntries(fields.map(f => [f.name, f.value ?? (f.type === "checkbox" ? false : "")])));
+  const fieldRequired = (f: Field) => operationNoteRequired(action, f.name, fieldValues, f.required !== false);
   const [dirty, setDirty] = useState(false);
   const lifecycle = useRef<AbortController|null>(null);
   useEffect(() => { lifecycle.current = new AbortController(); return () => lifecycle.current?.abort(); }, []);
@@ -81,7 +78,7 @@ export function ActionForm({
       const raw = fd.get(f.name);
       if (
         raw === "" &&
-        f.required === false &&
+        !fieldRequired(f) &&
         !["nullable", "nullable-number"].includes(f.type ?? "")
       )
         continue;
@@ -105,7 +102,7 @@ export function ActionForm({
       else if (f.type === "nullable-number")
         data[f.name] = raw === "" ? null : Number(raw);
       else if (f.type === "nullable") data[f.name] = raw === "" ? null : raw;
-      else if (raw !== "" || f.required !== false) data[f.name] = raw;
+      else if (raw !== "" || fieldRequired(f)) data[f.name] = raw;
     }
     for (const key of Object.keys(data)) {
       if (key.startsWith("address.") || key.startsWith("config.")) {
@@ -120,7 +117,7 @@ export function ActionForm({
         data.config = JSON.parse(data.config);
       if (action.startsWith("approval.") && typeof data.value === "string")
         data.value = JSON.parse(data.value);
-      const result = await request(action, data);
+      const result = await api(action, data);
       onResult?.(result);
       setSuccess(result.message ?? "Saved successfully.");
       if (result.signedOut) {
@@ -136,7 +133,7 @@ export function ActionForm({
     }
   }
   return (
-    <form className={`surface workflow-form product-form ${contextual ? "support-dialog-form" : ""}`} onSubmit={send} onChange={contextual ? () => setDirty(true) : undefined} data-unsaved={contextual && dirty ? "true" : undefined}>
+    <form className={`surface workflow-form product-form ${contextual ? "support-dialog-form" : ""}`} onSubmit={send} onChange={(e) => { const target = e.target as HTMLInputElement; setFieldValues(v => ({...v, [target.name]: target.type === "checkbox" ? target.checked : target.value})); if (contextual) setDirty(true); }} data-unsaved={contextual && dirty ? "true" : undefined}>
       {!contextual && <h3>{title}</h3>}
       {fields.map((f) =>
         action === "address.save" && f.name === "locationId" ? null : action ===
@@ -153,7 +150,7 @@ export function ActionForm({
         ) : (
           <label key={f.name} data-field-type={f.type ?? "text"}>
             {!["hidden", "boolean-hidden", "number-hidden"].includes(f.type ?? "") && (
-              <FieldCaption required={f.captionRequired ?? (f.type === "checkbox" ? f.needsConsent === true : f.required !== false)}>
+              <FieldCaption required={f.captionRequired ?? (f.type === "checkbox" ? f.needsConsent === true : fieldRequired(f))}>
                 {f.label}
               </FieldCaption>
             )}
@@ -161,7 +158,7 @@ export function ActionForm({
               <select
                 name={f.name}
                 defaultValue={f.value ?? ""}
-                required={f.required !== false}
+                required={fieldRequired(f)}
               >
                 <option value="">Choose…</option>
                 {f.options.map((o) => (
@@ -174,7 +171,7 @@ export function ActionForm({
               <textarea
                 name={f.name}
                 defaultValue={f.value ?? ""}
-                required={f.required !== false}
+                required={fieldRequired(f)}
                 minLength={f.minLength}
                 maxLength={f.maxLength ?? 2000}
               />
@@ -195,7 +192,7 @@ export function ActionForm({
                 defaultChecked={
                   f.type === "checkbox" ? Boolean(f.value) : undefined
                 }
-                required={f.type !== "checkbox" && f.required !== false}
+                required={f.type !== "checkbox" && fieldRequired(f)}
                 min={
                   f.min ??
                   (["number", "money"].includes(f.type ?? "") ? 0 : undefined)
@@ -245,9 +242,6 @@ export function Recovery({
 }: {
   mode: "recover" | "reset" | "verify" | "invite";
 }) {
-  const search = useSearchParams();
-  const returnTo = safeCustomerReturn(search.get("returnTo"));
-  const signIn = customerAuthHref(false, returnTo);
   const [link, setLink] = useState<{ token: string; temporary: boolean }>();
   const [result, setResult] = useState("");
   const linkRead = useRef(false);
@@ -255,19 +249,12 @@ export function Recovery({
     if (linkRead.current) return;
     linkRead.current = true;
     const params = new URLSearchParams(window.location.hash.slice(1));
-    setLink({
-      token: params.get("token") ?? "",
-      temporary: params.get("setup") === "temporary",
-    });
+    setLink({ token: params.get("token") ?? "", temporary: params.get("setup") === "temporary" });
     if (window.location.hash)
-      window.history.replaceState(
-        window.history.state,
-        "",
-        window.location.pathname + window.location.search,
-      );
+      window.history.replaceState(window.history.state, "", window.location.pathname + window.location.search);
   }, []);
   const title = {
-    recover: "Account recovery.",
+    recover: "Reset your password",
     reset: "Choose a new password",
     invite: "Accept your invitation",
     verify: "Confirm your email address",
@@ -280,40 +267,25 @@ export function Recovery({
   }[mode];
   const requiresLink = mode !== "recover";
   return (
-    <AuthShell
-      mode={mode === "recover" ? "recovery" : "link"}
-      title={title}
-      back={signIn}
-      description={
-        mode === "recover"
-          ? "We’ll send a password reset link to your email so you can regain access to your EasyGas account."
-          : undefined
-      }
-    >
+    <div className="container page workflow-stack">
+      <h1>{title}</h1>
       {result ? (
         <Notice type="success" message={result} />
       ) : requiresLink && !link ? (
         <Loading label="Preparing your secure link" />
       ) : requiresLink && !/^[a-f0-9]{64}$/.test(link?.token ?? "") ? (
-        <Notice
-          type="error"
-          message={
-            mode === "invite"
-              ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
-              : mode === "verify"
-                ? "Open the verification link in your EasyGas email. If it has expired, sign in and request a new verification email from Account & privacy."
-                : "Open the link in your EasyGas email. If your reset link has expired, request a new one."
-          }
-        />
-      ) : mode === "recover" ? (
-        <RecoveryRequest onResult={setResult} />
+        <Notice type="error" message={mode === "invite"
+          ? "Open the invitation link in your email. Ask your administrator for a new invitation if the link has expired."
+          : mode === "verify"
+            ? "Open the verification link in your EasyGas email. If it has expired, sign in and request a new verification email from Account & privacy."
+          : "Open the link in your EasyGas email. If your reset link has expired, request a new one."} />
       ) : (
         <ActionForm
-          request={authRequest}
           action={action}
-          title={link?.temporary ? "Enter the temporary password from your email"
-            : mode === "verify" ? "Confirm your address to continue" : "Set your password"}
-          fields={[
+          title={mode === "recover" ? "Enter your account email"
+            : link?.temporary ? "Enter the temporary password from your email"
+              : mode === "verify" ? "Confirm your address to continue" : "Set your password"}
+          fields={mode === "recover" ? [{ name: "email", label: "Email address", type: "email" }] : [
             { name: "token", label: "", value: link?.token, type: "hidden" },
             ...(mode === "verify" ? [] : [{
               name: "password",
@@ -322,26 +294,14 @@ export function Recovery({
               autoComplete: link?.temporary ? "current-password" : "new-password",
             }]),
           ]}
-          submit={{ reset: "Reset Password", invite: "Accept Invitation", verify: "Confirm Email" }[mode]}
+          submit={{ recover: "Send Reset Link", reset: "Reset Password", invite: "Accept Invitation", verify: "Confirm Email" }[mode]}
           onResult={(response) => setResult(response.message)}
         />
       )}
-      {mode === "recover" && (
-        <aside className="eg-auth-note">
-          Open your reset link in EasyGas, or choose “Open an account link” on
-          Sign In and paste the link from your email.
-        </aside>
-      )}
-      <div className="eg-auth-links">
-        {mode === "reset" && (
-          <Link href="/forgot-password">Request a new reset link</Link>
-        )}
-        {mode === "verify" && (
-          <Link href="/account-settings">Request a new verification email in your account</Link>
-        )}
-        <Link href={signIn}>Remember your password? Sign In</Link>
-      </div>
-    </AuthShell>
+      {mode === "reset" && <Link href="/forgot-password">Request a new reset link</Link>}
+      {mode === "verify" && <Link href="/account-settings">Request a new verification email in your account</Link>}
+      <Link href="/login">Return to sign in</Link>
+    </div>
   );
 }
 const supportStatuses = [

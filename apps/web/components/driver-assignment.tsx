@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useId, useRef, useState } from "react";
 import { api, Notice } from "./ui";
 import {
   fulfilmentIssue,
@@ -29,11 +29,20 @@ export type AssignmentCandidates = {
   writesEnabled: boolean;
   canReviewVehicles: boolean;
   canReviewDrivers: boolean;
+  orderReadiness?: {
+    ready: boolean | null;
+    issues: AssignmentIssue[];
+    reasons: string[];
+  };
+  preparationActions?: { id: string; label: string }[];
+  linkedVisit?: { driver_id: string; parent_order_id: string } | null;
   candidates: {
     id: string;
     name: string;
+    activeOrders?: number;
     readiness: {
       ready: boolean | null;
+      driverReady?: boolean | null;
       reasons: string[];
       issues?: AssignmentIssue[];
     };
@@ -112,6 +121,7 @@ export function DriverAssignmentChoices({
   onRefresh,
   disabled = false,
   onAssignVehicle,
+  onResolveOrder,
 }: {
   data: AssignmentCandidates | null;
   loading: boolean;
@@ -121,25 +131,75 @@ export function DriverAssignmentChoices({
   onRefresh: () => void;
   disabled?: boolean;
   onAssignVehicle?: () => void;
+  onResolveOrder?: (action: string) => void;
 }) {
   const readyDrivers =
-    data?.candidates.filter((d) => d.readiness.ready === true) ?? [];
+    data?.candidates.filter(
+      (d) => (d.readiness.driverReady ?? d.readiness.ready) === true,
+    ) ?? [];
   const blockedDrivers =
-    data?.candidates.filter((d) => d.readiness.ready !== true) ?? [];
+    data?.candidates.filter(
+      (d) => (d.readiness.driverReady ?? d.readiness.ready) !== true,
+    ) ?? [];
   const ready = readyDrivers.length;
+  const selectionHintId = useId();
+  const orderPending = Boolean(
+    data?.orderReadiness && data.orderReadiness.ready !== true,
+  );
+  const chosen = readyDrivers.find((driver) => driver.id === selected);
   return (
     <section
       className={styles.workspace}
       aria-label="Driver assignment requirements"
       aria-busy={loading}
     >
+      {data?.orderReadiness && (
+        <section
+          className="assignment-preparation"
+          aria-label="Order preparation"
+        >
+          <strong>1. Order preparation</strong>
+          <p>
+            {data.orderReadiness.ready
+              ? "Ready — order payment, stock and safety checks passed."
+              : "Select a ready driver below, then complete this order’s preparation before assignment."}
+          </p>
+          {data.orderReadiness.issues.map((issue, index) => (
+            <p role="status" key={issue.code + index}>
+              {issue.title}
+            </p>
+          ))}
+          {!data.orderReadiness.ready && (
+            <div className="service-actions">
+              {data.preparationActions?.map((action) => (
+                <button
+                  key={action.id}
+                  type="button"
+                  className="button secondary"
+                  disabled={disabled || !onResolveOrder}
+                  onClick={() => onResolveOrder?.(action.id)}
+                >
+                  {action.label}
+                </button>
+              ))}
+            </div>
+          )}
+          {!data.orderReadiness.ready && (
+            <p>
+              These are order requirements. Changing drivers will not resolve
+              them.
+            </p>
+          )}
+        </section>
+      )}
       <div className={styles.toolbar}>
         <div>
-          <strong>Driver readiness</strong>
+          <strong>2. Driver readiness</strong>
           {data && (
             <p>
               Fulfilment branch: {data.branch?.name ?? data.branch?.id} ·{" "}
-              {ready}/{data.candidates.length} eligible
+              {ready}/{data.candidates.length}{" "}
+              {data.orderReadiness ? "drivers ready" : "eligible"}
             </p>
           )}
         </div>
@@ -172,10 +232,19 @@ export function DriverAssignmentChoices({
               then refresh eligibility.
             </p>
           )}
+          <p id={selectionHintId} className={styles.note} role="status">
+            {chosen ? `${chosen.name} selected. ` : ""}
+            {orderPending
+              ? "Driver selection is available. Complete the order requirements above before you can assign the driver."
+              : "Select a ready driver, then confirm the assignment below."}
+          </p>
           <fieldset disabled={disabled || loading} className={styles.options}>
             <legend>Choose an eligible branch driver</legend>
             {readyDrivers.map((driver) => (
-              <article className={styles.driver} key={driver.id}>
+              <article
+                className={`${styles.driver}${selected === driver.id ? " is-selected" : ""}`}
+                key={driver.id}
+              >
                 <label className={styles.choice}>
                   <input
                     type="radio"
@@ -183,11 +252,27 @@ export function DriverAssignmentChoices({
                     value={driver.id}
                     checked={selected === driver.id}
                     disabled={!data.writesEnabled}
+                    aria-label={driver.name}
+                    aria-describedby={selectionHintId}
                     onChange={() => onSelect(driver.id)}
                   />
                   <span>
-                    <strong>{driver.name}</strong>
-                    <small>Eligible at last check</small>
+                    <strong>
+                      {driver.name}
+                      {selected === driver.id && (
+                        <span className="driver-assignment-selected">
+                          Selected
+                        </span>
+                      )}
+                    </strong>
+                    <small>
+                      {driver.activeOrders
+                        ? `${driver.activeOrders} active order(s) · can take another order when checks pass`
+                        : "Ready for an order"}
+                      {data.orderReadiness?.ready === false
+                        ? " · waiting for order preparation"
+                        : ""}
+                    </small>
                   </span>
                 </label>
               </article>
@@ -214,11 +299,9 @@ export function DriverAssignmentChoices({
                             name="assignmentDriver"
                             value={driver.id}
                             checked={selected === driver.id}
-                            disabled={
-                              driver.readiness.ready !== true ||
-                              !data.writesEnabled
-                            }
-                            onChange={() => onSelect(driver.id)}
+                            disabled
+                            aria-label={driver.name}
+                            aria-describedby={selectionHintId}
                           />
                           <span>
                             <strong>{driver.name}</strong>
@@ -259,9 +342,25 @@ export function DriverAssignmentChoices({
                               Review branch vehicles and trips
                             </a>
                           )}
-                        {issues.some((i) => i.code === "DRIVER_TRIP_REQUIRED") && data.canReviewVehicles && (
-                          <a href="/admin/deliveries#assign-vehicle" className={styles.help} onClick={onAssignVehicle ? e => { e.preventDefault(); onAssignVehicle(); } : undefined}>Assign vehicle to driver</a>
-                        )}
+                        {issues.some(
+                          (i) => i.code === "DRIVER_TRIP_REQUIRED",
+                        ) &&
+                          data.canReviewVehicles && (
+                            <a
+                              href="/admin/deliveries#assign-vehicle"
+                              className={styles.help}
+                              onClick={
+                                onAssignVehicle
+                                  ? (e) => {
+                                      e.preventDefault();
+                                      onAssignVehicle();
+                                    }
+                                  : undefined
+                              }
+                            >
+                              Assign vehicle to driver
+                            </a>
+                          )}
                       </article>
                     );
                   })}
@@ -283,8 +382,8 @@ export function DriverAssignmentChoices({
                 timeZone: "Africa/Lagos",
               })}{" "}
               Lagos time. Trip and vehicle readiness does not replace payment,
-              inspection or custody checks. All requirements are checked again
-              when you submit.
+              stock or custody checks. All requirements are checked again when
+              you submit.
             </p>
           )}
         </>

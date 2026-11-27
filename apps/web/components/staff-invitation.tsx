@@ -1,4 +1,5 @@
 "use client";
+import { DEFAULT_USER_BRANCH_ID } from "../../../packages/business-rules/src/user-branch";
 
 import { FieldCaption } from "./field-caption";
 import { useRef, useState, type FormEvent } from "react";
@@ -28,7 +29,8 @@ export default function StaffInvitation({
 }) {
   const [role, setRole] = useState<StaffRole | "">(fixedRole ?? "");
   const [branchId, setBranch] = useState(
-    branches.find((b) => b.value === defaultBranch)?.value ??
+    branches.find((b) => b.value === DEFAULT_USER_BRANCH_ID)?.value ??
+      branches.find((b) => b.value === defaultBranch)?.value ??
       (branches.length === 1 ? branches[0].value : ""),
   );
   const [changes, setChanges] = useState<Record<string, Effect>>({});
@@ -197,7 +199,7 @@ export default function StaffInvitation({
       {error && <Notice type="error" message={error} />}
       {verify && (
         <label>
-          <FieldCaption required={true}>Verify your password{" "}</FieldCaption>
+          <FieldCaption required={true}>Verify your password </FieldCaption>
           <FormInput
             name="verifyPassword"
             type="password"

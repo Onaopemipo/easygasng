@@ -1,3 +1,7 @@
+import {
+  phoneOrderProfileReady,
+  confirmPaidPhoneOrder,
+} from "../phone-order-payment-state";
 import { customerFundingBranch } from "../customer-funding-branch";
 import {
   documentIdentity,
@@ -10,7 +14,10 @@ import { invoiceBalance } from "../invoice-corrections";
 import { audit, notify } from "../governance";
 import { queueMessage } from "../accounts";
 import { gatewayPolicy, type GatewayPolicy } from "./policy";
-import { maximumPaymentPrincipal, quotePaymentFee } from "../../../../packages/business-rules/src/payment-fees";
+import {
+  maximumPaymentPrincipal,
+  quotePaymentFee,
+} from "../../../../packages/business-rules/src/payment-fees";
 import {
   type PaymentProvider,
   PaymentProviderError,
@@ -29,8 +36,34 @@ const target = z
     requestKey: z.string().uuid(),
   })
   .strict();
-async function customer(tx: SQL, token: string | null) {
-  const u = await actor(tx, token);
+export type OrderPaymentAuthority = {
+  orderId: string;
+  linkId: string;
+  resolve: (tx: SQL) => Promise<Actor>;
+};
+async function paymentScope(tx: SQL, d: any, scope?: OrderPaymentAuthority) {
+  if (!scope) return;
+  const orderId =
+    d.purpose === "order"
+      ? (d.orderId ?? d.order_id)
+      : d.purpose === "invoice"
+        ? (
+            await one(
+              tx,
+              "SELECT order_id FROM customer_invoices WHERE id=$1",
+              [d.invoiceId ?? d.invoice_id],
+            )
+          )?.order_id
+        : null;
+  if (orderId !== scope.orderId)
+    throw new AppError(404, "Payment not found for this private order link.");
+}
+async function customer(
+  tx: SQL,
+  token: string | null,
+  scope?: OrderPaymentAuthority,
+) {
+  const u = scope ? await scope.resolve(tx) : await actor(tx, token);
   allow(u, ["customer", "commercial"]);
   return u;
 }
@@ -75,6 +108,7 @@ async function obligation(
     );
     if (!order || order.customer_id !== user.id)
       throw new AppError(404, "Order not found.");
+    await phoneOrderProfileReady(tx, order);
     if (
       order.payment_method !== "card" ||
       ["cancelled", "failed", "returned", "delivered"].includes(order.status)
@@ -145,6 +179,7 @@ async function obligation(
         409,
         "This order requires finance review before payment.",
       );
+    await phoneOrderProfileReady(tx, order);
     const b = await invoiceBalance(tx, inv);
     if (b.notes.some((n: any) => n.state === "pending"))
       throw new AppError(
@@ -217,7 +252,10 @@ async function obligation(
     throw new AppError(400, "Specify the intended wallet funding amount.");
   const branch = await customerFundingBranch(tx, user);
   if (!branch)
-    throw new AppError(409, "Set a supported delivery address in account settings before topping up your wallet.");
+    throw new AppError(
+      409,
+      "Set a supported delivery address in account settings before topping up your wallet.",
+    );
   return {
     branch,
     base: d.amountKobo,
@@ -256,10 +294,12 @@ export async function preparePayment(
   db: DB,
   token: string | null,
   input: unknown,
+  authority?: OrderPaymentAuthority,
 ) {
   const d = target.parse(input);
   return db.transaction(async (tx) => {
-    const u = await customer(tx, token);
+    const u = await customer(tx, token, authority);
+    await paymentScope(tx, d, authority);
     await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [u.id]);
     const hash = digest(JSON.stringify({ ...d, requestKey: undefined }));
     const old = await one(
@@ -314,10 +354,7 @@ export async function preparePayment(
       const maximumTopUp = Math.min(p.walletMaximumKobo, maximumPrincipal);
       if (!p.walletFunding || !p.channels.includes("card"))
         throw new AppError(409, "Wallet funding is outside approved limits.");
-      if (
-        base < p.walletMinimumKobo ||
-        base > maximumTopUp
-      ) {
+      if (base < p.walletMinimumKobo || base > maximumTopUp) {
         const currency = new Intl.NumberFormat("en-NG", {
           style: "currency",
           currency: "NGN",
@@ -445,15 +482,17 @@ export async function readPayment(
   db: DB,
   token: string | null,
   intentId: string,
+  authority?: OrderPaymentAuthority,
 ) {
   return db.transaction(async (tx) => {
-    const u = await customer(tx, token);
+    const u = await customer(tx, token, authority);
     const i = await one(
       tx,
       "SELECT * FROM payment_intents WHERE id=$1 AND customer_id=$2",
       [intentId, u.id],
     );
     if (!i) throw new AppError(404, "Payment not found.");
+    await paymentScope(tx, i, authority);
     return view(
       i,
       await one(tx, "SELECT * FROM payment_attempts WHERE intent_id=$1", [
@@ -468,6 +507,7 @@ export async function initializePayment(
   input: unknown,
   runtime: PaymentRuntime,
   nativeReturn = false,
+  authority?: OrderPaymentAuthority,
 ) {
   const d = z
     .object({
@@ -478,7 +518,7 @@ export async function initializePayment(
     .strict()
     .parse(input);
   const prepared = await db.transaction(async (tx) => {
-    const u = await customer(tx, token);
+    const u = await customer(tx, token, authority);
     await tx.query("SELECT id FROM users WHERE id=$1 FOR UPDATE", [u.id]);
     const i = await one(
       tx,
@@ -486,6 +526,7 @@ export async function initializePayment(
       [d.intentId, u.id],
     );
     if (!i) throw new AppError(404, "Payment not found.");
+    await paymentScope(tx, i, authority);
     const a = await one(
       tx,
       "SELECT * FROM payment_attempts WHERE intent_id=$1 FOR UPDATE",
@@ -552,9 +593,16 @@ export async function initializePayment(
       reference: prepared.a.reference,
       email: prepared.i.email_snapshot,
       amountKobo: Number(prepared.i.quote.grossKobo),
-      callbackUrl:
-        runtime.callbackOrigin + "/payment-return?intent=" + prepared.i.id +
-        (nativeReturn ? "&client=native" : ""),
+      callbackUrl: authority
+        ? runtime.callbackOrigin +
+          "/phone-order?link=" +
+          authority.linkId +
+          "&intent=" +
+          prepared.i.id
+        : runtime.callbackOrigin +
+          "/payment-return?intent=" +
+          prepared.i.id +
+          (nativeReturn ? "&client=native" : ""),
       attemptId: prepared.a.id,
       channels: prepared.i.quote.channels,
     });
@@ -776,11 +824,13 @@ export async function reconcilePayment(
             o.orderId,
           ]))!.total_kobo,
         );
-        if (paid >= total)
+        if (paid >= total) {
           await tx.query(
             "UPDATE orders SET payment_status='verified' WHERE id=$1",
             [o.orderId],
           );
+          await confirmPaidPhoneOrder(tx, o.orderId);
+        }
       }
     }
     await tx.query(

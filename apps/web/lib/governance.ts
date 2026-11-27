@@ -1,3 +1,4 @@
+import { validateRewardsCustomer } from "./rewards-customers";
 import { validateInvitationAccess } from "./staff-invitation-access";
 import { accountRoles } from "../../../packages/business-rules/src/staff-roles";
 import { documentIdentitySchema } from "./document-identity";
@@ -232,6 +233,8 @@ export async function propose(
 ) {
   const d = await definition(tx, user, input.key, input.scope, "propose");
   validateValue(d, input.value);
+  if (d.value_type === "rewards_adjustment")
+    await validateRewardsCustomer(tx, input.scope, input.value, user);
   const setting = await one(
     tx,
     "SELECT * FROM settings WHERE key=$1 AND scope=$2 FOR UPDATE",

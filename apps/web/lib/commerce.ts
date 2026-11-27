@@ -1,3 +1,4 @@
+import { operationNoteSchema } from "./operation-notes";
 import { invoiceBalance } from "./invoice-corrections";
 import { serviceRefundAllowance } from "./service-refunds";
 import { reverseServiceRewards } from "./reward-services";
@@ -644,7 +645,7 @@ export async function commerceAction(
       .object({
         shiftId: uuid,
         countedKobo: z.number().int().min(0).max(1000000000),
-        note: z.string().min(5).max(1000),
+        note: operationNoteSchema(action, input as any, "note", 1000),
       })
       .strict()
       .parse(input);
@@ -667,6 +668,8 @@ export async function commerceAction(
         ))!.n,
       ),
       expected = Number(s.opening_kobo) + total;
+    if (d.countedKobo !== expected)
+      z.string().trim().min(5, "Explain the cash-up discrepancy.").max(1000).parse((input as any).note ?? "");
     await tx.query(
       "UPDATE pos_shifts SET counted_kobo=$1,expected_kobo=$2,note=$3,status='submitted',closed_at=now() WHERE id=$4",
       [d.countedKobo, expected, d.note, s.id],

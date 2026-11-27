@@ -9,6 +9,7 @@ import {
   Truck,
 } from "lucide-react";
 import { api, Loading, Modal, Notice, money } from "./ui";
+import { TripLPGOrders } from "./lpg-setup-access";
 
 const roles = ["owner", "manager", "finance", "driver"];
 const pageSize = 10;
@@ -592,6 +593,7 @@ export function FleetWorkspace({
           className="fleet-dialog fleet-trip-dialog"
           onClose={() => setDialog(null)}
         >
+          <TripLPGOrders trip={trip} user={user} />
           <TripDetail trip={trip} branchName={branchName(trip.branch_id)} />
           {user.role === "driver" &&
             trip.driver_id === user.id &&

@@ -87,6 +87,22 @@ export async function deliverTransactionalMail(
         "SELECT m.* FROM message_outbox m JOIN users u ON u.id=m.user_id WHERE m.channel='email' AND m.status='pending' AND m.next_attempt_at<=now() AND m.attempts<5 AND u.active=true ORDER BY m.created_at,m.id LIMIT 1 FOR UPDATE OF m SKIP LOCKED",
       );
       if (!row) return null;
+      if (row.dedupe_key.startsWith("phone-order-payment:")) {
+        const lid = row.dedupe_key.split(":")[1];
+        if (
+          !(await one(
+            tx,
+            "SELECT l.id FROM phone_order_payment_links l JOIN orders o ON o.id=l.order_id JOIN users u ON u.id=l.customer_id WHERE l.id=$1 AND l.customer_id=$2 AND lower(u.email)=lower($3) AND l.revoked_at IS NULL AND l.expires_at>now() AND o.status NOT IN ('cancelled','delivered','delivery_failed') AND o.payment_status<>'verified'",
+            [lid, row.user_id, row.recipient],
+          ))
+        ) {
+          await tx.query(
+            "UPDATE message_outbox SET status='cancelled' WHERE id=$1",
+            [row.id],
+          );
+          return { cancelled: true as const };
+        }
+      }
       if (row.dedupe_key.startsWith("payment-receipt:")) {
         const recipient = await one(
           tx,
@@ -94,7 +110,10 @@ export async function deliverTransactionalMail(
           [row.user_id, row.recipient],
         );
         if (!recipient) {
-          await tx.query("UPDATE message_outbox SET status='cancelled' WHERE id=$1", [row.id]);
+          await tx.query(
+            "UPDATE message_outbox SET status='cancelled' WHERE id=$1",
+            [row.id],
+          );
           return { cancelled: true as const };
         }
       }
@@ -114,12 +133,16 @@ export async function deliverTransactionalMail(
       }
       if (row.dedupe_key.startsWith("invite:")) {
         const [, invitationId, tokenHash] = row.dedupe_key.split(":");
-        const invitation = await one(tx,
+        const invitation = await one(
+          tx,
           "SELECT i.id FROM staff_invitations i JOIN users u ON u.id=i.invited_by JOIN branches b ON b.id=i.branch_id WHERE i.id=$1 AND i.email=$2 AND i.invited_by=$3 AND (i.temporary_password_hash IS NULL OR i.token_hash=$4) AND i.accepted_at IS NULL AND i.expires_at>now() AND u.active=true AND b.active=true AND (u.role='owner' OR (u.role='owner' AND u.branch_id=i.branch_id))",
           [invitationId, row.recipient, row.user_id, tokenHash ?? null],
         );
         if (!invitation) {
-          await tx.query("UPDATE message_outbox SET status='cancelled' WHERE id=$1", [row.id]);
+          await tx.query(
+            "UPDATE message_outbox SET status='cancelled' WHERE id=$1",
+            [row.id],
+          );
           return { cancelled: true as const };
         }
       }
@@ -151,7 +174,9 @@ export async function deliverTransactionalMail(
         id: message.id,
         recipient: message.recipient,
         subject: message.subject,
-        body: message.body.startsWith("v1:") ? openMessage(message.body) : message.body,
+        body: message.body.startsWith("v1:")
+          ? openMessage(message.body)
+          : message.body,
       });
       await db.transaction(async (tx) => {
         await tx.query(

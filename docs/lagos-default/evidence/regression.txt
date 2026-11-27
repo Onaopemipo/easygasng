@@ -1,0 +1,78 @@
+✔ ONBOARD-01: staff email acceptance, replacement before access and replay rejection (1641.070333ms)
+✔ ONBOARD-02: admin-created customer must accept and replace the emailed password (1116.404583ms)
+✔ ONBOARD-03: recovery covers staff and customers with bounded sends and single-use links (1090.257125ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RADD-FORM-E2E: real Admin form selects a customer and credits through canonical API directly; customer balance and readable audit details reflect it (1644.754042ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RADD-RETRY-UI: lost response recovers committed result; unknown result locks edits and reuses the same key on retry without double submission (43.851958ms)
+✔ RADD-E2E: Admin selects public customer and initial branch, adds immediately, sees balance/history, with no approval, setting change or wallet mutation (1132.077333ms)
+✔ RADD-REPLAY: duplicate/lost-response retries credit once; changed payload, another actor, another operation and revoked permission cannot reuse the key (887.54575ms)
+✔ RADD-GUARDS: direct credit denies every non-Admin role, missing verification/key, negative/zero/fraction/overflow, spoofed IDs, invalid customer/branch and extra bypass fields (936.190292ms)
+EasyGas incident diagnostic {
+  reference: '18ba1a8b-0f2b-4a99-a4f2-aa1ab170e905',
+  action: 'rewards.add',
+  sqlState: 'P0001'
+}
+✔ RADD-ATOMIC: ledger failure rolls back branch, points, audit and operation result; same key succeeds after repair (874.258042ms)
+✔ RADD-CONCURRENCY: concurrent duplicate requests credit once and separate additions retain both amounts without requiring a settings version (918.4935ms)
+✔ CM-01: customer creation, scoped management and privilege rejection (1028.964916ms)
+✔ LAG-OPERATOR: exact guarded operator SQL commits six backfills only, preserves all other business tables and rejects an unexpected target count (2107.923833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ LAG-UI-CUSTOMER: real edit form preserves existing branch and submits an Admin-selected branch; Manager has no branch edit control; create form preselects Lagos (49.990166ms)
+✔ LAG-UI-STAFF: new invitation chooses Lagos before operator/alphabetical defaults and sends the explicitly selected alternative (1.799167ms)
+✔ LAG-MIGRATE: missing branches across all user roles are filled once, explicit assignments and identity/ledger history stay unchanged, with per-user audit (1349.467167ms)
+✔ LAG-REGISTER: public sign-up persists Lagos, cannot choose an unauthorised role/branch, and is rejected safely if the default branch is inactive (858.335875ms)
+✔ LAG-CREATE: backend customer creation defaults Lagos, preserves an explicit active branch, and retains Manager branch isolation (997.319166ms)
+✔ LAG-EDIT: Admin edits customer branch with audit; Manager cannot move branches, staff identities cannot be changed through customer editing, histories are retained (839.083666ms)
+✔ LAG-GUARD: inactive Lagos stops backfill/default migration without changing missing accounts or emitting false audit records (820.597875ms)
+✔ LAG-REWARD: a newly registered customer is already in Lagos and Admin can add points directly without initial-branch setup (978.903917ms)
+✔ LAG-CHOICE: form defaults choose Lagos over alphabetical order and preserve explicit existing assignments/authorised single-branch scope (0.175875ms)
+✔ LAG-STAFF: new staff invitation defaults Lagos while explicit backend branch choice and access approvals remain intact (881.153458ms)
+✔ OWNER-AUTO01: owner submissions auto-apply once with immutable authority proof; staff remain independently reviewed (1178.45825ms)
+✔ OWNER-AUTO02: old pending requests are actionable only by their verified owner; drafts stay inactive until submission (936.674875ms)
+✔ OWNER-AUTO03: scheduling, current authority, stale versions, expiry, self privileges and live-payment blockers survive auto approval (930.093083ms)
+✔ OWNER-AUTO04: owner approval does not replace independent qualified safety review or invent safety evidence (930.671667ms)
+✔ OWNER-AUTO05: governed inventory request binds immutable operation before automatic application and never posts twice (878.788417ms)
+✔ OWNER-AUTO06: owner rollback uses the same audited policy and preserves historical versions (900.099458ms)
+✔ OWNER-AUTO07: verified owners can confirm delivery coverage; staff requests and blank boundaries still block ordering (985.219875ms)
+✔ OWNER-AUTO08: an existing owner coverage request can be approved by its requester without approving other pending requests (883.5315ms)
+✔ OWNER-AUTO-UI: owner apply action and status-specific guidance replace unconditional independent-review messaging (0.372916ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ RSEL-FORM: real form searches public ID, selects a branchless customer, changes branch, reviews readable identity and submits correct scoped version without raw ID entry (24.98475ms)
+✔ RSEL-PICKER: empty/failure retry, distinct same-name results, existing branch selection, and failed branch switch keep the last valid selection (4.741625ms)
+✔ RSEL-SEARCH: names/public IDs resolve to minimal records, duplicate names remain distinct; scoped permissions and literal search are enforced (1330.427ms)
+✔ RSEL-E2E: search, branchless draft, edit, submit, two independent approvals atomically assign branch and credit once without changing wallet (987.579709ms)
+✔ RSEL-DENIAL: invalid, spoofed, inactive/staff, branch mismatch and unauthorised initial assignment fail before a request is saved (995.208375ms)
+✔ RSEL-STALE: branch or customer status changed after proposal prevents partial branch/points activation (954.56175ms)
+✔ RSEL-ROLLBACK: ledger failure rolls back initial branch assignment and audit along with points (910.641875ms)
+✔ staff invitations are manageable without granting privileges, renew invalidates old links and accepted accounts appear in staff management (1300.262166ms)
+✔ staff edits, suspension, reinstatement and invitation revocation enforce authority, branch and session safeguards (1007.065208ms)
+✔ staff management invitation actions run with restricted runtime grants and business-wide administrators retain access to previous branch invitations (1003.447708ms)
+✔ STAFF-INV-01/02: selected privileges are reviewed, never applied before independent approval, and enforced after activation (1026.351542ms)
+✔ STAFF-INV-02: inviting owners cannot attach protected grants to driver roles or provide arbitrary privileges (991.754ms)
+✔ DRIVER-AVAIL-01: invited drivers default to available only on approved activation and keep later choices (1021.002542ms)
+✔ STAFF-PRIV01: per-user grant, deny and role default work end to end without changing roles; existing sessions recheck every request (1242.705375ms)
+✔ STAFF-PRIV02: privilege changes require fresh administrative identity and reject self escalation, forged fields, stale versions and protected-role grants (989.897083ms)
+✔ STAFF-PRIV03: merged administrators can edit cross-branch users; protected approval, qualification and runtime session boundaries remain intact (961.577333ms)
+✔ STAFF-PRIV04: restricted database runtime can grant, revoke and reset privileges with append-only audited history (872.209375ms)
+✔ STAFF-PRIV05: privilege endpoints require authenticated read/write methods and reject unverified HTTP mutations (969.12675ms)
+✔ STAFF-PRIV06: invalid batches roll back all changes, cached outcomes obey revocation, and field-only sessions cannot administer privileges (920.468958ms)
+✔ STAFF-PRIV07: role or branch changes invalidate additional grants while explicit revocations remain enforced (932.484458ms)
+✔ STAFF-PRIV08: reverting an identity change cannot silently reactivate an old grant, and identity changes invalidate an open editor revision (928.385333ms)
+✔ STAFF-ROLE08: staff roles have short display names and keep their canonical identities (1.509375ms)
+✔ STAFF-ROLE01–03: legacy identities upgrade atomically with overrides, session renewal and approval history (910.572458ms)
+✔ STAFF-ROLE04–06: branch isolation, qualified checklist review and independent financial approvals (821.373875ms)
+ℹ tests 55
+ℹ suites 0
+ℹ pass 55
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 54296.503125

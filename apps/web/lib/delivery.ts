@@ -13,12 +13,14 @@ import {
   type Actor,
 } from "./auth";
 import { audit, notify } from "./governance";
+import { settleVisitProducts } from "./order-visit-stock";
+import { isDoorstepRefill, requireRefillPhoto } from "./refill-fulfilment";
 export async function completeDelivery(
   tx: SQL,
   user: Actor,
   input: {
     orderId: string;
-    code: string;
+    code?: string;
     collectedKobo: number;
     version?: number;
     handover?: boolean;
@@ -31,7 +33,12 @@ export async function completeDelivery(
   allow(user, ["owner", "manager", "driver"], o.branch_id);
   if (user.role === "driver" && o.driver_id !== user.id)
     throw new AppError(403, "This delivery is assigned to another driver.");
-  if (o.status === "delivered" && digest(input.code) === o.delivery_code_hash) {
+  const refill = await isDoorstepRefill(tx, o.id);
+  if (
+    o.status === "delivered" &&
+    ((refill && !input.code) ||
+      digest(input.code ?? "") === o.delivery_code_hash)
+  ) {
     const collection = await one(
       tx,
       "SELECT collector_id,amount_kobo FROM cash_collections WHERE order_id=$1",
@@ -76,7 +83,11 @@ export async function completeDelivery(
       "Confirm actual handover of every item and the full gas quantity. Partial delivery requires dispatch review.",
     );
   await fulfilmentReady(tx, o);
-  await verifyDeliveryCode(tx, user, o, input.code);
+  if (refill) {
+    // Existing signed clients may still send a code; validate it rather than silently ignoring it.
+    if (input.code) await verifyDeliveryCode(tx, user, o, input.code);
+    await requireRefillPhoto(tx, o, attempt, Boolean(input.code));
+  } else await verifyDeliveryCode(tx, user, o, input.code ?? "");
   if (!["cash_on_delivery", "wallet", "card"].includes(o.payment_method))
     throw new AppError(
       409,
@@ -128,6 +139,7 @@ export async function completeDelivery(
   await verifyGasDispatch(tx, o.id);
   await gasReservation(tx, user, o.id, "fulfilled");
   await issueCylinders(tx, user, { orderId: o.id }, o.customer_id);
+  await settleVisitProducts(tx, user, o, "handed");
   if (o.payment_method === "cash_on_delivery") {
     const priorCollection = await one(
       tx,
@@ -142,6 +154,21 @@ export async function completeDelivery(
       throw new AppError(
         409,
         "Previously recorded cash collection differs. Independent review is required.",
+      );
+    const principal = Number(
+      (await one(
+        tx,
+        "SELECT COALESCE(sum(amount_kobo),0) n FROM verified_payments WHERE order_id=$1",
+        [o.id],
+      ))!.n,
+    );
+    if (
+      principal > 0 &&
+      (!priorCollection?.verified_at || principal < Number(o.total_kobo))
+    )
+      throw new AppError(
+        409,
+        "A payment is already recorded. Finance must review it before recording another cash collection.",
       );
     if (!priorCollection)
       await tx.query(
@@ -165,9 +192,10 @@ export async function completeDelivery(
       o.id,
       user.id,
       o.payment_method === "wallet"
-        ? "Customer code verified. Paid with purchase credit."
-        : o.payment_method === "card" ? "Customer code verified. Card payment recorded in the verified ledger."
-        : "Customer code verified. Cash collection recorded; independent finance reconciliation pending.",
+        ? `${refill ? "Refill quantity and photo verified" : "Customer code verified"}. Paid with purchase credit.`
+        : o.payment_method === "card"
+          ? `${refill ? "Refill quantity and photo verified" : "Customer code verified"}. Card payment recorded in the verified ledger.`
+          : `${refill ? "Refill quantity and photo verified" : "Customer code verified"}. Cash collection recorded; independent finance reconciliation pending.`,
     ],
   );
   await tx.query(
@@ -182,7 +210,8 @@ export async function completeDelivery(
       user.id,
       JSON.stringify({
         allItemsHandedOver: true,
-        codeVerified: true,
+        codeVerified: !refill,
+        refillPhotoVerified: refill,
         collectedKobo: input.collectedKobo,
       }),
     ],

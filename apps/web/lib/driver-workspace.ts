@@ -3,8 +3,12 @@ import { allow, AppError, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 import { audit } from "./governance";
 import { completeDelivery } from "./delivery";
+import { isDoorstepRefill } from "./refill-fulfilment";
 import { invoiceBalance } from "./invoice-corrections";
-import { driverAvailabilityWritesEnabled, setDriverAvailability } from "./driver-availability";
+import {
+  driverAvailabilityWritesEnabled,
+  setDriverAvailability,
+} from "./driver-availability";
 const allowed = new Set([
   "me",
   // The web shell still applies role/branch navigation checks to these reads.
@@ -37,6 +41,7 @@ const allowed = new Set([
   "driver.restrict",
   "driver.availability",
   "driver.complete",
+  "driver.depart",
   "dispatch.respond",
   "delivery.pickup",
   "delivery.arrived",
@@ -106,9 +111,13 @@ export async function driverWorkspace(
   if (!user.driver_delivery_only)
     throw new AppError(403, "Open a verified delivery-only session first.");
   if (action === "driver.history") {
-    if (user.role !== "driver" || !(await one(tx,
-      "SELECT id FROM branches WHERE id=$1 AND active=true", [user.branch_id],
-    ))) throw new AppError(403, "An active driver branch is required.");
+    if (
+      user.role !== "driver" ||
+      !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
+        user.branch_id,
+      ]))
+    )
+      throw new AppError(403, "An active driver branch is required.");
     return driverHistory(tx, user, input);
   }
   if (action === "driver.location") {
@@ -130,10 +139,23 @@ export async function driverWorkspace(
   }
   if (action === "driver.heartbeat") {
     z.object({}).strict().parse(input);
-    const active=await one(tx,"SELECT id FROM branches WHERE id=$1 AND active=true",[user.branch_id]);
-    if(!active) throw new AppError(409,"Driver branch is inactive.");
-    await tx.query("UPDATE users SET driver_last_seen_at=now() WHERE id=$1 AND active=true AND (driver_last_seen_at IS NULL OR driver_last_seen_at<now()-interval '15 seconds')",[user.id]);
-    return {observedAt:(await one(tx,"SELECT driver_last_seen_at FROM users WHERE id=$1",[user.id]))?.driver_last_seen_at};
+    const active = await one(
+      tx,
+      "SELECT id FROM branches WHERE id=$1 AND active=true",
+      [user.branch_id],
+    );
+    if (!active) throw new AppError(409, "Driver branch is inactive.");
+    await tx.query(
+      "UPDATE users SET driver_last_seen_at=now() WHERE id=$1 AND active=true AND (driver_last_seen_at IS NULL OR driver_last_seen_at<now()-interval '15 seconds')",
+      [user.id],
+    );
+    return {
+      observedAt: (
+        await one(tx, "SELECT driver_last_seen_at FROM users WHERE id=$1", [
+          user.id,
+        ])
+      )?.driver_last_seen_at,
+    };
   }
   if (action === "driver.snapshot") {
     z.object({}).strict().parse(input);
@@ -151,7 +173,9 @@ export async function driverWorkspace(
       )
     ).rows;
     if (!profile) throw new AppError(403, "Your driver branch is unavailable.");
-    const totals = await one(tx, `
+    const totals = await one(
+      tx,
+      `
       SELECT count(*) FILTER (WHERE o.status='assigned' AND a.state='assigned'
                AND r.decision IS DISTINCT FROM 'acknowledged') AS new_assignments,
              count(*) FILTER (WHERE o.status='out_for_delivery' OR (o.status='assigned'
@@ -159,16 +183,25 @@ export async function driverWorkspace(
       FROM orders o JOIN delivery_attempts a ON a.order_id=o.id AND a.driver_id=o.driver_id
       LEFT JOIN dispatch_responses r ON r.attempt_id=a.id
       WHERE o.driver_id=$1 AND o.branch_id=$2 AND a.state IN ('assigned','picked_up','arrived')
-        AND r.decision IS DISTINCT FROM 'rejected'`, [user.id, user.branch_id]);
-    const completed = await one(tx, `
+        AND r.decision IS DISTINCT FROM 'rejected'`,
+      [user.id, user.branch_id],
+    );
+    const completed = await one(
+      tx,
+      `
       SELECT count(*) AS total FROM delivery_attempts a JOIN orders o ON o.id=a.order_id
       WHERE a.driver_id=$1 AND o.branch_id=$2 AND a.state='delivered'
         AND (a.completed_at AT TIME ZONE 'Africa/Lagos')::date=(now() AT TIME ZONE 'Africa/Lagos')::date`,
-      [user.id, user.branch_id]);
-    const trip = await one(tx, `
+      [user.id, user.branch_id],
+    );
+    const trip = await one(
+      tx,
+      `
       SELECT t.id,t.location_consent,v.label AS vehicle_label,v.capacity_grams
       FROM driver_trips t LEFT JOIN driver_vehicles v ON v.id=t.vehicle_id AND v.branch_id=t.branch_id AND v.active=true
-      WHERE t.driver_id=$1 AND t.branch_id=$2 AND t.ended_at IS NULL`, [user.id, user.branch_id]);
+      WHERE t.driver_id=$1 AND t.branch_id=$2 AND t.ended_at IS NULL`,
+      [user.id, user.branch_id],
+    );
     return {
       profile,
       responses,
@@ -207,7 +240,11 @@ export async function driverWorkspace(
       .object({
         orderId: z.string().uuid(),
         version: z.number().int().nonnegative(),
-        code: z.string().regex(/^\d{6}$/),
+        code: z
+          .string()
+          .regex(/^\d{6}$/)
+          .optional(),
+        collectedKobo: z.number().int().nonnegative().optional(),
         handover: z.literal(true),
       })
       .strict()
@@ -221,6 +258,18 @@ export async function driverWorkspace(
       order.branch_id !== user.branch_id
     )
       throw new AppError(404, "Assigned delivery not found.");
+    const refill = await isDoorstepRefill(tx, order.id);
+    const cod =
+      refill &&
+      order.payment_method === "cash_on_delivery" &&
+      order.payment_status !== "verified" &&
+      (
+        await one(
+          tx,
+          "SELECT value FROM settings WHERE key='payment.cod' AND scope=$1",
+          [order.branch_id],
+        )
+      )?.value === true;
     let verifiedCash = false;
     if (
       order.payment_method === "cash_on_delivery" &&
@@ -250,7 +299,8 @@ export async function driverWorkspace(
       !(
         (["wallet", "card"].includes(order.payment_method) &&
           order.payment_status === "verified") ||
-        verifiedCash
+        verifiedCash ||
+        cod
       )
     )
       throw new AppError(
@@ -283,25 +333,36 @@ export async function driverWorkspace(
       );
     return completeDelivery(tx, user, {
       ...d,
-      collectedKobo: verifiedCash ? Number(order.total_kobo) : 0,
+      collectedKobo: verifiedCash
+        ? Number(order.total_kobo)
+        : cod
+          ? (d.collectedKobo ?? 0)
+          : 0,
     });
   }
   throw new AppError(404, "Unknown driver action.");
 }
 
-const historyInput = z.object({
-  from: z.iso.date().optional(),
-  to: z.iso.date().optional(),
-  outcome: z.enum(["delivered", "failed", "returned", "declined", "cancelled"]).optional(),
-  page: z.coerce.number().int().min(1).max(10000).default(1),
-}).strict().refine(({ from, to }) => !from || !to || from <= to, {
-  message: "Choose an end date on or after the start date.",
-});
+const historyInput = z
+  .object({
+    from: z.iso.date().optional(),
+    to: z.iso.date().optional(),
+    outcome: z
+      .enum(["delivered", "failed", "returned", "declined", "cancelled"])
+      .optional(),
+    page: z.coerce.number().int().min(1).max(10000).default(1),
+  })
+  .strict()
+  .refine(({ from, to }) => !from || !to || from <= to, {
+    message: "Choose an end date on or after the start date.",
+  });
 
 async function driverHistory(tx: SQL, user: Actor, input: unknown) {
   const { from, to, outcome, page } = historyInput.parse(input);
   const pageSize = 20;
-  const result = await one(tx, `
+  const result = await one(
+    tx,
+    `
     WITH records AS (
       SELECT a.id,a.order_id,o.reference,
         CASE WHEN a.state IN ('delivered','failed','returned') THEN a.state
@@ -338,6 +399,22 @@ async function driverHistory(tx: SQL, user: Actor, input: unknown) {
     SELECT (SELECT count(*) FROM filtered WHERE ($5::text IS NULL OR outcome=$5)) AS total,
            (SELECT count(*) FROM filtered WHERE outcome='delivered') AS delivered,
            COALESCE((SELECT json_agg(page_rows ORDER BY closed_at DESC,id DESC) FROM page_rows),'[]'::json) AS rows
-  `, [user.id, user.branch_id, from ?? null, to ?? null, outcome ?? null, pageSize, (page - 1) * pageSize]);
-  return { rows: result?.rows ?? [], total: Number(result?.total ?? 0), delivered: Number(result?.delivered ?? 0), page, pageSize };
+  `,
+    [
+      user.id,
+      user.branch_id,
+      from ?? null,
+      to ?? null,
+      outcome ?? null,
+      pageSize,
+      (page - 1) * pageSize,
+    ],
+  );
+  return {
+    rows: result?.rows ?? [],
+    total: Number(result?.total ?? 0),
+    delivered: Number(result?.delivered ?? 0),
+    page,
+    pageSize,
+  };
 }

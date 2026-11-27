@@ -1,3 +1,5 @@
+import { operationNoteSchema } from "./operation-notes";
+import { assignmentResponseReason } from "./assignment-response";
 import { vehiclePayload } from "./vehicle-manifest-schema";
 import {
   confirmDispatchDestination,
@@ -176,10 +178,14 @@ export async function driverOperations(
         ],
       )
     ).rows;
-    const events = trips.length ? (await tx.query(
-      "SELECT * FROM trip_events WHERE trip_id=ANY($1::text[]) ORDER BY sequence",
-      [trips.map(t => t.id)],
-    )).rows : [];
+    const events = trips.length
+      ? (
+          await tx.query(
+            "SELECT * FROM trip_events WHERE trip_id=ANY($1::text[]) ORDER BY sequence",
+            [trips.map((t) => t.id)],
+          )
+        ).rows
+      : [];
     const eventsByTrip = new Map<string, any[]>();
     for (const event of events) {
       const list = eventsByTrip.get(event.trip_id) ?? [];
@@ -263,7 +269,11 @@ export async function driverOperations(
       o.area = o.address?.zone ?? o.address?.area ?? "Unresolved address";
       o.recommendations = drivers
         .filter(
-          (d) => d.branch_id === o.branch_id && d.driver_available && d.trip_id && d.lpg_suitable,
+          (d) =>
+            d.branch_id === o.branch_id &&
+            d.driver_available &&
+            d.trip_id &&
+            d.lpg_suitable,
         )
         .map((d) => {
           const load = orders
@@ -299,8 +309,9 @@ export async function driverOperations(
         orderId: uid,
         driverId: uid,
         version: z.number().int().nonnegative(),
-        reason: z.string().min(10).max(500),
+        reason: operationNoteSchema(action, input as any, "reason", 500, 10),
         routeEstimateId: uid.optional(),
+        prepare: z.boolean().optional(),
       })
       .strict()
       .parse(input);
@@ -316,7 +327,11 @@ export async function driverOperations(
     );
     if (!driver || driver.branch_id !== o.branch_id)
       throw new AppError(409, "Driver branch is ineligible.");
-    if (!driver.driver_available) throw new AppError(409, "Driver availability is off; choose an available driver.");
+    if (!driver.driver_available)
+      throw new AppError(
+        409,
+        "Driver availability is off; choose an available driver.",
+      );
     await vehicleReady(tx, driver.id, o.id, o.branch_id);
     if (d.routeEstimateId)
       await validateRouteEstimate(tx, user, d.routeEstimateId, o.id, driver.id);
@@ -327,6 +342,17 @@ export async function driverOperations(
       reason: d.reason,
     });
     if (action === "dispatch.reassign") {
+      if (
+        await one(
+          tx,
+          "SELECT l.order_id FROM order_visit_links l JOIN orders c ON c.id=l.order_id WHERE l.parent_order_id=$1 AND c.status NOT IN ('delivered','cancelled') LIMIT 1",
+          [o.id],
+        )
+      )
+        throw new AppError(
+          409,
+          "Resolve linked extra orders before changing the original visit’s driver.",
+        );
       if (
         o.status !== "assigned" ||
         o.driver_id === driver.id ||
@@ -360,7 +386,7 @@ export async function driverOperations(
           JSON.stringify({ reason: d.reason, supersededBeforePickup: true }),
         ],
       );
-      await beginAttempt(tx, o, driver.id);
+      await beginAttempt(tx, o, driver.id, user);
       await tx.query(
         "UPDATE delivery_attempts SET requires_ack=true WHERE order_id=$1 AND state='assigned'",
         [o.id],
@@ -387,13 +413,40 @@ export async function driverOperations(
       });
       return { ok: true };
     }
+    if (d.prepare) {
+      if (Number(o.tracking_version) !== d.version)
+        throw new AppError(
+          409,
+          "This order changed. Refresh before assigning.",
+        );
+      for (const status of ["accepted", "preparing"]) {
+        if (
+          (status === "accepted" && o.status === "placed") ||
+          (status === "preparing" && o.status === "accepted")
+        ) {
+          await transitionOrder(tx, user, {
+            id: o.id,
+            status,
+            note: "Dispatcher confirmed this order for driver assignment",
+            version: Number(o.tracking_version),
+          });
+          const current = await one(
+            tx,
+            "SELECT status,tracking_version FROM orders WHERE id=$1",
+            [o.id],
+          );
+          o.status = current!.status;
+          o.tracking_version = current!.tracking_version;
+        }
+      }
+    }
     await fulfilmentReady(tx, o);
     const result = await transitionOrder(tx, user, {
       id: o.id,
       status: "assigned",
       driverId: driver.id,
       note: d.reason,
-      version: d.version,
+      version: d.prepare ? Number(o.tracking_version) : d.version,
     });
     await tx.query(
       "UPDATE delivery_attempts SET requires_ack=true WHERE order_id=$1 AND state='assigned'",
@@ -403,15 +456,19 @@ export async function driverOperations(
   }
   if (action === "dispatch.respond") {
     allow(user, ["driver"]);
-    const d = z
+    const parsed = z
       .object({
         orderId: uid,
         version: z.number().int().nonnegative(),
         decision: z.enum(["acknowledged", "rejected"]),
-        reason: z.string().min(5).max(500),
+        reason: z.string().max(500).optional(),
       })
       .strict()
       .parse(input);
+    const d = {
+      ...parsed,
+      reason: assignmentResponseReason(parsed.decision, parsed.reason, 500),
+    };
     const o = await one(tx, "SELECT * FROM orders WHERE id=$1 FOR UPDATE", [
       d.orderId,
     ]);
@@ -426,10 +483,17 @@ export async function driverOperations(
     );
     if (!a || a.driver_id !== user.id)
       throw new AppError(409, "Assignment changed.");
-    const branch = await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE", [o.branch_id]);
+    const branch = await one(
+      tx,
+      "SELECT id FROM branches WHERE id=$1 AND active=true FOR UPDATE",
+      [o.branch_id],
+    );
     if (!branch) throw new AppError(409, "Assignment branch is inactive.");
     if (new Date(o.delivery_code_expires_at).getTime() <= Date.now())
-      throw new AppError(409, "Assignment authorisation expired; dispatch must renew it.");
+      throw new AppError(
+        409,
+        "Assignment authorisation expired; dispatch must renew it.",
+      );
     const priorResponse = await one(
       tx,
       "SELECT decision,reason FROM dispatch_responses WHERE attempt_id=$1",
@@ -535,8 +599,8 @@ export async function driverOperations(
       );
     const active = await one(
       tx,
-      "SELECT id FROM orders WHERE driver_id=$1 AND status='out_for_delivery' LIMIT 1",
-      [user.id],
+      "SELECT id FROM orders WHERE (driver_id=$1 AND status='out_for_delivery') OR (status NOT IN ('delivered','cancelled') AND EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id AND l.trip_id=$2)) LIMIT 1",
+      [user.id, t.id],
     );
     if (active)
       throw new AppError(
@@ -608,10 +672,21 @@ export async function driverOperations(
             ORDER BY recorded_at,sequence LIMIT 1)`,
           [t.id, user.id, e.recordedAt],
         );
-        if (nearby.rows.some((point) => implausibleRiderSegment(
-          { ...point.payload, recordedAt: new Date(point.recorded_at).toISOString() },
-          { ...payload, recordedAt: e.recordedAt },
-        ))) throw new AppError(409, "This GPS observation needs review because it conflicts with nearby recorded locations.");
+        if (
+          nearby.rows.some((point) =>
+            implausibleRiderSegment(
+              {
+                ...point.payload,
+                recordedAt: new Date(point.recorded_at).toISOString(),
+              },
+              { ...payload, recordedAt: e.recordedAt },
+            ),
+          )
+        )
+          throw new AppError(
+            409,
+            "This GPS observation needs review because it conflicts with nearby recorded locations.",
+          );
       }
     } else if (e.kind === "fuel")
       payload = z

@@ -5,11 +5,19 @@ import { FieldCaption } from "./field-caption";
 export default function LPGLoadIssue({
   data,
   onDone,
+  contextOrderId,
+  onNeedCalibration,
+  onPendingChange,
 }: {
   data: any;
   onDone: () => void;
+  contextOrderId?: string;
+  onNeedCalibration?: () => void;
+  onPendingChange?: (pending: boolean) => void;
 }) {
-  const [orderId, setOrderId] = useState("");
+  const [selectedOrderId, setOrderId] = useState("");
+  const orderId = contextOrderId ?? selectedOrderId;
+  const [dirty, setDirty] = useState(false);
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
   const pending = useRef<{
@@ -36,6 +44,7 @@ export default function LPGLoadIssue({
     if (writing.current || !trip || !order) return;
     writing.current = true;
     setBusy(true);
+    onPendingChange?.(true);
     setError("");
     const f = new FormData(e.currentTarget);
     const input: any = {
@@ -45,6 +54,7 @@ export default function LPGLoadIssue({
       meterReadingGrams: Number(f.get("reading")),
       orderIds: [order.id],
       reason: String(f.get("reason")),
+      ...(contextOrderId ? {orderContext: {orderId: contextOrderId, tripId: trip.id, version: Number(order.tracking_version)}} : {}),
     };
     const signature = JSON.stringify({
       ...input,
@@ -70,24 +80,28 @@ export default function LPGLoadIssue({
         operationKey: pending.current.key,
       });
       pending.current = null;
+      setDirty(false);
       onDone();
-      setOrderId("");
+      if (!contextOrderId) setOrderId("");
     } catch (e: any) {
       setError(e.message);
     } finally {
       writing.current = false;
       setBusy(false);
+      onPendingChange?.(false);
     }
   }
   return (
-    <form className="panel stack product-form" onSubmit={submit}>
+    <form className="panel stack product-form" onSubmit={submit}
+      onChange={() => setDirty(true)} data-unsaved={dirty ? "true" : undefined}
+      data-submit-pending={busy ? "true" : undefined}>
       <h3>Issue vehicle LPG load</h3>
-      <p>
+      {!contextOrderId && <p>
         Select the reserved order and active driver trip. Use physical mass and
         calibrated meter readings; internal IDs are linked automatically.
-      </p>
+      </p>}
       <fieldset disabled={busy} className="stack">
-        <label>
+        {contextOrderId ? <p><strong>{order?.reference ?? "Order unavailable"}</strong> · {Number(order?.grams ?? 0) / 1000} kg reserved</p> : <label>
           <FieldCaption required>Reserved gas order</FieldCaption>
           <select
             value={orderId}
@@ -107,7 +121,7 @@ export default function LPGLoadIssue({
               </option>
             ))}
           </select>
-        </label>
+        </label>}
         {order && (
           <>
             {!trips.length ? (
@@ -116,7 +130,7 @@ export default function LPGLoadIssue({
                 message="This driver needs an active trip without an existing LPG load. Reconcile existing vehicle custody before issuing another load."
               />
             ) : (
-              <label>
+              contextOrderId ? <p><strong>Vehicle:</strong> {trip.label} · {trip.driver_name}</p> : <label>
                 <FieldCaption required>Vehicle / active trip</FieldCaption>
                 <select
                   value={trip?.id ?? ""}
@@ -132,7 +146,8 @@ export default function LPGLoadIssue({
             )}
             <label>
               <FieldCaption required>Calibrated mass meter</FieldCaption>
-              <select name="meterId" required key={trip?.id}>
+              <select name="meterId" required key={`${trip?.id}:${meters.map((m: any) => m.id + m.calibration_expires_at).join(",")}`}
+                defaultValue={contextOrderId && meters.length === 1 ? meters[0].id : ""}>
                 <option value="">Choose current meter</option>
                 {meters.map((m: any) => (
                   <option value={m.id} key={m.id}>
@@ -143,10 +158,10 @@ export default function LPGLoadIssue({
               </select>
             </label>
             {!meters.length && (
-              <p>
+              <div><p>
                 No current calibrated meter for this vehicle. Register or renew
                 it through the qualified meter workflow first.
-              </p>
+              </p>{onNeedCalibration && <button type="button" className="button secondary" onClick={onNeedCalibration}>Renew meter calibration</button>}</div>
             )}
             {recovery && (
               <Notice

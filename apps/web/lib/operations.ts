@@ -1,5 +1,16 @@
+import { operationNoteSchema } from "./operation-notes";
+import {
+  customerDeliveryPinSchema,
+  validateCustomerDeliveryPin,
+  recordCustomerDeliveryPin,
+} from "./customer-delivery-pin";
+import { createPhonePaymentLink } from "./phone-order-payments";
+import { takeTankerBuffer, recordTankerAllocation } from "./tanker-orders";
 import { verifyVehicleLPGPickup } from "./bulk-lpg-reservation";
-import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
+import {
+  deliveryCoveragePending,
+  hasConfirmedDeliveryCoverage,
+} from "../../../packages/business-rules/src/delivery-coverage";
 import { paystackAvailability } from "./payments/runtime";
 import { gatewayPolicy } from "./payments/policy";
 import { applyRewardDiscount, restoreOrderDiscount } from "./rewards";
@@ -12,6 +23,9 @@ import { digest, id, allow, AppError, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 import { audit, notify } from "./governance";
 import { orderTransitions } from "../../../packages/business-rules/src/forecast";
+import { activeVisit } from "./order-visit-context";
+import { canonicalRequest } from "./business-operation";
+import { settleVisitProducts } from "./order-visit-stock";
 export const checkoutSchema = z
   .object({
     items: z
@@ -48,6 +62,7 @@ export const checkoutSchema = z
     address: z
       .object({
         locationId: z.string().max(100).optional(),
+        deliveryPin: customerDeliveryPinSchema.optional(),
         building: z.string().max(100).optional(),
         landmark: z.string().max(250).optional(),
         directions: z.string().max(500).optional(),
@@ -87,14 +102,22 @@ export async function checkout(
   tx: SQL,
   user: Actor,
   input: z.infer<typeof checkoutSchema>,
-  assisted?: { customerId: string; reason: string },
+  assisted?: {
+    customerId: string;
+    reason: string;
+    prepaid?: boolean;
+    visit?: { parentOrderId: string; version: number };
+    visitProducts?: { productId: string; serialIds: string[] }[];
+  },
 ) {
   allow(user, ["customer", "commercial", "owner", "manager"]);
   const customerId = assisted?.customerId ?? user.id;
+  validateCustomerDeliveryPin(input.address);
   if (assisted) {
     allow(user, ["owner", "manager"]);
     if (
-      (input.paymentMethod ?? "cash_on_delivery") !== "cash_on_delivery" ||
+      (input.paymentMethod ?? "cash_on_delivery") !==
+        (assisted.prepaid ? "card" : "cash_on_delivery") ||
       input.rewardOfferId ||
       input.rewardPoints
     )
@@ -132,6 +155,26 @@ export async function checkout(
       );
     return prior;
   }
+  const visit = assisted?.visit
+    ? await activeVisit(
+        tx,
+        user,
+        assisted.visit.parentOrderId,
+        assisted.visit.version,
+      )
+    : null;
+  if (
+    visit &&
+    (visit.parent.customer_id !== customerId ||
+      canonicalRequest(visit.parent.address) !==
+        canonicalRequest(input.address) ||
+      visit.parent.delivery_date !== input.date ||
+      visit.parent.delivery_window !== input.window)
+  )
+    throw new AppError(
+      409,
+      "An extra order must keep the original customer, address and delivery visit.",
+    );
   const candidate = await one(
     tx,
     "SELECT id,branch_id FROM delivery_locations WHERE (($1::text IS NOT NULL AND id=$1) OR ($1::text IS NULL AND lower(name)=lower($2))) AND active=true AND visible=true AND archived=false",
@@ -176,18 +219,30 @@ export async function checkout(
       "Online ordering is being prepared. Please check back when delivery is enabled.",
     );
   const method = input.paymentMethod ?? "cash_on_delivery";
-  if (method === "card") {
+  if (method === "card" && !assisted?.prepaid) {
     allow(user, ["customer", "commercial"]);
-    const policy = gatewayPolicy.safeParse(await settingValue(tx, "payment.gateway", branchId));
+    const policy = gatewayPolicy.safeParse(
+      await settingValue(tx, "payment.gateway", branchId),
+    );
     const availability = await paystackAvailability(tx, branchId);
-    if (!policy.success || !availability.available || !policy.data.channels.includes("card"))
-      throw new AppError(409, "Credit / debit card checkout is currently unavailable.");
+    if (
+      !policy.success ||
+      !availability.available ||
+      !policy.data.channels.includes("card")
+    )
+      throw new AppError(
+        409,
+        "Credit / debit card checkout is currently unavailable.",
+      );
   }
   if (
     method === "wallet" &&
     !(await settingValue(tx, "wallet.enabled", branchId))
   )
-    throw new AppError(409, "Wallet payment is not enabled for this delivery branch.");
+    throw new AppError(
+      409,
+      "Wallet payment is not enabled for this delivery branch.",
+    );
   if (
     method === "cash_on_delivery" &&
     !(await settingValue(tx, "payment.cod", branchId))
@@ -266,18 +321,19 @@ export async function checkout(
   }).format(new Date());
   const day = new Date(input.date + "T00:00:00+01:00");
   if (
-    !Number.isFinite(day.getTime()) ||
-    new Intl.DateTimeFormat("en-CA", {
-      timeZone: "Africa/Lagos",
-      year: "numeric",
-      month: "2-digit",
-      day: "2-digit",
-    }).format(day) !== input.date ||
-    input.date < today ||
-    day.getTime() > Date.now() + 30 * 86400000
+    !visit &&
+    (!Number.isFinite(day.getTime()) ||
+      new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Africa/Lagos",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      }).format(day) !== input.date ||
+      input.date < today ||
+      day.getTime() > Date.now() + 30 * 86400000)
   )
     throw new AppError(400, "Choose a delivery date within the next 30 days.");
-  if (input.date === today) {
+  if (!visit && input.date === today) {
     const end = input.window.split(/[–-]/)[1]?.match(/^(\d{2}):(\d{2})$/);
     const time = new Intl.DateTimeFormat("en-GB", {
       timeZone: "Africa/Lagos",
@@ -300,11 +356,11 @@ export async function checkout(
   const booked = Number(
     (await one(
       tx,
-      "SELECT count(*) AS n FROM orders WHERE branch_id='lagos' AND delivery_date=$1 AND delivery_window=$2 AND status NOT IN ('cancelled','delivery_failed')",
+      "SELECT count(*) AS n FROM orders WHERE branch_id='lagos' AND delivery_date=$1 AND delivery_window=$2 AND status NOT IN ('cancelled','delivery_failed') AND NOT EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id)",
       [input.date, input.window],
     ))!.n,
   );
-  if (booked >= capacity)
+  if (!visit && booked >= capacity)
     throw new AppError(
       409,
       "This delivery window is fully booked. Choose another window or date.",
@@ -343,7 +399,9 @@ export async function checkout(
     subtotal += unit * item.quantity;
     items.push({ ...item, name: p.name, unit });
   }
-  const fee = Number(await settingValue(tx, "delivery.fee", branchId));
+  const fee = visit
+    ? 0
+    : Number(await settingValue(tx, "delivery.fee", branchId));
   if (!Number.isSafeInteger(subtotal) || !Number.isSafeInteger(fee) || fee < 0)
     throw new AppError(409, "Pricing is unavailable.");
   if (
@@ -356,6 +414,7 @@ export async function checkout(
       "The quotation changed. Review and accept the revised total.",
       "PRICE_CHANGED",
     );
+  let tankerReservation: any;
   if (gas) {
     const requested = gas.lines.reduce((n, g) => n + g.grams, 0);
     const reserved = await one(
@@ -363,11 +422,14 @@ export async function checkout(
       "UPDATE gas_stock SET reserved_grams=reserved_grams+$1 WHERE branch_id='lagos' AND grams-reserved_grams>=$1 RETURNING branch_id",
       [requested],
     );
-    if (!reserved)
-      throw new AppError(
-        409,
-        "Insufficient verified gas stock for this order.",
-      );
+    if (!reserved) {
+      tankerReservation = await takeTankerBuffer(tx, branchId, requested);
+      if (!tankerReservation)
+        throw new AppError(
+          409,
+          "Insufficient verified gas stock for this order.",
+        );
+    }
   }
   const code = String(randomInt(100000, 1000000));
   const orderId = id(),
@@ -453,7 +515,23 @@ export async function checkout(
       ],
     );
   }
-  await allocateCylinders(tx, user, branchId, items, { orderId });
+  if (tankerReservation && gas)
+    await recordTankerAllocation(
+      tx,
+      user,
+      orderId,
+      tankerReservation,
+      gas.lines.reduce((n, g) => n + g.grams, 0),
+      false,
+    );
+  await allocateCylinders(
+    tx,
+    user,
+    branchId,
+    items,
+    { orderId },
+    visit ? assisted?.visitProducts : undefined,
+  );
   for (const item of items) {
     await tx.query(
       "INSERT INTO order_items(order_id,product_id,name,quantity,unit_price_kobo) VALUES ($1,$2,$3,$4,$5)",
@@ -534,13 +612,14 @@ export async function checkout(
     ]);
     order!.payment_status = "verified";
   }
-  await notify(
-    tx,
-    customerId,
-    "Delivery confirmation code",
-    `Your delivery confirmation code is ${code}. Share it only after receiving all items.`,
-    orderId,
-  );
+  if (!visit)
+    await notify(
+      tx,
+      customerId,
+      "Delivery confirmation code",
+      `Your delivery confirmation code is ${code}. Share it only after receiving all items.`,
+      orderId,
+    );
   await notify(
     tx,
     customerId,
@@ -548,6 +627,9 @@ export async function checkout(
     `${ref} has been received. ${method === "wallet" ? "Paid from your wallet balance." : method === "card" ? "Card payment is required before dispatch. Complete secure checkout from My Orders." : "Payment is due on delivery."}`,
     orderId,
   );
+  if (!assisted && ["customer", "commercial"].includes(user.role))
+    await recordCustomerDeliveryPin(tx, orderId, customerId, "checkout");
+  if (assisted?.prepaid) await createPhonePaymentLink(tx, user, orderId);
   return order;
 }
 function randomSuffix() {
@@ -559,12 +641,14 @@ export async function transitionOrder(
   input: {
     id: string;
     status: string;
-    note: string;
+    note?: string;
     driverId?: string;
     version?: number;
     failureReason?: string;
   },
 ) {
+  const note = operationNoteSchema("order.transition", input, "note").parse(input.note);
+  input = { ...input, note };
   const o = await one(tx, "SELECT * FROM orders WHERE id=$1 FOR UPDATE", [
     input.id,
   ]);
@@ -604,6 +688,21 @@ export async function transitionOrder(
   }
   if (!orderTransitions[o.status]?.includes(input.status))
     throw new AppError(409, "This order status transition is not allowed.");
+  if (
+    (input.status === "cancelled" ||
+      (input.status === "assigned" &&
+        o.driver_id &&
+        input.driverId !== o.driver_id)) &&
+    (await one(
+      tx,
+      "SELECT l.order_id FROM order_visit_links l JOIN orders c ON c.id=l.order_id WHERE l.parent_order_id=$1 AND c.status NOT IN ('delivered','cancelled') LIMIT 1",
+      [o.id],
+    ))
+  )
+    throw new AppError(
+      409,
+      "Resolve the linked extra orders before cancelling or changing the original visit’s driver.",
+    );
   if (input.status === "delivered")
     throw new AppError(
       409,
@@ -624,7 +723,7 @@ export async function transitionOrder(
     const booked = Number(
       (await one(
         tx,
-        "SELECT count(*) AS n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status NOT IN ('cancelled','delivery_failed')",
+        "SELECT count(*) AS n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status NOT IN ('cancelled','delivery_failed') AND NOT EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id) AND id<>COALESCE((SELECT l.parent_order_id FROM order_visit_links l WHERE l.order_id=$4),$4)",
         [o.branch_id, o.delivery_date, o.delivery_window, o.id],
       ))!.n,
     );
@@ -640,7 +739,7 @@ export async function transitionOrder(
       [input.driverId, o.branch_id],
     );
     if (!driver) throw new AppError(400, "Driver unavailable in this branch.");
-    await beginAttempt(tx, o, input.driverId);
+    await beginAttempt(tx, o, input.driverId, user);
     await tx.query("UPDATE orders SET driver_id=$1 WHERE id=$2", [
       driver.id,
       o.id,
@@ -659,7 +758,7 @@ export async function transitionOrder(
       409,
       "Confirm the complete pickup manifest before dispatch.",
     );
-  if(input.status === "out_for_delivery") await verifyVehicleLPGPickup(tx,o);
+  if (input.status === "out_for_delivery") await verifyVehicleLPGPickup(tx, o);
   if (input.status === "delivery_failed" && attempt) {
     await tx.query(
       "UPDATE delivery_attempts SET state='failed',completed_at=now() WHERE id=$1",
@@ -709,6 +808,7 @@ export async function transitionOrder(
         "Physically receive and inspect the held goods before cancellation.",
       );
     await gasReservation(tx, user, o.id, "released");
+    await settleVisitProducts(tx, user, o, "released");
     await tx.query("SELECT id FROM branches WHERE id=$1 FOR UPDATE", [
       o.branch_id,
     ]);

@@ -1,6 +1,12 @@
 /** Read contracts over canonical delivery records; no parallel dispatch state. */
-export type DispatchTab = "queue" | "live" | "completed" | "exceptions";
+export type DispatchTab =
+  | "queue"
+  | "live"
+  | "completed"
+  | "exceptions"
+  | "payment";
 export const dispatchTabs: DispatchTab[] = [
+  "payment",
   "queue",
   "live",
   "completed",
@@ -46,11 +52,26 @@ export function driverContact(
 export function dispatchOrderTab(
   order: {
     status: string;
+    payment_status?: string;
+    payment_method?: string;
+    order_source?: string;
+    operational_review?: string | null;
     driver_response?: string | null;
     delivery_code_expires_at?: string | Date;
   },
   now = Date.now(),
 ): DispatchTab | null {
+  if (["placed", "accepted", "preparing"].includes(order.status)) {
+    if (
+      order.payment_status !== "verified" &&
+      (order.payment_method === "card" ||
+        order.order_source === "PHONE_ASSISTED")
+    )
+      return "payment";
+    if (order.operational_review) return "exceptions";
+    if (order.status === "placed" && order.payment_status === "verified")
+      return "queue";
+  }
   if (
     order.status === "assigned" &&
     (order.driver_response === "rejected" ||

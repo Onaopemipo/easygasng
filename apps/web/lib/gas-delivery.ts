@@ -1,4 +1,8 @@
-import { deliveryCoveragePending, hasConfirmedDeliveryCoverage } from "../../../packages/business-rules/src/delivery-coverage";
+import { availableTanker } from "./tanker-orders";
+import {
+  deliveryCoveragePending,
+  hasConfirmedDeliveryCoverage,
+} from "../../../packages/business-rules/src/delivery-coverage";
 import { z } from "zod";
 import { bulkReservation } from "./bulk-lpg-reservation";
 import { requireAvailableEmptyCylinders } from "./cylinder-allocation";
@@ -113,11 +117,26 @@ export async function gasDeliveryAction(
     return { id: lid, request: r };
   }
   if (action === "gas.cylinders") {
-    const d=z.object({lineId:z.string().uuid()}).strict().parse(input);
-    const line=await one(tx,"SELECT g.*,o.customer_id,o.branch_id FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.id=$1",[d.lineId]);
-    if(!line) throw new AppError(404,"Gas line not found.");
-    allow(user,["owner","finance"],line.branch_id);
-    return (await tx.query("SELECT c.id,c.serial,c.size_kg,c.status,c.test_due,(c.id=$4) AS selected,EXISTS(SELECT 1 FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.cylinder_id=c.id AND g.order_id<>$3 AND (o.status NOT IN ('cancelled','delivered','delivery_failed') OR EXISTS(SELECT 1 FROM delivery_attempts a WHERE a.order_id=o.id AND a.picked_up_at IS NOT NULL AND a.state IN ('picked_up','arrived','failed')))) AS committed FROM cylinders c WHERE c.branch_id=$1 AND c.size_kg*1000=$5 AND (c.customer_id=$2 OR EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.order_id=$3 AND a.state='reserved')) ORDER BY c.serial",[line.branch_id,line.customer_id,line.order_id,line.cylinder_id,Number(line.capacity_grams)])).rows;
+    const d = z.object({ lineId: z.string().uuid() }).strict().parse(input);
+    const line = await one(
+      tx,
+      "SELECT g.*,o.customer_id,o.branch_id FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.id=$1",
+      [d.lineId],
+    );
+    if (!line) throw new AppError(404, "Gas line not found.");
+    allow(user, ["owner", "finance"], line.branch_id);
+    return (
+      await tx.query(
+        "SELECT c.id,c.serial,c.size_kg,c.status,c.test_due,(c.id=$4) AS selected,EXISTS(SELECT 1 FROM order_gas_lines g JOIN orders o ON o.id=g.order_id WHERE g.cylinder_id=c.id AND g.order_id<>$3 AND (o.status NOT IN ('cancelled','delivered','delivery_failed') OR EXISTS(SELECT 1 FROM delivery_attempts a WHERE a.order_id=o.id AND a.picked_up_at IS NOT NULL AND a.state IN ('picked_up','arrived','failed')))) AS committed FROM cylinders c WHERE c.branch_id=$1 AND c.size_kg*1000=$5 AND (c.customer_id=$2 OR EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.order_id=$3 AND a.state='reserved')) ORDER BY c.serial",
+        [
+          line.branch_id,
+          line.customer_id,
+          line.order_id,
+          line.cylinder_id,
+          Number(line.capacity_grams),
+        ],
+      )
+    ).rows;
   }
   if (action === "gas.inspections") {
     allow(user, ["owner", "finance"]);
@@ -180,6 +199,7 @@ export async function gasDeliveryAction(
     const d = z
       .object({
         orderId: z.string().uuid(),
+        locationVersion: z.number().int().positive().optional(),
         reason: z.string().trim().min(10).max(1000),
       })
       .strict()
@@ -195,6 +215,7 @@ export async function gasDeliveryAction(
       o.location_id,
     ]);
     if (!l) throw new AppError(409, "Location record missing.");
+    if (d.locationVersion !== undefined && Number(l.version) !== d.locationVersion) throw new AppError(409,"Delivery coverage changed. Reload and review the current coverage before confirming.");
     if ((!l.active || l.archived) && user.role !== "owner")
       throw new AppError(
         403,
@@ -515,13 +536,32 @@ export async function gasQuote(
 ) {
   const c = await gasCatalogue(tx, branch);
   if (locationId !== undefined) {
-    const location = c.locations.find(l => l.id === locationId && l.branch_id === branch);
-    if (!location) throw new AppError(400, "Choose an active supported delivery location.");
+    const location = c.locations.find(
+      (l) => l.id === locationId && l.branch_id === branch,
+    );
+    if (!location)
+      throw new AppError(400, "Choose an active supported delivery location.");
     if (!hasConfirmedDeliveryCoverage(location.coverage))
-      throw new AppError(409, deliveryCoveragePending, "DELIVERY_COVERAGE_PENDING");
-    const delivery = await one(tx, "SELECT value FROM settings WHERE key='delivery.enabled' AND scope=$1", [branch]);
-    if (delivery?.value !== true) throw new AppError(409, "Online delivery is not available in this area yet.");
-    if (c.feeVersion == null || !Number.isSafeInteger(c.deliveryKobo) || c.deliveryKobo < 0)
+      throw new AppError(
+        409,
+        deliveryCoveragePending,
+        "DELIVERY_COVERAGE_PENDING",
+      );
+    const delivery = await one(
+      tx,
+      "SELECT value FROM settings WHERE key='delivery.enabled' AND scope=$1",
+      [branch],
+    );
+    if (delivery?.value !== true)
+      throw new AppError(
+        409,
+        "Online delivery is not available in this area yet.",
+      );
+    if (
+      c.feeVersion == null ||
+      !Number.isSafeInteger(c.deliveryKobo) ||
+      c.deliveryKobo < 0
+    )
       throw new AppError(409, "Delivery pricing is unavailable.");
   }
   let subtotal = 0;
@@ -539,8 +579,18 @@ export async function gasQuote(
   // Advisory only: checkout still atomically reserves stock under its existing locks.
   if (locationId !== undefined && calculated.length > 0) {
     const requested = calculated.reduce((mass, line) => mass + line.grams, 0);
-    if (!(await one(tx, "SELECT branch_id FROM gas_stock WHERE branch_id=$1 AND grams-reserved_grams >= $2", [branch, requested])))
-      throw new AppError(409, "Insufficient verified gas stock for this order.");
+    if (
+      !(await one(
+        tx,
+        "SELECT branch_id FROM gas_stock WHERE branch_id=$1 AND grams-reserved_grams >= $2",
+        [branch, requested],
+      )) &&
+      !(await availableTanker(tx, branch, requested))
+    )
+      throw new AppError(
+        409,
+        "Insufficient verified gas stock for this order.",
+      );
   }
   let physicalSubtotalKobo = 0;
   const physicalLines = [];
@@ -562,7 +612,13 @@ export async function gasQuote(
     if (locationId !== undefined && p.category === "Empty cylinders") {
       const size = Number(p.size_kg);
       const quantity = (emptyCylindersBySize.get(size) ?? 0) + item.quantity;
-      await requireAvailableEmptyCylinders(tx, branch, p.name, p.size_kg, quantity);
+      await requireAvailableEmptyCylinders(
+        tx,
+        branch,
+        p.name,
+        p.size_kg,
+        quantity,
+      );
       emptyCylindersBySize.set(size, quantity);
     }
     physicalSubtotalKobo += Number(p.price_kobo) * item.quantity;
@@ -629,20 +685,8 @@ export async function gasReservation(
         : `Order gas ${kind}`,
     ],
   );
-  if (kind === "fulfilled") {
-    const cylinders = (
-      await tx.query(
-        "UPDATE cylinders c SET status='filled' FROM order_gas_lines g WHERE g.order_id=$1 AND g.cylinder_id=c.id AND c.ownership='customer' AND c.status='empty' RETURNING c.id",
-        [orderId],
-      )
-    ).rows;
-    for (const c of cylinders)
-      await tx.query(
-        "INSERT INTO cylinder_events(id,cylinder_id,actor_id,previous_status,status,reason) VALUES ($1,$2,$3,'empty','filled',$4)",
-        [id(), c.id, user.id, "Gas refill fulfilled on order " + orderId],
-      );
-  }
 }
+
 export async function verifyGasDispatch(tx: SQL, orderId: string) {
   const lines = (
     await tx.query(
@@ -650,25 +694,8 @@ export async function verifyGasDispatch(tx: SQL, orderId: string) {
       [orderId],
     )
   ).rows;
-  for (const g of lines) {
-    const allocated = await one(
-      tx,
-      "SELECT id FROM cylinder_allocations WHERE cylinder_id=$1 AND order_id=$2 AND state='reserved'",
-      [g.cylinder_id, orderId],
-    );
-    if (
-      !g.inspected_at ||
-      g.status !== "empty" ||
-      Date.parse(g.test_due) <= Date.now() ||
-      g.branch_id !== g.order_branch ||
-      (!allocated && g.customer_id !== g.order_customer) ||
-      Number(g.allowable_grams) < Number(g.grams)
-    )
-      throw new AppError(
-        409,
-        "Verified cylinder inspection and filling eligibility are required before dispatch.",
-      );
-  }
+  // A doorstep bulk refill does not take the customer's cylinder into business custody.
+  // Keep historical cylinder records, but do not require serial registration or inspection.
   if (lines.length) {
     const coverage = await one(
       tx,
@@ -680,7 +707,7 @@ export async function verifyGasDispatch(tx: SQL, orderId: string) {
       coverage.value.requiresAddressConfirmation !== false &&
       !(await one(
         tx,
-        "SELECT a.id FROM audit_events a JOIN users u ON u.id=a.actor_id WHERE a.action='delivery.coverage_confirmed' AND a.target=$1 AND a.detail->>'locationId'=$2 AND a.detail->>'locationVersion'=$3 AND u.active=true AND u.role IN ('owner','manager') AND (u.role='owner' OR u.branch_id=$4)",
+        "SELECT a.id FROM audit_events a JOIN users u ON u.id=a.actor_id WHERE a.action='delivery.coverage_confirmed' AND a.target=$1 AND a.detail->>'locationId'=$2 AND a.detail->>'locationVersion'=$3 AND (NOT EXISTS(SELECT 1 FROM audit_events ch WHERE ch.target=$1 AND ch.action='phone_order.address_changed') OR a.detail->'address'=(SELECT address FROM orders WHERE id=$1)) AND u.active=true AND u.role IN ('owner','manager') AND (u.role='owner' OR u.branch_id=$4)",
         [orderId, coverage.id, String(coverage.version), lines[0].order_branch],
       ))
     )

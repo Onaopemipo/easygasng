@@ -1,4 +1,6 @@
 "use client";
+import { operationNoteRequired } from "../../../packages/business-rules/src/operation-notes";
+
 import { FieldCaption } from "./field-caption";
 import { OrderCardPayment } from "./hosted-payment";
 import { useEffect, useMemo, useState, useRef } from "react";
@@ -185,6 +187,12 @@ export function TrackingDetails({
   );
 }
 export default function DispatchTracking({ user, orderId = "" }: { user: any; orderId?: string }) {
+  const [movementChoices, setMovementChoices] = useState<Record<string, {action?: string; status?: string}>>({});
+  const movementNoteRequired = (o: any) => {
+    const action = movementChoices[o.id]?.action ?? "order.transition";
+    const status = movementChoices[o.id]?.status ?? (orderTransitions[o.status] ?? []).find((s: string) => s !== "delivered" && (user.role !== "driver" || ["out_for_delivery", "delivery_failed"].includes(s)));
+    return operationNoteRequired(action, action === "order.transition" ? "note" : "reason", {status}, action !== "delivery.complete");
+  };
   const tracking = useTrackingOrders(
       true,
       orderId,
@@ -433,7 +441,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                   >
                     <label>
                       <FieldCaption required={true}>Action</FieldCaption>
-                      <select name="action">
+                      <select name="action" onChange={e => setMovementChoices(v => ({...v, [o.id]: {...v[o.id], action: e.target.value}}))}>
                         <option value="order.transition">
                           {driver
                             ? "Update assigned delivery"
@@ -474,7 +482,7 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                     </label>
                     <label>
                       <FieldCaption required={true}>Next status when updating a delivery</FieldCaption>
-                      <select name="status">
+                      <select name="status" onChange={e => setMovementChoices(v => ({...v, [o.id]: {...v[o.id], status: e.target.value}}))}>
                         {(orderTransitions[o.status] ?? [])
                           .filter(
                             (s) =>
@@ -523,11 +531,11 @@ export default function DispatchTracking({ user, orderId = "" }: { user: any; or
                       </select>
                     </label>
                     <label>
-                      <FieldCaption required={true}>Operational reason / failure details</FieldCaption>
+                      <FieldCaption required={movementNoteRequired(o)}>{movementNoteRequired(o) ? "Reason and exception details" : "Operational note"}</FieldCaption>
                       <textarea
                         name="reason"
-                        required
-                        minLength={5}
+                        required={movementNoteRequired(o)}
+                        minLength={movementNoteRequired(o) ? 5 : undefined}
                         maxLength={500}
                       />
                     </label>

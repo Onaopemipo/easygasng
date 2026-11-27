@@ -1,12 +1,10 @@
 "use client";
-import { AuthShell } from "./auth-presentation";
-import { authRequest as api } from "./auth-request";
 import { FieldCaption } from "./field-caption";
 import { PASSWORD_MIN_LENGTH } from "../../../packages/business-rules/src/password-policy";
 
 import { FormInput } from "./password-input";
-import { useEffect, useState, useRef, type FormEvent } from "react";
-import { Notice, money } from "./ui";
+import { useEffect, useState, type FormEvent } from "react";
+import { api, Notice, money } from "./ui";
 export default function PhoneCompletion() {
   const [token, setToken] = useState(""),
     [code, setCode] = useState(""),
@@ -16,10 +14,7 @@ export default function PhoneCompletion() {
   useEffect(() => {
     const read=()=>{const raw=location.hash.slice(1);if(raw){setToken(raw);setOrder(null);setCode('');setMessage('');history.replaceState(null,'',location.pathname);}};read();window.addEventListener('hashchange',read);return()=>window.removeEventListener('hashchange',read);
   }, []);
-  const submitting = useRef(false);
   async function request() {
-    if (submitting.current) return;
-    submitting.current = true;
     setBusy(true);
     try {
       const r = await api("phone.otp", { token, channel: "sms" });
@@ -27,14 +22,11 @@ export default function PhoneCompletion() {
     } catch (e: any) {
       setMessage(e.message);
     } finally {
-      submitting.current = false;
       setBusy(false);
     }
   }
   async function review(e: FormEvent) {
     e.preventDefault();
-    if (submitting.current) return;
-    submitting.current = true;
     setBusy(true);
     try {
       const r = await api("phone.review", { token, code });
@@ -43,14 +35,11 @@ export default function PhoneCompletion() {
     } catch (e: any) {
       setMessage(e.message);
     } finally {
-      submitting.current = false;
       setBusy(false);
     }
   }
   async function complete(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (submitting.current) return;
-    submitting.current = true;
     setBusy(true);
     const f = new FormData(e.currentTarget);
     try {
@@ -65,13 +54,19 @@ export default function PhoneCompletion() {
     } catch (e: any) {
       setMessage(e.message);
     } finally {
-      submitting.current = false;
       setBusy(false);
     }
   }
   return (
-    <AuthShell mode="link" title="Complete your EasyGas account" back="/login"
-      description="Verify your phone before viewing your private order. Your existing customer account and order will be preserved.">
+    <main
+      className="container stack product-workspace"
+      style={{ padding: "48px 20px" }}
+    >
+      <h1>Complete your EasyGas account</h1>
+      <p>
+        Verify your phone before viewing your private order. Your existing
+        customer account and order will be preserved.
+      </p>
       {message && <Notice message={message} />}
       <button className="button" onClick={request} disabled={!token || busy}>
         Request phone verification code
@@ -123,6 +118,6 @@ export default function PhoneCompletion() {
           </form>
         </section>
       )}
-    </AuthShell>
+    </main>
   );
 }

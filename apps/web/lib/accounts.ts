@@ -1,3 +1,8 @@
+import { DEFAULT_USER_BRANCH_ID } from "../../../packages/business-rules/src/user-branch";
+import {
+  customerDeliveryPinSchema,
+  validateCustomerDeliveryPin,
+} from "./customer-delivery-pin";
 import { accountPassword } from "./password-policy";
 import { appOrigin } from "./request-origin";
 import { latestDeliveryPhoto } from "./delivery-photos";
@@ -15,11 +20,20 @@ import {
   allow,
 } from "./auth";
 import { audit, notify, propose } from "./governance";
-import { staffInvitationAccess, validateInvitationAccess } from "./staff-invitation-access";
+import {
+  staffInvitationAccess,
+  validateInvitationAccess,
+} from "./staff-invitation-access";
 import { sealMessage, requireMessageEncryption } from "./channel-messaging";
 import { bookingPhoneMessage } from "../../../packages/business-rules/src/booking-contact";
 import { normaliseCustomerPhone } from "../../../packages/business-rules/src/customer-identity";
-import { checkoutDelivery, defaultCheckoutAddress, type CheckoutAddress, type CheckoutDetailsOffer, type CheckoutProfile } from "../../../packages/business-rules/src/checkout-delivery";
+import {
+  checkoutDelivery,
+  defaultCheckoutAddress,
+  type CheckoutAddress,
+  type CheckoutDetailsOffer,
+  type CheckoutProfile,
+} from "../../../packages/business-rules/src/checkout-delivery";
 const email = z
   .email()
   .max(200)
@@ -80,32 +94,39 @@ export async function accountAction(
       "SELECT user_id FROM account_challenges WHERE token_hash=$1 AND purpose=$2",
       [digest(d.token), purpose],
     );
-    const account = challengeOwner && await one(
-      tx,
-      "SELECT active,provisional,password_hash,temporary_password_expires_at FROM users WHERE id=$1 FOR UPDATE",
-      [challengeOwner.user_id],
-    );
-    const c = account?.active && !account.provisional ? await one(
-      tx,
-      "SELECT * FROM account_challenges WHERE token_hash=$1 AND purpose=$2 FOR UPDATE",
-      [digest(d.token), purpose],
-    ) : null;
-    if (
-      !c ||
-      c.consumed_at ||
-      new Date(c.expires_at).getTime() <= Date.now()
-    )
+    const account =
+      challengeOwner &&
+      (await one(
+        tx,
+        "SELECT active,provisional,password_hash,temporary_password_expires_at FROM users WHERE id=$1 FOR UPDATE",
+        [challengeOwner.user_id],
+      ));
+    const c =
+      account?.active && !account.provisional
+        ? await one(
+            tx,
+            "SELECT * FROM account_challenges WHERE token_hash=$1 AND purpose=$2 FOR UPDATE",
+            [digest(d.token), purpose],
+          )
+        : null;
+    if (!c || c.consumed_at || new Date(c.expires_at).getTime() <= Date.now())
       throw new AppError(
         400,
         "This link has expired or has already been used. Request a new link.",
       );
     if ("password" in d && typeof d.password === "string") {
-      if (account!.temporary_password_expires_at && passwordMatches(d.password, account!.password_hash))
-        throw new AppError(400, "Choose a password different from your temporary password.");
-      await tx.query("UPDATE users SET password_hash=$1,verified=(verified OR temporary_password_expires_at IS NOT NULL),temporary_password_expires_at=NULL WHERE id=$2", [
-        hashPassword(d.password),
-        c.user_id,
-      ]);
+      if (
+        account!.temporary_password_expires_at &&
+        passwordMatches(d.password, account!.password_hash)
+      )
+        throw new AppError(
+          400,
+          "Choose a password different from your temporary password.",
+        );
+      await tx.query(
+        "UPDATE users SET password_hash=$1,verified=(verified OR temporary_password_expires_at IS NOT NULL),temporary_password_expires_at=NULL WHERE id=$2",
+        [hashPassword(d.password), c.user_id],
+      );
       await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
         c.user_id,
       ]);
@@ -116,7 +137,10 @@ export async function accountAction(
       [c.user_id, purpose],
     );
     if (purpose === "reset" && account?.temporary_password_expires_at)
-      await tx.query("UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='verify' AND consumed_at IS NULL", [c.user_id]);
+      await tx.query(
+        "UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='verify' AND consumed_at IS NULL",
+        [c.user_id],
+      );
     await audit(tx, null, action, c.user_id);
     await notify(
       tx,
@@ -126,7 +150,13 @@ export async function accountAction(
         ? "Your password changed. All existing sessions were signed out."
         : "Your email address has been verified.",
     );
-    return { ok: true, message: purpose === "reset" ? "Password reset. Sign in with your new password." : "Your email address is verified." };
+    return {
+      ok: true,
+      message:
+        purpose === "reset"
+          ? "Password reset. Sign in with your new password."
+          : "Your email address is verified.",
+    };
   }
   if (action === "invitation.accept") {
     const d = z
@@ -147,11 +177,18 @@ export async function accountAction(
       invitation.role !== "owner"
     )
       throw new AppError(400, "This invitation is no longer valid.");
-    if (invitation.temporary_password_hash && !passwordMatches(d.password, invitation.temporary_password_hash))
-      throw new AppError(400, "The temporary password does not match this invitation.");
+    if (
+      invitation.temporary_password_hash &&
+      !passwordMatches(d.password, invitation.temporary_password_hash)
+    )
+      throw new AppError(
+        400,
+        "The temporary password does not match this invitation.",
+      );
     // Invitations create an unprivileged account. Staff access still requires the existing independent dual approval.
     const uid = id();
-    const created = await one(tx,
+    const created = await one(
+      tx,
       "INSERT INTO users(id,name,email,password_hash,role,branch_id,verified,temporary_password_expires_at) VALUES ($1,$2,$3,$4,'customer',$5,true,$6) ON CONFLICT(email) DO NOTHING RETURNING id",
       [
         uid,
@@ -163,14 +200,20 @@ export async function accountAction(
       ],
     );
     if (!created)
-      throw new AppError(409, "This email already has an account. Ask your administrator to use the staff access workflow.");
+      throw new AppError(
+        409,
+        "This email already has an account. Ask your administrator to use the staff access workflow.",
+      );
     await tx.query(
       "UPDATE staff_invitations SET accepted_at=now() WHERE id=$1",
       [invitation.id],
     );
     let accessRequestId: string | undefined;
     if (invitation.requested_access) {
-      const plan = validateInvitationAccess(invitation.requested_access, invitation.branch_id);
+      const plan = validateInvitationAccess(
+        invitation.requested_access,
+        invitation.branch_id,
+      );
       const inviter: Actor = {
         id: invitation.invited_by,
         name: invitation.inviter_name,
@@ -180,16 +223,23 @@ export async function accountAction(
         verified_at: null,
         session_id: "",
       };
-      const revoked = await one(tx,
+      const revoked = await one(
+        tx,
         "SELECT 1 FROM staff_privilege_overrides WHERE user_id=$1 AND privilege='staff.manage' AND effect='deny'",
         [inviter.id],
       );
-      if (revoked) throw new AppError(400, "This invitation is no longer valid.");
-      const setting = await one(tx,
+      if (revoked)
+        throw new AppError(400, "This invitation is no longer valid.");
+      const setting = await one(
+        tx,
         "SELECT version FROM settings WHERE key='security.permissions' AND scope=$1 FOR UPDATE",
         [invitation.branch_id],
       );
-      if (!setting) throw new AppError(409, "Staff access is not configured for this branch. Ask your administrator for help.");
+      if (!setting)
+        throw new AppError(
+          409,
+          "Staff access is not configured for this branch. Ask your administrator for help.",
+        );
       // The owner authorised this exact plan when sending the invite. Acceptance
       // submits it for review; it does not verify or impersonate an owner session.
       const request = await propose(tx, inviter, {
@@ -200,11 +250,14 @@ export async function accountAction(
         reason: "Initial staff access selected on the accepted invitation.",
       });
       accessRequestId = request.id;
-      await tx.query("UPDATE staff_invitations SET access_request_id=$1 WHERE id=$2", [
-        accessRequestId, invitation.id,
-      ]);
+      await tx.query(
+        "UPDATE staff_invitations SET access_request_id=$1 WHERE id=$2",
+        [accessRequestId, invitation.id],
+      );
     }
-    await audit(tx, null, "invitation.accepted", uid, "success", { accessRequestId });
+    await audit(tx, null, "invitation.accepted", uid, "success", {
+      accessRequestId,
+    });
     await notify(
       tx,
       invitation.invited_by,
@@ -218,7 +271,9 @@ export async function accountAction(
       ok: true,
       message: invitation.temporary_password_hash
         ? "Invitation accepted. Sign in with your temporary password, then choose a new password." +
-          (accessRequestId ? " Your staff access is awaiting independent approval." : "")
+          (accessRequestId
+            ? " Your staff access is awaiting independent approval."
+            : "")
         : "Invitation accepted. Sign in with the password you just set.",
     };
   }
@@ -267,18 +322,54 @@ export async function accountAction(
         )
       ).rows,
     };
+  if (action === "account.repeat-order") {
+    if (!user) throw new AppError(401, "Sign in to order again.");
+    allow(user, ["customer", "commercial"]);
+    const d = z.object({ orderId: z.uuid() }).strict().parse(input);
+    const order = await one(tx, "SELECT id,address,location_id,status FROM orders WHERE id=$1 AND customer_id=$2", [d.orderId,user.id]);
+    if (!order) throw new AppError(404, "Order not found.");
+    if (!["delivered","cancelled"].includes(order.status)) throw new AppError(409, "This order is still active. Review it in Orders before placing another.");
+    const lines = (await tx.query("SELECT grams,capacity_grams FROM order_gas_lines WHERE order_id=$1 ORDER BY id", [order.id])).rows.map((g:any)=>({kg:Number(g.grams)/1000,capacityKg:Number(g.capacity_grams)/1000}));
+    const items = (await tx.query("SELECT product_id,quantity FROM order_items WHERE order_id=$1 ORDER BY product_id", [order.id])).rows.map((i:any)=>({productId:i.product_id,quantity:Number(i.quantity)}));
+    if (!lines.length && !items.length) throw new AppError(409,"This order cannot be repeated. Start a new order instead.");
+    const a = checkoutDelivery({user:{id:user.id,name:user.name}} as any, {street:order.address.street,zone:order.address.zone,phone:order.address.phone,location_id:order.location_id,details:order.address} as any,user.name);
+    // Only editable quantities and contact details: never copy money, payment attempts or capabilities.
+    return {repeat:true,customerId:user.id,lines,items,address:{...a,name:order.address.name || user.name},date:"",window:"",method:"card",gasEnabled:lines.length>0};
+  }
   if (action === "account.checkout-details") {
     allow(user, ["customer", "commercial"]);
-    const d = z.object({
-      orderId: z.uuid(),
-      save: z.object({ phone: z.boolean(), address: z.boolean(), version: z.string().length(64) }).strict().optional(),
-    }).strict().parse(input);
-    const account = await one<NonNullable<CheckoutProfile["user"]> & { active: boolean; provisional: boolean }>(tx,
-      "SELECT id,name,active,provisional,contact_phone,delivery_phone FROM users WHERE id=$1" + (d.save ? " FOR UPDATE" : ""),
+    const d = z
+      .object({
+        orderId: z.uuid(),
+        save: z
+          .object({
+            phone: z.boolean(),
+            address: z.boolean(),
+            version: z.string().length(64),
+          })
+          .strict()
+          .optional(),
+      })
+      .strict()
+      .parse(input);
+    const account = await one<
+      NonNullable<CheckoutProfile["user"]> & {
+        active: boolean;
+        provisional: boolean;
+      }
+    >(
+      tx,
+      "SELECT id,name,active,provisional,contact_phone,delivery_phone FROM users WHERE id=$1" +
+        (d.save ? " FOR UPDATE" : ""),
       [user.id],
     );
-    if (!account?.active || account.provisional) throw new AppError(403, "Sign in to an active customer account to save delivery details.");
-    const order = await one(tx,
+    if (!account?.active || account.provisional)
+      throw new AppError(
+        403,
+        "Sign in to an active customer account to save delivery details.",
+      );
+    const order = await one(
+      tx,
       "SELECT address, location_id FROM orders WHERE id=$1 AND customer_id=$2 AND order_source IN ('WEB','MOBILE')",
       [d.orderId, user.id],
     );
@@ -286,19 +377,31 @@ export async function accountAction(
     const address = order.address;
     const phone = normaliseCustomerPhone(address?.phone ?? "");
     if (!phone) throw new AppError(400, bookingPhoneMessage);
-    const version = digest(JSON.stringify([d.orderId, order.location_id, address]));
-    const savedAddresses = (await tx.query(
-      "SELECT id,label,street,zone,phone,location_id,is_default,details FROM account_addresses WHERE customer_id=$1 AND archived=false ORDER BY is_default DESC,created_at,id",
-      [user.id],
-    )).rows as CheckoutAddress[];
-    const normalise = (value: string) => value.trim().replace(/\s+/g, " ").toLowerCase();
-    const saved = savedAddresses.find(item =>
-      (item.location_id ? item.location_id === order.location_id : normalise(item.zone) === normalise(address.zone)) &&
-      normalise(item.street) === normalise(address.street)
+    const version = digest(
+      JSON.stringify([d.orderId, order.location_id, address]),
     );
-    const current = checkoutDelivery({ user: account, addresses: savedAddresses }, saved ?? defaultCheckoutAddress(savedAddresses));
+    const savedAddresses = (
+      await tx.query(
+        "SELECT id,label,street,zone,phone,location_id,is_default,details FROM account_addresses WHERE customer_id=$1 AND archived=false ORDER BY is_default DESC,created_at,id",
+        [user.id],
+      )
+    ).rows as CheckoutAddress[];
+    const normalise = (value: string) =>
+      value.trim().replace(/\s+/g, " ").toLowerCase();
+    const saved = savedAddresses.find(
+      (item) =>
+        (item.location_id
+          ? item.location_id === order.location_id
+          : normalise(item.zone) === normalise(address.zone)) &&
+        normalise(item.street) === normalise(address.street),
+    );
+    const current = checkoutDelivery(
+      { user: account, addresses: savedAddresses },
+      saved ?? defaultCheckoutAddress(savedAddresses),
+    );
     const details = {
       recipient: address.name.trim(),
+      deliveryPin: address.deliveryPin,
       building: address.building?.trim() || saved?.details?.building,
       landmark: address.landmark?.trim() || saved?.details?.landmark,
       directions: address.directions?.trim() || saved?.details?.directions,
@@ -306,14 +409,28 @@ export async function accountAction(
     const offer: CheckoutDetailsOffer = {
       version,
       phone: phone !== normaliseCustomerPhone(current.phone) ? phone : null,
-      address: !saved || details.recipient !== current.name ||
-        details.building !== saved.details?.building || details.landmark !== saved.details?.landmark ||
+      address:
+        !saved ||
+        JSON.stringify(details.deliveryPin) !==
+          JSON.stringify(saved.details?.deliveryPin) ||
+        details.recipient !== current.name ||
+        details.building !== saved.details?.building ||
+        details.landmark !== saved.details?.landmark ||
         details.directions !== saved.details?.directions
-        ? { street: address.street.trim(), zone: address.zone, recipient: details.recipient, phone: saved?.phone ?? phone }
-        : null,
+          ? {
+              street: address.street.trim(),
+              zone: address.zone,
+              recipient: details.recipient,
+              phone: saved?.phone ?? phone,
+            }
+          : null,
     };
     if (!d.save) return offer;
-    if (d.save.version !== version) throw new AppError(409, "The delivery details changed. Review the current details before saving.");
+    if (d.save.version !== version)
+      throw new AppError(
+        409,
+        "The delivery details changed. Review the current details before saving.",
+      );
     const savePhone = Boolean(d.save.phone && offer.phone);
     const saveAddress = Boolean(d.save.address && offer.address);
     if (saveAddress) {
@@ -329,16 +446,28 @@ export async function accountAction(
       });
     }
     if (savePhone) {
-      await tx.query("UPDATE users SET delivery_phone=$1 WHERE id=$2", [phone, user.id]);
-      if (saved && !saveAddress) await tx.query(
-        "UPDATE account_addresses SET phone=$1 WHERE id=$2 AND customer_id=$3 AND archived=false",
-        [phone, saved.id, user.id],
-      );
+      await tx.query("UPDATE users SET delivery_phone=$1 WHERE id=$2", [
+        phone,
+        user.id,
+      ]);
+      if (saved && !saveAddress)
+        await tx.query(
+          "UPDATE account_addresses SET phone=$1 WHERE id=$2 AND customer_id=$3 AND archived=false",
+          [phone, saved.id, user.id],
+        );
     }
-    if (savePhone || saveAddress) await audit(tx, user, "account.checkout_details_saved", d.orderId, "success", {
-      phone: savePhone,
-      address: saveAddress,
-    });
+    if (savePhone || saveAddress)
+      await audit(
+        tx,
+        user,
+        "account.checkout_details_saved",
+        d.orderId,
+        "success",
+        {
+          phone: savePhone,
+          address: saveAddress,
+        },
+      );
     return { ok: true };
   }
   if (action === "account.export") {
@@ -525,14 +654,19 @@ export async function accountAction(
     await tx.query("UPDATE sessions SET revoked_at=now() WHERE user_id=$1", [
       user.id,
     ]);
-    await tx.query("UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='reset' AND consumed_at IS NULL", [user.id]);
+    await tx.query(
+      "UPDATE account_challenges SET consumed_at=now() WHERE user_id=$1 AND purpose='reset' AND consumed_at IS NULL",
+      [user.id],
+    );
     await audit(tx, user, "account.password_changed", user.id);
     return { ok: true, signedOut: true };
   }
   if (action === "account.verification.send") {
-    const row = await one(tx, "SELECT verified,email FROM users WHERE id=$1 FOR UPDATE", [
-      user.id,
-    ]);
+    const row = await one(
+      tx,
+      "SELECT verified,email FROM users WHERE id=$1 FOR UPDATE",
+      [user.id],
+    );
     if (row!.verified) return { ok: true };
     const existing = await one(
       tx,
@@ -569,6 +703,7 @@ export async function accountAction(
         landmark: z.string().max(250).optional(),
         directions: z.string().max(500).optional(),
         recipient: z.string().max(100).optional(),
+        deliveryPin: customerDeliveryPinSchema.optional(),
         label: z.string().trim().min(2).max(40),
         street: z.string().trim().min(5).max(250),
         zone: z.string().trim().max(100).default(""),
@@ -585,6 +720,7 @@ export async function accountAction(
     if (!location)
       throw new AppError(400, "Choose an active supported delivery location.");
     d.zone = location.name;
+    validateCustomerDeliveryPin(d);
     const aid = d.id ?? id();
     if (d.id) {
       const a = await one(
@@ -618,6 +754,7 @@ export async function accountAction(
           landmark: d.landmark,
           directions: d.directions,
           recipient: d.recipient,
+          deliveryPin: d.deliveryPin,
         }),
         aid,
         user.id,
@@ -762,7 +899,7 @@ export async function accountAction(
       .object({
         email,
         name: z.string().trim().min(2).max(100),
-        branchId: z.string().min(1).max(100),
+        branchId: z.string().min(1).max(100).default(DEFAULT_USER_BRANCH_ID),
         access: staffInvitationAccess.optional(),
       })
       .strict()
@@ -774,11 +911,21 @@ export async function accountAction(
     )
       throw new AppError(400, "Choose an active branch.");
     allow(user, ["owner"], d.branchId);
-    const access = d.access ? validateInvitationAccess(d.access, d.branchId) : null;
-    if (access && !(await one(tx,
-      "SELECT 1 FROM settings WHERE key='security.permissions' AND scope=$1",
-      [d.branchId],
-    ))) throw new AppError(409, "Staff access is not configured for this branch. Choose a configured branch or contact your administrator.");
+    const access = d.access
+      ? validateInvitationAccess(d.access, d.branchId)
+      : null;
+    if (
+      access &&
+      !(await one(
+        tx,
+        "SELECT 1 FROM settings WHERE key='security.permissions' AND scope=$1",
+        [d.branchId],
+      ))
+    )
+      throw new AppError(
+        409,
+        "Staff access is not configured for this branch. Choose a configured branch or contact your administrator.",
+      );
     await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
       "staff-invite:" + d.email,
     ]);
@@ -802,7 +949,16 @@ export async function accountAction(
     const iid = id();
     await tx.query(
       "INSERT INTO staff_invitations(id,email,name,branch_id,invited_by,token_hash,expires_at,temporary_password_hash,requested_access) VALUES ($1,$2,$3,$4,$5,$6,now()+interval '48 hours',$7,$8)",
-      [iid, d.email, d.name, d.branchId, user.id, digest(token), hashPassword(temporaryPassword), access ? JSON.stringify(access) : null],
+      [
+        iid,
+        d.email,
+        d.name,
+        d.branchId,
+        user.id,
+        digest(token),
+        hashPassword(temporaryPassword),
+        access ? JSON.stringify(access) : null,
+      ],
     );
     await queueMessage(
       tx,
@@ -813,7 +969,10 @@ export async function accountAction(
       `invite:${iid}:${digest(token)}`,
       true,
     );
-    await audit(tx, user, "staff.invited", iid, "success", { role: access?.role, changes: access?.changes });
+    await audit(tx, user, "staff.invited", iid, "success", {
+      role: access?.role,
+      changes: access?.changes,
+    });
     return {
       ok: true,
       invitationId: iid,
@@ -853,7 +1012,9 @@ export async function accountAction(
       await audit(tx, user, "staff.invitation_revoked", i.id);
       return { ok: true };
     }
-    await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", ["staff-invite:" + i.email]);
+    await tx.query("SELECT pg_advisory_xact_lock(hashtext($1))", [
+      "staff-invite:" + i.email,
+    ]);
     if (
       !(await one(tx, "SELECT id FROM branches WHERE id=$1 AND active=true", [
         i.branch_id,
@@ -865,8 +1026,17 @@ export async function accountAction(
         409,
         "This account already exists. Use its access request controls.",
       );
-    if (await one(tx, "SELECT id FROM staff_invitations WHERE email=$1 AND id<>$2 AND accepted_at IS NULL AND expires_at>now()", [i.email, i.id]))
-      throw new AppError(409, "A newer invitation already exists for this email. Resend that invitation instead.");
+    if (
+      await one(
+        tx,
+        "SELECT id FROM staff_invitations WHERE email=$1 AND id<>$2 AND accepted_at IS NULL AND expires_at>now()",
+        [i.email, i.id],
+      )
+    )
+      throw new AppError(
+        409,
+        "A newer invitation already exists for this email. Resend that invitation instead.",
+      );
     const { token, password: temporaryPassword } = invitationCredentials();
     await tx.query(
       "UPDATE staff_invitations SET token_hash=$1,expires_at=now()+interval '48 hours',invited_by=$2,temporary_password_hash=$3 WHERE id=$4",
@@ -886,7 +1056,11 @@ export async function accountAction(
       true,
     );
     await audit(tx, user, "staff.invitation_resent", i.id);
-    return { ok: true, message: "A new invitation email is queued. The previous link and temporary password have been replaced." };
+    return {
+      ok: true,
+      message:
+        "A new invitation email is queued. The previous link and temporary password have been replaced.",
+    };
   }
   if (action === "staff.suspend") {
     allow(user, ["owner"]);
@@ -909,15 +1083,23 @@ export async function accountAction(
     if (["customer", "commercial"].includes(target.role))
       throw new AppError(400, "Use the customer account review process.");
     if (d.expectedRole && target.role !== d.expectedRole)
-      throw new AppError(409, "This account is no longer a driver. Refresh the directory.");
+      throw new AppError(
+        409,
+        "This account is no longer a driver. Refresh the directory.",
+      );
     if (target.role === "driver") {
       if (!target.active) return { ok: true };
-      if (await one(
-        tx,
-        "SELECT id FROM orders WHERE driver_id=$1 AND status IN ('assigned','out_for_delivery') LIMIT 1",
-        [d.userId],
-      ))
-        throw new AppError(409, "Resolve the driver's active deliveries in Dispatch Centre before suspending the account.");
+      if (
+        await one(
+          tx,
+          "SELECT id FROM orders WHERE driver_id=$1 AND status IN ('assigned','out_for_delivery') LIMIT 1",
+          [d.userId],
+        )
+      )
+        throw new AppError(
+          409,
+          "Resolve the driver's active deliveries in Dispatch Centre before suspending the account.",
+        );
       await tx.query(
         "UPDATE users SET driver_available=false,driver_availability_updated_at=now() WHERE id=$1 AND driver_available",
         [d.userId],
@@ -956,7 +1138,14 @@ export async function queueMessage(
 ) {
   await tx.query(
     "INSERT INTO message_outbox(id,user_id,channel,recipient,subject,body,dedupe_key) VALUES ($1,$2,'email',$3,$4,$5,$6) ON CONFLICT(dedupe_key) DO NOTHING",
-    [id(), userId, recipient, subject, confidential ? sealMessage(body) : body, key],
+    [
+      id(),
+      userId,
+      recipient,
+      subject,
+      confidential ? sealMessage(body) : body,
+      key,
+    ],
   );
 }
 export async function challenge(
@@ -982,13 +1171,13 @@ export async function challenge(
     temporaryPassword
       ? "Accept your EasyGas account"
       : purpose === "reset"
-      ? "Reset your EasyGas password"
-      : "Verify your EasyGas email",
+        ? "Reset your EasyGas password"
+        : "Verify your EasyGas email",
     temporaryPassword
       ? `Your EasyGas account is ready to accept.\n\nTemporary password: ${temporaryPassword}\n\nAccept your account: ${appOrigin()}/verify-email#token=${token}\n\nSign in with your temporary password and choose a new one. The link and temporary password expire after 48 hours.`
       : purpose === "reset"
-      ? `Use this link to choose a new password for your EasyGas account. It expires in 30 minutes.\n\n${appOrigin()}/reset-password#token=${token}\n\nIf you didn’t request a reset, you can ignore this email.`
-      : `${appOrigin()}/verify-email#token=${token}`,
+        ? `Use this link to choose a new password for your EasyGas account. It expires in 30 minutes.\n\n${appOrigin()}/reset-password#token=${token}\n\nIf you didn’t request a reset, you can ignore this email.`
+        : `${appOrigin()}/verify-email#token=${token}`,
     `challenge:${cid}`,
     Boolean(temporaryPassword) || purpose === "reset",
   );

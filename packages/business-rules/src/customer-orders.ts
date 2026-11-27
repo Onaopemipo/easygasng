@@ -35,3 +35,13 @@ export function refundLineLabel(order: any, source: string, index: number) {
   );
   return item?.name ?? `Order item ${index + 1}`;
 }
+
+/** Customer display only; payment and fulfilment authority stays on the server. */
+export function customerOrderStage(order: any): string {
+  if (order.status === "delivered") return "Delivered";
+  if (order.status === "cancelled") return "Cancelled";
+  if (order.status === "delivery_failed") return "Delivery needs attention";
+  if (order.status === "out_for_delivery") return "Driver on the way";
+  if (order.payment_status !== "verified" && (order.payment_method === "card" || order.order_source === "PHONE_ASSISTED")) return "Payment pending";
+  return ["accepted","preparing","assigned"].includes(order.status) || order.payment_status === "verified" ? "Confirmed" : "Order received";
+}

@@ -247,7 +247,7 @@ export function DispatchSetupChecklist({
             timeZone: "Africa/Lagos",
           })}{" "}
           Lagos time. Branch setup is a prerequisite check. Each order still
-          needs its own payment, coverage, inspection, stock, capacity and
+          needs its own payment, address coverage, stock, capacity and
           custody checks before assignment.
         </p>
       )}

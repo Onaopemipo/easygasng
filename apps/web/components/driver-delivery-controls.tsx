@@ -4,6 +4,7 @@ import { FieldCaption } from "./field-caption";
 import { api, Notice } from "./ui";
 import { deliveryFailureReasons } from "../../../packages/business-rules/src/order-tracking";
 import styles from "./driver-trip-controls.module.css";
+import { isDoorstepRefillOrder } from "../../../packages/business-rules/src/refill-workflow";
 
 export default function DriverDeliveryControls({
   order,
@@ -21,6 +22,8 @@ export default function DriverDeliveryControls({
   refresh: () => Promise<void>;
 }) {
   const [photoBusy, setPhotoBusy] = useState(false);
+  const [loadConfirmed, setLoadConfirmed] = useState(false);
+  useEffect(() => setLoadConfirmed(false), [order.id, order.tracking_version]);
   const [photoError, setPhotoError] = useState("");
   const [photoMessage, setPhotoMessage] = useState("");
   const [proofReady, setProofReady] = useState(false);
@@ -72,6 +75,11 @@ export default function DriverDeliveryControls({
   }, [order.id, order.attempt?.id, order.attempt?.state, proofRevision]);
   const uploading = useRef(false);
   const blocked = disabled || photoBusy;
+  const refill = isDoorstepRefillOrder(order);
+  const collectCOD =
+    refill &&
+    order.payment_method === "cash_on_delivery" &&
+    order.payment_status !== "verified";
   const context = { orderId: order.id, version: order.tracking_version };
   async function upload(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -140,94 +148,72 @@ export default function DriverDeliveryControls({
   return (
     <div className={styles.panel}>
       {order.status === "assigned" &&
-        order.attempt?.state === "assigned" &&
-        decision === "acknowledged" && (
+        ["assigned", "picked_up"].includes(order.attempt?.state) &&
+        (decision === "acknowledged" ||
+          order.attempt?.state === "picked_up") && (
           <form
             className={styles.panel}
-            onSubmit={(event) =>
-              movement(event, "delivery.pickup", { manifest: order.manifest })
-            }
+            onSubmit={(event) => {
+              event.preventDefault();
+              if (!loadConfirmed || blocked || lpg?.pickupReady === false)
+                return;
+              void write("driver.depart", {
+                ...context,
+                manifest: order.manifest,
+                loadConfirmed: true,
+              });
+            }}
           >
-            <h3>Inspected pickup</h3>
+            <h3>Load for this delivery</h3>
             <ul>
+              {(order.manifest?.gas ?? []).map((line: any, index: number) => (
+                <li key={index}>{Number(line.grams) / 1000} kg gas</li>
+              ))}
               {(order.manifest?.items ?? []).map((item: any) => (
                 <li key={item.product_id}>
                   {item.quantity} ×{" "}
                   {order.items?.find(
-                    (row: any) => row.product_id === item.product_id,
-                  )?.name ?? item.product_id}
+                    (r: any) => r.product_id === item.product_id,
+                  )?.name ?? "Product"}
                 </li>
               ))}
-              {(order.manifest?.gas ?? []).map((line: any) => (
-                <li key={line.id}>
-                  {Number(line.grams) / 1000} kg gas ·{" "}
-                  {Number(line.capacity_grams) / 1000} kg cylinder capacity
-                </li>
-              ))}
-              {(order.manifest?.serials ?? []).map((serial: string) => (
-                <li key={serial}>Cylinder serial: {serial}</li>
-              ))}
+              {(!refill || (order.manifest?.items ?? []).length > 0) &&
+                (order.manifest?.serials ?? []).map((serial: string) => (
+                  <li key={serial}>Cylinder serial: {serial}</li>
+                ))}
             </ul>
-            <fieldset
-              disabled={blocked || lpg?.pickupReady === false}
-              className={styles.panel}
-            >
+            <fieldset disabled={blocked || lpg?.pickupReady === false}>
               <label data-field-type="checkbox">
-                <input type="checkbox" required />
-                <span>
-                  I inspected and received every listed item, gas quantity and
-                  cylinder serial.
-                </span>
-              </label>
-              <label>
-                <FieldCaption required>Pickup note</FieldCaption>
-                <textarea
-                  name="reason"
+                <input
+                  type="checkbox"
+                  checked={loadConfirmed}
                   required
-                  minLength={5}
-                  maxLength={500}
+                  onChange={(e) => setLoadConfirmed(e.target.checked)}
                 />
+                <span>I checked the load for this order.</span>
               </label>
-              <button className="button">Confirm inspected pickup</button>
+              <button className="button" disabled={!loadConfirmed}>
+                Start delivery
+              </button>
             </fieldset>
           </form>
         )}
-      {order.status === "assigned" && order.attempt?.state === "picked_up" && (
-        <button
-          type="button"
-          className="button"
-          disabled={blocked || lpg?.pickupReady === false}
-          onClick={() =>
-            void write("order.transition", {
-              id: order.id,
-              version: order.tracking_version,
-              status: "out_for_delivery",
-              note: "Driver confirms inspected pickup and departure",
-            })
-          }
-        >
-          Start delivery
-        </button>
-      )}
       {order.status === "out_for_delivery" &&
         order.attempt?.state === "picked_up" && (
-          <form
-            className={styles.panel}
-            onSubmit={(event) => movement(event, "delivery.arrived")}
+          <button
+            type="button"
+            className="button"
+            disabled={blocked}
+            onClick={() =>
+              void write("delivery.arrived", {
+                ...context,
+                reason:
+                  "Driver explicitly confirmed arrival at the delivery address",
+              })
+            }
           >
-            <fieldset disabled={blocked} className={styles.panel}>
-              <label>
-                <FieldCaption required>Arrival note</FieldCaption>
-                <textarea
-                  name="reason"
-                  required
-                  minLength={5}
-                  maxLength={500}
-                />
-              </label>
-              <button className="button">Confirm arrival</button>
-            </fieldset>
-          </form>
+            I’ve arrived
+          </button>
         )}
       {order.status === "out_for_delivery" &&
         order.attempt?.state === "arrived" && (
@@ -265,7 +251,7 @@ export default function DriverDeliveryControls({
               {photoError && <Notice type="error" message={photoError} />}
               {photoMessage && <Notice message={photoMessage} />}
             </form>
-            {order.payment_status !== "verified" && (
+            {order.payment_status !== "verified" && !collectCOD && (
               <Notice message="Payment requires authorised operations review before handover can be completed. Drivers cannot verify or collect payment here." />
             )}
             <form
@@ -275,16 +261,24 @@ export default function DriverDeliveryControls({
                 const form = new FormData(event.currentTarget);
                 void write("driver.complete", {
                   ...context,
-                  code: String(form.get("code")),
+                  ...(refill ? {} : { code: String(form.get("code")) }),
+                  ...(collectCOD
+                    ? {
+                        collectedKobo:
+                          form.get("cashCollected") === "on"
+                            ? Number(order.total_kobo)
+                            : 0,
+                      }
+                    : {}),
                   handover: form.get("handover") === "on",
                 });
               }}
             >
-              <h3>Complete handover</h3>
+              <h3>{refill ? "Complete refill" : "Complete handover"}</h3>
               <p>
-                Upload authorised proof, then ask the customer for their
-                six-digit code after handing over every item and the full gas
-                quantity.
+                {refill
+                  ? "Record the supplied gas amount and upload a photo of the completed refill. No customer handover code is needed."
+                  : "Upload authorised proof, then ask the customer for their six-digit code after handing over every item and the full gas quantity."}
               </p>
               {proofChecking && (
                 <p role="status">Checking current-visit proof…</p>
@@ -307,23 +301,36 @@ export default function DriverDeliveryControls({
                   blocked ||
                   !proofReady ||
                   lpg?.handoverReady === false ||
-                  order.payment_status !== "verified"
+                  (!collectCOD && order.payment_status !== "verified")
                 }
                 className={styles.panel}
               >
-                <label>
-                  <FieldCaption required>
-                    Customer six-digit handover code
-                  </FieldCaption>
-                  <input
-                    name="code"
-                    inputMode="numeric"
-                    autoComplete="off"
-                    pattern="[0-9]{6}"
-                    maxLength={6}
-                    required
-                  />
-                </label>
+                {!refill && (
+                  <label>
+                    <FieldCaption required>
+                      Customer six-digit handover code
+                    </FieldCaption>
+                    <input
+                      name="code"
+                      inputMode="numeric"
+                      autoComplete="off"
+                      pattern="[0-9]{6}"
+                      maxLength={6}
+                      required
+                    />
+                  </label>
+                )}
+                {collectCOD && (
+                  <label data-field-type="checkbox">
+                    <input name="cashCollected" type="checkbox" required />
+                    <span>
+                      I actually collected ₦
+                      {(Number(order.total_kobo) / 100).toLocaleString()} in
+                      cash for this order. Finance reconciliation remains
+                      pending.
+                    </span>
+                  </label>
+                )}
                 <label data-field-type="checkbox">
                   <input name="handover" type="checkbox" required />
                   <span>
@@ -331,7 +338,9 @@ export default function DriverDeliveryControls({
                     over.
                   </span>
                 </label>
-                <button className="button">Complete delivery</button>
+                <button className="button">
+                  {refill ? "Complete refill" : "Complete delivery"}
+                </button>
               </fieldset>
             </form>
           </>

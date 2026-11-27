@@ -33,6 +33,7 @@ import {
   type useTrackingOrders,
 } from "./order-tracking";
 import {
+  customerOrderStage,
   orderMatches,
   orderSummary,
   refundLineLabel,
@@ -309,6 +310,16 @@ export function CustomerOrders({
     [reveal, setReveal] = useState(false),
     [busy, setBusy] = useState(false),
     [error, setError] = useState("");
+  async function repeatOrder(order: any) {
+    if (busy) return;
+    setBusy(true); setError("");
+    try {
+      const draft = await api("account.repeat-order", {orderId:order.id});
+      if (sessionStorage.getItem("easygas.gasDraft")) throw new Error("A checkout is already saved. Finish or clear it before ordering again.");
+      sessionStorage.setItem("easygas.gasDraft",JSON.stringify(draft));
+      window.location.assign("/gas-order");
+    } catch(e:any) {setError(e.message);} finally {setBusy(false);}
+  }
   const cancelKeys = useRef<Record<string, string>>({});
   const opened = useRef(false),
     trigger = useRef<HTMLElement | null>(null);
@@ -630,7 +641,7 @@ export function CustomerOrders({
                   <p>{orderSummary(selected)}</p>
                 </div>
                 <span className={`co-badge ${selected.status}`}>
-                  {trackingLabels[selected.status] ?? selected.status}
+                  {customerOrderStage(selected)}
                 </span>
               </div>
               <div
@@ -742,6 +753,7 @@ export function CustomerOrders({
                     >
                       Get help or change delivery
                     </Link>
+                    {terminal(selected) && <button className="button" disabled={busy} onClick={()=>repeatOrder(selected)}>Order again</button>}
                     {selected.status === "delivered" &&
                       selected.payment_status === "verified" && (
                         <>

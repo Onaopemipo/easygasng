@@ -34,6 +34,7 @@ import {
   paymentFieldLabel,
   paymentReviewValue,
 } from "../../../packages/business-rules/src/payment-editor";
+import { RewardsCustomerFields } from "./rewards-customer-fields";
 import { RewardsPolicyFields } from "./rewards-policy-fields";
 type Props = {
   setting: any;
@@ -44,15 +45,21 @@ type Props = {
   onBusyChange?: (busy: boolean) => void;
 };
 export default function SettingForm({
-  setting: s,
+  setting: initialSetting,
   onDone,
   requestId,
   returned,
   userId,
   onBusyChange,
 }: Props) {
+  const [s, setSetting] = useState(initialSetting);
+  const [rewardCustomer, setRewardCustomer] = useState<any>(null);
+  const [unconfirmed, setUnconfirmed] = useState(false);
+  const uncertain = useRef(false), additionIdentity = useRef<{fingerprint:string;key:string} | null>(null);
   const [value, setValue] = useState<any>(
-      s.value_type === "money" && s.value !== null
+      s.value_type === "rewards_adjustment" && !requestId
+        ? { customerId: "", points: "", reason: "", evidence: "" }
+        : s.value_type === "money" && s.value !== null
         ? String(Number(s.value) / 100)
         : (s.value ?? ""),
     ),
@@ -74,8 +81,10 @@ export default function SettingForm({
     accountRevision = useRef(0),
     prefix = useId(),
     requestClose = useModalClose(),
-    policy = settingApprovalCopy(s),
+    policy = settingApprovalCopy({ ...s, admin_reward_add: s.admin_reward_add && !requestId && (value.points === "" || value.points > 0) }),
     tabs = settingEditorTabs(s.value_type);
+  const adminRewardAddition = Boolean(s.admin_reward_add && !requestId && (value.points === "" || value.points > 0));
+  const directReward = Boolean(adminRewardAddition && !intent && value.points > 0);
   const changeValue = (next: any) => {
     setValue(next);
     setDirty(true);
@@ -137,9 +146,30 @@ export default function SettingForm({
         ?.querySelector(".sc-error")
         ?.scrollIntoView({ block: "nearest" });
   }, [error]);
+  async function changeRewardScope(scope: string) {
+    if (requestId) throw Error("An existing request cannot change branch. Create a new adjustment instead.");
+    if (scope === s.scope) return;
+    setBusy(true); onBusyChange?.(true);
+    try {
+      const rows = await api("settings?scope=" + encodeURIComponent(scope));
+      const next = rows.find((row: any) => row.key === "loyalty.adjustment");
+      if (!next) throw Error("Points adjustments are not configured in this branch.");
+      if (live.current) { setSetting(next); setReview(null); setDirty(true); }
+    } finally { if (live.current) setBusy(false); onBusyChange?.(false); }
+  }
   function beginReview(draft = false) {
-    if (pending.current) return;
+    if (pending.current || busy || uncertain.current) return;
     setError("");
+    if (s.value_type === "rewards_adjustment" && (!rewardCustomer || rewardCustomer.id !== value.customerId)) {
+      setError("Find and select a customer by name or public customer ID to continue.");
+      setTab(tabs[0].id);
+      return;
+    }
+    if (s.value_type === "rewards_adjustment" && (!Number.isInteger(value.points) || value.points === 0)) {
+      setError("Enter a nonzero whole number of points to add or reverse.");
+      setTab(tabs[0].id);
+      return;
+    }
     if (s.value_type === "payment_gateway" && value.enabled && !value.fee) {
       setError("Configure a verified fee schedule before enabling checkout.");
       setTab("fees");
@@ -185,11 +215,18 @@ export default function SettingForm({
         s,
         value,
         reason,
-        effectiveAt,
+        s.admin_reward_add && !requestId && !draft && value.points > 0 ? "" : effectiveAt,
         draft,
         requestId,
         returned,
       );
+      if (s.admin_reward_add && !requestId && !draft && value.points > 0) {
+        const fingerprint = JSON.stringify({ scope: s.scope, value, reason: reason.trim() });
+        if (additionIdentity.current?.fingerprint !== fingerprint)
+          additionIdentity.current = { fingerprint, key: crypto.randomUUID() };
+        submission.action = "rewards.add";
+        submission.body = { scope: s.scope, value, reason: reason.trim(), operationKey: additionIdentity.current.key } as any;
+      }
       setIntent(draft);
       setReview(submission);
       setTab("review");
@@ -221,21 +258,33 @@ export default function SettingForm({
       }
       const result = await api(review.action, review.body);
       if (!live.current) return;
+      uncertain.current = false; setUnconfirmed(false);
       setDirty(false);
       onDone(result);
     } catch (e: any) {
       if (live.current) {
-        setError(e.message);
-        if (e.code === "REAUTH_REQUIRED") setNeedsVerification(true);
+        if (review.action === "rewards.add" && (!e.status || e.status >= 500)) {
+          try {
+            const outcome = await api("rewards.add.operation?key=" + encodeURIComponent(review.body.operationKey));
+            if (outcome.status === "COMMITTED") {
+              uncertain.current = false; setUnconfirmed(false); setDirty(false); onDone(outcome.result); return;
+            }
+          } catch {}
+          uncertain.current = true; setUnconfirmed(true);
+          setError("The result has not been confirmed. Retry Add points with this unchanged request; it cannot be credited twice. Keep this form open until the result is confirmed.");
+        } else {
+          setError(e.message);
+          if (e.code === "REAUTH_REQUIRED") setNeedsVerification(true);
+        }
       }
     } finally {
       pending.current = false;
       if (live.current) setBusy(false);
-      onBusyChange?.(false);
+      onBusyChange?.(uncertain.current);
     }
   }
   function chooseTab(id: string) {
-    if (busy) return;
+    if (busy || unconfirmed) return;
     if (id === "review") {
       beginReview(intent);
       return;
@@ -314,16 +363,7 @@ export default function SettingForm({
         </div>
       ) : s.value_type === "rewards_adjustment" ? (
         <div className="testimonial-form">
-          <label>
-            <FieldCaption required={true}>Customer ID</FieldCaption>
-            <FormInput
-              required
-              value={value.customerId}
-              onChange={(e) =>
-                changeValue({ ...value, customerId: e.target.value })
-              }
-            />
-          </label>
+          <RewardsCustomerFields value={value} scope={s.scope} branches={branches} lockedScope={Boolean(requestId)} onChange={changeValue} onScopeChange={changeRewardScope} onSelected={setRewardCustomer} directAddition={adminRewardAddition} />
           <label>
             <FieldCaption required={true}>
               Points to add or reverse
@@ -1026,7 +1066,7 @@ export default function SettingForm({
             aria-selected={tab === t.id}
             aria-controls={prefix + "-panel-" + t.id}
             tabIndex={tab === t.id ? 0 : -1}
-            disabled={busy}
+            disabled={busy || unconfirmed}
             onClick={() => chooseTab(t.id)}
             onKeyDown={(e) => tabKey(e, i)}
           >
@@ -1068,7 +1108,7 @@ export default function SettingForm({
                 disabled={busy}
               />
             </label>
-            <details className="sc-schedule">
+            {!adminRewardAddition && <details className="sc-schedule">
               <summary>
                 <CalendarDays size={15} />{" "}
                 {effectiveAt
@@ -1094,7 +1134,7 @@ export default function SettingForm({
                 The change takes effect at the start of this day in Lagos, after
                 approvals and activation checks pass.
               </p>
-            </details>
+            </details>}
           </div>
         )}
         {tab === "review" && review && (
@@ -1111,7 +1151,15 @@ export default function SettingForm({
                   ? "Review revised draft"
                   : "Review change"}
             </h3>
-            {s.value_type === "access" ? (
+            {s.value_type === "rewards_adjustment" ? (
+              <dl className="sc-review-grid">
+                <div><dt>Customer</dt><dd>{rewardCustomer?.name} · {value.customerPublicId || rewardCustomer?.public_customer_id}</dd></div>
+                <div><dt>Branch</dt><dd>{branchName}{value.assignBranchId ? directReward ? " — assign with points" : " — assign on approval" : ""}</dd></div>
+                <div><dt>Points adjustment</dt><dd>{value.points > 0 ? "+" : ""}{value.points}</dd></div>
+                <div><dt>Adjustment reason</dt><dd>{value.reason}</dd></div>
+                <div><dt>Evidence reference</dt><dd>{value.evidence}</dd></div>
+              </dl>
+            ) : s.value_type === "access" ? (
               <dl className="sc-review-grid">
                 <div>
                   <dt>Account</dt>
@@ -1171,6 +1219,8 @@ export default function SettingForm({
                 <dd>
                   {intent || requestId
                     ? "Inactive draft"
+                    : directReward
+                      ? "Immediately when you confirm Add points"
                     : effectiveAt
                       ? "From " + effectiveAt + " (Lagos)"
                       : "After required approvals and checks"}
@@ -1189,7 +1239,7 @@ export default function SettingForm({
                 <h4>Confirm it’s you</h4>
                 <p>
                   Enter your password to{" "}
-                  {intent ? "save this draft" : "submit this change"}. Your
+                  {intent ? "save this draft" : directReward ? "add these points" : "submit this change"}. Your
                   proposed changes are preserved.
                 </p>
                 <label>
@@ -1227,7 +1277,7 @@ export default function SettingForm({
             <button
               className="button secondary"
               type="button"
-              disabled={busy}
+              disabled={busy || unconfirmed}
               onClick={() => {
                 setPassword("");
                 setTab(tabs[0].id);
@@ -1246,7 +1296,7 @@ export default function SettingForm({
               Cancel
             </button>
           )}
-          {tab !== "review" && !requestId && (
+          {tab !== "review" && !requestId && !adminRewardAddition && (
             <button
               className="button secondary sc-draft"
               type="button"
@@ -1271,7 +1321,9 @@ export default function SettingForm({
                 : needsVerification
                   ? intent
                     ? "Verify & save draft"
-                    : "Verify & submit"
+                    : directReward ? "Verify & add points" : "Verify & submit"
+                  : directReward
+                    ? "Add points"
                   : intent || requestId
                     ? "Save draft"
                     : s.owner_auto_approval || s.risk === 1

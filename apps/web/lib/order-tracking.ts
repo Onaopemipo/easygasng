@@ -1,3 +1,6 @@
+import { operationNoteSchema } from "./operation-notes";
+import { requirePaidPhoneOrder } from "./phone-order-payment-state";
+import { reserveTankerForAssignment } from "./tanker-orders";
 import { verifyVehicleLPGPickup } from "./bulk-lpg-reservation";
 import { cylinderAllocationReadiness } from "./cylinder-allocation";
 import { vehicleReady } from "./fleet-constraints";
@@ -9,6 +12,8 @@ import { AppError, allow, id, digest, type Actor } from "./auth";
 import { verifyGasDispatch } from "./gas-delivery";
 import { notify, audit } from "./governance";
 import { canonicalRequest } from "./business-operation";
+import { verifyVisitDriver } from "./order-visit-context";
+import { settleVisitProducts, verifyVisitProducts } from "./order-visit-stock";
 async function settingValue(tx: SQL, key: string, scope: string) {
   return (
     await one(tx, "SELECT value FROM settings WHERE key=$1 AND scope=$2", [
@@ -40,6 +45,9 @@ export async function deliveryManifest(tx: SQL, orderId: string) {
   return { items, serials, gas };
 }
 export async function fulfilmentReady(tx: SQL, o: any) {
+  await requirePaidPhoneOrder(tx, o);
+  await verifyVisitDriver(tx, o);
+  await verifyVisitProducts(tx, o);
   if (
     o.driver_id &&
     (process.env.NODE_ENV === "production" ||
@@ -84,11 +92,24 @@ export async function fulfilmentReady(tx: SQL, o: any) {
 
   // Authoritative payment ledger, or the existing explicitly approved branch COD exception.
   // A redirect, cached order payment_status or a driver's collection report is not payment proof.
-  const approvedCOD=o.payment_method === "cash_on_delivery" && (await settingValue(tx,"payment.cod",o.branch_id)) === true;
+  const approvedCOD =
+    o.payment_method === "cash_on_delivery" &&
+    (await settingValue(tx, "payment.cod", o.branch_id)) === true;
   // Legacy invoice-less orders still use the same net-payment/refund authority.
-  const verified=dispatchBalance ?? await invoiceBalance(tx,invoice ?? {id:null,order_id:o.id,total_kobo:o.total_kobo});
-  if(!approvedCOD && (verified.voided || verified.paidKobo < verified.totalKobo))
-    throw new AppError(409,"Verified payment or an approved cash-on-delivery exception is required before dispatch.");
+  const verified =
+    dispatchBalance ??
+    (await invoiceBalance(
+      tx,
+      invoice ?? { id: null, order_id: o.id, total_kobo: o.total_kobo },
+    ));
+  if (
+    !approvedCOD &&
+    (verified.voided || verified.paidKobo < verified.totalKobo)
+  )
+    throw new AppError(
+      409,
+      "Verified payment or an approved cash-on-delivery exception is required before dispatch.",
+    );
 
   const branch = await one(
     tx,
@@ -103,7 +124,7 @@ export async function fulfilmentReady(tx: SQL, o: any) {
   const booked = Number(
     (await one(
       tx,
-      "SELECT count(*) n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND status NOT IN ('cancelled','delivery_failed')",
+      "SELECT count(*) n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND status NOT IN ('cancelled','delivery_failed') AND NOT EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id)",
       [o.branch_id, o.delivery_date, o.delivery_window],
     ))!.n,
   );
@@ -138,7 +159,7 @@ export async function fulfilmentReady(tx: SQL, o: any) {
         "Assigned driver is no longer eligible in this branch.",
       );
   }
-  await cylinderAllocationReadiness(tx, {orderId:o.id});
+  await cylinderAllocationReadiness(tx, { orderId: o.id });
   const shortages = await one(
     tx,
     "SELECT i.product_id FROM order_items i LEFT JOIN inventory s ON s.product_id=i.product_id AND s.branch_id=$2 WHERE i.order_id=$1 AND (s.product_id IS NULL OR s.reserved<i.quantity OR s.quantity<s.reserved) LIMIT 1",
@@ -161,7 +182,12 @@ export async function fulfilmentReady(tx: SQL, o: any) {
     );
   await verifyGasDispatch(tx, o.id);
 }
-export async function beginAttempt(tx: SQL, o: any, driverId: string) {
+export async function beginAttempt(
+  tx: SQL,
+  o: any,
+  driverId: string,
+  user?: Actor,
+) {
   const prior = await one(
     tx,
     "SELECT * FROM delivery_attempts WHERE order_id=$1 ORDER BY assignment_version DESC LIMIT 1",
@@ -184,12 +210,13 @@ export async function beginAttempt(tx: SQL, o: any, driverId: string) {
   const count = Number(
     (await one(
       tx,
-      "SELECT count(*) n FROM orders WHERE driver_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status IN ('assigned','out_for_delivery')",
+      "SELECT count(DISTINCT COALESCE((SELECT l.parent_order_id FROM order_visit_links l WHERE l.order_id=orders.id),id)) n FROM orders WHERE driver_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status IN ('assigned','out_for_delivery') AND COALESCE((SELECT l.parent_order_id FROM order_visit_links l WHERE l.order_id=orders.id),id)<>COALESCE((SELECT l.parent_order_id FROM order_visit_links l WHERE l.order_id=$4),$4)",
       [driverId, o.delivery_date, o.delivery_window, o.id],
     ))!.n,
   );
   if (!Number.isFinite(capacity) || capacity <= count)
     throw new AppError(409, "Driver delivery capacity is fully booked.");
+  if (user) await reserveTankerForAssignment(tx, user, o, driverId);
   await tx.query(
     "INSERT INTO delivery_attempts(id,order_id,driver_id,assignment_version,state) VALUES($1,$2,$3,$4,'assigned')",
     [id(), o.id, driverId, Number(o.tracking_version) + 1],
@@ -230,7 +257,7 @@ const movement = z
   .object({
     orderId: z.string().uuid(),
     version: z.number().int().nonnegative(),
-    reason: z.string().min(5).max(500),
+    reason: z.string().trim().max(500).optional(),
     manifest: z.unknown().optional(),
     date: z
       .string()
@@ -245,16 +272,12 @@ export async function trackingAction(
   action: string,
   input: unknown,
 ) {
-  const d = movement.parse(input);
+  const d = movement.extend({ reason: operationNoteSchema(action, input as any) }).parse(input);
   const o = await one(tx, "SELECT * FROM orders WHERE id=$1 FOR UPDATE", [
     d.orderId,
   ]);
   if (!o) throw new AppError(404, "Order not found.");
-  allow(
-    user,
-    ["owner", "manager", "driver", "finance"],
-    o.branch_id,
-  );
+  allow(user, ["owner", "manager", "driver", "finance"], o.branch_id);
   if (user.role === "driver" && o.driver_id !== user.id)
     throw new AppError(403, "This delivery is assigned to another driver.");
   if (Number(o.tracking_version) !== d.version)
@@ -284,6 +307,17 @@ export async function trackingAction(
       );
     if (!d.date || !d.window || d.date < new Date().toISOString().slice(0, 10))
       throw new AppError(400, "Choose a valid future date and window.");
+    if (
+      await one(
+        tx,
+        "SELECT order_id FROM order_visit_links WHERE order_id=$1 OR parent_order_id=$1 LIMIT 1",
+        [o.id],
+      )
+    )
+      throw new AppError(
+        409,
+        "Same-visit orders cannot move to another delivery slot. Resolve linked orders and create a normally priced new visit.",
+      );
     const windows = String(
       await settingValue(tx, "delivery.windows", o.branch_id),
     )
@@ -301,7 +335,7 @@ export async function trackingAction(
     const n = Number(
       (await one(
         tx,
-        "SELECT count(*) n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status NOT IN ('cancelled','delivery_failed')",
+        "SELECT count(*) n FROM orders WHERE branch_id=$1 AND delivery_date=$2 AND delivery_window=$3 AND id<>$4 AND status NOT IN ('cancelled','delivery_failed') AND NOT EXISTS(SELECT 1 FROM order_visit_links l WHERE l.order_id=orders.id)",
         [o.branch_id, d.date, d.window, o.id],
       ))!.n,
     );
@@ -332,7 +366,7 @@ export async function trackingAction(
           throw new AppError(409, "Acknowledge this assignment before pickup.");
       }
       await fulfilmentReady(tx, o);
-      await verifyVehicleLPGPickup(tx,o);
+      await verifyVehicleLPGPickup(tx, o);
       const manifest = await deliveryManifest(tx, o.id);
       if (canonicalRequest(d.manifest) !== canonicalRequest(manifest))
         throw new AppError(
@@ -383,6 +417,7 @@ export async function trackingAction(
         );
       // Unsafe cylinders are not restocked/reissued; inspection workflow must correct them separately.
       await fulfilmentReady(tx, { ...o, driver_id: null });
+      await settleVisitProducts(tx, user, o, "returned");
       await tx.query(
         "UPDATE delivery_attempts SET state='returned',completed_at=now() WHERE id=$1",
         [a.id],

@@ -154,7 +154,16 @@ export default function AuditHistory({ refresh = 0 }: { refresh?: number }) {
                 {data.rows.map((r) => (
                   <tr key={r.id}>
                     <td>
-                      <strong>{r.action}</strong>
+                      <strong>{r.action === "rewards.points.added" ? "Reward points added" : r.action}</strong>
+                      {r.action === "rewards.points.added" && <details><summary>View points addition</summary><dl>
+                        <dt>Customer</dt><dd>{r.detail.customerName} · {r.detail.customerPublicId}</dd>
+                        <dt>Branch</dt><dd>{r.detail.branch}</dd>
+                        <dt>Points added</dt><dd>+{r.detail.points}</dd>
+                        <dt>Balance</dt><dd>{r.detail.balanceBefore} → {r.detail.balanceAfter}</dd>
+                        <dt>Reason</dt><dd>{r.detail.reason}</dd>
+                        <dt>Evidence reference</dt><dd>{r.detail.evidence}</dd>
+                        <dt>Reference</dt><dd>{r.detail.operationKey}</dd>
+                      </dl></details>}
                     </td>
                     <td>{r.actor ?? "Unauthenticated / system"}</td>
                     <td>
@@ -165,7 +174,7 @@ export default function AuditHistory({ refresh = 0 }: { refresh?: number }) {
                       </span>
                     </td>
                     <td>
-                      <code className="small-code">{r.target}</code>
+                      <code className="small-code">{r.action === "rewards.points.added" ? r.detail.customerPublicId : r.target}</code>
                     </td>
                     <td>
                       {new Date(r.created_at).toLocaleString("en-NG", {

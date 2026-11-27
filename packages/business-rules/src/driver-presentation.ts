@@ -101,10 +101,10 @@ export function driverNextAssignment<
 export function driverNextAction(order: any, decision?: string) {
   const label = assignmentLabel(order.status, order.attempt?.state, decision);
   return label === "Assigned"
-    ? "Review assignment"
+    ? "Accept order"
     : label === "Awaiting pickup"
-      ? "Review pickup requirements"
+      ? "Start delivery"
       : label === "At destination"
-        ? "Review handover requirements"
-        : "View delivery progress";
+        ? "Record supply and photo"
+        : "Continue delivery";
 }

@@ -88,6 +88,8 @@ const reads = new Set([
   "schedule.authorisations",
   "credits",
   "refund.lines",
+  "rewards.add.operation",
+  "rewards.customers",
   "rewards.program",
   "rewards.summary",
   "rewards.offers",

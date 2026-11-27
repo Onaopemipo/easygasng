@@ -1,4 +1,5 @@
 "use client";
+import { AssignmentResponseActions } from "./assignment-response-actions";
 import { FieldCaption } from "./field-caption";
 import { DoorstepCylinderForm } from "./doorstep-cylinder-form";
 import React, { useEffect, useState, type FormEvent } from "react";
@@ -358,30 +359,17 @@ export function OrderOperations({
         </article>
       ))}
       {user?.role === "driver" && order.status === "assigned" && (
-        <OperationForm
-          title="Respond to assignment"
-          action="dispatch.respond"
-          fields={[
-            { name: "orderId", label: "Order ID", value: order.id },
-            {
-              name: "version",
-              label: "Current order version",
-              type: "number",
-              value: order.tracking_version,
-            },
-            {
-              name: "decision",
-              label: "Decision",
-              options: [
-                { value: "acknowledged", label: "Acknowledge" },
-                {
-                  value: "rejected",
-                  label: "Reject and request dispatcher review",
-                },
-              ],
-            },
-            { name: "reason", label: "Reason" },
-          ]}
+        <AssignmentResponseActions
+          key={order.id + ":" + order.tracking_version}
+          declineDecision="rejected"
+          send={(values) =>
+            api("dispatch.respond", {
+              orderId: order.id,
+              version: order.tracking_version,
+              ...values,
+            })
+          }
+          done={load}
         />
       )}{" "}
       {!historyOnly && ["owner", "manager"].includes(user?.role) && (

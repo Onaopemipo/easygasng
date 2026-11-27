@@ -11,6 +11,7 @@ export function AddressAreaFields({
   areaLabel = "Delivery location",
   maxLength = 1000,
   onRecognizedArea,
+  onDeliveryChange,
 }: {
   areas: { id: string; name: string }[];
   street?: string;
@@ -19,6 +20,7 @@ export function AddressAreaFields({
   areaLabel?: string;
   maxLength?: number;
   onRecognizedArea?: (area: string) => void;
+  onDeliveryChange?: (value:{street:string;zone:string})=>void;
 }) {
   const [text, setText] = useState(street);
   const [chosen, setChosen] = useState<string | null>(area || null);
@@ -43,6 +45,8 @@ export function AddressAreaFields({
           onChange={(e) => {
             const value = e.target.value;
             setText(value);
+            const next=selectAddressLocation(value,areas,onRecognizedArea?area:chosen === ""?undefined:(chosen??undefined));
+            onDeliveryChange?.({street:value,zone:next.location?.name ?? ""});
             if (chosen === "") setChosen(null);
             if (onRecognizedArea && !area) {
               const { location } = selectAddressLocation(value, areas);
@@ -63,7 +67,7 @@ export function AddressAreaFields({
             name={areaName}
             value={selection.location?.id ?? ""}
             required
-            onChange={(e) => setChosen(e.target.value)}
+            onChange={(e) => {setChosen(e.target.value);onDeliveryChange?.({street:text,zone:areas.find(a=>a.id===e.target.value)?.name ?? ""});}}
           >
             <option value="">Choose your location</option>
             {areas.map((a) => (

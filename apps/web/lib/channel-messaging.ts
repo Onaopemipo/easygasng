@@ -353,6 +353,20 @@ export async function deliverChannels(
         return { skip: true };
       }
       if (
+        row.dedupe_key.startsWith("phone-order-payment:") &&
+        !(await one(
+          tx,
+          "SELECT l.id FROM phone_order_payment_links l JOIN orders o ON o.id=l.order_id WHERE l.id=$1 AND l.customer_id=$2 AND l.revoked_at IS NULL AND l.expires_at>now() AND o.status NOT IN ('cancelled','delivered','delivery_failed') AND o.payment_status<>'verified'",
+          [row.dedupe_key.split(":")[1], row.user_id],
+        ))
+      ) {
+        await tx.query(
+          "UPDATE message_outbox SET status='cancelled' WHERE id=$1",
+          [row.id],
+        );
+        return { skip: true };
+      }
+      if (
         row.purpose === "marketing" &&
         row.dedupe_key.startsWith("winback:")
       ) {

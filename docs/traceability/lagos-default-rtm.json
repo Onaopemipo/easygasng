@@ -1,0 +1,255 @@
+{
+  "phase": "Default Lagos user branch \u2014 27 November 2026",
+  "requirements": [
+    {
+      "id": "LAG-01",
+      "requirement": "Lagos is the persisted default for new users across public sign-up, customer creation and staff invitations; explicit active branch choices are retained",
+      "priority": "P0",
+      "critical": true,
+      "scope": "Default and missing-branch fill, not a transfer of explicitly assigned accounts",
+      "uiReference": "27 November2026 user instruction: Lagos default for every user, editable at backend",
+      "route": [
+        "/admin/customers",
+        "/admin/staff",
+        "/admin/settings",
+        "/api/register",
+        "/api/customers.update"
+      ],
+      "dataSource": "users.branch_id,branches,schema_migrations,audit_events; existing staff access approval history",
+      "securityControl": "Only Admin can move a customer between active branches; non-Admin creation/edits remain scoped; staff access changes retain existing approvals. No silent explicit-branch overwrite.",
+      "implementationFiles": [
+        "packages/business-rules/src/user-branch.ts",
+        "apps/web/lib/service.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/assisted-ordering.ts",
+        "apps/web/lib/customer-management.ts",
+        "apps/web/components/staff-invitation.tsx",
+        "apps/web/lib/db.ts"
+      ],
+      "testFiles": [
+        "tests/lagos-default.test.ts",
+        "tests/lagos-default-ui.test.ts",
+        "tests/lagos-default-migration.test.ts"
+      ],
+      "evidence": [
+        "docs/lagos-default/evidence/regression.txt",
+        "docs/lagos-default/evidence/typecheck.txt",
+        "docs/lagos-default/evidence/build.txt",
+        "docs/lagos-default/evidence/operator-migration-test.txt",
+        "docs/lagos-default/evidence/local-browser.json",
+        "docs/lagos-default/evidence/release-source.json"
+      ],
+      "negativeTests": [
+        "LAG-REGISTER forged branch/role and inactive Lagos rejected",
+        "LAG-CREATE cross-branch Manager default rejected"
+      ],
+      "acceptanceGate": "LAG-G01",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
+      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+    },
+    {
+      "id": "LAG-02",
+      "requirement": "Backfill only existing missing user branches to Lagos with per-user audit history; preserve identities, explicit branches and financial/order records",
+      "priority": "P0",
+      "critical": true,
+      "scope": "Default and missing-branch fill, not a transfer of explicitly assigned accounts",
+      "uiReference": "27 November2026 user instruction: Lagos default for every user, editable at backend",
+      "route": [
+        "/admin/customers",
+        "/admin/staff",
+        "/admin/settings",
+        "/api/register",
+        "/api/customers.update"
+      ],
+      "dataSource": "users.branch_id,branches,schema_migrations,audit_events; existing staff access approval history",
+      "securityControl": "Only Admin can move a customer between active branches; non-Admin creation/edits remain scoped; staff access changes retain existing approvals. No silent explicit-branch overwrite.",
+      "implementationFiles": [
+        "database/migrations/084_default_user_branch.sql",
+        "database/bootstrap.sql",
+        "docs/lagos-default/apply-migration084.sql"
+      ],
+      "testFiles": [
+        "tests/lagos-default.test.ts",
+        "tests/lagos-default-ui.test.ts",
+        "tests/lagos-default-migration.test.ts"
+      ],
+      "evidence": [
+        "docs/lagos-default/evidence/regression.txt",
+        "docs/lagos-default/evidence/typecheck.txt",
+        "docs/lagos-default/evidence/build.txt",
+        "docs/lagos-default/evidence/operator-migration-test.txt",
+        "docs/lagos-default/evidence/local-browser.json",
+        "docs/lagos-default/evidence/release-source.json"
+      ],
+      "negativeTests": [
+        "LAG-GUARD inactive Lagos aborts without false audits",
+        "LAG-OPERATOR changed target count and duplicate application abort"
+      ],
+      "acceptanceGate": "LAG-G02",
+      "status": "PARTIAL",
+      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
+      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+    },
+    {
+      "id": "LAG-03",
+      "requirement": "Admin can change customer branch in Customers; staff branch changes keep existing governed Roles & Access controls and branch isolation",
+      "priority": "P0",
+      "critical": true,
+      "scope": "Default and missing-branch fill, not a transfer of explicitly assigned accounts",
+      "uiReference": "27 November2026 user instruction: Lagos default for every user, editable at backend",
+      "route": [
+        "/admin/customers",
+        "/admin/staff",
+        "/admin/settings",
+        "/api/register",
+        "/api/customers.update"
+      ],
+      "dataSource": "users.branch_id,branches,schema_migrations,audit_events; existing staff access approval history",
+      "securityControl": "Only Admin can move a customer between active branches; non-Admin creation/edits remain scoped; staff access changes retain existing approvals. No silent explicit-branch overwrite.",
+      "implementationFiles": [
+        "apps/web/lib/customer-management.ts",
+        "apps/web/components/customer-management.tsx",
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/lagos-default.test.ts",
+        "tests/lagos-default-ui.test.ts",
+        "tests/lagos-default-migration.test.ts",
+        "tests/staff-privileges.test.ts"
+      ],
+      "evidence": [
+        "docs/lagos-default/evidence/regression.txt",
+        "docs/lagos-default/evidence/typecheck.txt",
+        "docs/lagos-default/evidence/build.txt",
+        "docs/lagos-default/evidence/operator-migration-test.txt",
+        "docs/lagos-default/evidence/local-browser.json",
+        "docs/lagos-default/evidence/release-source.json"
+      ],
+      "negativeTests": [
+        "LAG-EDIT Manager cross-branch move, inactive/unknown destination, NULL branch and staff-account edit rejected",
+        "STAFF-PRIV role/branch changes invalidate grants"
+      ],
+      "acceptanceGate": "LAG-G03",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
+      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+    },
+    {
+      "id": "LAG-04",
+      "requirement": "Verify migration, creation/edit/reward journeys and publish the bounded demo release with manuals and traceability",
+      "priority": "P1",
+      "critical": false,
+      "scope": "Default and missing-branch fill, not a transfer of explicitly assigned accounts",
+      "uiReference": "27 November2026 user instruction: Lagos default for every user, editable at backend",
+      "route": [
+        "/admin/customers",
+        "/admin/staff",
+        "/admin/settings",
+        "/api/register",
+        "/api/customers.update"
+      ],
+      "dataSource": "users.branch_id,branches,schema_migrations,audit_events; existing staff access approval history",
+      "securityControl": "Only Admin can move a customer between active branches; non-Admin creation/edits remain scoped; staff access changes retain existing approvals. No silent explicit-branch overwrite.",
+      "implementationFiles": [
+        "scripts/check-default-user-branch.ts",
+        "scripts/preview-lagos-default.mjs",
+        "docs/user-manual/default-user-branch.md"
+      ],
+      "testFiles": [
+        "tests/lagos-default.test.ts",
+        "tests/lagos-default-ui.test.ts",
+        "tests/lagos-default-migration.test.ts"
+      ],
+      "evidence": [
+        "docs/lagos-default/evidence/regression.txt",
+        "docs/lagos-default/evidence/typecheck.txt",
+        "docs/lagos-default/evidence/build.txt",
+        "docs/lagos-default/evidence/operator-migration-test.txt",
+        "docs/lagos-default/evidence/local-browser.json",
+        "docs/lagos-default/evidence/release-source.json"
+      ],
+      "negativeTests": [
+        "Operator gate prevents publishing before schema084; hosted check pending"
+      ],
+      "acceptanceGate": "LAG-G04",
+      "status": "PARTIAL",
+      "reason": "Implementation and isolated acceptance pass; shared demo migration and rollout not yet applied. Browser-control access-change confirmation is pending.",
+      "outstandingWork": "Apply reviewed084 with owner, verify hosted data/default, deploy bounded490-file source, verify candidate/stable, reconcile release evidence."
+    }
+  ],
+  "gates": [
+    {
+      "id": "LAG-G01",
+      "status": "PENDING",
+      "criterion": "New supported account creation defaults Lagos, explicit branch preserved, published behaviour verified",
+      "localStatus": "PASS",
+      "reason": "Hosted migration and rollout pending action-time confirmation"
+    },
+    {
+      "id": "LAG-G02",
+      "status": "PENDING",
+      "criterion": "Six existing missing customer branches filled with audits, all other data preserved atomically",
+      "localStatus": "PASS",
+      "reason": "Hosted migration and rollout pending action-time confirmation"
+    },
+    {
+      "id": "LAG-G03",
+      "status": "PENDING",
+      "criterion": "Admin branch editing and staff governance pass scoped negative tests and published readback",
+      "localStatus": "PASS",
+      "reason": "Hosted migration and rollout pending action-time confirmation"
+    },
+    {
+      "id": "LAG-G04",
+      "status": "PENDING",
+      "criterion": "Exact bounded candidate/stable rollout, manuals and matrices verified",
+      "localStatus": "PASS",
+      "reason": "Hosted migration and rollout pending action-time confirmation"
+    }
+  ],
+  "productionDecision": "Previous production NO-GO, physical/provider/native/import/retain-all decisions and unrelated work remain.",
+  "changeLog": [
+    {
+      "date": "2026-11-27",
+      "change": "Lagos is a default, filling missing branches and new accounts. Existing explicit assignments retained. Customer branch becomes editable for Admin; staff access governance remains."
+    },
+    {
+      "date": "2026-11-27",
+      "change": "55 regression cases pass, local Customers and staff-invitation browser acceptance and build pass. Default is a managing branch, not delivery coverage. Scope leaves explicit branch assignments intact and staff approvals unchanged. Shared084 and rollout remain pending."
+    }
+  ],
+  "coverage": {
+    "total": 4,
+    "implemented": 4,
+    "verified": 0,
+    "partial": 2,
+    "implementedUnverified": 2,
+    "excluded": 0,
+    "criticalTotal": 3,
+    "criticalVerified": 0,
+    "totalGates": 4,
+    "verifiedGates": 0,
+    "totalRoutes": 5,
+    "routesMapped": 5,
+    "localBrowserRoutesVerified": 2,
+    "hostedBrowserRoutesVerified": 0,
+    "regressionCases": 55,
+    "regressionPassed": 55,
+    "regressionSkipped": 0
+  },
+  "pendingRelease": {
+    "baselineDeployment": "dpl_Coy1nPuwgY6Zt9xADSu8AZGQYqsE",
+    "sourceFiles": 490,
+    "changedExisting": 9,
+    "added": 3,
+    "unchanged": 478,
+    "sharedMigration": "084 pending",
+    "expectedBackfill": 6,
+    "nativeBuild": false,
+    "businessMessages": 0,
+    "migrationStagedNotRun": true
+  },
+  "validationEvidence": "docs/lagos-default/evidence/traceability-tests.txt"
+}

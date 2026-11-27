@@ -1,3 +1,5 @@
+import { operationNoteSchema } from "./operation-notes";
+import { assignmentResponseReason } from "./assignment-response";
 import {
   bookingPhone,
   bookingPhoneMessage,
@@ -1318,15 +1320,19 @@ export async function professionalServiceAction(
     return openServiceDispute(tx, user, b, d.reason);
   }
   if (action === "booking.assignment.respond") {
-    const d = z
+    const parsed = z
       .object({
         bookingId: uuid,
         version: z.number().int(),
         decision: z.enum(["acknowledged", "declined"]),
-        reason,
+        reason: z.string().max(2000).optional(),
       })
       .strict()
       .parse(input);
+    const d = {
+      ...parsed,
+      reason: assignmentResponseReason(parsed.decision, parsed.reason, 2000),
+    };
     await technician(tx, user, b);
     if (b.assignment_response !== "pending") {
       if (
@@ -1393,7 +1399,7 @@ export async function professionalServiceAction(
   }
   if (action === "booking.work.start") {
     const d = z
-      .object({ bookingId: uuid, version: z.number().int(), reason })
+      .object({ bookingId: uuid, version: z.number().int(), reason: operationNoteSchema(action, data, "reason", 2000) })
       .strict()
       .parse(input);
     await technician(tx, user, b);
@@ -1492,7 +1498,7 @@ export async function professionalServiceAction(
           "in_progress",
           "failed",
         ]),
-        reason,
+        reason: operationNoteSchema(action, data, "reason", 2000),
       })
       .strict()
       .parse(input);
@@ -1546,7 +1552,7 @@ export async function professionalServiceAction(
         slotId: uuid.optional(),
         preferredStart: z.string().datetime({ offset: true }).optional(),
         version: z.number().int(),
-        reason,
+        reason: operationNoteSchema(action, data, "reason", 2000),
       })
       .strict()
       .refine(
@@ -2203,7 +2209,7 @@ export async function professionalServiceAction(
   }
   if (action === "booking.acknowledge") {
     const d = z
-      .object({ bookingId: uuid, accepted: z.boolean(), notes: reason })
+      .object({ bookingId: uuid, accepted: z.boolean(), notes: operationNoteSchema(action, data, "notes", 2000) })
       .strict()
       .parse(input);
     if (user.id !== b.customer_id)

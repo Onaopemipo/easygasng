@@ -1,4 +1,7 @@
 "use client";
+import {selectAddressLocation} from "../../../packages/business-rules/src/address-location";
+import DeliveryPinPicker from "./delivery-pin-picker";
+import {confirmedDeliveryPin,type ConfirmedDeliveryPin} from "../../../packages/business-rules/src/delivery-pin";
 import { FieldCaption } from "./field-caption";
 import { useEffect, useState } from "react";
 import {
@@ -83,16 +86,29 @@ function DeliveryFields({ profile, name, zones, draftStreet }: {
             <FormInput name="phone" required defaultValue={address.phone} type="tel" autoComplete="shipping tel" />
           </label>
         </div>
-        <AddressAreaFields areas={areas} areaLabel="Delivery area" street={choice === "draft" ? draftStreet : address.street} area={address.zone} maxLength={250} />
+        <PinnedAddressFields areas={areas} street={choice === "draft" ? draftStreet : address.street} zone={address.zone} pin={choice === "draft" ? undefined : address.deliveryPin} />
       </div>
     </>
   );
 }
 
+function PinnedAddressFields({areas,street,zone,pin}:{areas:{id:string;name:string}[];street:string;zone:string;pin?:ConfirmedDeliveryPin}) {
+ const [address,setAddress]=useState({street,zone:selectAddressLocation(street,areas,zone || undefined).location?.name ?? zone}),[point,setPoint]=useState(pin);
+ return <><AddressAreaFields areas={areas} street={street} area={zone} areaLabel="Delivery area" maxLength={250} onDeliveryChange={next=>{setAddress(next);setPoint(undefined);}} />
+ <DeliveryPinPicker street={address.street} zone={address.zone} value={point} onChange={setPoint}/>
+ <input type="hidden" name="deliveryPin" value={point?JSON.stringify(point):""}/></>;
+}
+
 export function readCheckoutDelivery(values: Record<string, FormDataEntryValue>) {
   if (!values.name || !values.phone || !values.street || !values.zone)
     throw new Error("Enter the recipient name, phone number and delivery address.");
+  let deliveryPin: ConfirmedDeliveryPin | undefined;
+  if (values.deliveryPin !== undefined) {
+    try {deliveryPin=confirmedDeliveryPin(JSON.parse(String(values.deliveryPin)),String(values.street),String(values.zone)) ?? undefined;} catch {}
+    if (!deliveryPin) throw new Error("Choose and confirm the delivery map location.");
+  }
   return {
+    ...(deliveryPin?{deliveryPin}:{}),
     name: String(values.name),
     phone: bookingPhone(String(values.phone)) ?? String(values.phone),
     street: String(values.street),

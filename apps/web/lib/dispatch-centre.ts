@@ -8,6 +8,7 @@ import { fulfilmentReady } from "./order-tracking";
 import { invoiceBalance } from "./invoice-corrections";
 import { vehicleReady } from "./fleet-constraints";
 import { driverAvailabilityWritesEnabled } from "./driver-availability";
+import { verifyVisitDriver } from "./order-visit-context";
 import { AssignmentRequirementError } from "./assignment-requirement-error";
 import {
   assignmentIssue,
@@ -98,18 +99,10 @@ export async function dispatchCentre(
     ]);
     if (!order) throw new AppError(404, "Order not found.");
     allow(user, ["owner", "manager"], order.branch_id);
-    if (!["accepted", "preparing", "assigned"].includes(order.status))
+    if (!["placed", "accepted", "preparing", "assigned"].includes(order.status))
       throw new AppError(
         409,
         "Order is not eligible for assignment in this state.",
-      );
-    if (
-      order.status !== "assigned" &&
-      !orderTransitions[order.status]?.includes("assigned")
-    )
-      throw new AppError(
-        409,
-        "Complete order preparation before selecting a driver.",
       );
     const drivers = (
       await tx.query(
@@ -118,6 +111,20 @@ export async function dispatchCentre(
       )
     ).rows;
     const candidates = [];
+    const orderReadiness = await probe(tx, () =>
+      fulfilmentReady(tx, { ...order, driver_id: null }),
+    );
+    const gasLines = (
+      await tx.query(
+        "SELECT id,grams FROM order_gas_lines WHERE order_id=$1 ORDER BY id",
+        [order.id],
+      )
+    ).rows;
+    const linkedVisit = await one(
+      tx,
+      "SELECT driver_id,parent_order_id FROM order_visit_links WHERE order_id=$1",
+      [order.id],
+    );
     for (const driver of drivers) {
       const readiness = await probe(tx, async () => {
         const issues: AssignmentIssue[] = [];
@@ -133,9 +140,22 @@ export async function dispatchCentre(
           issues.push(...e.issues);
         }
         if (issues.length) throw new AssignmentRequirementError(issues);
-        await fulfilmentReady(tx, { ...order, driver_id: driver.id });
+        await verifyVisitDriver(tx, { ...order, driver_id: driver.id });
       });
-      candidates.push({ ...driver, readiness });
+      const activeOrders = await one(
+        tx,
+        "SELECT count(*)::int n FROM orders WHERE driver_id=$1 AND status IN ('assigned','out_for_delivery')",
+        [driver.id],
+      );
+      candidates.push({
+        ...driver,
+        activeOrders: activeOrders!.n,
+        readiness: {
+          ...readiness,
+          driverReady: readiness.ready,
+          ready: readiness.ready === true && orderReadiness.ready === true,
+        },
+      });
     }
     return {
       orderId: order.id,
@@ -150,6 +170,18 @@ export async function dispatchCentre(
         order.status === "assigned" ? "dispatch.reassign" : "dispatch.assign",
       version: Number(order.tracking_version),
       candidates,
+      orderReadiness,
+      linkedVisit,
+      preparationActions: [
+        ...(order.order_source === "PHONE_ASSISTED" &&
+        order.payment_status !== "verified"
+          ? [{ id: "phone-payment", label: "Send payment link" }]
+          : []),
+        ...(["owner", "manager"].includes(user.role) && gasLines.length
+          ? [{ id: "coverage", label: "Confirm address coverage" }]
+          : []),
+        { id: "invoice", label: "Review payment & invoice" },
+      ],
       automaticAssignmentEnabled: false,
       writesEnabled:
         process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED !== "false" &&
@@ -169,13 +201,14 @@ export async function dispatchCentre(
       area: z.string().max(150).default(""),
       q: z.string().max(150).default(""),
       tab: z
-        .enum(["queue", "live", "completed", "exceptions"])
+        .enum(["queue", "live", "completed", "exceptions", "payment"])
         .default("queue"),
       priority: z.enum(["", "Overdue", "Normal"]).default(""),
       window: z.string().max(100).default(""),
       status: z
         .enum([
           "",
+          "placed",
           "accepted",
           "preparing",
           "assigned",
@@ -208,7 +241,8 @@ export async function dispatchCentre(
       `SELECT o.*,u.name customer_name,dr.name driver_name,
     (SELECT r.decision FROM delivery_attempts a LEFT JOIN dispatch_responses r ON r.attempt_id=a.id WHERE a.order_id=o.id ORDER BY a.assignment_version DESC LIMIT 1) driver_response,
     (SELECT jsonb_agg(jsonb_build_object('name',i.name,'quantity',i.quantity)) FROM order_items i WHERE i.order_id=o.id) items,
-    (SELECT COALESCE(sum(g.grams),0) FROM order_gas_lines g WHERE g.order_id=o.id) gas_grams
+    (SELECT COALESCE(sum(g.grams),0) FROM order_gas_lines g WHERE g.order_id=o.id) gas_grams,
+    (SELECT COALESCE(sum(vp.amount_kobo),0) FROM verified_payments vp WHERE vp.order_id=o.id) verified_kobo
     FROM orders o JOIN users u ON u.id=o.customer_id LEFT JOIN users dr ON dr.id=o.driver_id
     WHERE ($1::boolean OR o.branch_id=$2) AND ($3='' OR o.branch_id=$3)
     AND ((o.status='delivered' AND (o.delivered_at AT TIME ZONE 'Africa/Lagos')::date=$4::date)
@@ -252,6 +286,7 @@ export async function dispatchCentre(
   const queue = scope.filter(
     (o) =>
       dispatchOrderTab({
+        ...o,
         status: String(o.status),
         driver_response: o.driver_response,
         delivery_code_expires_at: o.delivery_code_expires_at,
@@ -260,7 +295,7 @@ export async function dispatchCentre(
   // A safety probe has bounded lock/work cost. Never replace an incomplete readiness count with a guessed number.
   let ready: number | null = queue.length > 250 ? null : 0;
   for (const o of ready === null ? [] : queue) {
-    if (!orderTransitions[o.status]?.includes("assigned")) {
+    if (!["placed", "accepted", "preparing"].includes(o.status)) {
       o.readiness = {
         ready: false,
         reasons: ["Complete order preparation before assignment."],
@@ -274,9 +309,13 @@ export async function dispatchCentre(
   }
   const counts = {
     queue: queue.length,
+    payment: scope.filter(
+      (o) => dispatchOrderTab({ ...o, status: String(o.status) }) === "payment",
+    ).length,
     live: scope.filter(
       (o) =>
         dispatchOrderTab({
+          ...o,
           status: String(o.status),
           driver_response: o.driver_response,
           delivery_code_expires_at: o.delivery_code_expires_at,
@@ -285,6 +324,7 @@ export async function dispatchCentre(
     completed: scope.filter(
       (o) =>
         dispatchOrderTab({
+          ...o,
           status: String(o.status),
           driver_response: o.driver_response,
           delivery_code_expires_at: o.delivery_code_expires_at,
@@ -293,6 +333,7 @@ export async function dispatchCentre(
     exceptions: scope.filter(
       (o) =>
         dispatchOrderTab({
+          ...o,
           status: String(o.status),
           driver_response: o.driver_response,
           delivery_code_expires_at: o.delivery_code_expires_at,
@@ -311,6 +352,7 @@ export async function dispatchCentre(
   const filtered = scope.filter(
       (o) =>
         dispatchOrderTab({
+          ...o,
           status: String(o.status),
           driver_response: o.driver_response,
           delivery_code_expires_at: o.delivery_code_expires_at,
@@ -326,7 +368,7 @@ export async function dispatchCentre(
       [o.id],
     );
     const balance = invoice ? await invoiceBalance(tx, invoice) : null;
-    const paid = balance && !balance.voided && balance.amountDueKobo === 0;
+    const paid = balance ? !balance.voided && balance.amountDueKobo === 0 : o.payment_status === "verified" && Number(o.verified_kobo) >= Number(o.total_kobo);
     const cod = await one(
       tx,
       "SELECT value FROM settings WHERE key='payment.cod' AND scope=$1",
@@ -334,7 +376,9 @@ export async function dispatchCentre(
     );
     o.paymentLabel = paid
       ? "Paid"
-      : o.payment_method === "cash_on_delivery" && cod?.value === true
+      : o.order_source !== "PHONE_ASSISTED" &&
+          o.payment_method === "cash_on_delivery" &&
+          cod?.value === true
         ? "Approved COD"
         : "Payment review";
     o.priority = dispatchPriority(
@@ -456,6 +500,7 @@ export async function dispatchCentre(
         area: o.address?.area,
       },
       status: o.status,
+      order_source: o.order_source,
       branch_id: o.branch_id,
       driver_id: o.driver_id,
       driver_name: o.driver_name,
@@ -467,7 +512,10 @@ export async function dispatchCentre(
       paymentLabel: o.paymentLabel,
       priority: o.priority,
       readiness: o.readiness,
-      canAssign: orderTransitions[o.status]?.includes("assigned") ?? false,
+      canAssign:
+        ["accepted", "preparing"].includes(o.status) ||
+        (o.status === "placed" && o.payment_status === "verified"),
+      needsAddressReview: !!o.operational_review,
       driver_response: o.driver_response,
       exception:
         o.driver_response === "rejected"

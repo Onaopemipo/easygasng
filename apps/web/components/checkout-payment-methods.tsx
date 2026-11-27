@@ -31,7 +31,7 @@ export function CheckoutPaymentMethods({
     data?: OrderPaymentOptions;
     error?: string;
   }>();
-  const [selected, setSelected] = useState("cash_on_delivery");
+  const [selected, setSelected] = useState("");
   const [revision, retry] = useState(0);
   const select = useRef<HTMLSelectElement>(null);
   const [deliveryBranch, setDeliveryBranch] = useState(branchId);
@@ -40,7 +40,8 @@ export function CheckoutPaymentMethods({
   const key = `${userId}:${currentBranch}`;
   const data = loaded?.key === key ? loaded.data : undefined;
   const error = loaded?.key === key ? loaded.error : undefined;
-  const method = value ?? selected;
+  const candidate = value ?? selected;
+  const method = data?.methods.includes(candidate) ? candidate : "";
   useEffect(() => {
     if (!userId) return;
     let active = true;
@@ -109,7 +110,7 @@ export function CheckoutPaymentMethods({
       data.balanceKobo < amountKobo;
     select.current?.setCustomValidity(
       shortfall
-        ? "Top up your wallet or choose Card or Cash for this order."
+        ? "Top up your wallet or choose another available payment method."
         : data?.methods.includes(method)
           ? ""
           : "Choose an available payment method, or retry loading payment choices.",
@@ -138,7 +139,7 @@ export function CheckoutPaymentMethods({
         <option value="" disabled>
           Choose how to pay
         </option>
-        {orderPaymentMethods.map((option) => (
+        {orderPaymentMethods.filter((option) => option.value !== "cash_on_delivery" || data?.methods.includes(option.value)).map((option) => (
           <option
             key={option.value}
             value={option.value}
@@ -169,7 +170,11 @@ export function CheckoutPaymentMethods({
                 ? walletPaymentHint(data!.balanceKobo, amountKobo)
                 : method === "card"
                   ? `Pay securely by card${data!.environment === "test" ? " in Paystack sandbox" : ""}. Review any processing charge before paying.`
-                  : "Pay cash when your order is delivered."}
+                  : method === "cash_on_delivery"
+                    ? "Pay cash when your order is delivered."
+                    : data!.methods.length
+                      ? "Choose an available payment method."
+                      : "No payment method is currently available. Please contact the business."}
             </p>
             {method === "wallet" && (
               <Link

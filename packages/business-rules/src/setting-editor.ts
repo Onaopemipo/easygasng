@@ -86,6 +86,7 @@ export function settingSubmission(
       };
 }
 export function settingApprovalCopy(s: any) {
+  if (s.admin_reward_add) return { label: "Admin adds points directly", detail: "Additions apply immediately when confirmed and are recorded in Audit History. No colleague approvals are required. Reversals retain their existing approval checks." };
   if (s.owner_auto_approval)
     return {
       label: "Automatic approval",

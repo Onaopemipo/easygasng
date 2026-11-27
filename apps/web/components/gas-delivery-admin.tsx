@@ -7,7 +7,6 @@ import {
   gasReportExcel,
   gasReportHtml,
 } from "../../../packages/business-rules/src/gas-report-export";
-import OrderCylinderInspection from "./order-cylinder-inspection";
 import { ActionForm } from "./workflows";
 export default function GasDeliveryAdmin({
   user,
@@ -24,23 +23,14 @@ export default function GasDeliveryAdmin({
 }) {
   const [locations, setLocations] = useState<any[]>([]),
     [stock, setStock] = useState<any[]>([]),
-    [inspections, setInspections] = useState<any[]>([]),
     [report, setReport] = useState<any>(null),
     [error, setError] = useState(""),
     [add, setAdd] = useState(false),
     [tick, setTick] = useState(0);
   useEffect(() => {
-    if (
-      ["owner", "manager", "finance"].includes(
-        user.role,
-      )
-    )
+    if (["owner", "manager", "finance"].includes(user.role))
       api("delivery.locations.manage")
         .then(setLocations)
-        .catch((e) => setError(e.message));
-    if (["owner", "finance"].includes(user.role))
-      api("gas.inspections")
-        .then(setInspections)
         .catch((e) => setError(e.message));
     if (["owner", "manager", "finance"].includes(user.role))
       api("gas.stock")
@@ -104,20 +94,11 @@ export default function GasDeliveryAdmin({
             onDone={() => setTick((t) => t + 1)}
           />
         )}
-        {["owner", "finance"].includes(user.role) && (
-          <section>
-            <h3>Gas filling inspections</h3>
-            {inspections.map((g) => (
-              <div className="surface" key={g.id}>
-                <p>
-                  {g.reference} · {Number(g.grams) / 1000} kg gas ·{" "}
-                  {Number(g.capacity_grams) / 1000} kg cylinder
-                </p>
-                <OrderCylinderInspection line={g} onDone={()=>setTick(t=>t+1)}/>
-              </div>
-            ))}
-          </section>
-        )}
+        <p>
+          Doorstep refills use the vehicle tank. Customer cylinders do not need
+          registration or a business inspection record. Drivers record the
+          supplied quantity and upload refill evidence.
+        </p>
         <h3>Delivery Locations</h3>
         {["owner", "manager"].includes(user.role) && (
           <button className="button secondary" onClick={() => setAdd(!add)}>

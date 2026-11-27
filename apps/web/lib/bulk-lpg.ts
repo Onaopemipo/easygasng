@@ -5,8 +5,10 @@ import { inventoryQualification } from "./inventory-business";
 import { audit } from "./governance";
 import { verifyGasDispatch } from "./gas-delivery";
 import { invoiceBalance } from "./invoice-corrections";
+import { fulfilmentReady } from "./order-tracking";
 import { requestBulkRecovery } from "./bulk-lpg-recovery";
 const mass = z.number().int().nonnegative().max(1_000_000_000);
+const orderContext = z.object({orderId: z.string().uuid(), tripId: z.string().uuid(), version: z.number().int().nonnegative()}).strict();
 async function event(
   tx: SQL,
   user: Actor,
@@ -29,14 +31,30 @@ export async function bulkLPG(
 ): Promise<any> {
   if (action === "bulk.summary") {
     allow(user, ["owner", "manager", "finance", "driver"]);
+    const orderId = (input as any)?.orderId === undefined ? null
+      : z.object({orderId: z.string().uuid()}).strict().parse(input).orderId;
+    let currentTrip = null;
+    let scopedOrder: any = null;
+    if (orderId) {
+      const order = await one(tx, "SELECT id,branch_id,driver_id,tracking_version,status FROM orders WHERE id=$1", [orderId]);
+      if (!order) throw new AppError(404, "Order not found.");
+      allow(user, ["owner", "manager", "finance", "driver"], order.branch_id);
+      if (user.role === "driver" && order.driver_id !== user.id)
+        throw new AppError(404, "Order not found.");
+      scopedOrder = order;
+      currentTrip = await one(tx,
+        "SELECT t.id,t.driver_id,t.branch_id,t.vehicle_id,v.label,u.name AS driver_name FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id AND v.branch_id=t.branch_id JOIN users u ON u.id=t.driver_id WHERE t.driver_id=$1 AND t.branch_id=$2 AND t.ended_at IS NULL ORDER BY t.started_at DESC LIMIT 1",
+        [order.driver_id, order.branch_id]);
+    }
     const loads = (
       await tx.query(
-        "SELECT l.*,t.driver_id,t.vehicle_id,v.label FROM bulk_lpg_loads l JOIN driver_trips t ON t.id=l.trip_id JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE ($1::boolean OR l.branch_id=$2) AND ($3::boolean OR t.driver_id=$4) ORDER BY l.created_at DESC LIMIT 100",
+        "SELECT l.*,t.driver_id,t.vehicle_id,v.label FROM bulk_lpg_loads l JOIN driver_trips t ON t.id=l.trip_id JOIN driver_vehicles v ON v.id=t.vehicle_id WHERE ($1::boolean OR l.branch_id=$2) AND ($3::boolean OR t.driver_id=$4) AND ($5::text IS NULL OR t.id=$6::text) ORDER BY l.created_at DESC LIMIT 100",
         [
           user.role === "owner",
           user.branch_id,
           user.role !== "driver",
           user.id,
+          orderId, currentTrip?.id ?? null,
         ],
       )
     ).rows;
@@ -62,6 +80,7 @@ export async function bulkLPG(
     }
     return {
       loads,
+      ...(orderId ? { orderId, orderVersion: Number(scopedOrder.tracking_version), orderStatus: scopedOrder.status, currentTrip } : {}),
       required:
         process.env.EASYGAS_BULK_LPG_ENABLED === "true" ||
         process.env.NODE_ENV === "production",
@@ -70,8 +89,8 @@ export async function bulkLPG(
           ? []
           : (
               await tx.query(
-                "SELECT t.id,t.driver_id,t.vehicle_id,v.label,u.name AS driver_name FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id JOIN users u ON u.id=t.driver_id WHERE t.ended_at IS NULL AND ($1::boolean OR t.branch_id=$2) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_loads l WHERE l.trip_id=t.id) ORDER BY t.started_at DESC",
-                [user.role === "owner", user.branch_id],
+                "SELECT t.id,t.driver_id,t.branch_id,t.vehicle_id,v.label,u.name AS driver_name FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id JOIN users u ON u.id=t.driver_id WHERE t.ended_at IS NULL AND ($1::boolean OR t.branch_id=$2) AND ($3::text IS NULL OR t.id=$4::text) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_loads l WHERE l.trip_id=t.id) ORDER BY t.started_at DESC",
+                [user.role === "owner", user.branch_id, orderId, currentTrip?.id ?? null],
               )
             ).rows,
       orders:
@@ -79,15 +98,15 @@ export async function bulkLPG(
           ? []
           : (
               await tx.query(
-                "SELECT o.id,o.reference,o.driver_id,o.tracking_version,o.status,(SELECT id FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_id,(SELECT state FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_state,(SELECT sum(g.grams) FROM order_gas_lines g WHERE g.order_id=o.id) AS grams FROM orders o WHERE o.status IN ('assigned','out_for_delivery') AND ($1::boolean OR o.branch_id=$2) AND EXISTS(SELECT 1 FROM order_gas_lines g WHERE g.order_id=o.id) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_allocations a WHERE a.order_id=o.id AND a.state NOT IN ('released','returned')) ORDER BY o.created_at",
-                [user.role === "owner", user.branch_id],
+                "SELECT o.id,o.reference,o.branch_id,o.driver_id,o.tracking_version,o.status,(SELECT id FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_id,(SELECT state FROM delivery_attempts a WHERE a.order_id=o.id ORDER BY assignment_version DESC LIMIT 1) AS attempt_state,(SELECT sum(g.grams) FROM order_gas_lines g WHERE g.order_id=o.id) AS grams FROM orders o WHERE o.status IN ('assigned','out_for_delivery') AND ($1::boolean OR o.branch_id=$2) AND ($3::text IS NULL OR o.id=$3) AND EXISTS(SELECT 1 FROM order_gas_lines g WHERE g.order_id=o.id) AND NOT EXISTS(SELECT 1 FROM bulk_lpg_allocations a WHERE a.order_id=o.id AND a.state NOT IN ('released','returned')) ORDER BY o.created_at",
+                [user.role === "owner", user.branch_id, orderId],
               )
             ).rows,
       meters: ["owner", "finance"].includes(user.role)
         ? (
             await tx.query(
-              "SELECT m.*,v.label FROM bulk_lpg_meters m JOIN driver_vehicles v ON v.id=m.vehicle_id WHERE ($1::boolean OR v.branch_id=$2) ORDER BY m.created_at DESC LIMIT 100",
-              [user.role === "owner", user.branch_id],
+              "SELECT m.*,v.label FROM bulk_lpg_meters m JOIN driver_vehicles v ON v.id=m.vehicle_id WHERE ($1::boolean OR v.branch_id=$2) AND ($3::text IS NULL OR m.vehicle_id=$4::text) ORDER BY m.created_at DESC LIMIT 100",
+              [user.role === "owner", user.branch_id, orderId, currentTrip?.vehicle_id ?? null],
             )
           ).rows
         : [],
@@ -122,6 +141,7 @@ export async function bulkLPG(
         calibrationReference: z.string().trim().min(10).max(300).optional(),
         calibrationExpiresAt: z.iso.datetime().optional(),
         reason: z.string().trim().min(10).max(500),
+        orderContext: orderContext.optional(),
       })
       .strict()
       .parse(input);
@@ -131,6 +151,17 @@ export async function bulkLPG(
       [d.meterId],
     );
     if (!initial) throw new AppError(404, "Meter not found.");
+    if (d.orderContext) {
+      // Match load issuance: current order first, then its trip/vehicle and meter.
+      const order = await one(tx, "SELECT * FROM orders WHERE id=$1 FOR UPDATE", [d.orderContext.orderId]);
+      if (!order) throw new AppError(404, "Order not found.");
+      allow(user, ["owner"], order.branch_id);
+      const trip = await one(tx, "SELECT * FROM driver_trips WHERE id=$1 FOR UPDATE", [d.orderContext.tripId]);
+      if (Number(order.tracking_version) !== d.orderContext.version ||
+        !["assigned", "out_for_delivery"].includes(order.status) || !trip || trip.ended_at ||
+        trip.driver_id !== order.driver_id || trip.branch_id !== order.branch_id || trip.vehicle_id !== initial.vehicle_id)
+        throw new AppError(409, "The order’s driver or vehicle changed. Refresh the order before renewing this meter.");
+    }
     // Match load issuance lock order. No certificate replacement during custody.
     const vehicle = await one(
       tx,
@@ -194,6 +225,7 @@ export async function bulkLPG(
     }
     await audit(tx, user, action, meter!.id, "success", {
       reason: d.reason,
+      ...(d.orderContext ? { orderContext: d.orderContext } : {}),
       previous: {
         calibrationReference: meter!.calibration_reference,
         calibrationExpiresAt: meter!.calibration_expires_at,
@@ -267,6 +299,7 @@ export async function bulkLPG(
         grams: mass.refine((n) => n > 0),
         meterReadingGrams: mass,
         orderIds: z.array(z.string().uuid()).max(100).default([]),
+        orderContext: orderContext.optional(),
         recovery: z
           .object({
             orderId: z.string().uuid(),
@@ -308,6 +341,9 @@ export async function bulkLPG(
       if (!o) throw new AppError(404, "Load order not found.");
       orders.push(o);
     }
+    if (d.orderContext && (d.orderContext.tripId !== d.tripId || orders.length !== 1 ||
+      orders[0].id !== d.orderContext.orderId || Number(orders[0].tracking_version) !== d.orderContext.version))
+      throw new AppError(409, "The order changed. Refresh its gas readiness before issuing the load.");
     const trip = await one(
       tx,
       "SELECT t.*,v.capacity_grams,v.active,v.lpg_suitable FROM driver_trips t JOIN driver_vehicles v ON v.id=t.vehicle_id AND v.branch_id=t.branch_id JOIN branches b ON b.id=t.branch_id AND b.active=true JOIN users u ON u.id=t.driver_id AND u.role='driver' AND u.active=true AND u.branch_id=t.branch_id WHERE t.id=$1 FOR UPDATE OF t,v",
@@ -647,7 +683,7 @@ export async function bulkLPG(
     return {
       ok: true,
       message:
-        "Actual cash collection recorded. Independent finance reconciliation is required before dispensing.",
+        "Actual cash collection recorded. Independent finance reconciliation remains pending; approved cash-on-delivery can proceed.",
     };
   } else if (action === "bulk.dispense") {
     allow(user, ["driver"], load.branch_id);
@@ -690,38 +726,37 @@ export async function bulkLPG(
         409,
         "Record arrival on the current delivery attempt before dispensing.",
       );
-    const paid = Number(
+    // Use the canonical prepaid/approved COD policy; finance reconciles actual COD
+    // after the visit, rather than holding the driver at the customer's address.
+    await fulfilmentReady(tx, order!);
+    const principal = Number(
       (await one(
         tx,
-        "SELECT COALESCE(sum(amount_kobo),0) AS n FROM verified_payments WHERE order_id=$1",
+        "SELECT COALESCE(sum(amount_kobo),0) n FROM verified_payments WHERE order_id=$1",
         [order!.id],
       ))!.n,
     );
-    const invoice = await one(
-      tx,
-      "SELECT * FROM customer_invoices WHERE order_id=$1",
-      [order!.id],
-    );
-    const obligation = invoice ? await invoiceBalance(tx, invoice) : null;
-    if (!obligation || obligation.voided || obligation.amountDueKobo > 0)
-      throw new AppError(
-        409,
-        "A current issued invoice and independently verified corrected balance are required before dispensing.",
-      );
     if (
-      order!.payment_status !== "verified" ||
-      paid < Number(order!.total_kobo) ||
-      (await one(
-        tx,
-        "SELECT id FROM credit_requests WHERE order_id=$1 AND status='approved' AND kind='refund'",
-        [order!.id],
-      ))
+      order!.payment_method === "cash_on_delivery" &&
+      principal > 0 &&
+      principal < Number(order!.total_kobo)
     )
       throw new AppError(
         409,
-        "Independently verified full principal without refund required before dispensing.",
+        "Existing partial payment needs finance review; do not collect the full amount again.",
       );
-    await verifyGasDispatch(tx, order!.id);
+
+    if (
+      await one(
+        tx,
+        "SELECT id FROM credit_requests WHERE order_id=$1 AND status='approved' AND kind='refund'",
+        [order!.id],
+      )
+    )
+      throw new AppError(
+        409,
+        "Refunded orders require finance review before dispensing.",
+      );
     const allocation = await one(
       tx,
       "SELECT * FROM bulk_lpg_allocations WHERE order_id=$1 AND load_id=$2 FOR UPDATE",

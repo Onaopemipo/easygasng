@@ -38,6 +38,7 @@ export async function allocateCylinders(
   branch: string,
   items: { productId: string; quantity: number }[],
   reference: { orderId?: string; saleId?: string },
+  vehicleProducts?: {productId:string;serialIds:string[]}[],
 ) {
   for (const item of items) {
     const p = await one(
@@ -46,9 +47,11 @@ export async function allocateCylinders(
       [item.productId],
     );
     if (p?.category !== "Empty cylinders") continue;
-    const units = await requireAvailableEmptyCylinders(
+    const serials=vehicleProducts?.filter(l=>l.productId===item.productId).flatMap(l=>l.serialIds);
+    const units = serials?.length ? (await tx.query("SELECT c.id FROM cylinders c WHERE c.id=ANY($1::text[]) AND c.branch_id=$2 AND c.size_kg=$3 AND c.status='empty' AND c.ownership='company' AND c.customer_id IS NULL AND c.test_due>CURRENT_DATE AND NOT EXISTS(SELECT 1 FROM cylinder_allocations a WHERE a.cylinder_id=c.id AND a.state IN ('reserved','issued')) ORDER BY c.id FOR UPDATE",[serials,branch,p.size_kg])).rows : await requireAvailableEmptyCylinders(
       tx, branch, p.name, p.size_kg, item.quantity, true,
     );
+    if(units.length!==item.quantity)throw new AppError(409,"Exact inspected vehicle cylinder serials are required for this extra order.");
     for (const c of units)
       await tx.query(
         "INSERT INTO cylinder_allocations(id,cylinder_id,order_id,sale_id,state) VALUES ($1,$2,$3,$4,'reserved')",

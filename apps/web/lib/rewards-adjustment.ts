@@ -1,19 +1,48 @@
+import { validateRewardsCustomer } from "./rewards-customers";
+import { audit } from "./governance";
 import { one, type SQL, type Row } from "./db";
 import { id, AppError } from "./auth";
-import { rewardsAdjustment } from "./rewards-schema";
 export async function applyRewardsAdjustment(tx: SQL, request: Row) {
   if (request.key !== "loyalty.adjustment") return;
-  const d = rewardsAdjustment.parse(request.proposed_value);
-  const target = await one(
+  // Retries never repeat either the branch assignment or the ledger credit.
+  if (
+    await one(tx, "SELECT id FROM reward_entries WHERE reference=$1", [
+      `adjustment:${request.id}`,
+    ])
+  )
+    return;
+  const requester = await one(
     tx,
-    "SELECT u.id FROM users u JOIN branches b ON b.id=u.branch_id AND b.active=true WHERE u.id=$1 AND u.branch_id=$2 AND u.role IN ('customer','commercial') AND u.active=true FOR UPDATE OF u",
-    [d.customerId, request.scope],
+    "SELECT id,role,branch_id,active FROM users WHERE id=$1",
+    [request.requester_id],
   );
-  if (!target)
-    throw new AppError(
-      403,
-      "Choose an active customer in the approved branch.",
+  if (!requester?.active)
+    throw new AppError(403, "The adjustment requester is no longer active.");
+  const { target, value: d } = await validateRewardsCustomer(
+    tx,
+    request.scope,
+    request.proposed_value,
+    requester as any,
+    true,
+  );
+  if (d.assignBranchId) {
+    await tx.query(
+      "UPDATE users SET branch_id=$1 WHERE id=$2 AND branch_id IS NULL",
+      [request.scope, d.customerId],
     );
+    await audit(
+      tx,
+      requester as any,
+      "rewards.customer.branch_assigned",
+      d.customerId,
+      "success",
+      {
+        previousBranchId: target.branch_id,
+        branchId: request.scope,
+        approvalRequestId: request.id,
+      },
+    );
+  }
   const entry = await one(
     tx,
     "INSERT INTO reward_entries(id,customer_id,points,reference) VALUES($1,$2,$3,$4) ON CONFLICT(reference) DO NOTHING RETURNING id",

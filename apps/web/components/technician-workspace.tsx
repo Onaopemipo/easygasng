@@ -1,4 +1,5 @@
 "use client";
+import { AssignmentResponseActions } from "./assignment-response-actions";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
@@ -345,34 +346,17 @@ export default function TechnicianWorkspace({ user }: { user: any }) {
               <h2>Job details · {detail.reference}</h2>
               {detail.status === "assigned" &&
                 detail.assignment_response === "pending" && (
-                  <ServiceForm
-                    title="Review your assignment"
-                    fields={[
-                      {
-                        name: "reason",
-                        label: "Acknowledgement or decline reason",
-                        type: "textarea",
-                      },
-                      {
-                        name: "decision",
-                        label: "Decision",
-                        options: [
-                          {
-                            value: "acknowledged",
-                            label: "Acknowledge assignment",
-                          },
-                          {
-                            value: "declined",
-                            label: "Decline and notify operations",
-                          },
-                        ],
-                      },
-                    ]}
-                    send={(v) =>
+                  <AssignmentResponseActions
+                    key={detail.id + ":" + detail.version}
+                    disabled={
+                      stale || loading || detailPending || !!detailError
+                    }
+                    declineDecision="declined"
+                    send={(values) =>
                       serviceMutation("booking.assignment.respond", {
                         bookingId: detail.id,
                         version: detail.version,
-                        ...v,
+                        ...values,
                       })
                     }
                     done={refresh}

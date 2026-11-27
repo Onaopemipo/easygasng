@@ -1,3 +1,4 @@
+import { validateRewardsCustomer } from "./rewards-customers";
 import { z } from "zod";
 import { one, type SQL } from "./db";
 import { AppError, recentVerification, type Actor } from "./auth";
@@ -108,6 +109,7 @@ export async function approvalWorkflowAction(
     if (d.value === undefined)
       throw new AppError(400, "Provide the revised value.");
     validateValue(def, d.value);
+    if (def.value_type === "rewards_adjustment") await validateRewardsCustomer(tx, r.scope, d.value, user);
     if (def.value_type === "access" && await one(tx,
       "SELECT id FROM staff_invitations WHERE access_request_id=$1", [r.id],
     )) {
@@ -151,6 +153,7 @@ export async function approvalWorkflowAction(
   }
   if (r.status !== "draft") throw new AppError(409, "Submit a draft request.");
   validateValue(def, r.proposed_value);
+  if (def.value_type === "rewards_adjustment") await validateRewardsCustomer(tx, r.scope, r.proposed_value, user);
   if (def.value_type === "access" && r.proposed_value.userId === user.id)
     throw new AppError(403, "Self-promotion is prohibited.");
   const current = await one(

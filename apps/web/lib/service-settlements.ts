@@ -1,3 +1,4 @@
+import { operationNoteSchema } from "./operation-notes";
 import { z } from "zod";
 import { one, type SQL, type Row } from "./db";
 import { allow, AppError, id, recentVerification, type Actor } from "./auth";
@@ -128,7 +129,7 @@ export async function serviceSettlements(
       bookingId: z.string().uuid(),
       settlementId: z.string().uuid(),
       accepted: z.boolean(),
-      notes: z.string().trim().min(10).max(1000),
+      notes: operationNoteSchema(action, input as any, "notes", 1000, 10),
     })
     .strict()
     .parse(input);
