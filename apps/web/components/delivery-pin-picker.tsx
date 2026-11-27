@@ -9,22 +9,26 @@ import {
 } from "../../../packages/business-rules/src/delivery-pin";
 import "leaflet/dist/leaflet.css";
 
+import { deliveryPinAreaError, deliveryAreaBounds, type DeliveryMapArea } from "../../../packages/business-rules/src/delivery-pin-area";
+
 export default function DeliveryPinPicker({
   street,
   zone,
   value,
+  area,
   onChange,
   disabled = false,
 }: {
   street: string;
   zone: string;
   value?: ConfirmedDeliveryPin;
+  area?: DeliveryMapArea;
   onChange: (pin: ConfirmedDeliveryPin | undefined) => void;
   disabled?: boolean;
 }) {
   const id = useId(),
-    valid = confirmedDeliveryPin(value, street, zone);
-  const [point, setPoint] = useState<DeliveryPoint | null>(valid),
+    valid = confirmedDeliveryPin(value, street, zone) && !deliveryPinAreaError(value, area ?? zone) ? confirmedDeliveryPin(value, street, zone) : null;
+  const [point, setPoint] = useState<DeliveryPoint | null>(confirmedDeliveryPin(value, street, zone)),
     [open, setOpen] = useState(false),
     [text, setText] = useState(""),
     [error, setError] = useState(""),
@@ -51,7 +55,8 @@ export default function DeliveryPinPicker({
     }
   }, [key]);
   useEffect(() => {
-    if (valid) setPoint(valid);
+    const bound = confirmedDeliveryPin(value, street, zone);
+    if (bound) setPoint(bound);
   }, [value?.latitude, value?.longitude, value?.addressKey, value?.confirmed]);
   function choose(p: DeliveryPoint) {
     if (disabled) return;
@@ -59,13 +64,14 @@ export default function DeliveryPinPicker({
     onChange(undefined);
     setError("");
   }
+  const bounds = deliveryAreaBounds(area ?? zone);
   useEffect(() => {
     if (!open || !host.current) return;
     let live = true;
     void import("leaflet")
       .then((L) => {
         if (!live || !host.current) return;
-        const centre = point ?? { latitude: 6.5244, longitude: 3.3792 },
+        const centre = point ?? (bounds ? {latitude:(bounds.south+bounds.north)/2,longitude:(bounds.west+bounds.east)/2} : { latitude: 6.5244, longitude: 3.3792 }),
           m = L.map(host.current).setView(
             [centre.latitude, centre.longitude],
             point ? 17 : 11,
@@ -114,7 +120,7 @@ export default function DeliveryPinPicker({
       map.current = null;
       marker.current = null;
     };
-  }, [open]);
+  }, [open, zone, bounds?.south, bounds?.north, bounds?.west, bounds?.east]);
   useEffect(() => {
     if (!point) {
       marker.current?.remove();
@@ -166,7 +172,8 @@ export default function DeliveryPinPicker({
       { enableHighAccuracy: true, maximumAge: 0, timeout: 15000 },
     );
   }
-  const canConfirm = !!point && street.trim().length >= 8 && !!zone.trim();
+  const areaError = point ? deliveryPinAreaError(point, area ?? zone) : "";
+  const canConfirm = !!point && !areaError && street.trim().length >= 8 && !!zone.trim();
   return (
     <section
       className="delivery-pin-picker"
@@ -183,7 +190,7 @@ export default function DeliveryPinPicker({
       <p style={{ margin: 0 }}>
         {valid
           ? "Delivery pin confirmed for this address."
-          : "Choose the exact delivery location so your driver can find you."}
+          : "Choose the delivery address on the map. Current location is only suitable when you are there."}
       </p>
       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
         <button
@@ -262,7 +269,7 @@ export default function DeliveryPinPicker({
           disabled={disabled || !canConfirm}
           onChange={(e) =>
             onChange(
-              e.target.checked && point
+              e.target.checked && point && canConfirm
                 ? { ...point, confirmed: true, addressKey: key }
                 : undefined,
             )
@@ -270,7 +277,8 @@ export default function DeliveryPinPicker({
         />
         <span>This pin matches my delivery address.</span>
       </label>
-      {!canConfirm && point && (
+      {areaError && <p role="alert">{areaError}</p>}
+      {!canConfirm && point && !areaError && (
         <p role="status">
           Enter your complete street address and delivery area before confirming
           the pin.

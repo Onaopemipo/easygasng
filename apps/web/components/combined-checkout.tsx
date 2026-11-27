@@ -224,7 +224,7 @@ export default function CombinedCheckout({
           {cart.length > 0 && (
             <>
               <h3>Product delivery</h3>
-              <CheckoutDeliveryFields user={user} zones={catalogue.zones} />
+              <CheckoutDeliveryFields user={user} zones={catalogue.zones} mapAreas={catalogue.gas?.locations} />
               <label>
                 <FieldCaption required={true}>Delivery date</FieldCaption>
                 <input name="date" type="date" required />

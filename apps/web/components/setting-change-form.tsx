@@ -1,4 +1,5 @@
 "use client";
+import DeliveryMapBoundsFields from "./delivery-map-bounds-fields";
 import React, {
   useState,
   useEffect,
@@ -834,6 +835,7 @@ export default function SettingForm({
         </>
       ) : s.value_type === "location" ? (
         <>
+          <DeliveryMapBoundsFields value={value} onChange={changeValue}/>
           {["name", "city", "state", "country", "coverage", "description"].map(
             (k) => (
               <label key={k}>

@@ -482,3 +482,5 @@ HAP hosted acceptance completed27 November2026:117/117 retained checks,6/6 requi
 Daily scale-based delivery —28 November2026: [matrix](daily-delivery-rtm.md). User-approved daily net gas weights, automatic assignment allocation, portable before/after refill weighing and office reconciliation. Seven requirements retained; historical metered data and production holds preserved.
 
 Daily iOS scale delivery acceptance —28 November2026: [focused matrix](daily-ios-rtm.json) extends DAY-05. Simulator acceptance/scale/photo-retry/completion and removal of normal meter/load shortcuts are recorded; physical camera, signed-device and offline acceptance remain in the original denominator.
+
+Delivery map pin mismatch —28 November2026: [PINAREA matrix](delivery-pin-area-rtm.md). Customer correction and canonical geographic guard; existing operational coverage and production holds preserved.

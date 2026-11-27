@@ -45,7 +45,7 @@ export async function gasCatalogue(tx: SQL, branch = "lagos") {
   );
   const locations = (
     await tx.query(
-      "SELECT l.*,COALESCE((s.value->>'requiresAddressConfirmation')::boolean,true) AS requires_address_confirmation FROM delivery_locations l JOIN branches b ON b.id=l.branch_id LEFT JOIN settings s ON s.key='location.'||l.id AND s.scope=l.branch_id WHERE l.active=true AND l.visible=true AND l.archived=false AND b.active=true ORDER BY l.display_order,l.name",
+      "SELECT l.*,s.value->'mapBounds' AS map_bounds,COALESCE((s.value->>'requiresAddressConfirmation')::boolean,true) AS requires_address_confirmation FROM delivery_locations l JOIN branches b ON b.id=l.branch_id LEFT JOIN settings s ON s.key='location.'||l.id AND s.scope=l.branch_id WHERE l.active=true AND l.visible=true AND l.archived=false AND b.active=true ORDER BY l.display_order,l.name",
     )
   ).rows;
   return {

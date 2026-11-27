@@ -1,0 +1,169 @@
+{
+  "phase": "Delivery map area mismatch \u2014 28 November 2026",
+  "requirements": [
+    {
+      "id": "PINAREA-01",
+      "priority": "P1",
+      "requirement": "Detect and explain out-of-area pins across web/native GPS, map, manual and saved-pin selection",
+      "routes": [
+        "/gas-order",
+        "/checkout",
+        "/phone-order",
+        "/admin/settings"
+      ],
+      "implementationFiles": [
+        "packages/business-rules/src/delivery-pin-area.ts",
+        "apps/web/components/delivery-pin-picker.tsx",
+        "apps/mobile/DeliveryPinPicker.tsx",
+        "apps/web/components/gas-order.tsx",
+        "apps/mobile/GasOrder.tsx"
+      ],
+      "authoritativeData": [
+        "delivery_locations",
+        "settings location.<id> mapBounds",
+        "Versioned initial coarse locality guards; no claim of property verification"
+      ],
+      "securityControls": "Unconfirmed/out-of-area pins cannot enable order confirmation; current-address binding preserved.",
+      "testIds": [
+        "PIN-GEO",
+        "PIN-UI-WEB",
+        "PIN-UI-NATIVE"
+      ],
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+      ],
+      "acceptanceGate": "PINAREA-G1",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "24 focused and regression tests, native/web types, production build and actual browser picker rejection/correction passed.",
+      "outstandingWork": "No outstanding work within bounded geographic rectangle scope. Complex boundaries/property verification and physical/signed native release are not claimed."
+    },
+    {
+      "id": "PINAREA-02",
+      "priority": "P1",
+      "requirement": "Enforce canonical delivery-area geography before checkout, saved-address and private phone-profile writes",
+      "routes": [
+        "/gas-order",
+        "/checkout",
+        "/phone-order",
+        "/admin/settings"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/customer-delivery-pin.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/accounts.ts",
+        "apps/web/lib/phone-order-payments.ts"
+      ],
+      "authoritativeData": [
+        "delivery_locations",
+        "settings location.<id> mapBounds",
+        "Versioned initial coarse locality guards; no claim of property verification"
+      ],
+      "securityControls": "Server resolves location ID/name/branch and governed settings; client bounds/checkbox cannot override; reject before stock/payment/destination mutation.",
+      "testIds": [
+        "PIN-API",
+        "PIN-PHONE",
+        "PIN-ADDRESS",
+        "PIN-RUNTIME"
+      ],
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+      ],
+      "acceptanceGate": "PINAREA-G2",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "24 focused and regression tests, native/web types, production build and actual browser picker rejection/correction passed.",
+      "outstandingWork": "No outstanding work within bounded geographic rectangle scope. Complex boundaries/property verification and physical/signed native release are not claimed."
+    },
+    {
+      "id": "PINAREA-03",
+      "priority": "P1",
+      "requirement": "Allow governed delivery-area bounds and document geographic precision and prior holds",
+      "routes": [
+        "/gas-order",
+        "/checkout",
+        "/phone-order",
+        "/admin/settings"
+      ],
+      "implementationFiles": [
+        "apps/web/lib/gas-delivery-config.ts",
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/components/delivery-map-bounds-fields.tsx",
+        "apps/web/components/setting-change-form.tsx"
+      ],
+      "authoritativeData": [
+        "delivery_locations",
+        "settings location.<id> mapBounds",
+        "Versioned initial coarse locality guards; no claim of property verification"
+      ],
+      "securityControls": "Existing owner approval/audit and location versioning; no new grants, migrations, provider activation or automatic coverage approval.",
+      "testIds": [
+        "PIN-GEO",
+        "PIN-GOVERNANCE"
+      ],
+      "evidence": [
+        "docs/delivery-pin-area/evidence/tests.txt",
+        "docs/delivery-pin-area/evidence/web-types.txt",
+        "docs/delivery-pin-area/evidence/native-types.txt",
+        "docs/delivery-pin-area/evidence/build.txt",
+        "docs/delivery-pin-area/evidence/outside.jpg",
+        "docs/delivery-pin-area/evidence/corrected.jpg",
+        "docs/delivery-pin-area/evidence/outside-ax.txt",
+        "docs/delivery-pin-area/evidence/corrected-ax.txt"
+      ],
+      "acceptanceGate": "PINAREA-G3",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "24 focused and regression tests, native/web types, production build and actual browser picker rejection/correction passed.",
+      "outstandingWork": "No outstanding work within bounded geographic rectangle scope. Complex boundaries/property verification and physical/signed native release are not claimed."
+    },
+    {
+      "id": "PINAREA-04",
+      "priority": "P1",
+      "requirement": "Publish the tested fix to the existing client-demo without changing business data or prior production holds",
+      "routes": [
+        "https://easygas-client-demo.vercel.app/gas-order"
+      ],
+      "implementationFiles": [
+        "apps/web/components/gas-order.tsx",
+        "apps/web/lib/customer-delivery-pin.ts"
+      ],
+      "authoritativeData": [
+        "Exact committed source and Vercel deployment readiness"
+      ],
+      "securityControls": "Existing demo project/environment only; no migration, credentials, role or live operational configuration changes.",
+      "testIds": [
+        "PIN-DEPLOY"
+      ],
+      "evidence": [],
+      "acceptanceGate": "PINAREA-G4",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Preparing exact-source deployment after local acceptance.",
+      "outstandingWork": "Demo readiness and source/smoke verification pending."
+    }
+  ],
+  "coverage": {
+    "requirements": 4,
+    "verified": 3,
+    "excluded": 0,
+    "gates": 4,
+    "gatesPassed": 3
+  },
+  "productionDecision": "Existing production NO-GO and unrelated holds preserved",
+  "scope": "Geographic rectangle guard, not reverse-geocoding, polygon or street-level coverage proof.",
+  "changeLog": [
+    "Initial scope: reject mismatched selected pin and explain correction; preserve absent-pin legacy records and prior safety/coverage checks.",
+    "Added explicit same-demo deployment gate; retained coarse-boundary precision limit and existing NO-GO."
+  ]
+}

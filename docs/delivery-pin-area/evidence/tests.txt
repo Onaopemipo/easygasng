@@ -1,0 +1,46 @@
+(node:37467) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ ADR-01: full house addresses identify a single configured locality (1.045208ms)
+✔ ADR-04: addresses without commas match only explicit locality and city suffixes (0.064833ms)
+✔ ADR-02: ambiguous, unknown and street-name matches require confirmation (0.10925ms)
+✔ ADR-03: changing or deleting an address cannot reuse a previous automatic match (0.054792ms)
+✔ ADR-07: address edits preserve explicitly selected and saved areas (0.169417ms)
+✔ ADR-08: an automatic suggestion follows the address and respects current choices (0.066875ms)
+(node:37468) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ CHECKOUT-PREFILL01: prefer the saved default, fall back to a usable legacy address and then to the account contact (0.944167ms)
+✔ CHECKOUT-SAVE01: preferred delivery phone fills new and default addresses while alternate addresses keep their contact (0.076959ms)
+(node:37469) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ PIN-UI-WEB GPS/manual/saved mismatch cannot be confirmed; corrected pin and changed-area boundary recover (12.337209ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ PIN-UI-NATIVE GPS/manual/saved mismatch cannot be confirmed; corrected pin and changed-area boundary recover (6.883333ms)
+(node:37474) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ PIN-GEO geographic guards reject overseas/wrong area/invalid/unknown coverage, preserve inclusive edges and governed custom overrides (5.09675ms)
+✔ PIN-API checkout rejects mismatched coordinates and forged location names before reserving stock or creating a destination; valid correction succeeds (1510.498917ms)
+✔ PIN-PHONE private order profile rejects outside area without profile/payment/destination writes; customer correction is accepted (1175.107667ms)
+✔ PIN-ADDRESS saved address cannot retain an overseas pin, while a corrected pin saves under canonical current coverage (858.764375ms)
+✔ PIN-RUNTIME current area lookup and rejects run under existing restricted server grants (776.699084ms)
+✔ PIN-GOVERNANCE custom map bounds use the existing single Admin approval, audit and public catalogue; customers cannot change them (885.803333ms)
+(node:37570) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ PPAY-JOURNEY: first-time phone customer completes scoped profile/address, pays, is confirmed once and receives tanker refill with photo before reconciliation/trip end (2380.057083ms)
+✔ PPAY-SECURITY: anonymous link cannot target another order/wallet, claim an account, alter scope/area or bypass incomplete profile, unpaid policy, expiry, revocation or changed source (2265.531667ms)
+✔ PPAY-MESSAGES: encrypted email and WhatsApp requests are retry-safe, honestly queued while disabled, and revoked email links are never delivered (1050.147834ms)
+✔ PPAY-VERIFY: pending, mismatched, or browser-asserted payment never confirms an order; exact verified provider evidence posts only once (1047.527375ms)
+✔ PPAY-EXTRA: a same-visit extra phone order charges no second delivery fee, stays unassigned until payment and then rejoins the original active driver (1172.476084ms)
+✔ PPAY-LEGACY: already-paid pre-migration phone orders remain paid; unpaid legacy COD requests convert explicitly to card without dispatch bypass (962.663833ms)
+✔ PPAY-ADDRESS: a customer address correction invalidates the prior coverage confirmation and still requires actual current address review (1183.937208ms)
+✔ PPAY-ORIGIN: foreign origins and oversized or missing capabilities cannot access the private customer order (1514.356708ms)
+ℹ tests 24
+ℹ suites 0
+ℹ pass 24
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 18445.912584

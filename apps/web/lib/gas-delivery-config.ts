@@ -2,6 +2,18 @@ import { z } from "zod";
 import { one, type SQL, type Row } from "./db";
 import { AppError, type Actor } from "./auth";
 import { grams } from "../../../packages/business-rules/src/gas-pricing";
+const mapBoundsConfig = z
+  .object({
+    south: z.number().min(-90).max(90),
+    north: z.number().min(-90).max(90),
+    west: z.number().min(-180).max(180),
+    east: z.number().min(-180).max(180),
+  })
+  .strict()
+  .refine(
+    (v) => v.south < v.north && v.west < v.east,
+    "Map boundaries must have south below north and west below east.",
+  );
 export const locationConfig = z
   .object({
     name: z.string().trim().min(2).max(100),
@@ -15,6 +27,7 @@ export const locationConfig = z
     displayOrder: z.number().int().min(0).max(10000),
     requiresAddressConfirmation: z.boolean().default(true),
     coverage: z.string().max(2000).default(""),
+    mapBounds: mapBoundsConfig.nullable().optional(),
     description: z.string().max(1000).default(""),
   })
   .strict()

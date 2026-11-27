@@ -42,23 +42,25 @@ export function useCheckoutProfile(id?: string) {
   return { profile: loaded?.id === id ? loaded?.profile : undefined, loading: Boolean(id && loaded?.id !== id) };
 }
 
-export function CheckoutDeliveryFields({ user, zones, draftStreet = "" }: {
+export function CheckoutDeliveryFields({ user, zones, mapAreas, draftStreet = "" }: {
   user: { id: string; name: string };
   zones: string[];
+  mapAreas?: {id:string;name:string;map_bounds?:unknown}[];
   draftStreet?: string;
 }) {
   const { profile, loading } = useCheckoutProfile(user.id);
   if (loading) return <ActionLoadingIndicator label="Loading your delivery details" />;
-  return <DeliveryFields profile={profile} name={user.name} zones={zones} draftStreet={draftStreet} />;
+  return <DeliveryFields profile={profile} name={user.name} zones={zones} mapAreas={mapAreas} draftStreet={draftStreet} />;
 }
 
-function DeliveryFields({ profile, name, zones, draftStreet }: {
+function DeliveryFields({ profile, name, zones, mapAreas, draftStreet }: {
   profile?: CheckoutProfile | null;
   name: string;
   zones: string[];
+  mapAreas?: {id:string;name:string;map_bounds?:unknown}[];
   draftStreet: string;
 }) {
-  const areas = zones.map((zone) => ({ id: zone, name: zone }));
+  const areas = zones.map((zone) => mapAreas?.find(a=>a.name===zone) ?? ({ id: zone, name: zone }));
   const addresses = checkoutAddresses(profile).filter((address) => zones.includes(address.zone));
   const [choice, setChoice] = useState(draftStreet.trim() ? "draft" : defaultCheckoutAddress(addresses)?.id ?? "");
   const address = checkoutDelivery(profile, addresses.find((item) => item.id === choice), name);
@@ -95,7 +97,7 @@ function DeliveryFields({ profile, name, zones, draftStreet }: {
 function PinnedAddressFields({areas,street,zone,pin}:{areas:{id:string;name:string}[];street:string;zone:string;pin?:ConfirmedDeliveryPin}) {
  const [address,setAddress]=useState({street,zone:selectAddressLocation(street,areas,zone || undefined).location?.name ?? zone}),[point,setPoint]=useState(pin);
  return <><AddressAreaFields areas={areas} street={street} area={zone} areaLabel="Delivery area" maxLength={250} onDeliveryChange={next=>{setAddress(next);setPoint(undefined);}} />
- <DeliveryPinPicker street={address.street} zone={address.zone} value={point} onChange={setPoint}/>
+ <DeliveryPinPicker area={areas.find(a=>a.name===address.zone)} street={address.street} zone={address.zone} value={point} onChange={setPoint}/>
  <input type="hidden" name="deliveryPin" value={point?JSON.stringify(point):""}/></>;
 }
 

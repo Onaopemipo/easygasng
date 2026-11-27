@@ -112,7 +112,7 @@ export async function checkout(
 ) {
   allow(user, ["customer", "commercial", "owner", "manager"]);
   const customerId = assisted?.customerId ?? user.id;
-  validateCustomerDeliveryPin(input.address);
+  await validateCustomerDeliveryPin(tx, input.address);
   if (assisted) {
     allow(user, ["owner", "manager"]);
     if (

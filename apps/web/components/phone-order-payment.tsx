@@ -1,4 +1,5 @@
 "use client";
+import { deliveryPinAreaError } from "../../../packages/business-rules/src/delivery-pin-area";
 import DeliveryPinPicker from "./delivery-pin-picker";
 import {
   confirmedDeliveryPin,
@@ -90,7 +91,7 @@ export default function PhoneOrderPayment() {
     try {
       if (
         !data.sameVisit &&
-        !confirmedDeliveryPin(pin, street, data.profile.zone)
+        (!confirmedDeliveryPin(pin, street, data.profile.zone) || !!deliveryPinAreaError(pin, data.profile.mapArea ?? data.profile.zone))
       )
         throw Error(
           "Confirm your delivery map location before continuing to payment.",
@@ -209,6 +210,7 @@ export default function PhoneOrderPayment() {
                   ) : (
                     <>
                       <DeliveryPinPicker
+                        area={data.profile.mapArea}
                         street={street}
                         zone={data.profile.zone}
                         value={pin}

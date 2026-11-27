@@ -1,6 +1,7 @@
 import {confirmedDeliveryPin} from "../../../packages/business-rules/src/delivery-pin";
 import {
   customerDeliveryPinSchema,
+  customerDeliveryMapArea,
   validateCustomerDeliveryPin,
   recordCustomerDeliveryPin,
 } from "./customer-delivery-pin";
@@ -203,6 +204,7 @@ export async function viewPhonePayment(tx: SQL, linkId: string, raw: string) {
       email: u.email.endsWith(".invalid") ? "" : u.email,
       street: o.address.street,
       zone: o.address.zone,
+      mapArea: await customerDeliveryMapArea(tx, o.address, o.branch_id),
       ...(suggestedPin ? { deliveryPin: suggestedPin } : {}),
     },
     gas: (
@@ -236,11 +238,11 @@ export async function completePhoneProfile(
 ) {
   const d = phoneProfile.parse(input),
     { l, o, u } = await phoneLink(tx, linkId, raw);
-  validateCustomerDeliveryPin({
+  await validateCustomerDeliveryPin(tx, {
     ...o.address,
     street: d.street,
     deliveryPin: d.deliveryPin,
-  });
+  }, o.branch_id);
   const phone = normaliseCustomerPhone(d.phone),
     original = normaliseCustomerPhone(o.address.phone);
   if (!phone || phone !== original)
@@ -365,7 +367,7 @@ export async function completePhoneProfile(
     ...(d.deliveryPin ? { deliveryPin: d.deliveryPin } : {}),
   };
   if (streetChanged && !d.deliveryPin) delete address.deliveryPin;
-  validateCustomerDeliveryPin(address);
+  await validateCustomerDeliveryPin(tx, address, o.branch_id);
   await tx.query("UPDATE orders SET address=$1 WHERE id=$2", [
     JSON.stringify(address),
     o.id,

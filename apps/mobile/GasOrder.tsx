@@ -1,3 +1,4 @@
+import { deliveryPinAreaError } from "../../packages/business-rules/src/delivery-pin-area";
 import DeliveryPinPicker from "./DeliveryPinPicker";
 import { confirmedDeliveryPin } from "../../packages/business-rules/src/delivery-pin";
 import { ScreenTransition } from "./ScreenTransition";
@@ -402,6 +403,8 @@ export default function GasOrder({
         throw Error(
           "Confirm your delivery map location before reviewing the order.",
         );
+      const pinAreaError = deliveryPinAreaError(contact.deliveryPin, area);
+      if (pinAreaError) throw Error(pinAreaError);
       if (!date || date < lagosDate() || !window)
         throw Error(
           "Choose today or a future delivery date and a time window.",
@@ -443,6 +446,8 @@ export default function GasOrder({
     try {
       let request = journal.current;
       if (!request) {
+        const pinError = deliveryPinAreaError(contact.deliveryPin, area);
+        if (pinError || !confirmedDeliveryPin(contact.deliveryPin, contact.street, area?.name ?? "")) throw Error(pinError || "Confirm your delivery map location.");
         if (!quote || quote.inputKey !== fingerprint)
           throw Error("Review the current order before confirming.");
         if (!payments.data?.methods.includes(method))
@@ -1005,6 +1010,7 @@ export default function GasOrder({
               onChange={(v) => patchContact("street", v)}
             />
             <DeliveryPinPicker
+              area={area}
               street={contact.street}
               zone={area?.name ?? ""}
               value={contact.deliveryPin}

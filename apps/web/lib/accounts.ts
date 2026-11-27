@@ -721,7 +721,7 @@ export async function accountAction(
     if (!location)
       throw new AppError(400, "Choose an active supported delivery location.");
     d.zone = location.name;
-    validateCustomerDeliveryPin(d);
+    await validateCustomerDeliveryPin(tx, d);
     const aid = d.id ?? id();
     if (d.id) {
       const a = await one(

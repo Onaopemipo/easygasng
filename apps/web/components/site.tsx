@@ -1538,7 +1538,7 @@ function Cart({ checkout = false }: { checkout?: boolean }) {
                   onSubmit={submit}
                 >
                   <h2>Where are we delivering?</h2>
-                  <CheckoutDeliveryFields user={user} zones={catalogue.zones} draftStreet={draft.address} />
+                  <CheckoutDeliveryFields user={user} zones={catalogue.zones} mapAreas={catalogue.gas?.locations} draftStreet={draft.address} />
                   <div className="form-columns">
                     <label>
                       <FieldCaption required={true}>Delivery date</FieldCaption>

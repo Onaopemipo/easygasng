@@ -12,23 +12,27 @@ import {
   type DeliveryPoint,
 } from "../../packages/business-rules/src/delivery-pin";
 
+import { deliveryPinAreaError, deliveryAreaBounds, type DeliveryMapArea } from "../../packages/business-rules/src/delivery-pin-area";
+
 export default function DeliveryPinPicker({
   street,
   zone,
   value,
+  area,
   onChange,
   disabled = false,
 }: {
   street: string;
   zone: string;
   value?: ConfirmedDeliveryPin;
+  area?: DeliveryMapArea;
   onChange: (pin: ConfirmedDeliveryPin | undefined) => void;
   disabled?: boolean;
 }) {
   const { colors } = useTheme(),
-    valid = confirmedDeliveryPin(value, street, zone),
+    valid = confirmedDeliveryPin(value, street, zone) && !deliveryPinAreaError(value, area ?? zone) ? confirmedDeliveryPin(value, street, zone) : null,
     key = deliveryAddressKey(street, zone);
-  const [point, setPoint] = useState<DeliveryPoint | null>(valid),
+  const [point, setPoint] = useState<DeliveryPoint | null>(confirmedDeliveryPin(value, street, zone)),
     [showMap, setShowMap] = useState(false),
     [manual, setManual] = useState(false),
     [text, setText] = useState(""),
@@ -48,7 +52,8 @@ export default function DeliveryPinPicker({
     setError("");
   }, [key]);
   useEffect(() => {
-    if (valid) setPoint(valid);
+    const bound = confirmedDeliveryPin(value, street, zone);
+    if (bound) setPoint(bound);
   }, [value?.latitude, value?.longitude, value?.addressKey, value?.confirmed]);
   function choose(p: DeliveryPoint) {
     if (disabled) return;
@@ -103,7 +108,9 @@ export default function DeliveryPinPicker({
       Marker = maps.Marker;
     } catch {}
   }
-  const canConfirm = !!point && street.trim().length >= 8 && !!zone.trim();
+  const bounds = deliveryAreaBounds(area ?? zone);
+  const areaError = point ? deliveryPinAreaError(point, area ?? zone) : "";
+  const canConfirm = !!point && !areaError && street.trim().length >= 8 && !!zone.trim();
   return (
     <View
       style={{
@@ -147,8 +154,8 @@ export default function DeliveryPinPicker({
             accessibilityLabel="Choose delivery map location"
             style={{ height: 260, width: "100%" }}
             region={{
-              latitude: point?.latitude ?? 6.5244,
-              longitude: point?.longitude ?? 3.3792,
+              latitude: point?.latitude ?? (bounds ? (bounds.south+bounds.north)/2 : 6.5244),
+              longitude: point?.longitude ?? (bounds ? (bounds.west+bounds.east)/2 : 3.3792),
               latitudeDelta: point ? 0.015 : 0.15,
               longitudeDelta: point ? 0.015 : 0.15,
             }}
@@ -217,7 +224,7 @@ export default function DeliveryPinPicker({
           disabled={disabled || !canConfirm}
           onValueChange={(yes) =>
             onChange(
-              yes && point
+              yes && point && canConfirm
                 ? { ...point, confirmed: true, addressKey: key }
                 : undefined,
             )
@@ -227,6 +234,7 @@ export default function DeliveryPinPicker({
           This pin matches my delivery address.
         </Text>
       </View>
+      {!!areaError && <Text accessibilityRole="alert" style={{ color: colors.text }}>{areaError}</Text>}
       {!!error && (
         <Text accessibilityRole="alert" style={{ color: colors.text }}>
           {error}

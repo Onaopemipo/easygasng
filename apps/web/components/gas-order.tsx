@@ -1,4 +1,5 @@
 "use client";
+import { deliveryPinAreaError } from "../../../packages/business-rules/src/delivery-pin-area";
 import DeliveryPinPicker from "./delivery-pin-picker";
 import {
   confirmedDeliveryPin,
@@ -439,7 +440,8 @@ export default function GasOrder({
     catalogue.orderingEnabled &&
     !!method &&
     paymentAvailable &&
-    !!confirmedDeliveryPin(address.deliveryPin, address.street, address.zone);
+    !!confirmedDeliveryPin(address.deliveryPin, address.street, address.zone) &&
+    !deliveryPinAreaError(address.deliveryPin, selectedArea ?? address.zone);
 
   function editOrder(section: string) {
     setQuote(null);
@@ -496,6 +498,7 @@ export default function GasOrder({
   }
   async function confirm() {
     if (
+      !canReview ||
       coveragePending ||
       !currentQuote ||
       !paymentAvailable ||
@@ -1156,6 +1159,7 @@ export default function GasOrder({
             </div>
             {coveragePending && <CoverageHelp />}
             <DeliveryPinPicker
+              area={selectedArea}
               street={address.street}
               zone={address.zone}
               value={address.deliveryPin}
@@ -1415,7 +1419,7 @@ export default function GasOrder({
               <button
                 type="button"
                 className="button"
-                disabled={busy || !paymentAvailable}
+                disabled={busy || !paymentAvailable || !canReview}
                 onClick={confirm}
               >
                 {busy ? "Confirming…" : "Accept total and confirm order"}
