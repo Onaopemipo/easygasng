@@ -234,12 +234,7 @@ test("ER-19R: independently approved referral hold blocks posting until separate
         },
         reason: "Synthetic independent risk control request",
       });
-      for (const role of ["owner2", "finance"])
-        await f.call(role, "approval.decide", {
-          id: r.id,
-          decision: "approve",
-          reason: "Independent risk evidence checked",
-        });
+      assert.equal(r.status,"active");
     }
     await review("held", 1);
     const o = await f.fulfilled();
@@ -341,12 +336,7 @@ test("ER-04S: completed service labour earns only after independent payment veri
       value: p,
       reason: "Synthetic service labour rewards policy",
     });
-    for (const role of ["owner2", "finance"])
-      await f.call(role, "approval.decide", {
-        id: r.id,
-        decision: "approve",
-        reason: "Independent synthetic service policy review",
-      });
+    assert.equal(r.status,"active");
     const b = await begin(f);
     await f.call("technician", "booking.cash.record", {
       bookingId: b.id,

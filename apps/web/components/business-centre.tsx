@@ -849,7 +849,7 @@ export function BusinessCentre({
                     · {s.reference}
                   </button>
                 ))}
-              <Notice message="Corrections and stocktakes stay pending until independently approved. Stale counts fail safely. Protective quarantine removes unsafe unreserved stock immediately." />
+              <Notice message="Admin corrections and stocktakes apply after one confirmation. Staff requests need review. Stale counts fail safely. Protective quarantine removes unsafe unreserved stock immediately." />
               {inventoryWrite && (
                 <div className="business-grid">
                   {[
@@ -922,7 +922,7 @@ export function BusinessCentre({
           )}
           {tab === "returns" && (
             <>
-              <Notice message="Returns are unsaleable until condition checks and independent release approval. Cancelled orders and unused technician materials use their original reconciliation workflows. Cylinders use serial inspections and custody." />
+              <Notice message="Returns are unsaleable until condition checks and release approval. Cancelled orders and unused technician materials use their original reconciliation workflows. Cylinders use serial inspections and custody." />
               {inventoryWrite && (
                 <div className="business-grid">
                   <ActionForm
@@ -1308,7 +1308,7 @@ export function BusinessCentre({
                 {recordExpense && <Modal className="compact-dialog" title="Record expense" onClose={() => setRecordExpense(false)}>
                 <ActionForm contextual
                   action="expense.create"
-                  title="Submit expense for independent approval"
+                  title="Submit expense for approval"
                   onDone={() => { setRecordExpense(false); reload(); }}
                   fields={[
                     { name: "branchId", label: "Branch", value: branchId },
@@ -1352,7 +1352,7 @@ export function BusinessCentre({
                 {financeView === "expenses" && <section className="surface">
                   <h2>Expense controls</h2>
                   <p>
-                    Submit → independent approval → record → verify actual
+                    Submit → one Admin approval → record → verify actual
                     payment. Corrections preserve the original event history.
                   </p>
                   <Link href="/admin/approvals">Open Approval Centre →</Link>

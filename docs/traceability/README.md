@@ -466,3 +466,8 @@ Supplied driver Expo Go login repaired: [DLOGIN matrix](driver-preview-login-rtm
 
 
 Default Lagos user branch — 27 November2026: [matrix](lagos-default-rtm.md), [machine-readable matrix](lagos-default-rtm.json) and [manual](../user-manual/default-user-branch.md). Four requirements retained and verified,55/55 regression cases and11 focused cases in the pushed checkout pass. Shared084 fills six missing customer branches with audits and preservation checks; exact490-file candidate/stable rollout passes.4/4 requirements,3/3 critical requirements and4/4 bounded gates verified; previous production NO-GO and unrelated holds remain.
+
+
+## Admin single approval (ASA)
+
+The explicitly approved Admin-only authority change is tracked in [Admin single approval](admin-single-approval-rtm.md). Migration085 was applied to the shared demo with 155 canonical table fingerprints preserved. Deployment acceptance remains a separate gate until recorded. Historical production NO-GO and unrelated holds remain.

@@ -268,7 +268,7 @@ function RefundRequest({ order }: { order: any }) {
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
         />
-        I accept purchase credit if independently approved.
+        I accept purchase credit if approved.
       </label>
       <p className="co-muted co-small">
         Delivery fees are included only in a full remaining-order request. A

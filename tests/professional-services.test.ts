@@ -49,7 +49,8 @@ test("service drafts are not sellable; checklist and price activation require in
       reason: "Test revoked reviewer",
     });
     const pending = await f.call("safety_officer", "approval.decide", { id: p.id, decision: "approve", reason: "Business decision without a valid safety qualification" });
-    assert.equal(pending.status, "partially_approved");
+    assert.equal(pending.status, "active");
+    assert.ok((await one(f.db,"SELECT expires_at<now() AS expired FROM technician_qualifications WHERE user_id=$1",[f.actors.safety_officer.id]))!.expired);
   } finally {
     await f.db.close?.();
   }

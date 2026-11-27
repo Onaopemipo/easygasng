@@ -1,0 +1,462 @@
+{
+  "phase": "Admin single approval",
+  "date": "2026-11-27",
+  "scopeChange": "User explicitly supersedes all prior colleague/dual business approval requirements for canonical owner (Admin). Other staff policy and genuine evidence/customer consent remain. No retrospective bulk approval; prior production NO-GO, import, retention and unrelated gates remain.",
+  "requirements": [
+    {
+      "id": "ASA-01",
+      "requirement": "Admin submissions and decisions need only one approval, including saved requests and all risk levels",
+      "priority": "P0",
+      "scope": "Existing EasyGas web, backend and mobile source",
+      "evidence": [
+        "docs/admin-single-approval/evidence/policy-tests.txt",
+        "docs/admin-single-approval/evidence/core-security.txt",
+        "docs/admin-single-approval/evidence/services-rewards-ui.txt",
+        "docs/admin-single-approval/evidence/roles-manifests.txt",
+        "docs/admin-single-approval/evidence/release-workflows.txt",
+        "docs/admin-single-approval/evidence/postgres-tests.txt",
+        "docs/admin-single-approval/evidence/own-material-recovery.txt",
+        "docs/admin-single-approval/evidence/browser-result.json",
+        "docs/admin-single-approval/evidence/migration085.txt",
+        "docs/admin-single-approval/evidence/schema-gate.txt",
+        "docs/admin-single-approval/evidence/executed-tests.json"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
+      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "critical": true,
+      "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
+      "route": [
+        "/admin/approvals",
+        "/admin/settings",
+        "/api/approval.decide",
+        "/api/setting.propose"
+      ],
+      "dataSource": "users, sessions, setting_definitions, settings, change_requests, approval_decisions, audit_events, setting_versions, staff_invitations",
+      "securityControl": "Current active canonical Admin, exact request revision/base version and policy snapshot, identity re-verification where required, scoped non-Admin authority, no own privilege escalation, immutable decisions/audits, row locks and replay protection. Actual operational evidence/customer consent retained.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "apps/web/lib/approval-workflow.ts",
+        "apps/web/lib/accounts.ts"
+      ],
+      "testFiles": [
+        "tests/admin-single-approval.test.ts",
+        "tests/admin-single-approval-postgres.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/platform.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/reward-customer-selection.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "ASA01",
+        "ASA02",
+        "ASA03",
+        "ASA04",
+        "ASA05",
+        "ASA06",
+        "ASA07",
+        "ASA08",
+        "ASA09"
+      ],
+      "negativeTests": [
+        "ASA01: Admin policy is unconditional across every definition, staff still cannot self-approve",
+        "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
+      ],
+      "acceptanceGate": "ASA-G01",
+      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+    },
+    {
+      "id": "ASA-02",
+      "requirement": "All separate financial, inventory, catalogue and delegation approval paths support Admin authority",
+      "priority": "P0",
+      "scope": "Existing EasyGas web, backend and mobile source",
+      "evidence": [
+        "docs/admin-single-approval/evidence/policy-tests.txt",
+        "docs/admin-single-approval/evidence/core-security.txt",
+        "docs/admin-single-approval/evidence/services-rewards-ui.txt",
+        "docs/admin-single-approval/evidence/roles-manifests.txt",
+        "docs/admin-single-approval/evidence/release-workflows.txt",
+        "docs/admin-single-approval/evidence/postgres-tests.txt",
+        "docs/admin-single-approval/evidence/own-material-recovery.txt",
+        "docs/admin-single-approval/evidence/browser-result.json",
+        "docs/admin-single-approval/evidence/migration085.txt",
+        "docs/admin-single-approval/evidence/schema-gate.txt",
+        "docs/admin-single-approval/evidence/executed-tests.json"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
+      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "critical": true,
+      "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
+      "route": [
+        "/admin/inventory",
+        "/admin/credits",
+        "/admin/reconciliation",
+        "/admin/pos",
+        "/admin/bookings",
+        "/admin/services",
+        "/admin/deliveries",
+        "/admin/recommendations",
+        "/admin/products",
+        "/admin/campaigns",
+        "/admin/operations",
+        "/admin/approvals"
+      ],
+      "dataSource": "inventory_operations, purchase_orders, stock_transfers, transfer_receipts, expenses, expense_events, credit_requests, wallet_entries, verified_payments, cash_collections, service_cash_collections, invoice_notes, product_compatibility, recommendation_rules, campaigns, approval_delegations, service_exception_settlements, service_materials, bulk_lpg_loads and their existing immutable histories",
+      "securityControl": "Current active canonical Admin, exact request revision/base version and policy snapshot, identity re-verification where required, scoped non-Admin authority, no own privilege escalation, immutable decisions/audits, row locks and replay protection. Actual operational evidence/customer consent retained.",
+      "implementationFiles": [
+        "apps/web/lib/inventory-business.ts",
+        "apps/web/lib/commerce.ts",
+        "apps/web/lib/delivery.ts",
+        "apps/web/lib/workspace.ts",
+        "apps/web/lib/scheduling.ts",
+        "apps/web/lib/invoice-corrections.ts",
+        "apps/web/lib/catalogue.ts",
+        "apps/web/lib/delegation.ts",
+        "apps/web/lib/service-settlements.ts",
+        "apps/web/lib/service-material-recovery.ts",
+        "apps/web/lib/professional-services.ts",
+        "apps/web/lib/vehicle-products.ts",
+        "apps/web/lib/bulk-lpg-recovery.ts",
+        "apps/web/lib/doorstep-products.ts",
+        "apps/web/lib/doorstep-execution.ts"
+      ],
+      "testFiles": [
+        "tests/admin-single-approval.test.ts",
+        "tests/admin-single-approval-postgres.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/platform.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/reward-customer-selection.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "ASA01",
+        "ASA02",
+        "ASA03",
+        "ASA04",
+        "ASA05",
+        "ASA06",
+        "ASA07",
+        "ASA08",
+        "ASA09"
+      ],
+      "negativeTests": [
+        "ASA01: Admin policy is unconditional across every definition, staff still cannot self-approve",
+        "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
+      ],
+      "acceptanceGate": "ASA-G02",
+      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+    },
+    {
+      "id": "ASA-03",
+      "requirement": "Web and mobile accurately describe one Admin approval and expose the correct actions",
+      "priority": "P1",
+      "scope": "Existing EasyGas web, backend and mobile source",
+      "evidence": [
+        "docs/admin-single-approval/evidence/policy-tests.txt",
+        "docs/admin-single-approval/evidence/core-security.txt",
+        "docs/admin-single-approval/evidence/services-rewards-ui.txt",
+        "docs/admin-single-approval/evidence/roles-manifests.txt",
+        "docs/admin-single-approval/evidence/release-workflows.txt",
+        "docs/admin-single-approval/evidence/postgres-tests.txt",
+        "docs/admin-single-approval/evidence/own-material-recovery.txt",
+        "docs/admin-single-approval/evidence/browser-result.json",
+        "docs/admin-single-approval/evidence/migration085.txt",
+        "docs/admin-single-approval/evidence/schema-gate.txt",
+        "docs/admin-single-approval/evidence/executed-tests.json"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual high-risk browser form applied one version with audit and no colleague decisions. Backend badge/action eligibility, real component rendering and mobile typecheck passed. No new native Admin approval UI or binary is introduced; field/customer acceptance remains separate.",
+      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "critical": false,
+      "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
+      "route": [
+        "/admin/approvals",
+        "/admin/settings",
+        "/api/approval.decide",
+        "/api/setting.propose"
+      ],
+      "dataSource": "Authoritative settings/approval progress metadata, current authenticated role, invitation plan and actual canonical action result; native field acceptance is a separate event, with no separate native Admin approval centre.",
+      "securityControl": "Current active canonical Admin, exact request revision/base version and policy snapshot, identity re-verification where required, scoped non-Admin authority, no own privilege escalation, immutable decisions/audits, row locks and replay protection. Actual operational evidence/customer consent retained.",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "apps/web/lib/navigation.ts",
+        "apps/web/lib/policies.ts",
+        "apps/web/components/admin.tsx",
+        "apps/web/components/compatibility.tsx",
+        "apps/web/components/recommendations.tsx",
+        "apps/web/components/professional-services.tsx",
+        "apps/web/components/cash-reconciliation.tsx",
+        "apps/web/components/staff-invitation.tsx",
+        "packages/business-rules/src/setting-editor.ts",
+        "packages/business-rules/src/settings-categories.ts"
+      ],
+      "testFiles": [
+        "tests/admin-single-approval.test.ts",
+        "tests/admin-single-approval-postgres.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/platform.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/reward-customer-selection.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "ASA01",
+        "ASA02",
+        "ASA03",
+        "ASA04",
+        "ASA05",
+        "ASA06",
+        "ASA07",
+        "ASA08",
+        "ASA09"
+      ],
+      "negativeTests": [
+        "ASA01: Admin policy is unconditional across every definition, staff still cannot self-approve",
+        "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
+      ],
+      "acceptanceGate": "ASA-G03",
+      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+    },
+    {
+      "id": "ASA-04",
+      "requirement": "Keep immutable audit, current authority, request revision, replay protection, evidence and customer consent checks",
+      "priority": "P0",
+      "scope": "Existing EasyGas web, backend and mobile source",
+      "evidence": [
+        "docs/admin-single-approval/evidence/policy-tests.txt",
+        "docs/admin-single-approval/evidence/core-security.txt",
+        "docs/admin-single-approval/evidence/services-rewards-ui.txt",
+        "docs/admin-single-approval/evidence/roles-manifests.txt",
+        "docs/admin-single-approval/evidence/release-workflows.txt",
+        "docs/admin-single-approval/evidence/postgres-tests.txt",
+        "docs/admin-single-approval/evidence/own-material-recovery.txt",
+        "docs/admin-single-approval/evidence/browser-result.json",
+        "docs/admin-single-approval/evidence/migration085.txt",
+        "docs/admin-single-approval/evidence/schema-gate.txt",
+        "docs/admin-single-approval/evidence/executed-tests.json"
+      ],
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate.",
+      "outstandingWork": "No further local Admin approval implementation within this bounded requirement. Shared migration/deployment belongs to ASA-05. Signed native publication and unrelated prior holds are not claimed.",
+      "critical": true,
+      "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
+      "route": [
+        "/admin/approvals",
+        "/admin/settings",
+        "/api/approval.decide",
+        "/api/setting.propose"
+      ],
+      "dataSource": "Current users/approval audit proofs, exact migration085 trigger body, pg_constraint/pg_trigger, schema_migrations, all155 canonical table row counts/fingerprints in disposable084\u2192085 rehearsal",
+      "securityControl": "Current active canonical Admin, exact request revision/base version and policy snapshot, identity re-verification where required, scoped non-Admin authority, no own privilege escalation, immutable decisions/audits, row locks and replay protection. Actual operational evidence/customer consent retained.",
+      "implementationFiles": [
+        "apps/web/lib/governance.ts",
+        "database/migrations/085_admin_single_approval.sql",
+        "database/bootstrap.sql",
+        "scripts/export-bootstrap.ts",
+        "apps/web/lib/db.ts",
+        "apps/web/lib/release-checks.ts",
+        "admin-single-approval-schema-check.ts",
+        "docs/admin-single-approval/apply-migration085.sql"
+      ],
+      "testFiles": [
+        "tests/admin-single-approval.test.ts",
+        "tests/admin-single-approval-postgres.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/platform.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/reward-customer-selection.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "ASA01",
+        "ASA02",
+        "ASA03",
+        "ASA04",
+        "ASA05",
+        "ASA06",
+        "ASA07",
+        "ASA08",
+        "ASA09"
+      ],
+      "negativeTests": [
+        "ASA01: Admin policy is unconditional across every definition, staff still cannot self-approve",
+        "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
+      ],
+      "acceptanceGate": "ASA-G04",
+      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+    },
+    {
+      "id": "ASA-05",
+      "requirement": "Verify whole-app inventory, positive and negative acceptance, document and publish reviewed source",
+      "priority": "P1",
+      "scope": "Existing EasyGas web, backend and mobile source",
+      "evidence": [
+        "docs/admin-single-approval/evidence/policy-tests.txt",
+        "docs/admin-single-approval/evidence/core-security.txt",
+        "docs/admin-single-approval/evidence/services-rewards-ui.txt",
+        "docs/admin-single-approval/evidence/roles-manifests.txt",
+        "docs/admin-single-approval/evidence/release-workflows.txt",
+        "docs/admin-single-approval/evidence/postgres-tests.txt",
+        "docs/admin-single-approval/evidence/own-material-recovery.txt",
+        "docs/admin-single-approval/evidence/browser-result.json",
+        "docs/admin-single-approval/evidence/migration085.txt",
+        "docs/admin-single-approval/evidence/schema-gate.txt",
+        "docs/admin-single-approval/evidence/executed-tests.json",
+        "docs/admin-single-approval/evidence/release-dry-run.json",
+        "docs/admin-single-approval/evidence/reviewed-source.json",
+        "docs/admin-single-approval/evidence/whole-suite-initial.tap"
+      ],
+      "status": "PARTIAL",
+      "reason": "Local source reviewed and dry-run verified; migration085/shared deployment/push not performed. Broad initial suite and legacy release-proof/traceability gaps remain recorded.",
+      "outstandingWork": "Action-time confirmation before Neon approval-restriction changes; apply reviewed guarded085, publish exact candidate, complete hosted acceptance and source-proof continuation. Reconcile legacy whole-suite proof/RTM failures and retained native holds without rewriting history.",
+      "critical": false,
+      "uiReference": "User instruction 27 November2026: every Admin approval is once, no colleague approval",
+      "route": [
+        "/admin/approvals",
+        "/admin/settings",
+        "/api/approval.decide",
+        "/api/setting.propose"
+      ],
+      "dataSource": "Exact previous490-file demo archive, reviewed492-file local dry run, per-file SHA1/SHA256 manifests, executed tests and raw whole-suite result",
+      "securityControl": "Current active canonical Admin, exact request revision/base version and policy snapshot, identity re-verification where required, scoped non-Admin authority, no own privilege escalation, immutable decisions/audits, row locks and replay protection. Actual operational evidence/customer consent retained.",
+      "implementationFiles": [
+        "docs/admin-single-approval/README.md",
+        "docs/user-manual/admin-approvals.md",
+        "scripts/verify-admin-single-preview.mjs",
+        "vercel.json"
+      ],
+      "testFiles": [
+        "tests/admin-single-approval.test.ts",
+        "tests/admin-single-approval-postgres.test.ts",
+        "tests/owner-auto-approval.test.ts",
+        "tests/approval-clarity.test.ts",
+        "tests/inventory-finance.test.ts",
+        "tests/service-material-recovery.test.ts",
+        "tests/service-exception-settlements.test.ts",
+        "tests/platform.test.ts",
+        "tests/staff-management.test.ts",
+        "tests/reward-customer-selection.test.ts",
+        "tests/navigation.test.ts"
+      ],
+      "testIds": [
+        "ASA01",
+        "ASA02",
+        "ASA03",
+        "ASA04",
+        "ASA05",
+        "ASA06",
+        "ASA07",
+        "ASA08",
+        "ASA09"
+      ],
+      "negativeTests": [
+        "ASA01: Admin policy is unconditional across every definition, staff still cannot self-approve",
+        "ASA02: one Admin decision satisfies risk4 role coverage and own legacy requests; stale and own-privilege changes fail"
+      ],
+      "acceptanceGate": "ASA-G05",
+      "testResult": "PASS \u2014 191 distinct focused test names across successful isolated runs; four actual PostgreSQL concurrency/security cases included; actual browser change, guarded085 rehearsal and web/native types/web build pass."
+    }
+  ],
+  "gates": [
+    {
+      "id": "ASA-G01",
+      "status": "PASS",
+      "requirement": "ASA-01",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate."
+    },
+    {
+      "id": "ASA-G02",
+      "status": "PASS",
+      "requirement": "ASA-02",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate."
+    },
+    {
+      "id": "ASA-G03",
+      "status": "PASS",
+      "requirement": "ASA-03",
+      "reason": "Actual high-risk browser form applied one version with audit and no colleague decisions. Backend badge/action eligibility, real component rendering and mobile typecheck passed. No new native Admin approval UI or binary is introduced; field/customer acceptance remains separate."
+    },
+    {
+      "id": "ASA-G04",
+      "status": "PASS",
+      "requirement": "ASA-04",
+      "reason": "Verified local implementation, current authority/revision checks, audit/idempotency and applicable UI/API acceptance. Shared deployment is a separate retained gate."
+    },
+    {
+      "id": "ASA-G05",
+      "status": "OPEN",
+      "requirement": "ASA-05",
+      "reason": "Local source reviewed and dry-run verified; migration085/shared deployment/push not performed. Broad initial suite and legacy release-proof/traceability gaps remain recorded."
+    }
+  ],
+  "releaseDecision": "NO-GO \u2014 Public Commercial Production",
+  "changeLog": [
+    {
+      "date": "2026-11-27",
+      "change": "User explicitly supersedes all prior colleague/dual business approval requirements for canonical owner (Admin). Other staff policy and genuine evidence/customer consent remain. No retrospective bulk approval; prior production NO-GO, import, retention and unrelated gates remain."
+    }
+  ],
+  "approvedScopeSupersedes": [
+    "OWNER-AUTO01/07 Admin allowlist and separate checklist-review restriction",
+    "APC-01/Admin dual-review assumptions",
+    "ER-03/ER-21/Admin own request and reversal approval restrictions",
+    "STAFF-INV-02/Admin colleague approval count",
+    "Prior Admin maker-check assumptions across finance, catalogue, campaign and inventory workflows"
+  ],
+  "preservedHolds": [
+    "NO-GO \u2014 Public Commercial Production",
+    "Actual historical import not authorised",
+    "Retain-all record decision",
+    "Genuine measurements, qualifications, payment receipts and customer consent",
+    "Existing native signing/device/production acceptance holds"
+  ],
+  "coverage": {
+    "implementation": {
+      "implemented": 5,
+      "total": 5
+    },
+    "verification": {
+      "verified": 4,
+      "total": 5
+    },
+    "critical": {
+      "verified": 3,
+      "total": 3
+    },
+    "gates": {
+      "passed": 4,
+      "total": 5
+    },
+    "routes": {
+      "implemented": 15,
+      "total": 15,
+      "note": "Route implementation count only; gate verification is reported separately."
+    },
+    "wholeSuiteInitial": {
+      "total": 1447,
+      "passed": 1353,
+      "failed": 58,
+      "skipped": 36,
+      "note": "Exploratory audit run, not final current-release evidence. All failed/skipped remain retained; functional policy changes subsequently tested in successful focused runs."
+    }
+  }
+}

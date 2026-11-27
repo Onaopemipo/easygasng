@@ -178,7 +178,7 @@ export async function approvalWorkflowAction(
       [r.scope],
     )
   ).rows)
-    if (u.id !== user.id && def.approve_roles.includes(u.role))
+    if (u.id !== user.id && (u.role === "owner" || def.approve_roles.includes(u.role)))
       await notify(
         tx,
         u.id,

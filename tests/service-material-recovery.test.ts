@@ -75,24 +75,22 @@ test("SVC-REC01: expired work authority stops new use but independent recovery r
     );
     await assert.rejects(
       () => mutate(f, "inventory", "service.material.recovery.execute", input),
-      /owner and finance/,
+      /Approve the exact material recovery/,
     );
+    await f.call("safety_officer","technician.qualify",{userId:f.actors.owner.id,code:"inventory_safety",evidence:"Synthetic verified qualification for local Admin recovery test",expiresAt:new Date(Date.now()+86400000).toISOString()});
     const review = await mutate(
       f,
-      "inventory",
+      "owner",
       "service.material.recovery.request",
       input,
     );
+    assert.equal(review.status,"active");
     await f.call("owner", "approval.decide", {
       id: review.id,
       decision: "approve",
       reason: "Independent owner actual custody review",
     });
-    await f.call("finance", "approval.decide", {
-      id: review.id,
-      decision: "approve",
-      reason: "Independent finance actual custody review",
-    });
+
     const operation = { ...input, operationKey: id() };
     await f.call("inventory", "service.material.recovery.execute", operation);
     await f.call("inventory", "service.material.recovery.execute", operation);

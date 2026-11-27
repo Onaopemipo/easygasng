@@ -249,7 +249,7 @@ export async function reconcileCash(
   if (!c) throw new AppError(404, "Cash collection not found.");
   allow(user, ["owner", "finance"], c.branch_id);
   recentVerification(user);
-  if (c.collector_id === user.id)
+  if (user.role !== "owner" && (c.collector_id === user.id))
     throw new AppError(
       403,
       "Cash collection must be reconciled by an independent finance approver.",

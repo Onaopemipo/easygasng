@@ -39,30 +39,19 @@ async function fixture() {
     });
   return { db, ids, tokens, call, grant };
 }
-test("limited delegation requires independent owner review and cannot approve grantor requests or exceed its ceiling", async () => {
+test("limited delegation accepts one Admin review and cannot approve grantor requests or exceed its ceiling", async () => {
   const f = await fixture(),
     grant = await f.grant();
-  await assert.rejects(
-    () =>
-      f.call("owner", "delegation.decide", {
-        id: grant.id,
-        decision: "approved",
-        reason: "Trying to approve my own delegation",
-      }),
-    /separate business owner/,
-  );
-  await f.call("reviewer", "delegation.decide", {
-    id: grant.id,
-    decision: "approved",
-    reason: "Independent review of bounded authority",
-  });
+  await f.call("owner", "delegation.decide", {id:grant.id,decision:"approved",reason:"Admin final bounded grant approval"});
   const own = await f.call("owner", "setting.propose", {
     key: "delivery.capacity",
     scope: "lagos",
     value: 80,
     version: 1,
     reason: "Grantor request must stay independent",
+    draft:true,
   });
+  await f.db.query("UPDATE change_requests SET status='pending_approval' WHERE id=$1",[own.id]);
   await assert.rejects(
     () =>
       f.call("dispatcher", "approval.decide", {

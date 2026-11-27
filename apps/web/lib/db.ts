@@ -525,6 +525,7 @@ export async function migrate(db: DB) {
       ["082", "database/migrations/082_same_visit_orders.sql"],
       ["083", "database/migrations/083_phone_order_payments.sql"],
       ["084", "database/migrations/084_default_user_branch.sql"],
+      ["085", "database/migrations/085_admin_single_approval.sql"],
     ]) {
       if (
         version === "044" &&

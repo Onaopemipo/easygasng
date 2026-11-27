@@ -88,20 +88,8 @@ test("staff invitations are manageable without granting privileges, renew invali
         (r: any) => r.id === adminRequest.id,
       ),
     );
-    assert.equal(
-      (await one(f.db, "SELECT role FROM users WHERE id=$1", [person.id]))!
-        .role,
-      "customer",
-    );
-    await assert.rejects(
-      () =>
-        f.call("administrator", "approval.decide", {
-          id: adminRequest.id,
-          decision: "approve",
-          reason: "Attempt to approve own access request",
-        }),
-      /permission|own|independent/i,
-    );
+    assert.equal((await one(f.db,"SELECT role FROM users WHERE id=$1",[person.id]))!.role,"manager");
+    assert.equal(adminRequest.status,"active");
     await assert.rejects(
       () =>
         f.call("administrator", "staff.access.request", {
@@ -112,13 +100,6 @@ test("staff invitations are manageable without granting privileges, renew invali
         }),
       /own privileges/,
     );
-    for (const reviewer of ["owner", "finance"]) {
-      await f.call(reviewer, "approval.decide", {
-        id: adminRequest.id,
-        decision: "approve",
-        reason: "Independent review of administrator access request",
-      });
-    }
     assert.equal(
       (await one(f.db, "SELECT role FROM users WHERE id=$1", [person.id]))!
         .role,
@@ -136,15 +117,7 @@ test("staff invitations are manageable without granting privileges, renew invali
         .role,
       "manager",
     );
-    await assert.rejects(
-      () =>
-        f.call("owner", "approval.decide", {
-          id: request.id,
-          decision: "approve",
-          reason: "Cannot approve own staff request",
-        }),
-      /own|independent/i,
-    );
+    assert.equal((await f.call("owner","approval.owner_apply",{id:request.id,reason:"Idempotent approval replay"})).status,"active");
   } finally {
     await f.db.close?.();
   }
@@ -322,10 +295,7 @@ test("STAFF-INV-01/02: selected privileges are reviewed, never applied before in
     const approval = (await f.call("finance", "approvals")).find((r: any) => r.id === requestId);
     assert.deepEqual(approval.invitation_access, { name: data.name, changes });
     const decision = { id: requestId, decision: "approve", reason: "Independent staff invitation review" };
-    await assert.rejects(f.call("administrator", "approval.decide", decision), /independent|own/i);
-    await f.call("owner", "approval.decide", decision);
-    await check("customer", 0);
-    await f.call("finance", "approval.decide", decision);
+    await f.call("administrator", "approval.decide", decision);
     await check("finance", 2);
     const { dispatch } = await import("../apps/web/lib/service");
     const session = await dispatch("login", null, { email: data.email, password: creds.password, newPassword: "Test-replacement8" }, f.db);
@@ -370,9 +340,7 @@ test("DRIVER-AVAIL-01: invited drivers default to available only on approved act
     assert.equal(pending.driver_available, false);
     const approval = (id: string) => ({ id, decision: "approve", reason: "Independent review of driver access" });
     await f.call("owner", "approval.decide", approval(request));
-    // A single approval does not open dispatch availability.
-    assert.deepEqual(await account(), pending);
-    await f.call("finance", "approval.decide", approval(request));
+    // A single Admin approval activates the accepted driver invitation.
     const active = (await account())!;
     assert.equal(active.role, "driver");
     assert.equal(active.driver_available, true);
@@ -385,8 +353,7 @@ test("DRIVER-AVAIL-01: invited drivers default to available only on approved act
     const review = await f.call("administrator", "staff.access.request", {
       userId: active.id, role: "driver", branchId: "lagos", reason: "Review existing driver access",
     });
-    for (const reviewer of ["owner", "finance"])
-      await f.call(reviewer, "approval.decide", approval(review.id));
+    assert.equal(review.status,"active");
     assert.deepEqual(await account(), afterOptOut);
   } finally {
     await f.db.close?.();

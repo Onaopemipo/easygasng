@@ -84,7 +84,7 @@ export function fulfilmentIssue(
     resolution =
       "Review the order’s invoice, verified payments and any approved cash-on-delivery policy. Finance must reconcile outstanding payment or corrections before dispatch. Then refresh eligibility.";
   } else if (/inspection|qualification|calibrat|cylinder/i.test(message)) {
-    responsible = "Qualified operations staff / business owner";
+    responsible = "Qualified operations staff / Admin";
     resolution =
       "Review the order’s inspection, qualification and custody evidence in the existing fulfilment workflow. Complete genuine required checks before refreshing eligibility.";
   } else if (/delivery capacity|window/i.test(message)) {

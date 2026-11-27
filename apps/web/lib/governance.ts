@@ -64,7 +64,7 @@ export async function notify(
   );
 }
 function proposalRoles(d: Row): string[] {
-  return d.propose_roles;
+  return d.propose_roles.length ? [...new Set(["owner", ...d.propose_roles])] : [];
 }
 export async function definition(
   tx: SQL,
@@ -91,7 +91,7 @@ export async function definition(
   }
   allow(
     user,
-    permission === "propose" ? proposalRoles(d) : d[`${permission}_roles`],
+    permission === "propose" ? proposalRoles(d) : ["owner", ...d[`${permission}_roles`]],
     scope,
   );
   return d;
@@ -348,7 +348,7 @@ export async function propose(
       )
     ).rows;
     for (const u of users)
-      if (u.id !== user.id && d.approve_roles.includes(u.role))
+      if (u.id !== user.id && (u.role === "owner" || d.approve_roles.includes(u.role)))
         await notify(
           tx,
           u.id,
@@ -365,23 +365,13 @@ export async function propose(
   return { id: requestId, ...result, state: result!.status.toUpperCase() };
 }
 export function canAutoApproveDefinition(d: Row) {
-  if (!ownerAutoApprovalEnabled() || d.value_type === "access" || d.category === "Finance Operations")
-    return false;
-  // These settings require the owner's business decision, with no separate
-  // finance or safety reviewer. Address and dispatch checks run independently.
-  const ownerOnlyOrderingSetting =
-    d.required_roles.length === 1 &&
-    d.required_roles[0] === "owner" &&
-    (d.key === "delivery.fee" ||
-      d.key === "gas.quantity_policy" ||
-      (d.value_type === "location" && d.key.startsWith("location.")));
-  // EasyRewards programme economics are a business-owner decision. This does
-  // not authorise points adjustments, refunds, access or payment configuration.
-  return d.key === "loyalty.policy" || d.key === "gas.price_per_kg" || d.value_type === "checklist" ||
-    (d.risk < 4 && (d.required_roles.length === 0 || ownerOnlyOrderingSetting));
+  // Admin is the final business approver for every definition. Domain evidence,
+  // customer consent and activation/version checks are enforced separately.
+  return Boolean(d?.propose_roles?.length);
 }
 export function ownerAutoApprovalEnabled() {
-  return process.env.EASYGAS_OWNER_AUTO_APPROVAL === "true";
+  // The approved Admin policy is universal; the former opt-in flag is obsolete.
+  return true;
 }
 /** Immutable authorisation for this revision; current owner authority is rechecked on every activation. */
 async function ownerRequestAuthorized(tx: SQL, r: Row) {
@@ -410,13 +400,8 @@ export async function autoApproveOwnerRequest(tx: SQL, user: Actor, requestId: s
       throw new AppError(403, "You cannot approve changes to your own privileges.");
     if (!(await ownerRequestAuthorized(tx, r))) await audit(tx, user, "approval.owner_auto_approved", r.id, "success", {
       revision: r.revision, baseVersion: r.base_version, key: r.key,
-      policy: "explicit-business-owner-authority-v1", reason: r.reason,
+      policy: "admin-single-approval-v2", reason: r.reason,
     });
-    // Owner authority replaces business approval, never the independent qualified safety review.
-    if (d.value_type === "checklist" && !(await validApprovals(tx, r, d))) {
-      if (r.status !== "partially_approved") await transitionApproval(tx, user, r.id, "partially_approved", "Owner approval recorded; qualified safety review still required");
-      return { id: r.id, status: "partially_approved", state: "PARTIALLY_APPROVED", autoApproved: true, awaitingQualifiedReview: true };
-    }
     await transitionApproval(tx, user, r.id, "approved", "Automatically approved under Business Owner authority");
   } else if (!["approved", "scheduled", "failed"].includes(r.status) || !(await ownerRequestAuthorized(tx, r)))
     throw new AppError(409, "Only an open owner request or an owner-authorised activation can be applied.");
@@ -430,7 +415,7 @@ export async function hasQualifiedSafetyReviewer(tx: SQL, ids: string[]) {
       AND q.verified_by<>q.user_id AND verifier.active=true AND verifier.role='owner' LIMIT 1`, [ids]));
 }
 export async function approvalProgress(tx: SQL, r: Row, d: Row) {
-  const ownerMode = canAutoApproveDefinition(d) && r.requester_role === "owner" && d.value_type !== "checklist";
+  const ownerMode = canAutoApproveDefinition(d) && r.requester_role === "owner";
   const ownerAuthorized = canAutoApproveDefinition(d) && await ownerRequestAuthorized(tx, r);
   const decisions = (
     await tx.query(
@@ -443,7 +428,7 @@ export async function approvalProgress(tx: SQL, r: Row, d: Row) {
     if (
       !a.active ||
       a.role !== a.current_role ||
-      a.approver_id === r.requester_id ||
+      (a.approver_id === r.requester_id && a.current_role !== "owner") ||
       (a.current_role !== "owner" && a.branch_id !== r.scope)
     )
       continue;
@@ -459,32 +444,40 @@ export async function approvalProgress(tx: SQL, r: Row, d: Row) {
     if (a.delegation_id) {
       if (!(await delegatedAuthority(tx, a.approver_id, d, r, a.delegation_id)))
         continue;
-    } else if (!d.approve_roles.includes(a.current_role)) continue;
+    } else if (a.current_role !== "owner" && !d.approve_roles.includes(a.current_role)) continue;
     valid.push(a);
   }
-  const qualifiedReviewRequired = d.value_type === "checklist" &&
+  const adminApproved = ownerAuthorized || valid.some((a) => a.current_role === "owner");
+  const qualifiedReviewRequired = !adminApproved && d.value_type === "checklist" &&
     !(await hasQualifiedSafetyReviewer(tx, valid.map((a) => a.approver_id)));
   if (ownerAuthorized) valid.push({ approver_id: r.requester_id, current_role: "owner" });
   const unique = [...new Map(valid.map((a) => [a.approver_id, a])).values()];
   const missingRoles = d.required_roles.filter((role: string) =>
     !unique.some((a) => a.current_role === role));
-  const required = ownerMode ? 1 : d.risk === 4 ? 2 : 1;
+  const required = ownerMode || adminApproved ? 1 : d.risk === 4 ? 2 : 1;
   const complete = !qualifiedReviewRequired && (
-    (ownerAuthorized && d.value_type !== "checklist") ||
+    adminApproved ||
     (unique.length >= (d.risk === 4 ? 2 : 1) && missingRoles.length === 0)
   );
   return {
-    mode: ownerMode ? "owner" : "independent",
-    approved: ownerMode ? (complete ? 1 : 0) : Math.min(required, unique.length),
+    mode: ownerMode || adminApproved ? "owner" : "independent",
+    approved: ownerMode || adminApproved ? (complete ? 1 : 0) : Math.min(required, unique.length),
     required,
     complete,
-    owner_approved: Boolean(ownerAuthorized),
-    missing_roles: ownerMode ? (complete ? [] : ["owner"]) : missingRoles,
+    owner_approved: Boolean(adminApproved),
+    missing_roles: ownerMode || adminApproved ? (complete ? [] : ["owner"]) : missingRoles,
     qualified_review_required: qualifiedReviewRequired,
   };
 }
 export async function validApprovals(tx: SQL, r: Row, d: Row) {
   return (await approvalProgress(tx, r, d)).complete;
+}
+/** Revalidate a revision-bound Admin authorisation; never infer approval from the executor's role. */
+export async function currentAdminApproval(tx: SQL, requestId: string) {
+  const r = await one(tx, "SELECT * FROM change_requests WHERE id=$1", [requestId]);
+  if (!r || r.status !== "active") return false;
+  const d = await one(tx, "SELECT * FROM setting_definitions WHERE key=$1", [r.key]);
+  return Boolean(d && (await approvalProgress(tx, r, d)).owner_approved);
 }
 async function applyApproved(
   tx: SQL,
@@ -863,20 +856,22 @@ export async function decide(
   const delegation = d.approve_roles.includes(user.role)
     ? null
     : await delegatedAuthority(tx, user.id, d, r);
-  if (!d.approve_roles.includes(user.role) && !delegation)
+  if (user.role !== "owner" && !d.approve_roles.includes(user.role) && !delegation)
     throw new AppError(
       403,
       "Your account has no current approval authority for this request.",
     );
-  if (r.requester_id === user.id)
+  if (r.requester_id === user.id && user.role !== "owner")
     throw new AppError(
       403,
       "An independent colleague must review your request.",
       "SELF_APPROVAL",
     );
-  if (decision === "approve" && d.value_type === "checklist" && await ownerRequestAuthorized(tx, r)
-      && !(await hasQualifiedSafetyReviewer(tx, [user.id])))
-    throw new AppError(403, "A current independently verified safety-review qualification is required.");
+  if (decision === "approve" && ["active", "scheduled", "approved"].includes(r.status)) {
+    const ownDecision = await one(tx, "SELECT id FROM approval_decisions WHERE request_id=$1 AND revision=$2 AND approver_id=$3 AND decision='approve'", [r.id, r.revision, user.id]);
+    if ((ownDecision || (user.role === "owner" && r.requester_id === user.id && await ownerRequestAuthorized(tx, r))) && await validApprovals(tx, r, d))
+      return { id: r.id, status: r.status, state: r.status.toUpperCase(), duplicate: true };
+  }
   if (
     !["pending_approval", "partially_approved"].includes(r.status) ||
     new Date(r.expires_at).getTime() < Date.now()

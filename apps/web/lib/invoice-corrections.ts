@@ -271,7 +271,7 @@ export async function invoiceCorrections(
     );
     if (!n || n.state !== "pending")
       throw new AppError(409, "Note is no longer pending.");
-    if (n.requested_by === user.id)
+    if (user.role !== "owner" && (n.requested_by === user.id))
       throw new AppError(403, "Independent finance/owner decision required.");
     if (
       d.approve &&

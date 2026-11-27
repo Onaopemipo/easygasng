@@ -32,23 +32,14 @@ async function agree(
     password: "Services-fixture-only-123!",
   });
   const b = (await f.call("owner", "bookings", { id: bookingId }))[0];
-  const s = await mutation(f, "service_manager", "booking.settlement.propose", {
+  const s = await mutation(f, "owner", "booking.settlement.propose", {
     bookingId,
     version: b.version,
     amountKobo,
     reason: "Synthetic negotiated charge for actual stopped work",
     evidence: "Synthetic report and actual customer settlement evidence",
   });
-  await f.call("owner", "approval.decide", {
-    id: s.requestId,
-    decision: "approve",
-    reason: "Independent synthetic owner settlement review",
-  });
-  await f.call("finance", "approval.decide", {
-    id: s.requestId,
-    decision: "approve",
-    reason: "Independent synthetic finance settlement review",
-  });
+  assert.equal((await f.db.query("SELECT status FROM change_requests WHERE id=$1",[s.requestId])).rows[0].status,"active");
   await mutation(f, "customer", "booking.settlement.consent", {
     bookingId,
     settlementId: s.id,

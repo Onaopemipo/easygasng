@@ -916,13 +916,13 @@ function Settings({
                         >
                           <History size={17} />
                         </button>}
-                        {d.propose_roles.includes(user.role) && (
+                        {d.propose_roles.length > 0 && (user.role === "owner" || d.propose_roles.includes(user.role)) && (
                           <button
                             className="button secondary"
                             onClick={() => {
                               if (d.key === "payment.integration" && d.value !== true) {
                                 const gateway = data.find((setting: any) => setting.key === "payment.gateway");
-                                if (gateway?.propose_roles.includes(user.role)) {
+                                if (gateway && gateway.propose_roles.length > 0 && (user.role === "owner" || gateway.propose_roles.includes(user.role))) {
                                   setCategory(settingsDisplayCategory(gateway));
                                   setQuery("");
                                   setEditing(settingsDisplay(gateway));
@@ -982,7 +982,7 @@ function Settings({
                   : result?.status === "draft"
                     ? "Draft saved. It is not active until submitted."
                     : result?.awaitingQualifiedReview
-                      ? "Owner approval recorded automatically. An independent qualified safety review is still required before activation."
+                      ? "Admin approval recorded. Evidence and activation checks still apply."
                       : result?.rewardAdded
                         ? `Added ${result.pointsAdded} points to ${result.customerPublicId}. New balance: ${result.balance} points. Audit history recorded.`
                       : result?.autoApproved
@@ -991,7 +991,7 @@ function Settings({
                           : "Automatically approved and applied. Audit history recorded."
                         : editing.risk === 1
                           ? "Setting saved and audit history recorded."
-                          : "Your request is awaiting independent approval. The current value remains active.",
+                          : "Your request is awaiting review. One Admin approval is final. The current value remains active until activation.",
               );
               onChange();
             }}
@@ -1379,13 +1379,13 @@ function Approvals({
           </p>
           <Notice
             message={
-              selected.owner_auto_approval && selected.approval_progress?.mode === "owner"
-                ? "This business setting can be authorised by its requesting Admin. No second Admin is needed. Use Approve after verifying your identity. Effective date and activation checks still apply."
+              selected.admin_single_approval || selected.owner_auto_approval && selected.approval_progress?.mode === "owner"
+                ? "One Admin approval is final, including your own request. No other reviewer is needed. Identity, evidence, effective date and activation checks still apply."
                 : selected.owner_auto_approval
-                  ? "The requesting Admin can record owner authorisation. An independent qualified safety review is still required before activation."
+                  ? "One Admin approval is final. Required operational evidence and activation checks still apply."
                 : selected.risk === 4
-                  ? "This restricted change needs two distinct authorised reviewers. The requester cannot review it. Required roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
-                  : "The requester cannot approve their own request. Authority and the active version are checked again at activation."
+                  ? "One Admin approval is final. Other staff follow the required review policy. Staff review roles: " + selected.required_roles.map((role: string) => roleLabel(role)).join(", ") + ". Identity verification is required."
+                  : "Admin can approve their own request once. Other staff need an eligible reviewer. Authority and the active version are checked again at activation."
             }
           />
           {["pending_approval", "partially_approved"].includes(selected.status) && selected.approval_progress?.qualified_review_required && (
@@ -1643,7 +1643,7 @@ function Approvals({
           {["pending_approval", "partially_approved"].includes(
             selected.status,
           ) &&
-          selected.requester_id !== user.id &&
+          !selected.can_owner_apply &&
           selected.can_approve ? (
             <>
               <label>
@@ -1703,7 +1703,7 @@ function Approvals({
                 ? "Use Approve above. Verify your identity first if prompted."
                 : selected.owner_auto_approval &&
                     selected.requester_id === user.id
-                  ? `Your owner request is ${selected.status.replaceAll("_", " ")}. Saved drafts must be submitted; qualified safety reviews and activation checks still apply.`
+                  ? `Your owner request is ${selected.status.replaceAll("_", " ")}. Saved drafts must be submitted. One Admin approval is final; evidence and activation checks still apply.`
                   : selected.requester_id === user.id &&
                       ["pending_approval", "partially_approved"].includes(
                         selected.status,
@@ -2211,7 +2211,7 @@ function Records({
         )}
       </div>
       {section === "staff" && (
-        <Notice message="Accounts register as customers. Role changes require a protected Staff & Permissions request, two independent approvals, and verification. Staff cannot grant themselves business authority." />
+        <Notice message="Accounts register as customers. Role changes require a protected Staff & Permissions request, one Admin approval and identity verification. Staff cannot grant themselves business authority." />
       )}
       {["finance", "reports"].includes(section) && (
         <Notice message="Amounts are based on recorded orders. An unpaid order does not count as verified revenue. Purchase credit and refunds are reviewed under Credits & Refunds; external payment providers remain unconnected. CSV amounts are in kobo." />

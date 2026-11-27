@@ -56,7 +56,7 @@ export async function serviceMaterialRecoveryAction(
   });
   const key = `service_material_recovery.${m.id}.${b.version}`;
   if (action === "service.material.recovery.request") {
-    allow(user, ["finance"], b.branch_id);
+    allow(user, ["owner", "finance"], b.branch_id);
     await tx.query(
       'INSERT INTO setting_definitions(key,label,category,description,owner_role,risk,value_type,propose_roles,approve_roles,view_roles,required_roles,additional_verification) VALUES($1,$2,\'Professional Services\',\'One-time actual material custody recovery after stopped work; never authorises work or changes customer charges.\',\'owner\',4,\'service_material_recovery\',\'["finance"]\',\'["owner","finance"]\',\'["owner","finance","manager"]\',\'["owner","finance"]\',true) ON CONFLICT(key) DO NOTHING',
       [key, b.reference + " material custody recovery"],
@@ -86,7 +86,7 @@ export async function serviceMaterialRecoveryAction(
   if (canonicalRequest(approved?.value) !== canonicalRequest(payload))
     throw new AppError(
       409,
-      "Exact independent owner and finance material recovery approval required.",
+      "Approve the exact material recovery before recording it. One Admin approval is final.",
     );
   await tx.query(
     "UPDATE inventory SET quantity=quantity+$1 WHERE branch_id=$2 AND product_id=$3",

@@ -403,7 +403,7 @@ export async function vehicleProducts(
       if (canonicalRequest(approved?.value) !== canonicalRequest(p))
         throw new AppError(
           409,
-          "Exact independent owner and finance approval is required for missing or quarantined stock.",
+          "Approve the exact missing or quarantined stock recovery first. One Admin approval is final.",
         );
     }
   }

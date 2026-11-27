@@ -434,7 +434,7 @@ export default function ProductCatalogue({ user }: { user: any }) {
             <>
               <p>
                 Product content is shared across branches. Pricing and
-                publication use independent approvals.
+                publication use one Admin approval. Other staff requests follow the review policy.
               </p>
               <CatalogueEditor
                 initialId={target?.id ?? "new"}

@@ -57,7 +57,7 @@ export async function fixture(dataDir: string | DB = "memory://") {
     checks,
     reason: "Test qualified checklist review",
   });
-  for (const role of ["owner", "safety_officer"])
+  for (const role of ["owner"])
     await call(role, "approval.decide", {
       id: proposal.id,
       decision: "approve",

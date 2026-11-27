@@ -156,28 +156,13 @@ test("MANIFEST-02: loss/quarantine remains held until exact independent owner an
     };
     await assert.rejects(
       () => f.run("inventory", "manifest.return.receive", returned),
-      /owner and finance/,
+      /Approve the exact/,
     );
     const review = await f.run("inventory", "manifest.return.review", returned);
     await f.call("owner", "approval.decide", {
       id: review.id,
       decision: "approve",
       reason: "Independent synthetic physical loss review",
-    });
-    await assert.rejects(
-      () => f.run("inventory", "manifest.return.receive", returned),
-      /owner and finance/,
-    );
-    await f.db.query("UPDATE users SET role='finance' WHERE id=$1", [
-      f.actors.commercial.id,
-    ]);
-    await f.db.query("UPDATE sessions SET verified_at=now() WHERE user_id=$1", [
-      f.actors.commercial.id,
-    ]);
-    await f.call("commercial", "approval.decide", {
-      id: review.id,
-      decision: "approve",
-      reason: "Independent synthetic finance loss review",
     });
     await f.run("inventory", "manifest.return.receive", returned);
     const stock = (
@@ -246,25 +231,10 @@ test("MANIFEST-03: inactive-driver custody needs exact independent recovery appr
     ]);
     await assert.rejects(
       () => f.run("inventory", "manifest.return.receive", returned),
-      /owner and finance/,
+      /Approve the exact/,
     );
     const review = await f.run("inventory", "manifest.return.review", returned);
     await f.call("owner", "approval.decide", {
-      id: review.id,
-      decision: "approve",
-      reason: common.reason,
-    });
-    await assert.rejects(
-      () => f.run("inventory", "manifest.return.receive", returned),
-      /owner and finance/,
-    );
-    await f.db.query("UPDATE users SET role='finance' WHERE id=$1", [
-      f.actors.commercial.id,
-    ]);
-    await f.db.query("UPDATE sessions SET verified_at=now() WHERE user_id=$1", [
-      f.actors.commercial.id,
-    ]);
-    await f.call("commercial", "approval.decide", {
       id: review.id,
       decision: "approve",
       reason: common.reason,
@@ -275,7 +245,7 @@ test("MANIFEST-03: inactive-driver custody needs exact independent recovery appr
           ...returned,
           saleableQuantity: 1,
         }),
-      /owner and finance/,
+      /Approve the exact/,
     );
     const key = id();
     await f.call("inventory", "manifest.return.receive", {

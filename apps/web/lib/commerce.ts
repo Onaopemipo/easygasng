@@ -46,7 +46,7 @@ export async function commerceAction(
       return one(tx, `
         WITH scoped AS (
           SELECT c.*, u.name AS customer_name, o.reference AS order_reference,
-                 c.status='pending' AND c.requested_by<>$3 AS can_decide
+                 c.status='pending' AND ($1::boolean OR c.requested_by<>$3) AS can_decide
           FROM credit_requests c JOIN users u ON u.id=c.customer_id
           LEFT JOIN orders o ON o.id=c.order_id
           WHERE ($1::boolean OR c.branch_id=$2)
@@ -263,7 +263,7 @@ export async function commerceAction(
     if (!c) throw new AppError(404, "Credit request not found.");
     allow(user, ["owner", "finance"]);
     recentVerification(user);
-    if (c.requested_by === user.id)
+    if (user.role !== "owner" && (c.requested_by === user.id))
       throw new AppError(
         403,
         "A different finance approver must verify the credit.",
@@ -691,7 +691,7 @@ export async function commerceAction(
     if (!s) throw new AppError(404, "Shift not found.");
     allow(user, ["owner", "finance"], s.branch_id);
     recentVerification(user);
-    if (s.cashier_id === user.id)
+    if (user.role !== "owner" && (s.cashier_id === user.id))
       throw new AppError(
         403,
         "A different finance approver must verify this shift.",

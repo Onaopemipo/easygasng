@@ -441,7 +441,7 @@ export async function doorstepProducts(
     if (
       !e.cash_reported_at ||
       e.cash_reported_by !== m.driver_id ||
-      e.cash_reported_by === user.id ||
+      (user.role !== "owner" && e.cash_reported_by === user.id) ||
       e.cash_verified_at ||
       new Date(e.cash_reported_at) > new Date(e.expires_at) ||
       b.amountDueKobo !== Number(e.amount_kobo)

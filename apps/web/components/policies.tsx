@@ -96,7 +96,7 @@ export default function PolicyAdmin({ user }: { user: any }) {
               submit={
                 r.owner_auto_approval
                   ? "Apply reviewed policy"
-                  : "Request independent owner approval"
+                  : "Request Admin approval"
               }
               fields={[
                 { name: "title", label: "Title", value: r.title },

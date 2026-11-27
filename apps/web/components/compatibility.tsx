@@ -54,7 +54,7 @@ export function Compatibility({
           {manage &&
             ["owner"].includes(user?.role) &&
             !c.reviewed_by &&
-            c.proposed_by !== user.id && (
+            (
               <ServiceForm
                 title="Review specification evidence"
                 fields={[

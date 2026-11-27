@@ -90,10 +90,7 @@ test("RECOVERY-01: shared independent approval atomically reconciles measured lo
     assert.equal(driverHistory.detail.before, undefined);
     assert.equal(driverHistory.detail.reserved, undefined);
     assert.equal(driverHistory.detail.observedGrams, 9000);
-    await assert.rejects(
-      () => f.approve(request.requestId),
-      /no longer open|already/,
-    );
+    assert.equal((await f.approve(request.requestId)).duplicate,true);
     assert.equal(Number((await f.balance()).grams), 19000);
     await assert.rejects(() => f.request(), /held custody/);
     await f.call("driver", "trip.end", {

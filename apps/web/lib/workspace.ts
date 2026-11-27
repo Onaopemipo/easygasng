@@ -274,6 +274,7 @@ export async function workspaceAction(
     return {
       permissions: {
         canApprove: user.role === "owner",
+        adminFinalApproval: user.role === "owner",
         canReceive: ["owner", "manager", "finance"].includes(user.role),
         userId: user.id,
       },
@@ -374,7 +375,7 @@ export async function workspaceAction(
     if (d.status === "approved") {
       allow(user, ["owner", "manager", "finance"], p.branch_id);
       recentVerification(user);
-      if (p.requested_by === user.id)
+      if (user.role !== "owner" && (p.requested_by === user.id))
         throw new AppError(
           403,
           "A different authorised colleague must approve the purchase.",
@@ -664,7 +665,7 @@ export async function workspaceAction(
       );
     if (!t) throw new AppError(404, "Transfer not found.");
     allow(user, ["owner", "manager", "finance"], t.destination_branch);
-    if (t.requested_by === user.id)
+    if (user.role !== "owner" && (t.requested_by === user.id))
       throw new AppError(
         403,
         "A different receiving colleague must confirm receipt.",

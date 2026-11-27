@@ -554,7 +554,7 @@ export default function SettingForm({
             </label>
           ))}
           <p>
-            Use verified business information. An independent owner must approve
+            Use verified business information. One Admin approval is final for
             this proposal. Prices and delivery coverage are managed separately.
           </p>
         </div>
@@ -692,7 +692,7 @@ export default function SettingForm({
             />
             <FieldCaption required={false}>
               {" "}
-              Enable independently approved road planning
+              Enable approved road planning
             </FieldCaption>
           </label>
           {[

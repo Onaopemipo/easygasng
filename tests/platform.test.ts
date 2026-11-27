@@ -127,7 +127,7 @@ test("B: price proposal retains current price until an independent manager appro
     750000,
   );
 });
-test("C: settlement changes require verification and two distinct independent owner/finance approvers", async () => {
+test("C: one final Admin approval verifies settlement changes once", async () => {
   const f = await fixture();
   const r = await f.proposal("finance", "payment.settlement", {
     bank: "Test Bank",
@@ -147,34 +147,10 @@ test("C: settlement changes require verification and two distinct independent ow
     decision: "approve",
     reason: "Verified bank metadata",
   });
-  assert.equal((await f.value("payment.settlement"))!.version, 1);
-  await denied(
-    () =>
-      f.call("owner", "approval.decide", {
-        id: r.id,
-        decision: "approve",
-        reason: "",
-      }),
-    409,
-  );
-  const second = id();
-  await db.query(
-    "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'Independent finance',$2,$3,'finance',$4)",
-    [second, `${second}@example.test`, passwordHash, f.branch],
-  );
-  const token = await issueSession(db, second);
-  await dispatch("reauth", token, { password }, db);
-  await dispatch(
-    "approval.decide",
-    token,
-    {
-      id: r.id,
-      decision: "approve",
-      reason: "Independent verification complete",
-    },
-    db,
-  );
-  assert.equal((await f.value("payment.settlement"))!.version, 2);
+  assert.equal((await f.value("payment.settlement"))!.version,2);
+  assert.equal((await f.call("owner","approval.decide",{id:r.id,decision:"approve",reason:"Retry same Admin confirmation"})).duplicate,true);
+  assert.equal(Number((await one(db,"SELECT count(*) n FROM approval_decisions WHERE request_id=$1",[r.id]))!.n),1);
+
 });
 test("D: self-approval fails without changing request, settings or decisions", async () => {
   const f = await fixture();
@@ -825,7 +801,7 @@ test("scheduled changes remain inactive until explicitly revalidated at their ef
   await f.call("owner", "approval.activate", { id: r.id });
   assert.equal((await f.value("delivery.fee"))!.value, 150000);
 });
-test("protected staff changes require independent approvals and revoke the target sessions", async () => {
+test("protected staff changes need one Admin approval and revoke target sessions", async () => {
   const f = await fixture();
   const r = await f.proposal("manager", "security.permissions", {
     userId: f.users.sales.id,
@@ -839,21 +815,7 @@ test("protected staff changes require independent approvals and revoke the targe
     decision: "approve",
     reason: "Access reviewed by owner",
   });
-  assert.equal(
-    (await one(db, "SELECT role FROM users WHERE id=$1", [f.users.sales.id]))!
-      .role,
-    "manager",
-  );
-  await f.call("finance", "approval.decide", {
-    id: r.id,
-    decision: "approve",
-    reason: "Independent access review complete",
-  });
-  assert.equal(
-    (await one(db, "SELECT role FROM users WHERE id=$1", [f.users.sales.id]))!
-      .role,
-    "finance",
-  );
+  assert.equal((await one(db,"SELECT role FROM users WHERE id=$1",[f.users.sales.id]))!.role,"finance");
   await denied(() => f.call("sales", "inventory"), 401);
   const login = await dispatch(
     "login",

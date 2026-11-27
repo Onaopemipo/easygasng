@@ -194,7 +194,7 @@ export default function StaffInvitation({
       )}
       <p className="muted">
         The recipient must accept the invitation and replace their temporary
-        password. Staff access requires two independent approvals.
+        password. Staff access needs one Admin approval after the invitation is accepted.
       </p>
       {error && <Notice type="error" message={error} />}
       {verify && (

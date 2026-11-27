@@ -9,7 +9,7 @@ import {
   digest,
   type Actor,
 } from "./auth";
-import { propose, decide, audit, canAutoApproveDefinition, definition, autoApproveOwnerRequest } from "./governance";
+import { propose, decide, audit, canAutoApproveDefinition, definition, autoApproveOwnerRequest, currentAdminApproval } from "./governance";
 import { grams } from "../../../packages/business-rules/src/gas-pricing";
 import { applyBulkRecovery } from "./bulk-lpg-recovery";
 const reason = z.string().trim().min(5).max(1000),
@@ -1488,11 +1488,7 @@ export async function inventoryBusiness(
           409,
           "Transfer approval/requester is no longer valid.",
         );
-      const a = await one(
-        tx,
-        "SELECT u.id FROM approval_decisions d JOIN users u ON u.id=d.approver_id WHERE d.request_id=$1 AND d.decision='approve' AND u.active=true AND u.role='owner'",
-        [t.approval_request_id],
-      );
+      const a = await currentAdminApproval(tx, t.approval_request_id);
       if (!a)
         throw new AppError(
           409,
@@ -1528,7 +1524,7 @@ export async function inventoryBusiness(
       });
       return { ok: true };
     }
-    if (t.requested_by === user.id || t.dispatched_by === user.id)
+    if (user.role !== "owner" && (t.requested_by === user.id || t.dispatched_by === user.id))
       throw new AppError(
         403,
         "A different receiving colleague must confirm receipt.",
@@ -1767,7 +1763,7 @@ export async function inventoryBusiness(
         409,
         "Expense must be independently approved, then recorded before payment evidence.",
       );
-    if (kind === "paid" && e.requested_by === user.id)
+    if (user.role !== "owner" && (kind === "paid" && e.requested_by === user.id))
       throw new AppError(
         403,
         "A different finance colleague must verify actual payment evidence.",
@@ -1777,11 +1773,7 @@ export async function inventoryBusiness(
       "SELECT r.status FROM change_requests r WHERE r.id=$1",
       [e.approval_request_id],
     );
-    const valid = await one(
-      tx,
-      "SELECT u.id FROM approval_decisions d JOIN users u ON u.id=d.approver_id WHERE d.request_id=$1 AND d.decision='approve' AND u.active=true AND u.role='owner'",
-      [e.approval_request_id],
-    );
+    const valid = await currentAdminApproval(tx, e.approval_request_id);
     if (approval?.status !== "active" || !valid)
       throw new AppError(
         409,

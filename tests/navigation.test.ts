@@ -273,16 +273,12 @@ test("RM-07,10,11: fresh authentication, branch scope, counter aggregates and ro
     await f.db.close?.();
   }
 });
-test("approval badge agrees with independent eligibility, excludes requester, recipient, expired and already-decided requests", async () => {
+test("approval badge includes Admin own pending requests; staff requester/recipient, expiry and duplicate exclusions remain", async () => {
   const f = await fixture();
   try {
-    const request = await f.call("owner", "staff.access.request", {
-      userId: f.actors.technician.id,
-      role: "finance",
-      branchId: "lagos",
-      reason: "Synthetic access request for badge verification",
-    });
-    assert.equal((await f.call("owner", "navigation")).counters.approvals, 0);
+    const request=await f.call("owner","setting.propose",{key:"security.permissions",scope:"lagos",version:1,value:{userId:f.actors.technician.id,role:"finance",branchId:"lagos"},reason:"Synthetic legacy pending badge request",draft:true});
+    await f.db.query("UPDATE change_requests SET status='pending_approval' WHERE id=$1",[request.id]);
+    assert.equal((await f.call("owner", "navigation")).counters.approvals, 1);
     assert.equal((await f.call("finance", "navigation")).counters.approvals, 1);
     const visible = await f.call("finance", "approvals");
     assert.equal(visible.filter((r: any) => r.can_approve).length, 1);
@@ -393,7 +389,9 @@ test("bounded delegation is included in approval counters only while independent
       version: setting!.version,
       value: true,
       reason: "Synthetic delegated navigation decision",
+      draft:true,
     });
+    await f.db.query("UPDATE change_requests SET status='pending_approval' WHERE id=$1",[request.id]);
     const grant = id();
     await f.db.query(
       "INSERT INTO approval_delegations(id,grantor_id,delegate_id,setting_key,scope,status,reason,starts_at,expires_at,reviewed_by) VALUES($1,$2,$3,'publish.hose','lagos','approved','Synthetic independently reviewed grant',now()-interval '1 minute',now()+interval '1 day',$4)",

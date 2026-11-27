@@ -109,7 +109,7 @@ export default function BundleAdmin({ user }: { user: any }) {
               },
               {
                 name: "active",
-                label: "Publish after independent owner approval",
+                label: "Publish after Admin approval",
                 type: "checkbox",
                 value: b.config.active,
               },

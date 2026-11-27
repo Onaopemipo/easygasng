@@ -88,7 +88,7 @@ export async function catalogueAction(
       [d.id],
     );
     if (!c) throw new AppError(404, "Specification record not found.");
-    if (c.proposed_by === user.id)
+    if (user.role !== "owner" && (c.proposed_by === user.id))
       throw new AppError(403, "Independent specification review is required.");
     if (c.reviewed_by)
       throw new AppError(
@@ -346,7 +346,7 @@ export async function catalogueAction(
     if (!r) throw new AppError(404, "Rule not found.");
     allow(user, ["owner"], r.branch_id);
     recentVerification(user);
-    if (r.created_by === user.id)
+    if (user.role !== "owner" && (r.created_by === user.id))
       throw new AppError(
         403,
         "Recommendation rules require independent review.",

@@ -263,7 +263,7 @@ export function EasyRewards() {
                 <p>
                   {data.policy
                     ? `Approved policy version ${data.policy.version}. Eligible categories: ${data.policy.eligibleCategories.join(", ") || "None configured"}.`
-                    : "No EasyRewards policy has been independently approved."}
+                    : "No EasyRewards policy has been approved."}
                 </p>
                 <p>
                   No active expiry or tiers.{" "}
@@ -510,7 +510,7 @@ export function EasyRewardsReport() {
       )}
 
       <Link href="/admin/settings">
-        Review loyalty policy and independent approvals
+        Review loyalty policy and approvals
       </Link>
       {error ? (
         <Notice type="error" message={error} />
@@ -924,7 +924,7 @@ export function PartialRefundForm({ orderId }: { orderId: string }) {
           checked={consent}
           onChange={(e) => setConsent(e.target.checked)}
         />
-        <FieldCaption required={true}>I accept purchase credit if independently approved.</FieldCaption>
+        <FieldCaption required={true}>I accept purchase credit if approved.</FieldCaption>
       </label>
       <button
         className="button secondary"

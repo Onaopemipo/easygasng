@@ -1255,7 +1255,7 @@ export async function dispatch(
         ).rows
           .filter(
             (d) =>
-              d.view_roles.includes(user!.role) &&
+              (user!.role === "owner" || d.view_roles.includes(user!.role)) &&
               d.value_type !== "inventory_operation",
           )
           .map((d) => ({
@@ -1393,7 +1393,7 @@ export async function dispatch(
           JSON.stringify([user.role]),
         ];
         const base =
-          "FROM change_requests r JOIN setting_definitions d ON d.key=r.key JOIN users u ON u.id=r.requester_id WHERE ($1::text IS NULL OR r.scope=$1) AND d.view_roles @> $2::jsonb";
+          "FROM change_requests r JOIN setting_definitions d ON d.key=r.key JOIN users u ON u.id=r.requester_id WHERE ($1::text IS NULL OR r.scope=$1) AND ($2::jsonb ? 'owner' OR d.view_roles @> $2::jsonb)";
         const filtered =
           base +
           " AND ($3='all' OR ($3='pending' AND r.status IN ('pending_approval','partially_approved')) OR ($3='high' AND r.risk=4) OR r.status=$3) AND ($4='' OR d.label ILIKE '%'||$4||'%' OR r.key ILIKE '%'||$4||'%' OR u.name ILIKE '%'||$4||'%' OR r.id ILIKE '%'||$4||'%')";
@@ -1435,7 +1435,7 @@ export async function dispatch(
         const permitted = rows.filter(
           (r) =>
             (user!.role === "owner" || r.scope === user!.branch_id) &&
-            r.view_roles.includes(user!.role),
+            (user!.role === "owner" || r.view_roles.includes(user!.role)),
         );
         for (const r of permitted) {
           if (r.value_type === "inventory_operation") {
@@ -1452,17 +1452,17 @@ export async function dispatch(
             [r.key],
           );
           r.can_approve =
-            r.requester_id !== user!.id &&
+            (user!.role === "owner" || r.requester_id !== user!.id) &&
             ["pending_approval", "partially_approved"].includes(r.status) &&
             new Date(r.expires_at).getTime() > Date.now() &&
-            (r.approve_roles.includes(user!.role) ||
+            (user!.role === "owner" || r.approve_roles.includes(user!.role) ||
               Boolean(d && (await delegatedAuthority(tx, user!.id, d, r)))) &&
             !(
               d?.value_type === "access" &&
               r.proposed_value?.userId === user!.id
             );
           if (
-            r.can_approve &&
+            r.can_approve && user.role !== "owner" &&
             d?.value_type === "checklist" &&
             r.status === "partially_approved" &&
             !(await hasQualifiedSafetyReviewer(tx, [user.id]))
@@ -1490,6 +1490,9 @@ export async function dispatch(
             ].includes(r.status) &&
             new Date(r.expires_at).getTime() > Date.now();
           r.approval_progress = d ? await approvalProgress(tx, r, d) : null;
+          r.admin_single_approval = user.role === "owner";
+          if (r.admin_single_approval && r.approval_progress && !r.approval_progress.complete)
+            r.approval_progress = { ...r.approval_progress, mode: "owner", required: 1, approved: 0, missing_roles: ["owner"], qualified_review_required: false };
           r.state = r.status.toUpperCase();
           r.decisions = (
             await tx.query(

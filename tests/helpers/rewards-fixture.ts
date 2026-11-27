@@ -47,16 +47,8 @@ export async function rewardsFixture(database?: DB) {
       value,
       reason: "Synthetic policy for isolated rewards tests only",
     });
-    await f.call("owner2", "approval.decide", {
-      id: r.id,
-      decision: "approve",
-      reason: "Independent synthetic owner approval",
-    });
-    await f.call("finance", "approval.decide", {
-      id: r.id,
-      decision: "approve",
-      reason: "Independent synthetic finance approval",
-    });
+    // Admin submission is the final approval; no manufactured second reviewer.
+    if (r.status !== "active") throw new Error("Admin reward policy did not activate");
     return r;
   };
   const fulfilled = async () => {

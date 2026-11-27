@@ -172,7 +172,7 @@ export function settingsApprovalBadge(
   },
   role: string,
 ) {
-  if (!d.propose_roles.includes(role))
+  if (!d.propose_roles.length || (role !== "owner" && !d.propose_roles.includes(role)))
     return {
       label: d.propose_roles.length ? "View only" : "Read only",
       detail:

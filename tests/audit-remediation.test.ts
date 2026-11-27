@@ -119,20 +119,10 @@ test("WEB-A01 and WEB-A06: sole-owner policy UI reflects existing authority with
       value: d!.value,
       reason: "Synthetic financial control remains independent",
     });
-    assert.equal(financial.status, "pending_approval");
-    await assert.rejects(
-      f.call("owner", "approval.owner_apply", {
-        id: financial.id,
-        reason: "Must not bypass financial independence",
-      }),
-      /independent/,
-    );
-    process.env.EASYGAS_OWNER_AUTO_APPROVAL = "false";
-    assert.ok(
-      (await f.call("owner", "policies.manage")).every(
-        (r: any) => !r.owner_auto_approval,
-      ),
-    );
+    assert.equal(financial.status,"active");
+    assert.equal((await f.call("owner","approval.owner_apply",{id:financial.id,reason:"Retry existing final Admin approval"})).status,"active");
+    process.env.EASYGAS_OWNER_AUTO_APPROVAL="false";
+    assert.ok((await f.call("owner","policies.manage")).every((r:any)=>r.owner_auto_approval));
   } finally {
     await f.db.close?.();
     if (previous === undefined) delete process.env.EASYGAS_OWNER_AUTO_APPROVAL;

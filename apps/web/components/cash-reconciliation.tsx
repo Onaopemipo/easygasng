@@ -7,10 +7,12 @@ import { ActionForm } from "./workflows";
 export function CashCollectionTable({
   rows,
   userId,
+  adminFinalApproval = false,
   onReview,
 }: {
   rows: any[];
   userId?: string;
+  adminFinalApproval?: boolean;
   onReview: (row: any) => void;
 }) {
   return (
@@ -38,7 +40,7 @@ export function CashCollectionTable({
               </td>
               <td>
                 {!row.verified_at &&
-                  (row.collector_id === userId ? (
+                  (row.collector_id === userId && !adminFinalApproval ? (
                     <span>Another finance reviewer required</span>
                   ) : (
                     <button
@@ -64,7 +66,7 @@ export default function CashReconciliation({
   refresh = 0,
   onChange,
 }: {
-  user?: { id: string };
+  user?: { id: string; role?: string };
   refresh?: number;
   onChange?: () => void;
 }) {
@@ -148,6 +150,7 @@ export default function CashReconciliation({
             <CashCollectionTable
               rows={visible}
               userId={user?.id}
+              adminFinalApproval={user?.role === "owner"}
               onReview={review}
             />
           )}

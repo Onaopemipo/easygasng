@@ -286,7 +286,7 @@ export function RecommendationWorkspace({
             Displayed {selected.displayed} · Selected {selected.selected} ·
             Booked {selected.booked} · Completed {selected.completed}
           </p>
-          {user.role === "owner" && user.id !== selected.created_by ? (
+          {user.role === "owner" ? (
             <DialogDraft>
               <ServiceForm
                 title="Independent review"

@@ -3,8 +3,10 @@ import { fixture } from "./order-tracking-fixture";
 import { id, issueSession, actor } from "../../apps/web/lib/auth";
 import { one } from "../../apps/web/lib/db";
 import { attachDeliveryPhoto } from "../../apps/web/lib/delivery-photos";
-export async function dispatchJourneyFixture() {
-  const f = await fixture();
+import { type DB } from "../../apps/web/lib/db";
+export async function dispatchJourneyFixture(database?: DB) {
+  process.env.EASYGAS_MESSAGE_ENCRYPTION_KEY ??= "9".repeat(64);
+  const f = await fixture(database);
   process.env.EASYGAS_BULK_LPG_ENABLED = "true";
   process.env.EASYGAS_DOORSTEP_ENABLED = "true";
   const reviewer = id();
@@ -52,11 +54,7 @@ export async function dispatchJourneyFixture() {
     },
     reason: "Synthetic independently approved journey quantity policy",
   });
-  await f.call("reviewer", "approval.decide", {
-    id: policy.id,
-    decision: "approve",
-    reason: "Synthetic independent quantity policy review",
-  });
+  if (policy.status !== "active") throw new Error("Admin quantity policy did not activate");
   await f.db.exec(
     "UPDATE settings SET value='true' WHERE key='wallet.enabled' AND scope='lagos'",
   );

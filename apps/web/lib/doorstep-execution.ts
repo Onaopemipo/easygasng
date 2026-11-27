@@ -539,7 +539,7 @@ export async function doorstepExecution(
       e.cash_reported_by !== m.driver_id ||
       new Date(e.cash_reported_at).getTime() >
         new Date(e.expires_at).getTime() ||
-      e.cash_reported_by === user.id ||
+      (user.role !== "owner" && e.cash_reported_by === user.id) ||
       e.cash_verified_at ||
       b.amountDueKobo !== Number(e.amount_kobo)
     )

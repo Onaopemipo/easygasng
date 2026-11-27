@@ -565,7 +565,7 @@ export default function ProfessionalServices({
           {manager && workspace && (
             <>
               <h2>Business-managed service catalogue</h2>
-              <Notice message="Draft services are not bookable. Configuration requires independent owner approval; safety checklists require an owner and a currently qualified safety reviewer." />
+              <Notice message="Draft services are not bookable. One Admin approval is final for service settings and checklists. Actual work still needs valid qualifications, evidence and customer consent." />
               {workspace.services.map((s: any) => (
                 <ServiceEditor
                   key={s.id + ":" + version}
@@ -2186,19 +2186,15 @@ export function BookingCard({
             <details>
               <summary>Recover stopped-work material custody</summary>
               <p>
-                Record actual counts only. Owner and finance approval is
-                required. Recovery never authorises further work or changes
+                Record actual counts only. One Admin approval is final. Recovery never authorises further work or changes
                 customer charges.
               </p>
-              {(user.role === "finance"
-                ? ["request", "execute"]
-                : ["execute"]
-              ).map((step) => (
+              {["request", "execute"].map((step) => (
                 <ServiceForm
                   key={step}
                   title={
                     step === "request"
-                      ? "Request independent material recovery review"
+                      ? "Request material recovery review"
                       : "Execute approved material recovery"
                   }
                   fields={[
@@ -2278,7 +2274,7 @@ export function BookingCard({
             <p>
               Arrival permits assessment only. Current work phase:{" "}
               {b.work_phase}. Successful work requires consented evidence,
-              independent quotation approval, customer acceptance and verified
+              quotation approval, customer acceptance and verified
               payment.
             </p>
             <ServiceForm
@@ -2294,7 +2290,7 @@ export function BookingCard({
             />
             {q && (
               <ServiceForm
-                title="Submit latest quote for independent business approval"
+                title="Submit latest quote for business approval"
                 fields={[{ name: "reason", label: "Scope and review reason" }]}
                 done={done}
                 send={(v) =>
@@ -2373,7 +2369,7 @@ export function BookingCard({
             separately approved, customer-agreed settlement can establish
             reviewed charges.
           </p>
-          {user.role === "manager" && (
+          {["owner", "manager"].includes(user.role) && (
             <ServiceForm
               title="Propose an exception settlement"
               fields={[

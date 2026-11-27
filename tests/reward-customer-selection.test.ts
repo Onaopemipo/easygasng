@@ -36,22 +36,20 @@ test('RSEL-SEARCH: names/public IDs resolve to minimal records, duplicate names 
  await assert.rejects(()=>f.call('owner','rewards.customers',{scope:'not-a-branch',query:'Points'}));
  }finally{await f.db.close?.();}
 });
-test('RSEL-E2E: search, branchless draft, edit, submit, two independent approvals atomically assign branch and credit once without changing wallet',async()=>{
+test('RSEL-E2E: search, branchless draft, edit, submit with one Admin approval atomically assign branch and credit once without changing wallet',async()=>{
  const f=await setup();try{
  const wallet=await f.call('customer','wallet');
  const found=await f.call('owner','rewards.customers',{scope:'lagos',query:f.customer.public_customer_id});assert.equal(found.customers[0].branch_id,null);
  const r=await f.propose({},'owner',true);assert.equal(r.status,'draft');assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);
  await f.call('owner','approval.edit',{id:r.id,value:f.value(),reason:'Reviewed synthetic branch and points'});
  await f.call('owner','approval.submit',{id:r.id,reason:'Submit reviewed synthetic adjustment'});
- await assert.rejects(()=>f.approve(r.id,'owner'),/independent|own/i);
- await f.approve(r.id,'reviewer');assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);
- await f.approve(r.id,'finance');assert.equal(await f.branch(),'lagos');assert.equal(await f.balance(),100);
+ assert.equal((await f.approve(r.id,'owner')).duplicate,true);assert.equal(await f.branch(),'lagos');assert.equal(await f.balance(),100);
  const request=(await one(f.db,'SELECT * FROM change_requests WHERE id=$1',[r.id]))!;assert.equal(request.status,'active');
  await f.db.transaction(tx=>applyRewardsAdjustment(tx,request));assert.equal(await f.balance(),100);
  assert.equal((await f.db.query("SELECT id FROM audit_events WHERE action='rewards.customer.branch_assigned' AND target=$1",[f.customer.id])).rows.length,1);
  assert.deepEqual(await f.call('customer','wallet'),wallet);
  // An existing customer's normal correction and legacy UUID payload remain supported.
- const legacy=await f.propose({assignBranchId:undefined,customerPublicId:undefined,points:25});await f.approve(legacy.id,'reviewer');await f.approve(legacy.id,'finance');assert.equal(await f.balance(),125);
+ const legacy=await f.propose({assignBranchId:undefined,customerPublicId:undefined,points:25});assert.equal(legacy.status,'active');assert.equal(await f.balance(),125);
  }finally{await f.db.close?.();}
 });
 test('RSEL-DENIAL: invalid, spoofed, inactive/staff, branch mismatch and unauthorised initial assignment fail before a request is saved',async()=>{
@@ -65,15 +63,15 @@ test('RSEL-DENIAL: invalid, spoofed, inactive/staff, branch mismatch and unautho
 });
 test('RSEL-STALE: branch or customer status changed after proposal prevents partial branch/points activation',async()=>{
  const f=await setup();try{
- const r=await f.propose();await f.approve(r.id,'reviewer');await f.db.query('UPDATE users SET branch_id=$1 WHERE id=$2',['qa-other',f.customer.id]);
- await f.approve(r.id,'finance');assert.equal(await f.branch(),'qa-other');assert.equal(await f.balance(),0);assert.equal((await one(f.db,'SELECT status FROM change_requests WHERE id=$1',[r.id]))!.status,'failed');
- await f.db.query('UPDATE users SET branch_id=NULL WHERE id=$1',[f.customer.id]);const next=await f.propose();await f.approve(next.id,'reviewer');await f.db.query('UPDATE users SET active=false WHERE id=$1',[f.customer.id]);await f.approve(next.id,'finance');assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);
+ const r=await f.propose({},'owner',true);await f.db.query("UPDATE change_requests SET status='pending_approval' WHERE id=$1",[r.id]);await f.db.query('UPDATE users SET branch_id=$1 WHERE id=$2',['qa-other',f.customer.id]);
+ await f.approve(r.id,'owner');assert.equal(await f.branch(),'qa-other');assert.equal(await f.balance(),0);assert.equal((await one(f.db,'SELECT status FROM change_requests WHERE id=$1',[r.id]))!.status,'failed');
+ await f.db.query('UPDATE users SET branch_id=NULL WHERE id=$1',[f.customer.id]);const next=await f.propose({},'owner',true);await f.db.query("UPDATE change_requests SET status='pending_approval' WHERE id=$1",[next.id]);await f.db.query('UPDATE users SET active=false WHERE id=$1',[f.customer.id]);await f.approve(next.id,'owner');assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);
  }finally{await f.db.close?.();}
 });
 test('RSEL-ROLLBACK: ledger failure rolls back initial branch assignment and audit along with points',async()=>{
  const f=await setup();try{
- const r=await f.propose();await f.approve(r.id,'reviewer');
+ const r=await f.propose({},'owner',true);
  await f.db.exec("CREATE FUNCTION rsel_reject() RETURNS trigger LANGUAGE plpgsql AS $$ BEGIN RAISE EXCEPTION 'Synthetic ledger failure'; END $$; CREATE TRIGGER rsel_failure BEFORE INSERT ON reward_entry_details FOR EACH ROW EXECUTE FUNCTION rsel_reject();");
- await f.approve(r.id,'finance');assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);assert.equal((await one(f.db,'SELECT status FROM change_requests WHERE id=$1',[r.id]))!.status,'failed');assert.equal((await f.db.query("SELECT id FROM audit_events WHERE action='rewards.customer.branch_assigned' AND target=$1",[f.customer.id])).rows.length,0);
+ await f.call('owner','approval.submit',{id:r.id,reason:'Confirm synthetic ledger failure test'});assert.equal(await f.branch(),null);assert.equal(await f.balance(),0);assert.equal((await one(f.db,'SELECT status FROM change_requests WHERE id=$1',[r.id]))!.status,'failed');assert.equal((await f.db.query("SELECT id FROM audit_events WHERE action='rewards.customer.branch_assigned' AND target=$1",[f.customer.id])).rows.length,0);
  }finally{await f.db.close?.();}
 });

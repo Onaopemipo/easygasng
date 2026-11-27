@@ -203,7 +203,7 @@ export async function schedulingAction(
     allow(user, ["owner", "manager"], c.branch_id);
     if (d.decision === "approved") {
       recentVerification(user);
-      if (c.requested_by === user.id)
+      if (user.role !== "owner" && (c.requested_by === user.id))
         throw new AppError(
           403,
           "A different authorised colleague must approve the campaign.",

@@ -105,15 +105,7 @@ test("ER-03: unapproved example economics and self approval cannot issue or rede
       value: f.policy,
       reason: "Synthetic independent approval requirement",
     });
-    await assert.rejects(
-      () =>
-        f.call("owner", "approval.decide", {
-          id: r.id,
-          decision: "approve",
-          reason: "Forbidden self approval",
-        }),
-      /own|independent/i,
-    );
+    assert.equal(r.status,"active");
     assert.equal(
       rewardsPolicy.safeParse({ ...f.policy, referralPoints: -1 }).success,
       false,
@@ -457,7 +449,7 @@ test("ER-18: approved referral first verified fulfilment awards once, hides iden
     await f.db.close?.();
   }
 });
-test("ER-21: manual point correction requires independent owner and finance approvals and cannot change wallet money", async () => {
+test("ER-21: Admin adds points directly once with audit authority and cannot change wallet money", async () => {
   const f = await rewardsFixture();
   try {
     await f.approve();
@@ -474,39 +466,11 @@ test("ER-21: manual point correction requires independent owner and finance appr
       },
       reason: "Synthetic independent correction test",
     });
-    assert.equal(await rewardBalance(f.db, f.actors.customer.id), 0);
-    await assert.rejects(
-      () =>
-        f.call("owner", "approval.decide", {
-          id: r.id,
-          decision: "approve",
-          reason: "Self approval must fail",
-        }),
-      /own|independent/i,
-    );
-    await f.call("owner2", "approval.decide", {
-      id: r.id,
-      decision: "approve",
-      reason: "Synthetic independent owner review",
-    });
-    assert.equal(await rewardBalance(f.db, f.actors.customer.id), 0);
-    await f.call("finance", "approval.decide", {
-      id: r.id,
-      decision: "approve",
-      reason: "Synthetic independent finance review",
-    });
-    assert.equal(await rewardBalance(f.db, f.actors.customer.id), 123);
-    assert.equal((await f.call("customer", "wallet")).balanceKobo, wallet);
-    await assert.rejects(
-      () =>
-        f.call("finance", "approval.decide", {
-          id: r.id,
-          decision: "approve",
-          reason: "Synthetic retry after committed approval",
-        }),
-      /no longer open/,
-    );
-    assert.equal(await rewardBalance(f.db, f.actors.customer.id), 123);
+    assert.equal(r.status,"active");
+    assert.equal(await rewardBalance(f.db,f.actors.customer.id),123);
+    assert.equal((await f.call("customer","wallet")).balanceKobo,wallet);
+    await assert.rejects(()=>f.call("finance","setting.propose",{key:"loyalty.adjustment",scope:"lagos",version:1,value:{customerId:f.actors.customer.id,points:1,reason:"Forged Admin authority",evidence:"Synthetic"},reason:"Cannot forge Admin mode",adminRewardAdd:true}),/Unrecognized|unrecognized/);
+    assert.equal(await rewardBalance(f.db,f.actors.customer.id),123);
   } finally {
     await f.db.close?.();
   }

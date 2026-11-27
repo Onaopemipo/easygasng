@@ -973,7 +973,7 @@ export async function professionalServiceAction(
         "SELECT technician_id FROM service_reports WHERE booking_id=$1",
         [incident.target],
       );
-      if (report?.technician_id === user.id)
+      if (user.role !== "owner" && (report?.technician_id === user.id))
         throw new AppError(
           403,
           "The service author cannot resolve their own dispute.",
@@ -2405,7 +2405,7 @@ export async function professionalServiceAction(
       [d.collectionId, b.id],
     );
     if (!c) throw new AppError(404, "Collection not found.");
-    if (c.collector_id === user.id)
+    if (user.role !== "owner" && (c.collector_id === user.id))
       throw new AppError(403, "Independent finance verification is required.");
     if (c.verified_at) return { ok: true };
     const due = await balance(tx, b);

@@ -32,7 +32,7 @@ export async function policyAction(
     if (!user) return undefined;
     allow(user, ["owner"]);
     return (
-      await tx.query(`SELECT l.*,d.risk,d.value_type,d.category,d.required_roles,d.key
+      await tx.query(`SELECT l.*,d.risk,d.value_type,d.category,d.required_roles,d.propose_roles,d.key
       FROM legal_documents l JOIN setting_definitions d ON d.key='legal.'||l.kind ORDER BY l.title`)
     ).rows.map((r) => ({
       ...r,

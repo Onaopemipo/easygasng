@@ -188,7 +188,7 @@ test("WALLET-BANK: pending transfer, scoped independent approval, rejection and 
 test("WALLET-BRANCH: unassigned customers use authoritative active context without mutating identity; ambiguous and foreign addresses cannot choose funding branch",async()=>{
  const db=await createDatabase("memory://");await migrate(db);
  const uid=id(),other=id();
- for(const u of [uid,other]) await db.query("INSERT INTO users(id,name,email,password_hash,role) VALUES($1,'Synthetic unassigned customer',$2,$3,'customer')",[u,u+"@example.test",hashPassword("Wallet-test-only123!")]);
+ for(const u of [uid,other]) await db.query("INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES($1,'Synthetic unassigned customer',$2,$3,'customer',NULL)",[u,u+"@example.test",hashPassword("Wallet-test-only123!")]);
  const token=await issueSession(db,uid);
  const call=(action:string,input:any={})=>dispatch(action,token,input,db);
  try {

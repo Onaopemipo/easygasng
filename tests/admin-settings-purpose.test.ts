@@ -19,8 +19,8 @@ test('ASSET-LABELS: current policies, legacy fields and independent operational 
  for(const key of ['loyalty.enabled','loyalty.spend_per_point','loyalty.credit_per_point','delivery.zones','price.refill-6','price.refill-12','price.refill-25','price.refill-50']){const d=by(key);const g=settingsGroups([d],settingsDisplayCategory(d),'')[0];assert.equal(g.advanced,true,key);assert.match(display(key).label,/legacy/i);assert.equal(settingsGroups([d],'unused',d.label)[0].settings[0],d);}
  assert.equal(settingsGroups([by('publish.refill-6')],'Gas & Products','')[0].advanced,false);
  assert.match(display('document.identity').description,/Existing issued documents/);assert.match(display('website.content').description,/public contacts/);assert.match(display('security.policy').label,/read-only/);
- assert.equal(settingsApprovalBadge({...by('loyalty.policy'),owner_auto_approval:true},'owner').label,'Automatic approval');
- assert.equal(settingsApprovalBadge({...by('payment.gateway'),owner_auto_approval:false},'owner').label,'2 approvals required');
+ assert.equal(settingsApprovalBadge({...by('loyalty.policy'),owner_auto_approval:true},'owner').label,'One Admin approval');
+ assert.equal(settingsApprovalBadge({...by('payment.gateway'),owner_auto_approval:false},'owner').label,'Admin approval required');
  assert.equal(settingsApprovalBadge({...by('security.policy'),propose_roles:[]},'owner').label,'Read only');
  assert.equal(settingsApprovalBadge({...by('document.identity'),propose_roles:['owner'],owner_auto_approval:false},'finance').label,'View only');
  assert.equal(settingsDisplayCategory(by('legal.privacy')),'Policies & Terms');assert.equal(settingsDisplayCategory(by('security.policy')),'Staff & Security');

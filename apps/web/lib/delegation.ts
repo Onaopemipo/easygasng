@@ -33,7 +33,7 @@ export async function delegatedAuthority(
         a.grantor_active &&
         a.reviewer_active &&
         a.reviewer_role === "owner" &&
-        a.reviewed_by !== a.grantor_id &&
+        (a.reviewed_by !== a.grantor_id || a.grantor_role === "owner") &&
         a.grantor_id !== r.requester_id &&
         ["owner", "manager"].includes(a.grantor_role) &&
         d.approve_roles.includes(a.grantor_role) &&
@@ -161,7 +161,7 @@ export async function delegationAction(
         [d.id],
       );
     if (!a) throw new AppError(404, "Delegation not found.");
-    if (a.grantor_id === user.id || a.delegate_id === user.id)
+    if (a.delegate_id === user.id)
       throw new AppError(
         403,
         "A separate business owner must review the delegation.",

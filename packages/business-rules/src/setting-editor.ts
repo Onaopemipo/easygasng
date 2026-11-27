@@ -86,12 +86,12 @@ export function settingSubmission(
       };
 }
 export function settingApprovalCopy(s: any) {
-  if (s.admin_reward_add) return { label: "Admin adds points directly", detail: "Additions apply immediately when confirmed and are recorded in Audit History. No colleague approvals are required. Reversals retain their existing approval checks." };
+  if (s.admin_reward_add) return { label: "Admin adds points directly", detail: "Additions apply immediately when confirmed and are recorded in Audit History. No colleague approvals are required. An Admin can also approve reversals once; evidence checks still apply." };
   if (s.owner_auto_approval)
     return {
-      label: "Automatic approval",
+      label: "One Admin approval",
       detail:
-        "Admin approval is automatic. Identity, scheduling and activation checks still apply.",
+        "Your confirmation is the final Admin approval. No colleague approval is needed. Identity, scheduling and evidence checks still apply.",
     };
   if (s.risk === 1)
     return {
@@ -100,13 +100,13 @@ export function settingApprovalCopy(s: any) {
         "Applies immediately after successful submission, with an audit record.",
     };
   return {
-    label: s.risk === 4 ? "2 approvals required" : "Approval required",
+    label: "Admin approval required",
     detail:
       s.risk === 4
         ? s.value_type === "access"
-          ? "Two independent eligible approvals are required. You cannot approve your own access change."
-          : "Two independent eligible approvals are required. The current configuration stays active until approval and activation checks pass."
-        : "The current value stays active until the required independent review and activation checks pass.",
+          ? "One Admin approval is final. Other staff follow the required review policy. You cannot approve changes to your own privileges."
+          : "One Admin approval is final. Other staff follow the required review policy. The current configuration stays active until approval and activation checks pass."
+        : "One Admin approval is final. The current value stays active until review and activation checks pass.",
   };
 }
 export function settingChangeRows(

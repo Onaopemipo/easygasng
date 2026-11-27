@@ -267,15 +267,7 @@ test("reviewed recommendations count real events, never claim unknown compatibil
       evidence:
         "Offer professional assessment without asserting equipment compatibility.",
     });
-    await assert.rejects(
-      () =>
-        f.call("owner", "recommendation.approve", { id: r.id, active: true }),
-      /independent/,
-    );
-    await f.call("safety_officer", "recommendation.approve", {
-      id: r.id,
-      active: true,
-    });
+    await f.call("owner", "recommendation.approve", {id:r.id,active:true});
     const rows = await f.call("customer", "recommendations", {
       productId: "regulator",
     });

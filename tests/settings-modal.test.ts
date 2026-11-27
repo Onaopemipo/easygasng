@@ -69,10 +69,10 @@ test("SMOD-CONTRACTS: exact currency, Lagos scheduling and draft/revision API co
     settingEditorTabs("rewards_policy").map((t) => t.id),
     ["points", "services", "offers"],
   );
-  assert.equal(settingApprovalCopy({ risk: 4 }).label, "2 approvals required");
+  assert.equal(settingApprovalCopy({ risk: 4 }).label, "Admin approval required");
   assert.equal(
     settingApprovalCopy({ risk: 4, owner_auto_approval: true }).label,
-    "Automatic approval",
+    "One Admin approval",
   );
   assert.deepEqual(
     settingChangeRows(
@@ -104,7 +104,7 @@ test("SMOD-RENDER: staff editor exposes readable selection and review without ra
     "Review change",
     "Save draft",
     "Schedule for later",
-    "2 approvals required",
+    "Admin approval required",
     "Reason for change",
   ])
     assert.ok(html.includes(label), label);

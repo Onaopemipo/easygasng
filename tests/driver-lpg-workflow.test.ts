@@ -439,8 +439,9 @@ test("DLPG-UI01: driver sees actionable missing custody, observed acknowledgemen
     }),
   );
   assert.match(missing, /Recover missing LPG custody/);
-  assert.match(missing,/MARKED-QA-006/);
-  assert.match(missing,/Match the marked serial/);
+  // DRF scope correction: tanker refills do not register customer cylinder serials.
+  assert.doesNotMatch(missing,/Match the marked serial|no linked cylinder serial/);
+  assert.match(missing,/No customer-cylinder serial registration is required/);
   assert.equal(
     lpgReadiness(order, { required: true, loads: [] }).handoverReady,
     false,
@@ -476,7 +477,7 @@ test("DLPG-UI01: driver sees actionable missing custody, observed acknowledgemen
   assert.equal(lpgReadiness(order, props.bulk).handoverReady, true);
 });
 
-test("DLPG-04: customer checkout through serial registration, qualified inspection, assigned load, actual pickup and driver handover succeeds under bulk-enabled operations", async () => {
+test("DLPG-04: historical registered cylinders stay retained while bulk load, pickup and driver refill handover succeeds", async () => {
   const old = process.env.EASYGAS_BULK_LPG_ENABLED,
     oldNode = process.env.NODE_ENV,
     oldField = process.env.EASYGAS_FIELD_OPERATIONS_ENABLED,
@@ -504,11 +505,7 @@ test("DLPG-04: customer checkout through serial registration, qualified inspecti
       },
       reason: "Synthetic independently approved delivery policy",
     });
-    await f.call("dispatcher", "approval.decide", {
-      id: policy.id,
-      decision: "approve",
-      reason: "Synthetic independent quantity approval",
-    });
+    assert.equal(policy.status,"active");
     const lines = [{ capacityKg: 6, kg: 6 }],
       q = await f.call("customer", "gas.quote", { lines, locationId: "lekki" });
     const o = await f.call("customer", "checkout", {
@@ -643,7 +640,7 @@ test("DLPG-04: customer checkout through serial registration, qualified inspecti
     assert.equal(
       (await f.db.query("SELECT status FROM cylinders WHERE id=$1", [c.id]))
         .rows[0].status,
-      "filled",
+      "empty", // DRF: supplying gas does not change a customer-cylinder registry record.
     );
     assert.equal(Number((await f.balance()).grams), 14000);
     assert.equal(Number((await f.balance()).reserved_grams), 6000); // other original fixture order retained

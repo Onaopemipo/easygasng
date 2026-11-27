@@ -21,7 +21,7 @@ export async function serviceSettlements(
       })
       .strict()
       .parse(input);
-    allow(user, ["manager"], b.branch_id);
+    allow(user, ["owner", "manager"], b.branch_id);
     recentVerification(user);
     if (
       !["failed", "cancelled"].includes(b.status) ||

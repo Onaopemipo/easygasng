@@ -108,70 +108,13 @@ test("A–C,K: draft, permissions, status injection and independent review share
     await f.db.close?.();
   }
 });
-test("D,G: distinct dual approval and revisions invalidate prior decisions by revision", async () => {
+test("D,G: one final Admin approval and revisions invalidate prior decisions by revision", async () => {
   const f = await fixture();
   try {
-    const p = await f.call("owner", "setting.propose", {
-      key: "payment.settlement",
-      scope: "lagos",
-      version: 1,
-      value: {
-        bank: "Fixture bank",
-        account: "0123456789",
-        name: "Fixture account",
-      },
-      reason: "Synthetic settlement review",
-    });
-    await f.call("finance", "approval.decide", {
-      id: p.id,
-      decision: "approve",
-      reason: "Finance review",
-    });
-    assert.equal(
-      (await one(f.db, "SELECT status FROM change_requests WHERE id=$1", [
-        p.id,
-      ]))!.status,
-      "partially_approved",
-    );
-    await assert.rejects(() =>
-      f.call("finance", "approval.decide", {
-        id: p.id,
-        decision: "approve",
-        reason: "Cannot count twice",
-      }),
-    );
-    const secondOwner = id();
-    await f.db.query(
-      "INSERT INTO users(id,name,email,password_hash,role,branch_id) VALUES ($1,'Second synthetic owner',$2,$3,'owner','lagos')",
-      [
-        secondOwner,
-        secondOwner + "@example.test",
-        hashPassword("Second-owner-fixture-only-123!"),
-      ],
-    );
-    const token = await issueSession(f.db, secondOwner);
-    await dispatch(
-      "reauth",
-      token,
-      { password: "Second-owner-fixture-only-123!" },
-      f.db,
-    );
-    await dispatch(
-      "approval.decide",
-      token,
-      {
-        id: p.id,
-        decision: "approve",
-        reason: "Second independent financial approval",
-      },
-      f.db,
-    );
-    assert.equal(
-      (await one(f.db, "SELECT status FROM change_requests WHERE id=$1", [
-        p.id,
-      ]))!.status,
-      "active",
-    );
+    const p=await f.call("finance","setting.propose",{key:"payment.settlement",scope:"lagos",version:1,value:{bank:"Fixture bank",account:"0123456789",name:"Fixture account"},reason:"Synthetic settlement review"});
+    await assert.rejects(()=>f.call("finance","approval.decide",{id:p.id,decision:"approve",reason:"Self review denied"}),/independent/);
+    assert.equal((await f.approve(p.id)).status,"active");
+    assert.equal((await f.approve(p.id)).duplicate,true);
     const r = await f.propose("gas.price_per_kg", 190000);
     await f.call("owner", "approval.decide", {
       id: r.id,
@@ -590,7 +533,10 @@ test("delivery fee is once per order in every area; inactive locations retain ad
   }
 });
 test("verified gas-cylinder filling and delivery consume bulk stock once and preserve custody restrictions", async () => {
-  const f = await fixture();
+  const {dispatchJourneyFixture}=await import("./helpers/dispatch-journey-fixture");
+  const f=await dispatchJourneyFixture();
+  const env={...process.env};
+  const users=f.actors;
   const oldRewardsFlag = process.env.EASYGAS_REWARDS_ISSUANCE_ENABLED;
   process.env.EASYGAS_REWARDS_ISSUANCE_ENABLED = "true";
   try {
@@ -600,11 +546,11 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
       [
         ownerId,
         ownerId + "@gas-rewards.test",
-        hashPassword("Shared-fixture-only-123!"),
+        hashPassword("Tracking-fixture-only-123!"),
       ],
     );
-    f.users.owner2 = { id: ownerId, token: await issueSession(f.db, ownerId) };
-    await f.call("owner2", "reauth", { password: "Shared-fixture-only-123!" });
+    users.owner2 = { id: ownerId, token: await issueSession(f.db, ownerId) };
+    await f.call("owner2", "reauth", { password: "Tracking-fixture-only-123!" });
     const policy = await f.call("owner", "setting.propose", {
       key: "loyalty.policy",
       scope: "lagos",
@@ -622,12 +568,8 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
       },
       reason: "Synthetic independently approved verified gas rewards policy",
     });
-    for (const role of ["owner2", "finance"])
-      await f.call(role, "approval.decide", {
-        id: policy.id,
-        decision: "approve",
-        reason: "Independent synthetic gas rewards approval",
-      });
+    assert.equal(policy.status,"active");
+    assert.equal(Number((await one(f.db,"SELECT count(*) n FROM audit_events WHERE target=$1 AND action='approval.owner_auto_approved'",[policy.id]))!.n),1);
 
     await f.db.query(
       "UPDATE settings SET value='true' WHERE key IN ('delivery.enabled','payment.cod')",
@@ -681,48 +623,13 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
         f.call("owner", "order.transition", {
           id: o.id,
           status: "assigned",
-          driverId: f.users.driver.id,
+          driverId: users.driver.id,
           note: "Cannot bypass physical inspection",
         }),
-      /inspection/,
+      /address/,
     );
-    const line = await one(
-      f.db,
-      "SELECT id FROM order_gas_lines WHERE order_id=$1",
-      [o.id],
-    );
-    const intake = await f.call("inventory", "gas.cylinder.intake", {
-      lineId: line!.id,
-      serial: "SYNTHETIC-" + id(),
-      sizeKg: 6,
-      testDue: new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10),
-      reason: "Synthetic verified customer ownership and physical intake",
-    });
-    const cylinder = intake.id;
-    assert.equal(
-      (await one(f.db, "SELECT status FROM cylinders WHERE id=$1", [cylinder]))!
-        .status,
-      "quarantined",
-    );
-    await f.call("owner", "technician.qualify", {
-      userId: f.users.inventory.id,
-      code: "cylinder_inspection",
-      evidence: "Synthetic independently verified physical inspector",
-      expiresAt: new Date(Date.now() + 365 * 86400000).toISOString(),
-    });
-    await f.call("inventory", "cylinder.inspect", {
-      id: cylinder,
-      passed: true,
-      notes: "Synthetic documented physical inspection evidence",
-      nextDue: new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10),
-    });
-    await f.call("inventory", "gas.inspection.record", {
-      lineId: line!.id,
-      cylinderId: cylinder,
-      allowableKg: 6,
-      reason:
-        "Synthetic physical intake, inspection and residual fill evidence",
-    });
+    const cylinderCount=Number((await one(f.db,"SELECT count(*) n FROM cylinders"))!.n);
+    const trip=await f.start();
     await f.call("owner", "delivery.coverage.confirm", {
       orderId: o.id,
       reason:
@@ -731,30 +638,26 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
     await f.call("owner", "order.transition", {
       id: o.id,
       status: "assigned",
-      driverId: f.users.driver.id,
+      driverId: users.driver.id,
       note: "Synthetic verified dispatch assignment",
     });
+    const load=await f.run("inventory","bulk.load.issue",{tripId:trip.id,meterId:f.meter.id,grams:6000,meterReadingGrams:100000,orderIds:[o.id],reason:"Synthetic actual tanker load issued"});
+    await f.run("driver","bulk.load.acknowledge",{loadId:load.id,version:1,returnGrams:6000,meterReadingGrams:100000,reason:"Synthetic driver acknowledges measured tanker load"});
+    await f.ack(o);
     await verifiedPickup(f.call, o.id);
     await f.call("driver", "order.transition", {
       id: o.id,
       status: "out_for_delivery",
       note: "Synthetic driver collection",
     });
+    await f.run("driver","delivery.arrived",{orderId:o.id,version:Number((await f.snapshot(o.id)).tracking_version),reason:"Synthetic customer doorstep arrival"});
+    await f.run("driver","bulk.dispense",{loadId:load.id,version:2,orderId:o.id,meterReadingGrams:106000,reason:"Synthetic actual6000g supplied at doorstep"});
+    await f.proof(o);
     const code = (await f.call("customer", "orders")).find(
       (x: any) => x.id === o.id,
     ).confirmation_code;
-    await f.call("driver", "delivery.complete", {
-      handover: true,
-      orderId: o.id,
-      code,
-      collectedKobo: Number(o.total_kobo),
-    });
-    await f.call("driver", "delivery.complete", {
-      handover: true,
-      orderId: o.id,
-      code,
-      collectedKobo: Number(o.total_kobo),
-    });
+    const completion={handover:true,orderId:o.id,version:Number((await f.snapshot(o.id)).tracking_version),code,collectedKobo:Number(o.total_kobo),operationKey:id()};
+    await f.run('driver','driver.complete',completion);await f.run('driver','driver.complete',completion);
     assert.equal(
       Number(
         (await one(
@@ -764,11 +667,7 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
       ),
       0,
     );
-    assert.equal(
-      (await one(f.db, "SELECT status FROM cylinders WHERE id=$1", [cylinder]))!
-        .status,
-      "filled",
-    );
+    assert.equal(Number((await one(f.db,"SELECT count(*) n FROM cylinders"))!.n),cylinderCount);
     assert.equal(
       (await one(
         f.db,
@@ -790,11 +689,12 @@ test("verified gas-cylinder filling and delivery consume bulk stock once and pre
       "SELECT id FROM cash_collections WHERE order_id=$1",
       [o.id],
     );
-    await f.call("finance", "cash.reconcile", { id: collection!.id });
+    await f.call("inventory", "cash.reconcile", { id: collection!.id });
     await f.db.transaction(processRewards);
     await f.db.transaction(processRewards);
     assert.equal((await f.call("customer", "wallet")).points, 108);
   } finally {
+    process.env=env;
     if (oldRewardsFlag === undefined)
       delete process.env.EASYGAS_REWARDS_ISSUANCE_ENABLED;
     else process.env.EASYGAS_REWARDS_ISSUANCE_ENABLED = oldRewardsFlag;

@@ -241,14 +241,15 @@ export async function accountAction(
           "Staff access is not configured for this branch. Ask your administrator for help.",
         );
       // The owner authorised this exact plan when sending the invite. Acceptance
-      // submits it for review; it does not verify or impersonate an owner session.
+      // submits it for one Admin approval after the exact invitation is bound.
+      // Never impersonate a recently verified Admin session from customer acceptance.
       const request = await propose(tx, inviter, {
         key: "security.permissions",
         scope: invitation.branch_id,
         version: setting.version,
         value: { userId: uid, role: plan.role, branchId: invitation.branch_id },
         reason: "Initial staff access selected on the accepted invitation.",
-      });
+      }, { deferOwnerActivation: true });
       accessRequestId = request.id;
       await tx.query(
         "UPDATE staff_invitations SET access_request_id=$1 WHERE id=$2",

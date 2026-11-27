@@ -1,0 +1,30 @@
+✔ RSEL-SEARCH: names/public IDs resolve to minimal records, duplicate names remain distinct; scoped permissions and literal search are enforced (1419.0295ms)
+✔ RSEL-E2E: search, branchless draft, edit, submit with one Admin approval atomically assign branch and credit once without changing wallet (1146.367417ms)
+✔ RSEL-DENIAL: invalid, spoofed, inactive/staff, branch mismatch and unauthorised initial assignment fail before a request is saved (1090.963208ms)
+✔ RSEL-STALE: branch or customer status changed after proposal prevents partial branch/points activation (1036.957791ms)
+✔ RSEL-ROLLBACK: ledger failure rolls back initial branch assignment and audit along with points (1055.065875ms)
+✔ VISIT-CREATE: an active driver takes a separate fee-free order on the same visit, retaining original totals and idempotency (1505.180208ms)
+✔ VISIT-GAS: ready busy drivers can receive same-visit gas without a customer cylinder gate (1205.270917ms)
+✔ VISIT-NEG: roles, revoked privileges, client scope/fee overrides, closed visits and stale price/visit are rejected (1085.565958ms)
+✔ VISIT-CAPACITY: one visit consumes one stop while gas/vehicle demand and normal delivery fees stay authoritative (1475.539792ms)
+✔ VISIT-JOURNEY: an extra order placed at the customer shares the active trip, has independent proof/payment and reconciles both deliveries before trip end (1387.281625ms)
+✔ VISIT-STOCK: missing or unacknowledged custody, stale load quotes and insufficient mass cannot promise an extra order (991.855ms)
+✔ VISIT-CANCEL: cancellation returns an unpicked extra reservation to vehicle custody exactly once; protected parent, immutable links and role revocations remain (1066.186459ms)
+✔ VISIT-LPG: an extra gas order uses acknowledged buffer once, still requires its own acknowledgement, metering and proof without cylinder registration (1227.355458ms)
+✔ VISIT-SERIAL: extra empty cylinders retain exact acknowledged vehicle serials through allocation and customer handover (1129.499ms)
+✔ SVC-CANCEL01: late pre-work cancellation uses existing independent finance approval and preserves money (1210.197333ms)
+✔ SVC-CANCEL02: changed booking and chargeable work invalidate pre-work cancellation authority (996.893ms)
+✔ SVC-EX01: failed chargeable work uses customer-agreed dual-approved settlement and exact invoice credit/excess refund without certifying completion (1320.344792ms)
+✔ SVC-EX02: declined quote can close with an honest unsuccessful report and cannot charge unapproved labour (1029.838208ms)
+✔ SVC-REC01: expired work authority stops new use but independent recovery reconciles actual issued/used/damaged/returned stock exactly once (1336.3905ms)
+✔ SMOD-CONTRACTS: exact currency, Lagos scheduling and draft/revision API contracts (1.711958ms)
+✔ SMOD-RENDER: staff editor exposes readable selection and review without raw account IDs or inline verification (5.376958ms)
+✔ SMOD-SECURITY: scoped lookup, verification, self access, stale versions and inactive drafts remain server-enforced (1142.868208ms)
+ℹ tests 22
+ℹ suites 0
+ℹ pass 22
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 26594.91525

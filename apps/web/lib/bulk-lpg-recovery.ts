@@ -142,7 +142,6 @@ export async function applyBulkRecovery(tx: SQL, user: Actor, op: Row) {
     load.state !== "held" ||
     load.ended_at ||
     Number(load.version) !== p.loadVersion ||
-    user.id === op.requested_by ||
     user.id === load.driver_id ||
     user.id === load.received_by
   )
