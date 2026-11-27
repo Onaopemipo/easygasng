@@ -17,13 +17,13 @@ Open **Dispatch → Today’s deliveries**. Choose the driver and vehicle (each 
 
 Start the day once. Incoming orders use this same vehicle throughout the day. You can also open the daily setup card within a gas order’s **Overview**, without closing the order modal. Existing order reservations that fit are attached automatically; other orders can be assigned when gas is available. Actual available stock and vehicle capacity remain enforced.
 
-If an earlier metered/product trip has open custody, finish its genuine reconciliation before starting the new day. Existing measurements are never invented, converted or erased. If a trip has old metered gas history, close that trip before using a daily run.
+If an earlier metered/product trip has open custody, finish its genuine reconciliation before starting the new day. Expand **Branch setup & earlier vehicle trips** for those management actions. Existing measurements are never invented, converted or erased. If a trip has old metered gas history, close that trip before using a daily run.
 
 ## Take and assign orders — office/customer
 
 - Customers select kg, confirm their delivery address and pay.
 - For a phone call, staff create the phone order and send the scoped payment link. A first-time customer supplies their basic profile and address, then pays. Assign only after the server verifies payment.
-- Confirm the real address/coverage and map destination in the order when required. Select an eligible driver and assign. A driver can receive more orders while already delivering; the whole day is not blocked by one assignment.
+- Confirm the real address/coverage and map destination in the order when required. Select an eligible driver and assign. The office modal then shows **Awaiting driver start**; the driver starts from their own app. It shows **Awaiting driver refill** and **Awaiting refill photo** until the current scale readings/photo are recorded. Refresh the order to see driver progress. A driver can receive more orders while already delivering; the whole day is not blocked by one assignment.
 - For extra gas at the same customer/on the same visit, use **Extra order for this visit** on the original active order. It creates a separate prepaid order with **no additional delivery fee**. After verified payment it rejoins that visit/driver, subject to available vehicle gas. Do not create a normal unrelated order to waive its fee.
 - Address confirmation, driver assignment and status updates keep the order modal open. Refresh the current record if another user changes it.
 

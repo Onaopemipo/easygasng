@@ -191,3 +191,8 @@ test("AORD-SCOPE: canonical staff provisional flag is scoped, absent from custom
     await f.db.close?.();
   }
 });
+
+test('DAY-MODAL: daily office actions wait for driver start, scale supply and current photo without offering unusable pickup actions',()=>{
+ const view=(status:string,supplied:number,photo:boolean)=>render(React.createElement(AdminOrderDetails,{order:{...order,status,driver_id:'driver',daily_run:{grams:6000,supplied_grams:supplied,photo_ready:photo}},user:owner,onClose(){},onChanged(){}}));
+ assert.match(view('assigned',0,false),/disabled=""[^>]*>Awaiting driver start/);assert.match(view('out_for_delivery',0,false),/disabled=""[^>]*>Awaiting driver refill/);assert.match(view('out_for_delivery',6000,false),/disabled=""[^>]*>Awaiting refill photo/);assert.match(view('out_for_delivery',6000,true),/>Confirm delivery<\/button>/);assert.doesNotMatch(view('assigned',0,false),/Renew meter calibration|Issue LPG load/);
+});

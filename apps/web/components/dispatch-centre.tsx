@@ -463,7 +463,8 @@ export default function DispatchCentre({ user }: { user: any }) {
           </div>
         )}
       </header>
-      {["owner","manager"].includes(user.role)&&<DailyDelivery user={user} branch={branch} onChange={()=>{setSetupRevision(n=>n+1);refresh();}}/>}
+      {["owner","manager"].includes(user.role)&&<DailyDelivery user={user} branch={branch} refreshToken={data?.observedAt} onChange={()=>{setSetupRevision(n=>n+1);refresh();}}/>}
+      <details className="panel"><summary>Branch setup & earlier vehicle trips</summary>
       <div className="dispatch-vehicle-launch">
         <button
           className="button secondary"
@@ -505,6 +506,7 @@ export default function DispatchCentre({ user }: { user: any }) {
           );
         }}
       />
+      </details>
       {vehicleOpen && (
         <DispatchVehicleAssignment
           key={viewerScope}

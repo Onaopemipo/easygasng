@@ -60,7 +60,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-01",
       "status": "VERIFIED_COMPLETE",
@@ -127,7 +129,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-02",
       "status": "VERIFIED_COMPLETE",
@@ -200,7 +204,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-03",
       "status": "VERIFIED_COMPLETE",
@@ -268,7 +274,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-04",
       "status": "VERIFIED_COMPLETE",
@@ -295,17 +303,21 @@
         "apps/mobile/DriverWorkspace.tsx",
         "apps/mobile/DriverDeparture.tsx",
         "apps/mobile/DriverLoadReadiness.tsx",
-        "apps/mobile/DailyRefill.tsx"
+        "apps/mobile/DailyRefill.tsx",
+        "apps/web/lib/order-records.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
       "testFiles": [
         "tests/daily-delivery.test.ts",
         "tests/daily-delivery-components.test.ts",
-        "tests/daily-delivery-postgres.test.ts"
+        "tests/daily-delivery-postgres.test.ts",
+        "tests/admin-order-modal.test.ts"
       ],
       "testIds": [
-        "DAY-UI"
+        "DAY-UI",
+        "DAY-MODAL",
+        "DAY-UI live day refresh"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -338,11 +350,13 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-05",
       "status": "PARTIAL",
-      "reason": "Office and driver browser journey passed through real private photo upload, delivery and office close; actual native form recovery and iOS bundle export pass. Physical iOS/Android camera/scale acceptance remains unverified.",
+      "reason": "Full office/driver browser journey and corrected waiting-action browser check pass. Office live refresh preserves closing form entries, current photo readiness controls completion, and native form recovery/iOS export pass. Physical native-device acceptance remains open.",
       "outstandingWork": "Physical iOS/Android scale/camera/offline acceptance. New signed/TestFlight binary was not requested or built."
     },
     {
@@ -362,7 +376,9 @@
         "apps/web/lib/driver-workspace.ts",
         "packages/business-rules/src/staff-privileges.ts",
         "apps/web/app/api/[action]/route.ts",
-        "daily-delivery-schema-check.ts"
+        "daily-delivery-schema-check.ts",
+        "apps/web/lib/operations.ts",
+        "apps/web/lib/delivery-photos.ts"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -407,7 +423,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-06",
       "status": "VERIFIED_COMPLETE",
@@ -481,7 +499,9 @@
         "docs/daily-delivery/evidence/deployment.json",
         "docs/daily-delivery/evidence/hosted-smoke.json",
         "docs/daily-delivery/evidence/source-verification-first.json",
-        "docs/daily-delivery/evidence/release-health-tests.txt"
+        "docs/daily-delivery/evidence/release-health-tests.txt",
+        "docs/daily-delivery/evidence/final-next-actions-tests.txt",
+        "docs/daily-delivery/evidence/browser-waiting-next-action.txt"
       ],
       "acceptanceGate": "DAY-G-07",
       "status": "VERIFIED_COMPLETE",
@@ -548,6 +568,10 @@
     {
       "date": "2026-11-28",
       "change": "Daily supplied gas now appears in Dispatch totals at measurement time, before pending photo completion. Carry-forward excludes same-visit/mixed physical returns. Existing native source fixes were preserved as prerequisites; no signed binary publication claim."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Daily office modal waits for actual driver departure, scale supply and current photo instead of offering an unusable pickup action. Live day counters refresh without remounting entered weight forms. Earlier setup/trip controls are collapsed; legacy checks remain. Departure audit describes the actual daily-allocation action."
     }
   ]
 }

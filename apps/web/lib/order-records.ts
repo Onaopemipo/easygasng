@@ -13,7 +13,7 @@ export async function hydrateOrderRecords(
 ) {
   if (!orders.length) return orders;
   const ids = orders.map((o) => o.id);
-  const dailyRows=staff?(await tx.query("SELECT a.order_id,a.state allocation_state,a.grams,a.supplied_grams,r.id run_id,r.state,r.trip_id,f.recorded_at supplied_at FROM daily_delivery_allocations a JOIN daily_delivery_runs r ON r.id=a.run_id LEFT JOIN daily_delivery_refills f ON f.allocation_id=a.id WHERE a.order_id=ANY($1::text[]) AND a.state<>'released'",[ids])).rows:[];
+  const dailyRows=staff?(await tx.query("SELECT a.order_id,a.state allocation_state,a.grams,a.supplied_grams,r.id run_id,r.state,r.trip_id,f.recorded_at supplied_at,EXISTS(SELECT 1 FROM delivery_photos p WHERE p.order_id=a.order_id AND p.attempt_id=f.attempt_id AND p.actor_id=r.driver_id AND p.consent AND p.retain_until>now() AND octet_length(p.data)>0 AND p.captured_at>=f.recorded_at AND p.created_at>=f.recorded_at) photo_ready FROM daily_delivery_allocations a JOIN daily_delivery_runs r ON r.id=a.run_id LEFT JOIN daily_delivery_refills f ON f.allocation_id=a.id WHERE a.order_id=ANY($1::text[]) AND a.state<>'released'",[ids])).rows:[];
   const visitLinks=(await tx.query("SELECT l.order_id,l.parent_order_id,p.reference AS parent_reference,c.reference,c.status FROM order_visit_links l JOIN orders p ON p.id=l.parent_order_id JOIN orders c ON c.id=l.order_id WHERE l.order_id=ANY($1::text[]) OR l.parent_order_id=ANY($1::text[])",[ids])).rows;
   for(const o of orders){o.visit_link=visitLinks.find(l=>l.order_id===o.id)??null;o.extra_orders=visitLinks.filter(l=>l.parent_order_id===o.id).map(l=>({id:l.order_id,reference:l.reference,status:l.status}));}
   const gas = (

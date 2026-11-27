@@ -11,6 +11,7 @@ test("DAY01 full paid refill → actual scale stock debit → consented current 
     const r = await f.start(),
       o = await f.make();
     await f.assign(o);
+    await assert.rejects(()=>f.transition(o,"out_for_delivery"),/driver.*Start delivery/i);
     let current = await f.arrive(o);
     assert(current.daily_run);
     assert.equal(Number((await f.summary()).committed_grams), 6000);
@@ -39,6 +40,7 @@ test("DAY01 full paid refill → actual scale stock debit → consented current 
         }),
       /photo/,
     );
+    assert.equal((await f.snapshot(o.id)).daily_run.photo_ready, false);
     const driver = await actor(f.db, f.actors.driver.token);
     await f.db.transaction((tx) =>
       attachDeliveryPhoto(
@@ -51,6 +53,7 @@ test("DAY01 full paid refill → actual scale stock debit → consented current 
         new Date().toISOString(),
       ),
     );
+    assert.equal((await f.snapshot(o.id)).daily_run.photo_ready, true);
     await f.run("driver", "driver.complete", {
       orderId: o.id,
       version: current.tracking_version,

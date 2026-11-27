@@ -5,13 +5,17 @@ export default function DailyDelivery({
   user,
   branch,
   onChange,
+  refreshToken,
 }: {
   user: any;
   branch: string;
   onChange: () => void;
+  refreshToken?: string;
 }) {
   const [loaded, setData] = useState<any>(null),
-    [options, setOptions] = useState<any>(null),
+    [loadedOptions, setOptions] = useState<any>(null),
+    [readError, setReadError] = useState(""),
+    [optionsError, setOptionsError] = useState(""),
     [error, setError] = useState(""),
     [message, setMessage] = useState(""),
     [busy, setBusy] = useState(false),
@@ -23,24 +27,41 @@ export default function DailyDelivery({
   const scope = [selectedBranch, user.id, user.role].join(":");
   const data = loaded?.scope === scope ? loaded.data : null;
   useEffect(() => {
-    let live = true;
-    setData(null);
-    setOptions(null);
     setError("");
-    Promise.all([
-      api("daily.summary?branch=" + encodeURIComponent(selectedBranch)),
-      api(
-        "dispatch.vehicle.options?branch=" + encodeURIComponent(selectedBranch),
-      ),
-    ])
-      .then(([d, o]) => {
+    setMessage("");
+    setMode("");
+    setReadError("");
+    setOptionsError("");
+  }, [scope]);
+  const options = loadedOptions?.scope === scope ? loadedOptions.data : null;
+  const cannotWrite = Boolean(readError || optionsError);
+  useEffect(() => {
+    let live = true;
+    api("daily.summary?branch=" + encodeURIComponent(selectedBranch))
+      .then((d) => {
         if (live) {
           setData({ scope, data: d });
-          setOptions(o);
+          setReadError("");
         }
       })
       .catch((e) => {
-        if (live) setError(e.message);
+        if (live) setReadError(e.message);
+      });
+    return () => {
+      live = false;
+    };
+  }, [scope, revision, refreshToken]);
+  useEffect(() => {
+    let live = true;
+    api("dispatch.vehicle.options?branch=" + encodeURIComponent(selectedBranch))
+      .then((o) => {
+        if (live) {
+          setOptions({ scope, data: o });
+          setOptionsError("");
+        }
+      })
+      .catch((e) => {
+        if (live) setOptionsError(e.message);
       });
     return () => {
       live = false;
@@ -118,10 +139,21 @@ export default function DailyDelivery({
   return (
     <section className="stack panel" aria-label="Today’s delivery day">
       <h2>Today’s deliveries</h2>
+      <button
+        className="button secondary"
+        disabled={busy}
+        onClick={() => setRevision((x) => x + 1)}
+      >
+        Refresh day records
+      </button>
       {message && <Notice message={message} />}{" "}
       {error && <Notice type="error" message={error} />}
-      {!data && !error && <p role="status">Loading today’s vehicle and gas…</p>}
-      {error && (
+      {readError && <Notice type="error" message={readError} />}
+      {optionsError && <Notice type="error" message={optionsError} />}
+      {!data && !readError && !optionsError && (
+        <p role="status">Loading today’s vehicle and gas…</p>
+      )}
+      {(error || readError || optionsError) && (
         <button
           className="button secondary"
           onClick={() => setRevision((x) => x + 1)}
@@ -155,14 +187,14 @@ export default function DailyDelivery({
           <div className="aord-footer">
             <button
               className="button secondary"
-              disabled={busy}
+              disabled={busy || cannotWrite}
               onClick={() => setMode("add")}
             >
               Add gas
             </button>
             <button
               className="button"
-              disabled={busy}
+              disabled={busy || cannotWrite}
               onClick={() => setMode("close")}
             >
               Close delivery day
@@ -177,7 +209,11 @@ export default function DailyDelivery({
         </p>
       )}
       {data && options && (!run || mode) && (
-        <form onSubmit={submit} className="stack">
+        <form
+          key={`${run?.id ?? "start"}:${mode}`}
+          onSubmit={submit}
+          className="stack"
+        >
           {!run && (
             <p>
               Use the actual gas-only weight loaded. Starting the day also marks
@@ -191,7 +227,10 @@ export default function DailyDelivery({
                 ? "Additional gas loaded"
                 : "Closing reconciliation"}
           </h3>
-          <fieldset disabled={busy || !data.enabled} className="stack">
+          <fieldset
+            disabled={busy || cannotWrite || !data.enabled}
+            className="stack"
+          >
             {!run && (
               <>
                 <label>

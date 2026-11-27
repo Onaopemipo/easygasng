@@ -756,7 +756,7 @@ export async function transitionOrder(
   )
     throw new AppError(
       409,
-      "Confirm the complete pickup manifest before dispatch.",
+      (await one(tx,"SELECT id FROM daily_delivery_allocations WHERE order_id=$1 AND state='allocated'",[o.id])) ? 'The driver needs to accept this order and tap Start delivery in their app. Refresh the order after they start.' : "Confirm the complete pickup manifest before dispatch.",
     );
   if (input.status === "out_for_delivery") await verifyVehicleLPGPickup(tx, o);
   if (input.status === "delivery_failed" && attempt) {

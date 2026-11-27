@@ -229,3 +229,83 @@ test("DAY-UI actual native refill submits before/after kg, preserves failure and
     if (t) await act(async () => t.unmount());
   }
 });
+
+test("DAY-UI live day refresh keeps the same closing form, updates supply totals, freezes writes on read failure and resets only for a different run", async () => {
+  const pending: any[] = [];
+  (globalThis as any).dailyAPI = (...args: any[]) =>
+    new Promise((resolve, reject) => pending.push({ args, resolve, reject }));
+  let t: any;
+  const run = {
+    id: "RUN",
+    label: "Daily vehicle",
+    driver_name: "Driver",
+    state: "active",
+    opening_grams: 100000,
+    added_grams: 0,
+    supplied_grams: 0,
+    committed_grams: 6000,
+    version: 1,
+  };
+  const props = {
+    user: { id: "owner", role: "owner", branchId: "lagos" },
+    branch: "lagos",
+    refreshToken: "1",
+    onChange() {},
+  };
+  try {
+    await act(async () => {
+      t = create(React.createElement(Day, props));
+    });
+    await act(async () => {
+      pending[0].resolve({ enabled: true, runs: [run] });
+      pending[1].resolve({ drivers: [], vehicles: [] });
+    });
+    await act(async () =>
+      t.root
+        .findAllByType("button")
+        .find((b: any) => b.children.join("") === "Close delivery day")
+        .props.onClick(),
+    );
+    const form = t.root.findByType("form");
+    await act(async () =>
+      t.update(React.createElement(Day, { ...props, refreshToken: "2" })),
+    );
+    assert.equal(
+      pending.length,
+      3,
+      "Background refresh must not replace vehicle/driver choices",
+    );
+    assert.equal(t.root.findByType("form"), form);
+    await act(async () =>
+      pending[2].resolve({
+        enabled: true,
+        runs: [
+          { ...run, version: 2, supplied_grams: 6000, committed_grams: 0 },
+        ],
+      }),
+    );
+    assert.equal(t.root.findByType("form"), form);
+    assert.match(text(t), /94/);
+    await act(async () =>
+      t.update(React.createElement(Day, { ...props, refreshToken: "3" })),
+    );
+    await act(async () => pending[3].reject(Error("Daily read unavailable")));
+    assert.equal(t.root.findByType("form"), form);
+    assert.equal(t.root.findByType("fieldset").props.disabled, true);
+    assert.match(text(t), /Daily read unavailable/);
+    await act(async () =>
+      t.update(React.createElement(Day, { ...props, refreshToken: "4" })),
+    );
+    await act(async () =>
+      pending[4].resolve({
+        enabled: true,
+        runs: [{ ...run, id: "OTHER", version: 1 }],
+      }),
+    );
+    assert.notEqual(t.root.findByType("form"), form);
+    assert.equal(t.root.findByType("fieldset").props.disabled, false);
+  } finally {
+    if (t) await act(async () => t.unmount());
+    delete (globalThis as any).dailyAPI;
+  }
+});

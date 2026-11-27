@@ -57,7 +57,7 @@ export async function departDelivery(tx: SQL, user: Actor, input: unknown) {
       version: d.version,
       manifest: d.manifest,
       reason:
-        "Driver explicitly confirmed the displayed vehicle load before departure",
+        daily ? "Driver started delivery against the office-recorded daily gas allocation" : "Driver explicitly confirmed the displayed vehicle load before departure",
     });
   const current = await one(
     tx,
@@ -68,7 +68,7 @@ export async function departDelivery(tx: SQL, user: Actor, input: unknown) {
     id: order.id,
     status: "out_for_delivery",
     version: Number(current!.tracking_version),
-    note: "Driver confirmed vehicle load and started delivery",
+    note: daily ? "Driver started daily weighed gas delivery" : "Driver confirmed vehicle load and started delivery",
   });
   return {
     ok: true,

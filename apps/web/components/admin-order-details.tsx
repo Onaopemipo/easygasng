@@ -184,6 +184,8 @@ export default function AdminOrderDetails({
     actions.find((a) => a.id === "phone-payment") ??
     actions.find((a) => a.id === "complete") ??
     (next ? actions.find((a) => a.id === "transition") : undefined);
+  const awaitingDriver = Boolean(order.daily_run && ((order.status === 'assigned' && order.attempt?.state!=='picked_up') || (order.status === 'out_for_delivery' && !order.daily_run.photo_ready)));
+  const waitingLabel = order.status === 'assigned' ? 'Awaiting driver start' : Number(order.daily_run?.supplied_grams)>0 ? 'Awaiting refill photo' : 'Awaiting driver refill';
   const action = actions.find((a) => a.id === view);
   const title = view === "invoice" ? "Order invoice" : action?.label;
   function statusUpdated(status: string) {
@@ -406,7 +408,7 @@ export default function AdminOrderDetails({
           <div className="aord-tab-content">
             {tab === "overview" && <>
               <OrderOverview order={order} />
-              {order.daily_run && <Notice message={`Daily vehicle gas is reserved for this order. ${Number(order.daily_run.supplied_grams)>0 ? 'Scale refill recorded; the driver can upload the photo and complete delivery.' : 'The driver can accept, start delivery and record before/after scale weights at the customer.'}`} />}
+              {order.daily_run && <Notice message={`Daily vehicle gas is reserved for this order. ${order.status==='assigned' ? 'The driver accepts and starts delivery in their app. Refresh this order to see their progress.' : order.daily_run.photo_ready ? 'Scale refill and current photo are recorded. Delivery can be completed.' : Number(order.daily_run.supplied_grams)>0 ? 'Scale refill recorded; waiting for the driver to upload the refill photo.' : 'The driver records before/after scale weights at the customer, then uploads the refill photo.'}`} />}
               {!order.daily_run && order.gas_lines?.length>0 && ['owner','manager'].includes(user.role) && !['delivered','cancelled'].includes(order.status) && <DailyDelivery user={user} branch={order.branch_id} onChange={()=>onChanged({keepOpen:true})}/>}
 
               {!order.daily_run && order.gas_lines?.length > 0 && order.driver_id && ["assigned", "out_for_delivery"].includes(order.status) && <LPGSetupAccess role={user.role} />}
@@ -493,8 +495,8 @@ export default function AdminOrderDetails({
                 </button>
               )}
               {primary && (
-                <button className="button" onClick={() => setView(primary.id)}>
-                  {primary.id === "transition" ? labels[next!] : primary.label}
+                <button className="button" disabled={awaitingDriver} onClick={() => setView(primary.id)}>
+                  {awaitingDriver ? waitingLabel : primary.id === "transition" ? labels[next!] : primary.label}
                 </button>
               )}
               <select
@@ -710,10 +712,12 @@ export function OrderStatusAction({
         <FormInput name="note" required={operationNoteRequired("order.transition", "note", {status})} minLength={operationNoteRequired("order.transition", "note", {status}) ? 5 : undefined} maxLength={500} />
       </label>
       {error && <Notice type="error" message={error} />}
+      {order.daily_run && status==='out_for_delivery' && order.attempt?.state!=='picked_up' && <Notice message="The driver accepts and starts delivery in their app. Refresh this order after they start."/>}
       <button
         className="button"
         disabled={
           busy ||
+          (order.daily_run && status==='out_for_delivery' && order.attempt?.state!=='picked_up') ||
           (status === "assigned" && (candidates.loading || !driverReady))
         }
       >
