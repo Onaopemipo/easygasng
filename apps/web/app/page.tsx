@@ -39,7 +39,7 @@ export default async function Page() {
   try {
     const [catalogue, testimonials] = await Promise.all([
       dispatch("catalogue", null, { view: "homepage" }),
-      dispatch("testimonials.public", null),
+      dispatch("testimonials.public", null).catch(() => []),
     ]);
     const initial = JSON.parse(
       JSON.stringify({ ...catalogue, testimonials }, (_key, value) =>

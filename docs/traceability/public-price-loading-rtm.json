@@ -1,0 +1,103 @@
+{
+  "phase": "Public price loading \u201428 November2026",
+  "requirements": [
+    {
+      "id": "PLOAD-01",
+      "priority": "P1",
+      "requirement": "Show gas price and flat fee in the initial homepage HTML, retaining one loading state only if no snapshot exists",
+      "implementationFiles": [
+        "apps/web/app/page.tsx",
+        "apps/web/components/site.tsx",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "authoritativeData": [
+        "settings gas.price_per_kg/delivery.fee/gas.quantity_policy by branch",
+        "Server priceVersion/feeVersion/policyVersion and fetchedAt"
+      ],
+      "securityControls": "Public canonical settings only; private session/cart hydration remains separate; unavailable prices never invented.",
+      "testIds": [
+        "PRICE-SSR",
+        "PRICE-UI"
+      ],
+      "acceptanceGate": "PLOAD-G1",
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json"
+      ],
+      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
+      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+    },
+    {
+      "id": "PLOAD-02",
+      "priority": "P1",
+      "requirement": "Reuse branch-scoped public pricing and deduplicate refreshes without hiding already loaded figures",
+      "implementationFiles": [
+        "packages/business-rules/src/public-gas-cache.ts",
+        "apps/web/components/public-gas-cache.ts",
+        "apps/web/components/gas-order.tsx"
+      ],
+      "authoritativeData": [
+        "settings gas.price_per_kg/delivery.fee/gas.quantity_policy by branch",
+        "Server priceVersion/feeVersion/policyVersion and fetchedAt"
+      ],
+      "securityControls": "60-second freshness, monotonically versioned settings, branch isolation, bounded request, no user/session cache; authoritative quote/checkout remains.",
+      "testIds": [
+        "PRICE-CACHE",
+        "PRICE-BRANCH",
+        "PRICE-RETRY"
+      ],
+      "acceptanceGate": "PLOAD-G2",
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json"
+      ],
+      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
+      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+    },
+    {
+      "id": "PLOAD-03",
+      "priority": "P1",
+      "requirement": "Load canonical prices early and once per public catalogue read, verify rollout and preserve checkout safety",
+      "implementationFiles": [
+        "apps/web/lib/gas-delivery.ts",
+        "apps/web/lib/service.ts"
+      ],
+      "authoritativeData": [
+        "settings gas.price_per_kg/delivery.fee/gas.quantity_policy by branch",
+        "Server priceVersion/feeVersion/policyVersion and fetchedAt"
+      ],
+      "securityControls": "Gas price/fee/policy from one scoped SQL snapshot; existing backend payment/version/coverage controls remain. No setting mutation or migration.",
+      "testIds": [
+        "PRICE-API",
+        "PRICE-DEPLOY"
+      ],
+      "acceptanceGate": "PLOAD-G3",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json"
+      ],
+      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
+      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+    }
+  ],
+  "coverage": {
+    "requirements": 3,
+    "verified": 2,
+    "gates": 3,
+    "gatesPassed": 2,
+    "excluded": 0
+  },
+  "productionDecision": "Existing production NO-GO and unrelated holds preserved",
+  "changeLog": [
+    "Approved scope: early single loading state for gas price/flat fee; same-branch continuity and canonical checkout verification retained."
+  ]
+}

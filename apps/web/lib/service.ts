@@ -241,6 +241,7 @@ export async function dispatch(
           .object({ view: z.enum(["homepage"]).optional() })
           .strict()
           .parse(input);
+        const gas = await gasCatalogue(tx);
         return {
           preview:
             process.env.NODE_ENV !== "production" && d.view !== "homepage",
@@ -264,10 +265,10 @@ export async function dispatch(
               "SELECT name FROM product_categories WHERE active=true ORDER BY name",
             )
           ).rows.map((r) => r.name),
-          gas: await gasCatalogue(tx),
+          gas,
           walletEnabled: await settingValue(tx, "wallet.enabled"),
-          deliveryFee: await settingValue(tx, "delivery.fee"),
-          zones: (await gasCatalogue(tx)).locations.map((l: any) => l.name),
+          deliveryFee: gas.deliveryKobo,
+          zones: gas.locations.map((l: any) => l.name),
           windows: String(await settingValue(tx, "delivery.windows"))
             .split(",")
             .map((s) => s.trim()),

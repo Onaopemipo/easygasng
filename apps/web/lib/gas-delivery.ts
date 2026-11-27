@@ -28,27 +28,17 @@ const verifiedKg = z
     }
   }, "Use kilograms with no more than three decimal places.");
 export async function gasCatalogue(tx: SQL, branch = "lagos") {
-  const price = await one(
-    tx,
-    "SELECT value,version FROM settings WHERE key='gas.price_per_kg' AND scope=$1",
-    [branch],
-  );
-  const fee = await one(
-    tx,
-    "SELECT value,version FROM settings WHERE key='delivery.fee' AND scope=$1",
-    [branch],
-  );
-  const policy = await one(
-    tx,
-    "SELECT value,version FROM settings WHERE key='gas.quantity_policy' AND scope=$1",
-    [branch],
-  );
-  const locations = (
-    await tx.query(
-      "SELECT l.*,s.value->'mapBounds' AS map_bounds,COALESCE((s.value->>'requiresAddressConfirmation')::boolean,true) AS requires_address_confirmation FROM delivery_locations l JOIN branches b ON b.id=l.branch_id LEFT JOIN settings s ON s.key='location.'||l.id AND s.scope=l.branch_id WHERE l.active=true AND l.visible=true AND l.archived=false AND b.active=true ORDER BY l.display_order,l.name",
-    )
-  ).rows;
+  const [settings, locationRows] = await Promise.all([
+    tx.query("SELECT key,value,version FROM settings WHERE scope=$1 AND key IN ('gas.price_per_kg','delivery.fee','gas.quantity_policy')", [branch]),
+    tx.query("SELECT l.*,s.value->'mapBounds' AS map_bounds,COALESCE((s.value->>'requiresAddressConfirmation')::boolean,true) AS requires_address_confirmation FROM delivery_locations l JOIN branches b ON b.id=l.branch_id LEFT JOIN settings s ON s.key='location.'||l.id AND s.scope=l.branch_id WHERE l.active=true AND l.visible=true AND l.archived=false AND b.active=true ORDER BY l.display_order,l.name"),
+  ]);
+  const price = settings.rows.find(r=>r.key==='gas.price_per_kg');
+  const fee = settings.rows.find(r=>r.key==='delivery.fee');
+  const policy = settings.rows.find(r=>r.key==='gas.quantity_policy');
+  const locations = locationRows.rows;
   return {
+    branchId: branch,
+    fetchedAt: Date.now(),
     priceKobo: Number(price?.value),
     priceVersion: price?.version,
     deliveryKobo: Number(fee?.value),

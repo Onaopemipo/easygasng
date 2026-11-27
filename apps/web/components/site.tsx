@@ -121,10 +121,13 @@ export default function Site({
   const pathname = usePathname(),
     router = useRouter();
   useEffect(() => {
+    if (pathname === "/" && initialCatalogue) { setCatalogue(initialCatalogue); setError(""); return; }
+    let live = true;
     api(pathname === "/" ? "catalogue?view=homepage" : "catalogue")
-      .then(setCatalogue)
-      .catch((e) => setError(e.message));
-  }, [pathname === "/"]);
+      .then(value => { if (live) setCatalogue(value); })
+      .catch((e) => { if (live) setError(e.message); });
+    return () => { live = false; };
+  }, [pathname === "/", initialCatalogue]);
   // Hydrate once per mount, independently of catalogue/navigation refreshes.
   useEffect(() => {
     try {
@@ -295,7 +298,7 @@ export default function Site({
             } />
           ) : pathname === "/login" || pathname === "/register" ? (
             <Auth key={pathname} register={pathname === "/register"} />
-          ) : !ready || (protectedPath && !user) ? (
+          ) : (!ready && !(pathname === "/" && catalogue)) || (protectedPath && !user) ? (
             <Loading page />
           ) : pathname === "/account" && workspace ? (
             <CustomerDashboard user={user} />

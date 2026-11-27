@@ -490,3 +490,5 @@ Delivery map area fix published —28 November2026: [PINAREA matrix](delivery-pi
 Mobile sign-out repair —28 November2026: [MSO matrix](mobile-signout-rtm.md). Restore real App wiring in Expo Go and bound session cleanup while preserving encrypted evidence. Existing production holds remain.
 
 Expo Go sign-out repaired —28 November2026: [MSO matrix](mobile-signout-rtm.md) verifies3/3 bounded requirements/gates. Normal App entry and shared demo API restored, actual driver sign-out/server revocation and final-source guest reload observed;12 targeted checks and native types pass. No new signed binary, backend deployment, credential reset or business mutation; prior production holds remain.
+
+Public gas/flat delivery price loading —28 November2026: [PLOAD matrix](public-price-loading-rtm.md). Early server-rendered prices, one fallback loader, branch-scoped continuity and unchanged checkout authority. Previous holds preserved.

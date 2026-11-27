@@ -1,4 +1,5 @@
 "use client";
+import { publicGasCache, loadPublicGas } from "./public-gas-cache";
 import { deliveryPinAreaError } from "../../../packages/business-rules/src/delivery-pin-area";
 import DeliveryPinPicker from "./delivery-pin-picker";
 import {
@@ -70,7 +71,8 @@ export default function GasOrder({
   onDone?: () => void;
   compact?: boolean;
 }) {
-  const [config, setConfig] = useState<any>(catalogue?.gas),
+  const [initialPricing] = useState(() => publicGasCache.seed(catalogue?.gas) ?? publicGasCache.read("lagos")?.value);
+  const [config, setConfig] = useState<any>(initialPricing ?? catalogue?.gas),
     [lines, setLines] = useState([{ capacityKg: 12.5, kg: 0 }]),
     [quote, setQuote] = useState<any>(null),
     [error, setError] = useState(""),
@@ -98,7 +100,7 @@ export default function GasOrder({
     [method, setMethod] = useState("cash_on_delivery");
   const [repeatItems,setRepeatItems] = useState<any[] | null>(null);
   const [compactKg, setCompactKg] = useState("");
-  const [pricingBranch, setPricingBranch] = useState<string | null>(null);
+  const [pricingBranch, setPricingBranch] = useState<string | null>(initialPricing?.branchId ?? null);
   const [pricingFailed, setPricingFailed] = useState<string | null>(null);
   const { profile, loading: loadingDelivery } = useCheckoutProfile(
     compact ? undefined : user?.id,
@@ -128,42 +130,23 @@ export default function GasOrder({
     selectedArea && !hasConfirmedDeliveryCoverage(selectedArea.coverage);
   const requestedBranch = areaBranch ?? "lagos";
   const [paymentAvailable, setPaymentAvailable] = useState(false);
+  const pricingRetry = useRef(0);
   useEffect(() => {
     let live = true;
-    setPricingBranch(null);
+    publicGasCache.seed(catalogue?.gas);
+    const force = catalogueRevision !== pricingRetry.current;
+    pricingRetry.current = catalogueRevision;
+    const cached = publicGasCache.read(requestedBranch);
+    if (cached) { setConfig(cached.value); setPricingBranch(requestedBranch); }
+    else setPricingBranch(null);
     setPricingFailed(null);
-    const controller = new AbortController();
-    const timeout = setTimeout(() => {
-      if (live) {
-        setPricingFailed(requestedBranch);
-        setError("The gas catalogue request timed out. Please retry.");
-        controller.abort();
-      }
-    }, 15000);
-    api(
-      "gas.catalogue?branchId=" + encodeURIComponent(requestedBranch),
-      undefined,
-      { signal: controller.signal },
-    )
-      .then((value) => {
-        if (live) {
-          setConfig(value);
-          setPricingBranch(requestedBranch);
-        }
-      })
-      .catch((e) => {
-        if (live && !controller.signal.aborted) {
-          setPricingFailed(requestedBranch);
-          setError(e.message);
-        }
-      })
-      .finally(() => clearTimeout(timeout));
-    return () => {
-      live = false;
-      clearTimeout(timeout);
-      controller.abort();
-    };
-  }, [catalogueRevision, requestedBranch]);
+    if (cached?.fresh && !force) return;
+    loadPublicGas(requestedBranch, force)
+      .then(value => { if (live) { setConfig(value); setPricingBranch(requestedBranch); setPricingFailed(null); } })
+      .catch(e => { if (live) { setPricingFailed(requestedBranch); setError(e.message); } });
+    return () => { live = false; };
+  }, [catalogueRevision, requestedBranch, catalogue?.gas]);
+
   useEffect(() => {
     const identity = user?.id ?? "guest";
     const apply = (id: string) => {
@@ -475,7 +458,8 @@ export default function GasOrder({
         { signal: AbortSignal.timeout(15000) },
       );
       if (latestQuoteKey.current !== quoteKey) return;
-      setConfig(q);
+      publicGasCache.seed(q);
+          setConfig(q);
       setQuote({
         inputKey: quoteKey,
         ...q,
@@ -609,13 +593,14 @@ export default function GasOrder({
             <p>Quick, secure and home delivery</p>
           </div>
         </header>
-        <div className="compact-gas-prices" aria-live="polite">
+        {pricingLoading && <ActionLoadingIndicator label="Loading gas price and delivery fee" />}
+        <div className="compact-gas-prices" aria-live="polite" aria-busy={pricingLoading}>
           <div>
             <Tag aria-hidden="true" />
             <span>
               <strong>
                 {pricingLoading ? (
-                  <ActionLoadingIndicator label="Loading gas price" />
+                  "—"
                 ) : pricingReady && config.priceKobo > 0 ? (
                   money(config.priceKobo) + "/kg"
                 ) : (
@@ -630,7 +615,7 @@ export default function GasOrder({
             <span>
               <strong>
                 {pricingLoading ? (
-                  <ActionLoadingIndicator label="Loading delivery fee" />
+                  "—"
                 ) : pricingReady && feeReady ? (
                   money(config.deliveryKobo)
                 ) : (
@@ -666,7 +651,8 @@ export default function GasOrder({
                 q.feeVersion !== config.feeVersion ||
                 q.policyVersion !== config.policyVersion
               ) {
-                setConfig(q);
+                publicGasCache.seed(q);
+          setConfig(q);
                 setError(
                   "Gas pricing or quantity limits changed. Review the updated estimate and try again.",
                 );
@@ -796,7 +782,7 @@ export default function GasOrder({
               aria-live="polite"
             >
               {pricingLoading ? (
-                <ActionLoadingIndicator label="Checking current prices" />
+                "Checking current prices…"
               ) : !pricingReady ? (
                 "Current prices could not be loaded."
               ) : !configured || !feeReady ? (
@@ -823,7 +809,7 @@ export default function GasOrder({
                 )}
             </div>
             {error && <Notice type="error" message={error} />}
-            {error && !pricingReady && (
+            {error && pricingFailed === requestedBranch && (
               <button
                 type="button"
                 className="button secondary"
