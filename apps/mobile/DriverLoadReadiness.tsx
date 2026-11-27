@@ -30,8 +30,17 @@ export default function DriverLoadReadiness({
     let current = true;
     onChange({ key, ready: !gas });
     setResult(null);
-    if(order.daily_run){onChange({key,ready:order.daily_run.state==='active'&&order.daily_run.allocation_state==='allocated'});return;}
+    if (order.daily_run) {
+      onChange({
+        key,
+        ready:
+          order.daily_run.state === "active" &&
+          order.daily_run.allocation_state === "allocated",
+      });
+      return;
+    }
     if (!gas) return;
+    if (order.legacy_lpg !== true) return;
     let timer: ReturnType<typeof setTimeout>;
     const deadline = new Promise<never>((_, reject) => {
       timer = setTimeout(() => reject(Error("Load check timed out.")), 15000);
@@ -53,7 +62,18 @@ export default function DriverLoadReadiness({
       clearTimeout(timer);
     };
   }, [api, key, gas, revision, onChange]);
-  if (!gas||order.daily_run) return null;
+  if (!gas || order.daily_run) return null;
+  if (order.legacy_lpg !== true)
+    return (
+      <Card>
+        <Title>Waiting for the office</Title>
+        <Copy>
+          The office needs to start today’s delivery day and reserve this
+          order’s gas on your vehicle. Refresh the order after Dispatch confirms
+          it. You can accept the assignment while waiting.
+        </Copy>
+      </Card>
+    );
   const current = result?.key === key ? result : null;
   return (
     <Card>

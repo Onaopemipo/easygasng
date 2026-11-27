@@ -378,7 +378,16 @@
         "apps/mobile/DailyRefill.tsx",
         "apps/web/lib/order-records.ts",
         "apps/web/lib/daily-delivery.ts",
-        "packages/business-rules/src/staff-privileges.ts"
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "packages/business-rules/src/driver-load-readiness.ts",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "packages/business-rules/src/driver-presentation.ts",
+        "packages/business-rules/src/driver-presentation.ts",
+        "docs/traceability/daily-ios-rtm.json"
       ],
       "dataSource": "Canonical daily_delivery_runs/allocations/refills/weights, driver_trips, orders, gas_stock, verified payments, current-attempt delivery_photos",
       "securityControl": "Real actor/branch/role, protected staff privileges, password re-verification for office weights, immutable measurement/audit history, atomic reservations and idempotent operations; no synthetic production data",
@@ -386,7 +395,8 @@
         "tests/daily-delivery.test.ts",
         "tests/daily-delivery-components.test.ts",
         "tests/daily-delivery-postgres.test.ts",
-        "tests/admin-order-modal.test.ts"
+        "tests/admin-order-modal.test.ts",
+        "tests/daily-ios-presentation.test.ts"
       ],
       "testIds": [
         "DAY-UI",
@@ -396,7 +406,11 @@
         "DAY08",
         "DAY-UI-SETUP",
         "DAY-MODAL-SETUP",
-        "DAY-PG concurrent attach"
+        "DAY-PG concurrent attach",
+        "DIO-01",
+        "DIO-02",
+        "DIO-03",
+        "DIO-04"
       ],
       "negativeTests": [
         "Wrong role/driver/branch",
@@ -451,12 +465,28 @@
         "docs/daily-delivery/evidence/start-day-fix/deployment.json",
         "docs/daily-delivery/evidence/start-day-fix/build.txt",
         "docs/daily-delivery/evidence/start-day-fix/root-types.txt",
-        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt"
+        "docs/daily-delivery/evidence/start-day-fix/root-tests.txt",
+        "docs/daily-delivery/evidence/ios-daily/server-readback.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh-after-native.json",
+        "docs/daily-delivery/evidence/ios-daily/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-daily/regression-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/presentation-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/native-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/web-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/ios-export-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/allocation-waiting.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-ready.png",
+        "docs/daily-delivery/evidence/ios-daily/work-overview.png",
+        "docs/daily-delivery/evidence/ios-daily/work-actions.png",
+        "docs/daily-delivery/evidence/ios-daily/daily-vehicle.png",
+        "docs/daily-delivery/evidence/ios-daily/delivered.png",
+        "docs/daily-delivery/evidence/ios-daily/upload-retry.png"
       ],
       "acceptanceGate": "DAY-G-05",
       "status": "PARTIAL",
-      "reason": "Actual deployed Admin order recovery remains inside the same modal and advances to Awaiting driver start. Daily Start Day/scale form renderers and retry preservation pass. Physical native-device/offline acceptance remains open.",
-      "outstandingWork": "Physical iOS/Android camera/scale acceptance; full offline scale/photo queueing is not verified and current scale saves require connectivity. New signed/TestFlight binary was not requested or built."
+      "reason": "Full Expo Go/iOS26.5 daily acceptance\u2192direct departure\u2192arrival\u2192scale\u2192consented gallery photo\u2192503 retry\u2192server-confirmed completion verified, with zero meter/load records or calls. Native Work/Home/vehicle views corrected; same-version office allocation refresh unlocks departure. Parent remains partial solely for physical camera/new signed-device and offline acceptance.",
+      "outstandingWork": "Physical iOS/Android camera/scale acceptance; full offline scale/photo queueing remains unverified and scale saves need connectivity. No new signed/TestFlight binary requested or built."
     },
     {
       "id": "DAY-06",
@@ -747,6 +777,14 @@
     {
       "date": "2026-11-28",
       "change": "Repaired release5545a0f is live as dpl_ZCcZakJ3181b2bBcoMvCimbxsjUM;505/505 uploaded files match. Existing Admin saved login was used through Firefox UI to reserve EG-2026-75ADFA5D on the genuine25kg day; six unassigned queue commitments returned to ordinary branch reservations with audits. Same modal shows Awaiting driver start. Opening/addition/supply/payment values unchanged; no refill or physical evidence invented. Native/device/offline holds remain."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "User requests full iOS daily driver journey. Bounded disposable simulator fixture uses canonical APIs with zero legacy meter/load records; stale allocation readiness and Work-tab legacy fallback are under investigation. No hosted delivery/measurement or new signed binary is authorised by the test."
+    },
+    {
+      "date": "2026-11-28",
+      "change": "Daily native simulator journey verified against zero legacy loads/meters, including encrypted gallery upload503 retry and completion with exactly one stock debit. Removed normal Work/Home/vehicle meter/pickup/code/driver-close shortcuts, fixed stale readiness after same-version office reservation, and replaced stale acceptance/pickup labels. Focused DIO01\u201304 all verified; physical camera/signed/offline holds remain within DAY-05. No hosted business changes or new binary."
     }
   ]
 }

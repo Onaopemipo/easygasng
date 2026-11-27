@@ -50,13 +50,11 @@ export function FieldNextHome({
           YOUR NEXT PRIORITY
         </NextText>
         <NextText kind="title" style={{ fontSize: 28, lineHeight: 33 }}>
-          {driver
-            ? "Trip & delivery readiness"
-            : "Appointments & work authority"}
+          {driver ? "Today’s deliveries" : "Appointments & work authority"}
         </NextText>
         <NextText style={{ color: colors.muted }}>
           {driver
-            ? "Start a suitable vehicle trip before collecting orders."
+            ? "The office prepares today’s vehicle and records the opening gas weight. Accept assigned orders, refill using the scale, then add a photo and complete delivery."
             : "Review the scope and approval before starting work."}
         </NextText>
         <NextButton
@@ -91,7 +89,7 @@ export function FieldNextHome({
           title={driver ? "Driver workspace" : "Technician workspace"}
           detail={
             driver
-              ? "Trip, assignments, handover and returns"
+              ? "Today’s vehicle, assigned orders, scale refills and photos"
               : "Appointments, work authority and completion"
           }
           icon={driver ? "truck" : "wrench"}
@@ -133,19 +131,13 @@ export function FieldNextWork({
     driver = role === "driver";
   const overview = driver
     ? [
-        ["Home, Orders, History and Profile", "home"],
+        ["Today’s vehicle and gas", "trip"],
+        ["Accept and start deliveries", "orders"],
+        ["Weigh customer refill", "orders"],
+        ["Photo and delivery completion", "orders"],
         ["Availability", "availability"],
-        ["Connection state", "connection"],
-        ["Vehicle and odometer", "trip"],
-        ["Start trip", "trip"],
-        ["Accept assigned orders", "orders"],
-        ["Inspected pickup", "orders"],
-        ["Travel and arrival", "orders"],
-        ["Metered dispensing", "trip"],
-        ["Customer code", "orders"],
-        ["Proof and cash", "orders"],
-        ["Failed delivery", "orders"],
-        ["Returns and end trip", "trip"],
+        ["Connection and sync", "connection"],
+        ["Delivery history", "history"],
       ]
     : [
         ["Home, Jobs, History and Profile", "home"],
@@ -162,18 +154,13 @@ export function FieldNextWork({
       ];
   const actions = driver
     ? [
-        ["Set availability", "availability"],
-        ["Start a trip", "trip"],
         ["Accept order", "orders"],
-        ["Record inspected pickup", "orders"],
+        ["Start delivery", "orders"],
         ["Record arrival", "orders"],
-        ["Record location and fuel", "trip"],
-        ["Acknowledge bulk load", "trip"],
-        ["Record metered dispensing", "trip"],
-        ["Complete handover", "orders"],
+        ["Record scale refill", "orders"],
+        ["Upload photo and complete delivery", "orders"],
         ["Report failed delivery", "orders"],
-        ["Declare returned custody", "trip"],
-        ["End reconciled trip", "trip"],
+        ["Today’s vehicle and office reconciliation", "trip"],
       ]
     : [
         ["Set availability preference", "availability"],

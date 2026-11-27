@@ -25,6 +25,7 @@ import {
   driverContactLabel,
   driverInitials,
   driverNextAction,
+  driverOrderLabel,
   driverNextAssignment,
 } from "../../packages/business-rules/src/driver-presentation";
 import CustomerNotifications from "./CustomerNotifications";
@@ -103,7 +104,7 @@ export default function DriverWorkspace({
   logout: () => Promise<void>;
 }) {
   const { colors, dark, preference, setPreference } = useTheme();
-  const [tripTab, setTripTab] = useState("Trip");
+  const [tripTab, setTripTab] = useState("Daily gas");
   const [loadReadiness, setLoadReadiness] = useState<{key: string; ready: boolean} | null>(null);
   const insets = useSafeAreaInsets();
   const headerGreen = "#004c30";
@@ -474,7 +475,7 @@ export default function DriverWorkspace({
             security: "Security",
             personal: "Personal information",
             support: "Help & support",
-            trip: "Trip & custody",
+            trip: "Today’s vehicle",
           } as Record<string, string>
         )[page];
 
@@ -564,9 +565,8 @@ export default function DriverWorkspace({
             >
               <DriverLabel icon="cube-outline" label={o.reference} />
               <DriverBadge
-                label={assignmentLabel(
-                  o.status,
-                  o.attempt?.state,
+                label={driverOrderLabel(
+                  o,
                   snapshot.responses.find((r: any) => r.order_id === o.id)
                     ?.decision,
                 )}
@@ -732,8 +732,8 @@ export default function DriverWorkspace({
           {!!snapshot && page === "trip" && !selected && (
             <>
               <NextIntro
-                title="Trip & custody"
-                detail="Vehicle readiness, stock and independently confirmed returns."
+                title="Today’s vehicle"
+                detail="The office records opening and closing gas weights. Use Deliveries for scale refills and photos."
               />
               <View
                 style={{
@@ -744,7 +744,7 @@ export default function DriverWorkspace({
                   borderRadius: 15,
                 }}
               >
-                {["Trip", "LPG", "Products"].map((label) => (
+                {["Daily gas", "Earlier trip", "Products"].map((label) => (
                   <Pressable
                     key={label}
                     accessibilityRole="tab"
@@ -765,13 +765,13 @@ export default function DriverWorkspace({
                   </Pressable>
                 ))}
               </View>
-              {tripTab === "Trip" ? (
+              {tripTab === "Earlier trip" ? (
                 <DriverTripTracking
                   api={api}
                   userId={user.id}
                   visible={!revoked}
                 />
-              ) : tripTab === "LPG" ? (
+              ) : tripTab === "Daily gas" ? (
                 <BulkLPG api={api} />
               ) : (
                 <VehicleManifest api={api} />
@@ -908,7 +908,7 @@ export default function DriverWorkspace({
                         api={api} order={order} tripId={snapshot?.trip?.id ?? null}
                         onChange={setLoadReadiness}
                         onReviewLoad={() => {
-                          setError(""); setSelected(null); setTripTab("LPG"); setPage("trip");
+                          setError(""); setSelected(null); setTripTab("Daily gas"); setPage("trip");
                         }}
                       />}
                       {order.events?.map((e: any, i: number) => (
@@ -984,7 +984,7 @@ export default function DriverWorkspace({
                               disabled={busy || !connected || revoked}
                             />
                           )}
-                          {!order.daily_run && <DriverPickupSummary order={order} refill={refill} />}
+                          {!order.daily_run && (!order.gas_lines?.length || order.legacy_lpg === true) && <DriverPickupSummary order={order} refill={refill} />}
                           <DriverDeparture
                             key={"depart:" + order.id + ":" + order.tracking_version}
                             order={order}

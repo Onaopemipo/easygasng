@@ -1,0 +1,65 @@
+(node:30055) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI office defaults, loading, stale branch/actor reads and denied recovery are explicit (10.950833ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI web scale retry preserves readings and operation key, prevents double taps and supports multiple cylinders (4.060125ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI actual native refill submits before/after kg, preserves failure and refreshes proof stage on success (2.8665ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI live day refresh keeps the same closing form, updates supply totals, freezes writes on read failure and resets only for a different run (7.211625ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI-SETUP capacity is visible and invalid opening weights never reauthenticate; existing order reservation uses the active day (12.782208ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✖ DAY-IOS-READY a newly reserved daily order reruns readiness at the same order version without requesting old bulk load evidence (2.5685ms)
+✖ DAY-IOS-WORK daily read loading/failure never mounts legacy meter/load forms, retries show daily vehicle and departure is one tap (1.1585ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 5
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 237.555875
+
+✖ failing tests:
+
+test at tests/daily-delivery-components.test.ts:1:11110
+✖ DAY-IOS-READY a newly reserved daily order reruns readiness at the same order version without requesting old bulk load evidence (2.5685ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /calibrat|meter reading|measured load confirmation|Open vehicle gas load/. Input:
+  
+  '{"type":"card","props":{},"children":[{"type":"title","props":{},"children":["Vehicle gas readiness"]},{"type":"text","props":{},"children":["Accepting an order confirms the assignment. Starting delivery also needs its vehicle gas allocation and your measured load confirmation."]},{"type":"text","props":{},"children":["Dispatch has not recorded a vehicle gas allocation for this 6 kg order. Ask authorised staff to check the vehicle’s current meter calibration, record the measured load and include this order."]},{"type":"button","props":{"label":"Open vehicle gas load","secondary":true},"children":null},{"type":"button","props":{"label":"Refresh gas readiness","secondary":true,"disabled":false},"children":null}]}'
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/daily-delivery/git-worktree/tests/daily-delivery-components.test.ts:454:134)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '{"type":"card","props":{},"children":[{"type":"title","props":{},"children":["Vehicle gas readiness"]},{"type":"text","props":{},"children":["Accepting an order confirms the assignment. Starting delivery also needs its vehicle gas allocation and your measured load confirmation."]},{"type":"text","props":{},"children":["Dispatch has not recorded a vehicle gas allocation for this 6 kg order. Ask authorised staff to check the vehicle’s current meter calibration, record the measured load and include this order."]},{"type":"button","props":{"label":"Open vehicle gas load","secondary":true},"children":null},{"type":"button","props":{"label":"Refresh gas readiness","secondary":true,"disabled":false},"children":null}]}',
+    expected: /calibrat|meter reading|measured load confirmation|Open vehicle gas load/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }
+
+test at tests/daily-delivery-components.test.ts:1:12136
+✖ DAY-IOS-WORK daily read loading/failure never mounts legacy meter/load forms, retries show daily vehicle and departure is one tap (1.1585ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:
+  + actual - expected
+  
+    [
+  +   'bulk.summary',
+      'daily.summary'
+    ]
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/daily-delivery/git-worktree/tests/daily-delivery-components.test.ts:459:84)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: [ 'bulk.summary', 'daily.summary' ],
+    expected: [ 'daily.summary' ],
+    operator: 'deepStrictEqual',
+    diff: 'simple'
+  }

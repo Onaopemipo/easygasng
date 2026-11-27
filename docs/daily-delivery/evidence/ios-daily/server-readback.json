@@ -1,0 +1,1181 @@
+{
+  "order": {
+    "id": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+    "reference": "EG-2026-8CC94EA6",
+    "customer_id": "2ffd3b23-793a-402c-8d2f-16cebaa71343",
+    "branch_id": "lagos",
+    "status": "delivered",
+    "payment_status": "verified",
+    "payment_method": "wallet",
+    "subtotal_kobo": 1080000,
+    "delivery_kobo": 500000,
+    "total_kobo": 1580000,
+    "address": {
+      "name": "SANDBOX customer",
+      "zone": "Lekki",
+      "phone": "08012345678",
+      "street": "12 Synthetic Street",
+      "locationId": "lekki"
+    },
+    "delivery_date": "2026-11-28",
+    "delivery_window": "14:00–18:00",
+    "instructions": "",
+    "driver_id": "c034a9cf-9310-4156-baa9-f35d94d2742c",
+    "idempotency_key": "e9e783b0-cdba-41cf-b7f7-60d118c4af00",
+    "request_hash": "367c23551ddbc5f8a7593f5919bcf3e52714c1e6d47c988602bf7ec38cbd10ad",
+    "created_at": "2026-11-27T16:38:22.342Z",
+    "delivered_at": "2026-11-27T16:46:15.251Z",
+    "location_id": "lekki",
+    "location_snapshot": {
+      "id": "lekki",
+      "city": "Lagos",
+      "name": "Lekki",
+      "state": "Lagos",
+      "version": 1
+    },
+    "pricing_snapshot": {
+      "feeKobo": 500000,
+      "feeVersion": 2,
+      "gasPriceKobo": 180000,
+      "gasPriceVersion": 1
+    },
+    "operational_review": null,
+    "tracking_version": 8,
+    "reward_discount_kobo": 0,
+    "order_source": "WEB",
+    "assisted_by": null,
+    "assisted_reason": null,
+    "customer_name": "customer",
+    "customer_provisional": false,
+    "visit_link": null,
+    "extra_orders": [],
+    "daily_run": {
+      "order_id": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+      "allocation_state": "fulfilled",
+      "grams": 6000,
+      "supplied_grams": 6000,
+      "run_id": "50fe8bdc-d6fe-4f1d-8a10-29c88203a28e",
+      "state": "active",
+      "trip_id": "f6eb32ae-7a52-45e7-89e6-9b77e7e1e7e5",
+      "supplied_at": "2026-11-27T16:43:20.823Z",
+      "photo_ready": true
+    },
+    "legacy_lpg": false,
+    "gas_lines": [
+      {
+        "id": "a9d458eb-7c31-4da8-aa40-08487181d51f",
+        "order_id": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "capacity_grams": 6000,
+        "grams": 6000,
+        "unit_price_kobo": 180000,
+        "subtotal_kobo": 1080000,
+        "cylinder_id": null,
+        "inspected_by": null,
+        "inspection_note": null,
+        "inspected_at": null,
+        "allowable_grams": null,
+        "pricing_version": 1
+      }
+    ],
+    "attempt": {
+      "id": "44832b62-73f8-404d-bce6-c9a3952be52e",
+      "state": "delivered",
+      "driver_id": "c034a9cf-9310-4156-baa9-f35d94d2742c",
+      "assignment_version": 4,
+      "picked_up_at": "2026-11-27T16:42:41.129Z",
+      "arrived_at": "2026-11-27T16:43:01.867Z",
+      "completed_at": "2026-11-27T16:46:15.251Z"
+    },
+    "driver": {
+      "name": "driver"
+    },
+    "last_update": "2026-11-27T16:46:15.251Z",
+    "gps": {
+      "enabled": false,
+      "status": "unavailable",
+      "eta": null
+    },
+    "manifest": {
+      "items": [],
+      "serials": [],
+      "gas": [
+        {
+          "id": "a9d458eb-7c31-4da8-aa40-08487181d51f",
+          "grams": 6000,
+          "capacity_grams": 6000
+        }
+      ]
+    },
+    "delivery_evidence": [
+      {
+        "kind": "pickup",
+        "detail": {
+          "reason": "Driver started delivery against the office-recorded daily gas allocation",
+          "manifest": {
+            "gas": [
+              {
+                "id": "a9d458eb-7c31-4da8-aa40-08487181d51f",
+                "grams": 6000,
+                "capacity_grams": 6000
+              }
+            ],
+            "items": [],
+            "serials": []
+          }
+        },
+        "created_at": "2026-11-27T16:42:41.129Z"
+      },
+      {
+        "kind": "arrived",
+        "detail": {
+          "reason": "Driver confirms arrival at the assigned address"
+        },
+        "created_at": "2026-11-27T16:43:01.867Z"
+      },
+      {
+        "kind": "handover",
+        "detail": {
+          "codeVerified": false,
+          "collectedKobo": 0,
+          "allItemsHandedOver": true,
+          "refillPhotoVerified": true
+        },
+        "created_at": "2026-11-27T16:46:15.251Z"
+      }
+    ],
+    "items": [],
+    "events": [
+      {
+        "status": "placed",
+        "note": "Order placed; payment remains unverified.",
+        "created_at": "2026-11-27T16:38:22.342Z",
+        "version": 1,
+        "previous_status": null
+      },
+      {
+        "status": "accepted",
+        "note": "Isolated tracking test operation",
+        "created_at": "2026-11-27T16:38:22.376Z",
+        "version": 2,
+        "previous_status": "placed"
+      },
+      {
+        "status": "preparing",
+        "note": "Isolated tracking test operation",
+        "created_at": "2026-11-27T16:38:22.384Z",
+        "version": 3,
+        "previous_status": "accepted"
+      },
+      {
+        "status": "assigned",
+        "note": "Isolated tracking test operation",
+        "created_at": "2026-11-27T16:38:22.391Z",
+        "version": 4,
+        "previous_status": "preparing"
+      },
+      {
+        "status": "assigned",
+        "note": "delivery.pickup: Driver started delivery against the office-recorded daily gas allocation",
+        "created_at": "2026-11-27T16:42:41.129Z",
+        "version": 5,
+        "previous_status": "assigned"
+      },
+      {
+        "status": "out_for_delivery",
+        "note": "Driver started daily weighed gas delivery",
+        "created_at": "2026-11-27T16:42:41.129Z",
+        "version": 6,
+        "previous_status": "assigned"
+      },
+      {
+        "status": "out_for_delivery",
+        "note": "delivery.arrived: Driver confirms arrival at the assigned address",
+        "created_at": "2026-11-27T16:43:01.867Z",
+        "version": 7,
+        "previous_status": "out_for_delivery"
+      },
+      {
+        "status": "delivered",
+        "note": "Refill quantity and photo verified. Paid with purchase credit.",
+        "created_at": "2026-11-27T16:46:15.251Z",
+        "version": 8,
+        "previous_status": "out_for_delivery"
+      }
+    ]
+  },
+  "day": {
+    "id": "50fe8bdc-d6fe-4f1d-8a10-29c88203a28e",
+    "trip_id": "f6eb32ae-7a52-45e7-89e6-9b77e7e1e7e5",
+    "branch_id": "lagos",
+    "driver_id": "c034a9cf-9310-4156-baa9-f35d94d2742c",
+    "vehicle_id": "59f7beab-1321-44ac-817a-330e41af55e2",
+    "opening_grams": 100000,
+    "added_grams": 0,
+    "supplied_grams": 6000,
+    "committed_grams": 0,
+    "state": "active",
+    "version": 3,
+    "scale_reference": "",
+    "opened_by": "ecf719b6-2805-4204-9632-61d672eeb3b5",
+    "opened_at": "2026-11-27T16:38:22.332Z",
+    "closing_grams": null,
+    "variance_grams": null,
+    "closed_by": null,
+    "closed_at": null,
+    "label": "SANDBOX daily vehicle",
+    "capacity_grams": 200000,
+    "driver_name": "driver",
+    "start_odometer": "10",
+    "queued_grams": "0"
+  },
+  "stock": {
+    "grams": 494000,
+    "reserved_grams": 94000
+  },
+  "trip": {
+    "ended_at": null
+  },
+  "refills": [
+    {
+      "readings": [
+        {
+          "afterGrams": 14400,
+          "beforeGrams": 8400
+        }
+      ],
+      "supplied_grams": 6000,
+      "recorded_at": "2026-11-27T16:43:20.823Z"
+    }
+  ],
+  "photos": [
+    {
+      "alt": "Synthetic QA refill: 6 kg added on the scale",
+      "consent": true,
+      "bytes": 1066,
+      "created_at": "2026-11-27T16:46:08.371Z"
+    }
+  ],
+  "legacyLoads": 0,
+  "legacyMeters": 0,
+  "requests": [
+    {
+      "action": "driver.restrict",
+      "status": 200,
+      "at": "2026-11-27T16:42:24.297Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:24.328Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:24.340Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:42:24.348Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:42:24.355Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.678Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.683Z"
+    },
+    {
+      "action": "dispatch.respond",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.693Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 4,
+        "decision": "acknowledged",
+        "operationKey": "6256d770-ce16-4a10-b104-4816e52e85c5"
+      }
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.704Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.709Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.712Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:42:32.716Z",
+      "input": {}
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:42:39.290Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:39.298Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:39.303Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:42:39.305Z",
+      "input": {}
+    },
+    {
+      "action": "driver.depart",
+      "status": 200,
+      "at": "2026-11-27T16:42:41.159Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 4,
+        "manifest": {
+          "items": [],
+          "serials": [],
+          "gas": [
+            {
+              "id": "a9d458eb-7c31-4da8-aa40-08487181d51f",
+              "grams": 6000,
+              "capacity_grams": 6000
+            }
+          ]
+        },
+        "loadConfirmed": true,
+        "operationKey": "e6348280-fc4b-488c-8a8e-d3b506cf5811"
+      }
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:41.170Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:41.174Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:42:41.177Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:42:41.180Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:42:54.290Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:42:54.294Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:42:54.297Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:42:54.300Z",
+      "input": {}
+    },
+    {
+      "action": "delivery.arrived",
+      "status": 200,
+      "at": "2026-11-27T16:43:01.872Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 6,
+        "reason": "Driver confirms arrival at the assigned address",
+        "operationKey": "45610be3-4890-44d8-a93b-f35851112754"
+      }
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:01.882Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:01.887Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:01.889Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:01.892Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:09.291Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:09.296Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:09.299Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:09.301Z",
+      "input": {}
+    },
+    {
+      "action": "daily.refill.record",
+      "status": 200,
+      "at": "2026-11-27T16:43:20.851Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 7,
+        "readings": [
+          {
+            "beforeKg": 8.4,
+            "afterKg": 14.4
+          }
+        ],
+        "operationKey": "b8966e57-fadb-4b6a-8140-e56f40c93481"
+      }
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:20.865Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:20.871Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:20.875Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:20.879Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:24.301Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:24.305Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:24.307Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:24.309Z",
+      "input": {}
+    },
+    {
+      "action": "driver.complete",
+      "status": 409,
+      "at": "2026-11-27T16:43:34.456Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 7,
+        "handover": true,
+        "operationKey": "2767703e-e443-4c48-b8d0-6f29694b0ba1"
+      },
+      "error": "{\"error\":\"Upload an authorised proof photo for this delivery attempt before completion.\",\"code\":\"INVALID_REQUEST\"}"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:39.306Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:39.317Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:39.321Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:39.325Z",
+      "input": {}
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:43:54.318Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:43:54.327Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:43:54.332Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:43:54.337Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:44:09.331Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:44:09.338Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:44:09.343Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:44:09.347Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:44:24.329Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:44:24.335Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:44:24.339Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:44:24.342Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:44:39.347Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:44:39.354Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:44:39.358Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:44:39.361Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:44:54.334Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:44:54.340Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:44:54.344Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:44:54.348Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:45:09.344Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:45:09.350Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:45:09.355Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:45:09.359Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:45:24.342Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:45:24.345Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:45:24.348Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:45:24.350Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:45:39.353Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:45:39.360Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:45:39.366Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:45:39.371Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:45:54.340Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:45:54.345Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:45:54.347Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:45:54.350Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:03.507Z"
+    },
+    {
+      "action": "media",
+      "status": 503,
+      "at": "2026-11-27T16:46:03.518Z",
+      "error": "{\"error\":\"Synthetic first upload unavailable\"}"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:03.529Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:03.534Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:03.537Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:03.540Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.344Z"
+    },
+    {
+      "action": "media",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.375Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.386Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.389Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.392Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:08.395Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:09.352Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:09.357Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:09.360Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:09.363Z",
+      "input": {}
+    },
+    {
+      "action": "driver.complete",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.274Z",
+      "input": {
+        "orderId": "401c5b26-8d3e-4ece-9ed8-c3760e3b2ef6",
+        "version": 7,
+        "handover": true,
+        "operationKey": "2767703e-e443-4c48-b8d0-6f29694b0ba1"
+      }
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.282Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.290Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.294Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.299Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:15.304Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:24.356Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:24.359Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:24.363Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:24.366Z",
+      "input": {}
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:39.355Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:39.358Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:39.362Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:39.364Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:46:54.355Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:46:54.359Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:46:54.362Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:46:54.364Z",
+      "input": {}
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:47:09.358Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:47:09.361Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:47:09.365Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:47:09.367Z",
+      "input": {}
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:47:24.374Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:47:24.377Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:47:24.380Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:47:24.383Z",
+      "input": {}
+    },
+    {
+      "action": "driver.restrict",
+      "status": 200,
+      "at": "2026-11-27T16:47:32.617Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:47:32.635Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:47:32.641Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:47:32.644Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:47:32.647Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:47:47.607Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:47:47.612Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:47:47.616Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:47:47.620Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:48:02.611Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:48:02.616Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:48:02.618Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:48:02.621Z",
+      "input": {}
+    },
+    {
+      "action": "driver.restrict",
+      "status": 200,
+      "at": "2026-11-27T16:48:08.442Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:48:08.448Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:48:08.453Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:48:08.457Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:48:08.460Z",
+      "input": {}
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:48:23.455Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:48:23.458Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:48:23.461Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:48:23.464Z",
+      "input": {}
+    },
+    {
+      "action": "daily.summary",
+      "status": 200,
+      "at": "2026-11-27T16:48:25.686Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:48:38.455Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:48:38.463Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:48:38.467Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:48:38.472Z",
+      "input": {}
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:48:53.455Z"
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:48:53.458Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:48:53.461Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:48:53.463Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:49:08.455Z"
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:49:08.459Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:49:08.462Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:49:08.465Z",
+      "input": {}
+    },
+    {
+      "action": "orders",
+      "status": 200,
+      "at": "2026-11-27T16:49:23.456Z"
+    },
+    {
+      "action": "driver.heartbeat",
+      "status": 200,
+      "at": "2026-11-27T16:49:23.459Z",
+      "input": {}
+    },
+    {
+      "action": "driver.snapshot",
+      "status": 200,
+      "at": "2026-11-27T16:49:23.462Z"
+    },
+    {
+      "action": "notifications.list",
+      "status": 200,
+      "at": "2026-11-27T16:49:23.465Z"
+    }
+  ]
+}

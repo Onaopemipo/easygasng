@@ -40,7 +40,11 @@ If an earlier metered/product trip has open custody, finish its genuine reconcil
 3. Weigh the customer’s cylinder **before filling**. Record its actual scale reading in kg.
 4. Fill the paid amount, then weigh the **same cylinder** again on the same scale. Record its actual after reading. The difference is gas added, so the empty-cylinder tare cancels out; the business does not register the customer’s cylinder. Do not put total cylinder weight into a “gas-only” field.
 5. Tap **Save scale readings**. For multiple cylinders, add a row for each. Their combined increase must equal the paid quantity. Example: before **8.4 kg**, after **14.4 kg** means **6 kg supplied**. If readings differ from the paid amount, check the actual measurements or contact the office; never change evidence just to pass a check.
-6. Take/upload the refill photo with the required consent, then complete delivery. The photo must belong to this visit and be captured after the recorded refill. A photo stored only on the phone is not yet uploaded.
+6. In iOS, describe the refill photo, confirm the customer’s consent and take the photo. Tap **Synchronise Encrypted Proof** to upload it, then **Complete Refill**. If upload fails, retry synchronisation; do not record the same refill again. The photo must belong to this visit and be captured after the recorded refill. A photo stored only on the phone is not yet uploaded.
+
+The iOS **Work** page now offers **Accept and start deliveries**, **Weigh customer refill**, and **Photo and delivery completion**. **Today’s vehicle and gas** shows supplied and expected remaining gas; the office owns opening/closing reconciliation. Earlier metered trip records are separate historical/exception controls, not steps in daily delivery.
+
+If **Waiting for the office** appears, accept the order if appropriate and ask Dispatch to reserve its gas in the order modal. Refresh after the office confirms it. The app then shows **Ready to start** and enables **Start delivery** without a meter, load-confirmation switch or reassignment.
 
 Scale saves currently require a connection. A failed save keeps the entered readings while the screen remains open; reconnect and retry the same save before proceeding to the refill photo. Full offline scale/photo queueing and physical device acceptance remain outside this verified release.
 

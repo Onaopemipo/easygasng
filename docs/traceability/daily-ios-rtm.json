@@ -1,0 +1,325 @@
+{
+  "phase": "iOS daily scale delivery acceptance \u201428 November2026",
+  "scope": "Expo Go58 on EasyGas First Sign-In QA,iOS26.5. Existing DriverWorkspace and actual native encrypted proof SDK; disposable loopback canonical API fixture. No hosted customer delivery or physical gas evidence fabricated.",
+  "parentRequirement": "DAY-05",
+  "requirements": [
+    {
+      "id": "DIO-01",
+      "requirement": "Daily driver acceptance, departure, Home/Work and vehicle views contain no normal meter/load/pickup/code steps",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverLoadReadiness.tsx",
+        "apps/mobile/DriverDeparture.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "packages/business-rules/src/driver-load-readiness.ts",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "apps/mobile/DailyRefill.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills, orders, delivery_attempts, verified_payments, delivery_photos and immutable operation/audit records. Portable weights and photo here are labelled disposable synthetic test evidence.",
+      "securityControl": "Real restricted driver session, actor/branch/current order/attempt/version, payment authority, exact supplied kg, stable operation keys, authenticated private consented proof, retryable encrypted device queue; no runtime permission expansion.",
+      "testFiles": [
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "scripts/preview-ios-daily-delivery.ts",
+        "tests/daily-ios-presentation.test.ts"
+      ],
+      "testIds": [
+        "DAY-IOS-READY",
+        "DAY-IOS-WORK",
+        "DAY-IOS-WORKSPACE",
+        "DAY01",
+        "DAY05",
+        "DAY08",
+        "Actual iOS CUA accept\u2192depart\u2192arrive\u2192scale\u2192gallery\u2192503\u2192retry\u2192complete",
+        "DIO-LABELS"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/ios-daily/server-readback.json",
+        "docs/daily-delivery/evidence/ios-daily/native-components.txt",
+        "docs/daily-delivery/evidence/ios-daily/workspace-components-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/delivered.png",
+        "docs/daily-delivery/evidence/ios-daily/work-actions.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh-after-native.json",
+        "docs/daily-delivery/evidence/ios-daily/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-daily/regression-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/presentation-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/native-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/web-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/ios-export-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/allocation-waiting.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-ready.png",
+        "docs/daily-delivery/evidence/ios-daily/work-overview.png",
+        "docs/daily-delivery/evidence/ios-daily/daily-vehicle.png",
+        "docs/daily-delivery/evidence/ios-daily/upload-retry.png"
+      ],
+      "acceptanceGate": "DIO-G-01",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Expo Go/iOS simulator daily journey, unchanged-version office allocation refresh, corrected Work/vehicle screens,22 scoped regression cases, normal iOS JS export and native/web typechecks pass.",
+      "outstandingWork": "None within bounded simulator scope. Physical camera, new signed/TestFlight release and full offline acceptance remain open in parent DAY-05.",
+      "negativeTests": [
+        "No bulk summary/load form on daily read failure",
+        "Unallocated order cannot start",
+        "Same order version must invalidate cached readiness after daily allocation",
+        "Missing current photo rejects completion",
+        "503 retains encrypted photo for retry",
+        "Wrong actor/branch/current attempt and mismatching supplied quantity rejected by canonical API",
+        "No double gas debit at completion; no repeated refill record"
+      ]
+    },
+    {
+      "id": "DIO-02",
+      "requirement": "Record portable-scale before/after kg for exactly the paid amount with one physical stock debit",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverLoadReadiness.tsx",
+        "apps/mobile/DriverDeparture.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "packages/business-rules/src/driver-load-readiness.ts",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "apps/mobile/DailyRefill.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills, orders, delivery_attempts, verified_payments, delivery_photos and immutable operation/audit records. Portable weights and photo here are labelled disposable synthetic test evidence.",
+      "securityControl": "Real restricted driver session, actor/branch/current order/attempt/version, payment authority, exact supplied kg, stable operation keys, authenticated private consented proof, retryable encrypted device queue; no runtime permission expansion.",
+      "testFiles": [
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "scripts/preview-ios-daily-delivery.ts",
+        "tests/daily-ios-presentation.test.ts"
+      ],
+      "testIds": [
+        "DAY-IOS-READY",
+        "DAY-IOS-WORK",
+        "DAY-IOS-WORKSPACE",
+        "DAY01",
+        "DAY05",
+        "DAY08",
+        "Actual iOS CUA accept\u2192depart\u2192arrive\u2192scale\u2192gallery\u2192503\u2192retry\u2192complete",
+        "DIO-LABELS"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/ios-daily/server-readback.json",
+        "docs/daily-delivery/evidence/ios-daily/native-components.txt",
+        "docs/daily-delivery/evidence/ios-daily/workspace-components-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/delivered.png",
+        "docs/daily-delivery/evidence/ios-daily/work-actions.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh-after-native.json",
+        "docs/daily-delivery/evidence/ios-daily/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-daily/regression-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/presentation-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/native-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/web-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/ios-export-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/allocation-waiting.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-ready.png",
+        "docs/daily-delivery/evidence/ios-daily/work-overview.png",
+        "docs/daily-delivery/evidence/ios-daily/daily-vehicle.png",
+        "docs/daily-delivery/evidence/ios-daily/upload-retry.png"
+      ],
+      "acceptanceGate": "DIO-G-02",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Expo Go/iOS simulator daily journey, unchanged-version office allocation refresh, corrected Work/vehicle screens,22 scoped regression cases, normal iOS JS export and native/web typechecks pass.",
+      "outstandingWork": "None within bounded simulator scope. Physical camera, new signed/TestFlight release and full offline acceptance remain open in parent DAY-05.",
+      "negativeTests": [
+        "No bulk summary/load form on daily read failure",
+        "Unallocated order cannot start",
+        "Same order version must invalidate cached readiness after daily allocation",
+        "Missing current photo rejects completion",
+        "503 retains encrypted photo for retry",
+        "Wrong actor/branch/current attempt and mismatching supplied quantity rejected by canonical API",
+        "No double gas debit at completion; no repeated refill record"
+      ]
+    },
+    {
+      "id": "DIO-03",
+      "requirement": "Current consented native photo upload,503 retry, blocked missing proof and server-confirmed delivery completion",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverLoadReadiness.tsx",
+        "apps/mobile/DriverDeparture.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "packages/business-rules/src/driver-load-readiness.ts",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "apps/mobile/DailyRefill.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills, orders, delivery_attempts, verified_payments, delivery_photos and immutable operation/audit records. Portable weights and photo here are labelled disposable synthetic test evidence.",
+      "securityControl": "Real restricted driver session, actor/branch/current order/attempt/version, payment authority, exact supplied kg, stable operation keys, authenticated private consented proof, retryable encrypted device queue; no runtime permission expansion.",
+      "testFiles": [
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "scripts/preview-ios-daily-delivery.ts",
+        "tests/daily-ios-presentation.test.ts"
+      ],
+      "testIds": [
+        "DAY-IOS-READY",
+        "DAY-IOS-WORK",
+        "DAY-IOS-WORKSPACE",
+        "DAY01",
+        "DAY05",
+        "DAY08",
+        "Actual iOS CUA accept\u2192depart\u2192arrive\u2192scale\u2192gallery\u2192503\u2192retry\u2192complete",
+        "DIO-LABELS"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/ios-daily/server-readback.json",
+        "docs/daily-delivery/evidence/ios-daily/native-components.txt",
+        "docs/daily-delivery/evidence/ios-daily/workspace-components-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/delivered.png",
+        "docs/daily-delivery/evidence/ios-daily/work-actions.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh-after-native.json",
+        "docs/daily-delivery/evidence/ios-daily/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-daily/regression-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/presentation-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/native-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/web-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/ios-export-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/allocation-waiting.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-ready.png",
+        "docs/daily-delivery/evidence/ios-daily/work-overview.png",
+        "docs/daily-delivery/evidence/ios-daily/daily-vehicle.png",
+        "docs/daily-delivery/evidence/ios-daily/upload-retry.png"
+      ],
+      "acceptanceGate": "DIO-G-03",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Expo Go/iOS simulator daily journey, unchanged-version office allocation refresh, corrected Work/vehicle screens,22 scoped regression cases, normal iOS JS export and native/web typechecks pass.",
+      "outstandingWork": "None within bounded simulator scope. Physical camera, new signed/TestFlight release and full offline acceptance remain open in parent DAY-05.",
+      "negativeTests": [
+        "No bulk summary/load form on daily read failure",
+        "Unallocated order cannot start",
+        "Same order version must invalidate cached readiness after daily allocation",
+        "Missing current photo rejects completion",
+        "503 retains encrypted photo for retry",
+        "Wrong actor/branch/current attempt and mismatching supplied quantity rejected by canonical API",
+        "No double gas debit at completion; no repeated refill record"
+      ]
+    },
+    {
+      "id": "DIO-04",
+      "requirement": "Fresh office allocation at unchanged order version invalidates native readiness cache, preserving driver/branch authority and existing metered history",
+      "implementationFiles": [
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DriverLoadReadiness.tsx",
+        "apps/mobile/DriverDeparture.tsx",
+        "apps/mobile/BulkLPG.tsx",
+        "apps/mobile/MobileNextFieldWork.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx",
+        "packages/business-rules/src/driver-load-readiness.ts",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "apps/mobile/DailyRefill.tsx",
+        "packages/business-rules/src/driver-presentation.ts"
+      ],
+      "dataSource": "Canonical daily_delivery_runs/allocations/refills, orders, delivery_attempts, verified_payments, delivery_photos and immutable operation/audit records. Portable weights and photo here are labelled disposable synthetic test evidence.",
+      "securityControl": "Real restricted driver session, actor/branch/current order/attempt/version, payment authority, exact supplied kg, stable operation keys, authenticated private consented proof, retryable encrypted device queue; no runtime permission expansion.",
+      "testFiles": [
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/dispatch-driver-photos.test.ts",
+        "scripts/preview-ios-daily-delivery.ts",
+        "tests/daily-ios-presentation.test.ts"
+      ],
+      "testIds": [
+        "DAY-IOS-READY",
+        "DAY-IOS-WORK",
+        "DAY-IOS-WORKSPACE",
+        "DAY01",
+        "DAY05",
+        "DAY08",
+        "Actual iOS CUA accept\u2192depart\u2192arrive\u2192scale\u2192gallery\u2192503\u2192retry\u2192complete",
+        "DIO-LABELS"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/ios-daily/server-readback.json",
+        "docs/daily-delivery/evidence/ios-daily/native-components.txt",
+        "docs/daily-delivery/evidence/ios-daily/workspace-components-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/delivered.png",
+        "docs/daily-delivery/evidence/ios-daily/work-actions.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh.json",
+        "docs/daily-delivery/evidence/ios-daily/allocation-refresh-after-native.json",
+        "docs/daily-delivery/evidence/ios-daily/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-daily/regression-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/presentation-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/native-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/web-types.txt",
+        "docs/daily-delivery/evidence/ios-daily/ios-export-final.txt",
+        "docs/daily-delivery/evidence/ios-daily/allocation-waiting.png",
+        "docs/daily-delivery/evidence/ios-daily/allocation-ready.png",
+        "docs/daily-delivery/evidence/ios-daily/work-overview.png",
+        "docs/daily-delivery/evidence/ios-daily/daily-vehicle.png",
+        "docs/daily-delivery/evidence/ios-daily/upload-retry.png"
+      ],
+      "acceptanceGate": "DIO-G-04",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Expo Go/iOS simulator daily journey, unchanged-version office allocation refresh, corrected Work/vehicle screens,22 scoped regression cases, normal iOS JS export and native/web typechecks pass.",
+      "outstandingWork": "None within bounded simulator scope. Physical camera, new signed/TestFlight release and full offline acceptance remain open in parent DAY-05.",
+      "negativeTests": [
+        "No bulk summary/load form on daily read failure",
+        "Unallocated order cannot start",
+        "Same order version must invalidate cached readiness after daily allocation",
+        "Missing current photo rejects completion",
+        "503 retains encrypted photo for retry",
+        "Wrong actor/branch/current attempt and mismatching supplied quantity rejected by canonical API",
+        "No double gas debit at completion; no repeated refill record"
+      ]
+    }
+  ],
+  "productionDecision": "NO-GO \u2014 original production/provider/import/retention/native physical and signed-device holds remain",
+  "coverage": {
+    "requirements": 4,
+    "implemented": 4,
+    "verified": 4,
+    "partial": 0,
+    "excluded": 0,
+    "gates": 4,
+    "gatesPassed": 4
+  },
+  "gates": [
+    {
+      "id": "DIO-G-01",
+      "requirement": "DIO-01",
+      "status": "PASSED"
+    },
+    {
+      "id": "DIO-G-02",
+      "requirement": "DIO-02",
+      "status": "PASSED"
+    },
+    {
+      "id": "DIO-G-03",
+      "requirement": "DIO-03",
+      "status": "PASSED"
+    },
+    {
+      "id": "DIO-G-04",
+      "requirement": "DIO-04",
+      "status": "PASSED"
+    }
+  ],
+  "limits": [
+    "Simulator gallery selection is not physical camera capture.",
+    "No new signed/TestFlight binary.",
+    "Current scale saves require connectivity; full offline scale/photo queueing acceptance remains open."
+  ],
+  "diagnostics": [
+    "reproduced-native-gaps.txt retains the two pre-repair renderer failures.",
+    "workspace-components.txt retains a broad native-next harness compile failure on unrelated react-native-maps host shims. That broad suite is not claimed passed; focused real Work components and actual iOS screens were executed.",
+    "ios-export.txt retains an interrupted root-level npx invocation; final export uses the installed mobile SDK and normal entry."
+  ]
+}

@@ -1,4 +1,5 @@
 import { ScreenModal } from "./ScreenCanvas";
+import {driverAcceptedAssignmentNotice} from "../../packages/business-rules/src/driver-presentation";
 import React, { useEffect, useRef, useState } from "react";
 import { AppState, Platform, ScrollView, View } from "react-native";
 import * as Notifications from "expo-notifications";
@@ -64,7 +65,9 @@ export default function DriverAssignmentAlerts({
   const [alert, setAlert] = useState<AssignmentAlert | "test" | null>(null);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
-  const acceptedVisit = useRef<{ orderId: string; attemptId: string } | null>(null);
+  const acceptedVisit = useRef<{ orderId: string; attemptId: string } | null>(
+    null,
+  );
   const [busy, setBusy] = useState(false);
   const seen = useRef(new Set<string>());
   const alive = useRef(false),
@@ -346,10 +349,11 @@ export default function DriverAssignmentAlerts({
       });
       if (!alive.current || seq !== generation.current) return;
       setAlert(null);
-      acceptedVisit.current = { orderId: current.id, attemptId: current.attempt.id };
-      setNotice(
-        "Order accepted. Pickup and delivery are still separate steps.",
-      );
+      acceptedVisit.current = {
+        orderId: current.id,
+        attemptId: current.attempt.id,
+      };
+      setNotice(driverAcceptedAssignmentNotice(current));
       onReview(current);
       try {
         await onRefresh();
@@ -419,11 +423,16 @@ export default function DriverAssignmentAlerts({
           />
         </Card>
       )}
-      {notice && orders.some((order) =>
-        order.id === acceptedVisit.current?.orderId &&
-        order.attempt?.id === acceptedVisit.current?.attemptId &&
-        order.status === "assigned" && order.attempt?.state === "assigned"
-      ) ? <Copy>{notice}</Copy> : null}
+      {notice &&
+      orders.some(
+        (order) =>
+          order.id === acceptedVisit.current?.orderId &&
+          order.attempt?.id === acceptedVisit.current?.attemptId &&
+          order.status === "assigned" &&
+          order.attempt?.state === "assigned",
+      ) ? (
+        <Copy>{connected ? driverAcceptedAssignmentNotice(orders.find(order=>order.id===acceptedVisit.current?.orderId)??{}) : notice}</Copy>
+      ) : null}
       {!alert && error ? <Copy>{error}</Copy> : null}
       <ScreenModal
         visible={alert !== null}

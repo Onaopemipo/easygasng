@@ -6,6 +6,16 @@ export function driverLoadScope(order: any, tripId: string | null) {
     order.branch_id,
     order.tracking_version,
     tripId,
+    order.legacy_lpg === true,
+    order.daily_run
+      ? [
+          order.daily_run.run_id,
+          order.daily_run.state,
+          order.daily_run.allocation_state,
+          order.daily_run.grams,
+          order.daily_run.supplied_grams,
+        ]
+      : null,
     (order.gas_lines ?? []).map((line: any) => [line.id, line.grams]),
   ]);
 }

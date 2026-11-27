@@ -12,24 +12,33 @@ export default function DriverDeparture({
 }) {
   const starting = useRef(false);
   const [confirmed, setConfirmed] = useState(false);
+  const needsPickupConfirmation =
+    !order.daily_run && (!order.gas_lines?.length || order.legacy_lpg === true);
   return (
     <View style={{ gap: 12 }}>
-      {!order.daily_run&&<View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
-        <Switch
-          accessibilityLabel="I checked the load for this order"
-          value={confirmed}
-          disabled={disabled}
-          onValueChange={setConfirmed}
-        />
-        <View style={{ flex: 1 }}>
-          <Copy>I checked the load for this order.</Copy>
+      {needsPickupConfirmation && (
+        <View style={{ flexDirection: "row", gap: 10, alignItems: "center" }}>
+          <Switch
+            accessibilityLabel="I checked the load for this order"
+            value={confirmed}
+            disabled={disabled}
+            onValueChange={setConfirmed}
+          />
+          <View style={{ flex: 1 }}>
+            <Copy>I checked the load for this order.</Copy>
+          </View>
         </View>
-      </View>}
+      )}
       <Button
         label="Start delivery"
-        disabled={disabled || (!order.daily_run && !confirmed)}
+        disabled={disabled || (needsPickupConfirmation && !confirmed)}
         onPress={async () => {
-          if (starting.current || disabled || (!order.daily_run && !confirmed)) return;
+          if (
+            starting.current ||
+            disabled ||
+            (needsPickupConfirmation && !confirmed)
+          )
+            return;
           starting.current = true;
           try {
             await onStart({

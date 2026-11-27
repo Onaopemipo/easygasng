@@ -13,3 +13,5 @@
 | DAY-07 | Retain legacy metered history and operational holds, migration/release guard, manuals and verified traceability | VERIFIED_COMPLETE | DAY-G-07 | No outstanding bounded release/manual work. Existing production NO-GO, actual operations/provider and signed-device gates remain separately open. |
 
 See the [machine matrix](daily-delivery-rtm.json) for sources, controls, executed tests and gates. [Manual](../user-manual/daily-delivery.md), [report](../daily-delivery/README.md). Start Day/old-form defect was reopened, repaired and verified: [live recovery](../daily-delivery/evidence/start-day-fix/hosted-recovery.json), [browser proof](../daily-delivery/evidence/start-day-fix/order-ready.png). No new signed/TestFlight binary. Actual physical driver refill is not fabricated; original holds remain.
+
+Daily iOS acceptance: [DIO matrix](daily-ios-rtm.md) verifies4/4 bounded simulator requirements. Actual acceptance, scale, photo retry and delivery completion pass; stale Work shortcuts and allocation readiness repaired. DAY-05 remains partial for physical camera/signed-device/offline acceptance, retained in its denominator.

@@ -51,7 +51,7 @@ export function driverAssignmentTone(
     ? "green"
     : ["In progress", "Picked up"].includes(label)
       ? "blue"
-      : ["Awaiting pickup", "Assigned"].includes(label)
+      : ["Awaiting pickup", "Assigned", "Ready to start", "Waiting for office"].includes(label)
         ? "amber"
         : "neutral";
 }
@@ -99,12 +99,27 @@ export function driverNextAssignment<
   );
 }
 export function driverNextAction(order: any, decision?: string) {
-  const label = assignmentLabel(order.status, order.attempt?.state, decision);
+  const label = driverOrderLabel(order, decision);
   return label === "Assigned"
     ? "Accept order"
-    : label === "Awaiting pickup"
+    : label === "Waiting for office" ? "Review daily allocation"
+    : label === "Awaiting pickup" || label === "Ready to start"
       ? "Start delivery"
       : label === "At destination"
         ? "Record supply and photo"
         : "Continue delivery";
+}
+
+export function driverOrderLabel(order:any, decision?:string) {
+  const label=assignmentLabel(order.status,order.attempt?.state,decision);
+  if(label==='Awaiting pickup' && order.gas_lines?.length && order.legacy_lpg!==true)
+    return order.daily_run?.state==='active' && order.daily_run?.allocation_state==='allocated' ? 'Ready to start' : 'Waiting for office';
+  return label;
+}
+export function driverAcceptedAssignmentNotice(order:any) {
+  if(order.gas_lines?.length && order.legacy_lpg!==true)
+    return driverOrderLabel(order,'acknowledged')==='Ready to start'
+      ? 'Order accepted. Tap Start delivery when you are ready to leave.'
+      : 'Order accepted. Refresh the order after the office reserves its gas for today’s delivery.';
+  return 'Order accepted. Review the existing pickup details before starting delivery.';
 }

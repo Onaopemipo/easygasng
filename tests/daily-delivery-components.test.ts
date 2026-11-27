@@ -19,11 +19,11 @@ await fs.writeFile(
 );
 await fs.writeFile(
   path.join(tmp, "native.tsx"),
-  `import React from 'react';export const View=p=><view {...p}/>;export const Button=p=><button {...p}/>;export const Card=p=><card {...p}/>;export const Copy=p=><text {...p}/>;export const Title=p=><title {...p}/>;export const TextInput=p=><input {...p}/>;export const FieldCaption=p=><label {...p}/>;export const useTheme=()=>({colors:{}});export const randomUUID=()=>crypto.randomUUID();`,
+  `import React from 'react';export const View=p=><view {...p}/>;export const Switch=p=><switch {...p}/>;export const Pressable=p=><pressable {...p}/>;export const NextIntro=p=><intro {...p}/>;export const NextText=p=><text {...p}/>;export const NextCard=p=><card {...p}/>;export const NextList=p=><list {...p}/>;export const NextRow=p=><row {...p}/>;export const NextButton=p=><button {...p}/>;export const NextIcon=p=><icon {...p}/>;export const ContextSheet=p=><sheet {...p}/>;export const initials=()=>"QA";export const Feedback=p=><feedback {...p}/>;export const NativeForm=p=><legacyform {...p}/>;export const Button=p=><button {...p}/>;export const Card=p=><card {...p}/>;export const Copy=p=><text {...p}/>;export const Title=p=><title {...p}/>;export const TextInput=p=><input {...p}/>;export const FieldCaption=p=><label {...p}/>;export const useTheme=()=>({colors:{}});export const randomUUID=()=>crypto.randomUUID();`,
 );
 await build({
   stdin: {
-    contents: `export {default as Day} from './apps/web/components/daily-delivery';export {default as Refill} from './apps/web/components/daily-refill';export {default as NativeRefill} from './apps/mobile/DailyRefill';`,
+    contents: `export {default as Day} from './apps/web/components/daily-delivery';export {default as Refill} from './apps/web/components/daily-refill';export {default as NativeRefill} from './apps/mobile/DailyRefill';export {default as LoadReadiness} from './apps/mobile/DriverLoadReadiness';export {default as Departure} from './apps/mobile/DriverDeparture';export {default as VehicleWork} from './apps/mobile/BulkLPG';export {FieldNextWork,FieldNextHome} from './apps/mobile/MobileNextFieldWork';`,
     resolveDir: process.cwd(),
     loader: "tsx",
   },
@@ -46,7 +46,7 @@ await build({
         b.onResolve(
           {
             filter:
-              /^(react-native|expo-crypto|\.\/CustomerUI|\.\/theme|\.\/typography)$/,
+              /^(react-native|expo-crypto|\.\/CustomerUI|\.\/theme|\.\/typography|\.\/Workflows|\.\/MobileNextUI|\.\/ContextSheet)$/,
           },
           () => ({ path: path.join(tmp, "native.tsx") }),
         );
@@ -54,9 +54,16 @@ await build({
     },
   ],
 });
-const { Day, Refill, NativeRefill } = createRequire(import.meta.url)(
-  path.join(tmp, "test.cjs"),
-);
+const {
+  Day,
+  Refill,
+  NativeRefill,
+  LoadReadiness,
+  Departure,
+  VehicleWork,
+  FieldNextWork,
+  FieldNextHome,
+} = createRequire(import.meta.url)(path.join(tmp, "test.cjs"));
 const text = (t: any) => JSON.stringify(t.toJSON());
 const order = {
   id: "ORDER",
@@ -445,5 +452,155 @@ test("DAY-UI-SETUP capacity is visible and invalid opening weights never reauthe
     globalThis.FormData = Original;
     if (t) await act(async () => t.unmount());
     delete (globalThis as any).dailyAPI;
+  }
+});
+
+test("DAY-IOS-READY a newly reserved daily order reruns readiness at the same order version without requesting old bulk load evidence", async () => {
+  let t: any;
+  const changes: any[] = [],
+    calls: string[] = [];
+  const api = async (a: string) => {
+      calls.push(a);
+      return { enabled: true, loads: [] };
+    },
+    onChange = (r: any) => changes.push(r),
+    base = {
+      id: "ORDER",
+      driver_id: "D",
+      branch_id: "lagos",
+      tracking_version: 7,
+      gas_lines: [{ id: "G", grams: 6000 }],
+      legacy_lpg: false,
+    };
+  try {
+    await act(async () => {
+      t = create(
+        React.createElement(LoadReadiness, {
+          api,
+          order: base,
+          tripId: "T",
+          onChange,
+          onReviewLoad() {},
+        }),
+      );
+    });
+    assert.doesNotMatch(
+      text(t),
+      /calibrat|meter reading|measured load confirmation|Open vehicle gas load/,
+    );
+    await act(async () =>
+      t.update(
+        React.createElement(LoadReadiness, {
+          api,
+          order: {
+            ...base,
+            daily_run: {
+              run_id: "RUN",
+              state: "active",
+              allocation_state: "allocated",
+              grams: 6000,
+              supplied_grams: 0,
+            },
+          },
+          tripId: "T",
+          onChange,
+          onReviewLoad() {},
+        }),
+      ),
+    );
+    assert.equal(changes.at(-1).ready, true);
+    assert(!calls.includes("bulk.summary"));
+    assert.equal(t.toJSON(), null);
+  } finally {
+    if (t) await act(async () => t.unmount());
+  }
+});
+
+test("DAY-IOS-WORK daily read loading/failure never mounts legacy meter/load forms, retries show daily vehicle and departure is one tap", async () => {
+  let t: any;
+  const calls: string[] = [];
+  let reject: any;
+  const api = (a: string) => {
+    calls.push(a);
+    return new Promise((resolve, no) => {
+      reject = no;
+    });
+  };
+  try {
+    await act(async () => {
+      t = create(React.createElement(VehicleWork, { api }));
+    });
+    assert.deepEqual(calls, ["daily.summary"]);
+    assert.doesNotMatch(text(t), /Bulk LPG custody|measured load|meter/);
+    await act(async () => reject(Error("Network down")));
+    assert.match(text(t), /Network down|Could not refresh/);
+    assert.doesNotMatch(text(t), /Bulk LPG custody|measured load|meter/);
+    await act(async () => t.unmount());
+    const start: any[] = [];
+    await act(async () => {
+      t = create(
+        React.createElement(Departure, {
+          order: {
+            id: "ORDER",
+            tracking_version: 7,
+            daily_run: { state: "active" },
+            manifest: { gas: [] },
+          },
+          disabled: false,
+          onStart: (x: any) => start.push(x),
+        }),
+      );
+    });
+    assert.equal(t.root.findAllByType("switch").length, 0);
+    const button = t.root.findByType("button");
+    assert.equal(button.props.disabled, false);
+    await act(async () => button.props.onPress());
+    assert.equal(start.length, 1);
+  } finally {
+    if (t) await act(async () => t.unmount());
+  }
+});
+
+test("DAY-IOS-WORKSPACE daily home and Work overview/actions omit meter, inspected pickup, customer code and driver reconciliation shortcuts", async () => {
+  let t: any;
+  const props = {
+    role: "driver",
+    data: {
+      profile: { branch_name: "Lagos" },
+      metrics: { newAssignments: 1, inProgress: 0 },
+    },
+    connected: true,
+    navigate() {},
+    availability: true,
+    onAvailability() {},
+  };
+  try {
+    await act(async () => {
+      t = create(React.createElement(FieldNextHome, props));
+    });
+    assert.match(text(t), /office prepares today/);
+    assert.doesNotMatch(text(t), /Start a suitable vehicle trip/);
+    await act(async () => t.unmount());
+    await act(async () => {
+      t = create(React.createElement(FieldNextWork, props));
+    });
+    assert.match(text(t), /Weigh customer refill/);
+    assert.doesNotMatch(
+      text(t),
+      /Inspected pickup|Metered dispensing|Customer code|Start trip|Returns and end trip/,
+    );
+    const actions = t.root
+      .findAllByType("pressable")
+      .find((b: any) => b.props.accessibilityLabel === "Actions");
+    assert(actions);
+    await act(async () => actions.props.onPress());
+    assert.match(text(t), /Record scale refill/);
+    assert.match(text(t), /Upload photo and complete delivery/);
+    assert.doesNotMatch(
+      text(t),
+      /Acknowledge bulk load|metered|inspected pickup|Declare returned custody|End reconciled trip|Start a trip/,
+    );
+  } finally {
+    if (t) await act(async () => t.unmount());
   }
 });
