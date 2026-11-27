@@ -17,7 +17,7 @@ Open **Dispatch → Today’s deliveries**. Choose the driver and vehicle (each 
 
 Start the day once. Incoming orders use this same vehicle throughout the day. You can also open the daily setup card within a gas order’s **Overview**, without closing the order modal. Existing order reservations that fit are attached automatically; other orders can be assigned when gas is available. Actual available stock and vehicle capacity remain enforced.
 
-If an earlier metered/product trip has open custody, finish its genuine reconciliation before starting the new day. Expand **Branch setup & earlier vehicle trips** for those management actions. Existing measurements are never invented, converted or erased. If a trip has old metered gas history, close that trip before using a daily run.
+If an earlier metered/product trip has open custody, finish its genuine reconciliation before starting the new day. Expand **Branch setup & earlier vehicle trips** for those management actions. Existing measurements are never invented, converted or erased. A current trip can be reused once all earlier custody is genuinely reconciled; its history remains unchanged.
 
 ## Take and assign orders — office/customer
 
@@ -35,6 +35,8 @@ If an earlier metered/product trip has open custody, finish its genuine reconcil
 4. Fill the paid amount, then weigh the **same cylinder** again on the same scale. Record its actual after reading. The difference is gas added, so the empty-cylinder tare cancels out; the business does not register the customer’s cylinder. Do not put total cylinder weight into a “gas-only” field.
 5. Tap **Save scale readings**. For multiple cylinders, add a row for each. Their combined increase must equal the paid quantity. Example: before **8.4 kg**, after **14.4 kg** means **6 kg supplied**. If readings differ from the paid amount, check the actual measurements or contact the office; never change evidence just to pass a check.
 6. Take/upload the refill photo with the required consent, then complete delivery. The photo must belong to this visit and be captured after the recorded refill. A photo stored only on the phone is not yet uploaded.
+
+Scale saves currently require a connection. A failed save keeps the entered readings while the screen remains open; reconnect and retry the same save before proceeding to the refill photo. Full offline scale/photo queueing and physical device acceptance remain outside this verified release.
 
 Measured supply reduces physical stock immediately. Completing the photo/order cannot deduct that gas a second time. Do not cancel an order to release gas that has already been supplied; contact the office for proper review.
 

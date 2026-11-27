@@ -367,7 +367,7 @@ export async function dailyDelivery(
       trip &&
       (await one(
         tx,
-        "SELECT id FROM bulk_lpg_loads WHERE trip_id=$1 UNION ALL SELECT id FROM vehicle_product_loads WHERE trip_id=$1 AND state<>'reconciled'",
+        "SELECT id FROM bulk_lpg_loads WHERE trip_id=$1 AND state<>'reconciled' UNION ALL SELECT id FROM vehicle_product_loads WHERE trip_id=$1 AND state<>'reconciled'",
         [trip.id],
       ))
     )

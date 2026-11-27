@@ -14,16 +14,18 @@ Scope changes and operational details:
 - One active run per branch. Multiple orders per run; physical gas is reserved once, debited on actual scale supply, and never debited again at delivery completion.
 - Added gas is an increment, not an edited opening weight. Closed measurements and histories cannot be rewritten.
 - Only unsupplied ordinary orders can carry forward with payment/reservation retained. Complete/cancel same-visit extras first; resolve actual mixed product returns separately.
-- Earlier trips are not automatically converted. Reconcile and end existing metered trips before opening a daily run on that vehicle.
+- Earlier trips are not automatically converted. Reconcile any open metered custody before opening a daily run; an existing trip can be reused without rewriting its reconciled history.
 - Routine notes remain optional; explanations for a measured discrepancy remain required.
 - Existing field-operation gates stay enforced. Doorstep amendment/COD/real-provider settings are not automatically enabled.
 
 The implementation was developed in an isolated worktree from `81d322a`, with the existing mobile workspace fixes preserved as prerequisites. No unrelated root working-tree edits are discarded. See the machine-readable matrix for current exact coverage and outstanding acceptance.
 
-## Demo release
+## Demo release and limits
 
-Published to https://easygas-client-demo.vercel.app from source `9a97b03`. Vercel deployment `dpl_Fz22Xpaz5CPTAiiQFS3o4nNk1MKg` is READY; downloaded source archive matched505/505 shipped files. Shared schema086 and all existing read-only gates pass. The public demo health route is ready; daily operations reject unauthenticated requests. A follow-up strengthens runtime health to require086 explicitly; its deployment is recorded in the final release evidence.
+Published to https://easygas-client-demo.vercel.app. Latest deployment/source commit and downloaded-source verification are recorded in [deployment evidence](evidence/deployment.json) and [source evidence](evidence/source-verification.json). All505 uploaded source files matched the tested release archive. Public demo health and authentication-denial checks pass; shared read-only schema gates082–086 pass. No hosted opening/closing/refill measurements or operational settings were invented or changed.
 
-Coverage:7/7 implementation,6/7 verification,5/5 critical server controls,6/7 gates. Native physical acceptance remains partial. No new TestFlight binary was built; older installed binaries do not contain the scale forms. Use the updated mobile source/preview for this workflow until a new signed release is produced.
+The browser completed office opening → assignment (modal stayed open) → driver acceptance/departure/arrival →6kg scale supply → actual private PNG upload →delivery →94kg office close/trip end. Daily office buttons now wait for actual driver start/refill/photo. Background refresh preserves entered closing figures; failed reads disable saving. Earlier setup/trip management is expandable.
 
-Final usability checks: daily office buttons now say Awaiting driver start/refill/photo until authoritative evidence permits the next action. Background day refresh updates the expected balance while preserving the same closing form and entered measurements; failed reads disable saving. Driver/vehicle choices refresh only on explicit/context refresh. Earlier vehicle setup is expandable. The source archive and latest deployment IDs are recorded in `evidence/deployment.json` and `evidence/source-verification.json`.
+An unresolved earlier vehicle load blocks daily start. After genuine reconciliation, the current trip can be reused; executed DAY06 proves the earlier metered load row remains unchanged through a complete daily refill and close.
+
+Coverage:7/7 implementation,6/7 verification,5/5 critical server controls and6/7 gates. Actual native device acceptance remains partial. Current scale saves require connectivity; a failed save keeps readings on the open screen for retry. Full offline scale/photo queueing is not verified. No new TestFlight binary was built: older installed binaries do not contain these scale forms. Use the updated native source/preview or the deployed driver web workspace until a new signed release is produced. Existing production NO-GO and unrelated holds remain.

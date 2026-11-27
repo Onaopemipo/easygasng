@@ -47,12 +47,10 @@ test(
         readings: [{ beforeKg: 8, afterKg: 14 }],
         operationKey: id(),
       };
+      const second={...input,operationKey:id()};
       const both = await Promise.allSettled([
         f.call("driver", "daily.refill.record", input),
-        f.call("driver", "daily.refill.record", {
-          ...input,
-          operationKey: id(),
-        }),
+        f.call("driver", "daily.refill.record", second),
       ]);
       assert.equal(both.filter((x) => x.status === "fulfilled").length, 1);
       assert.equal(both.filter((x) => x.status === "rejected").length, 1);
@@ -74,8 +72,7 @@ test(
         ),
         1,
       );
-      const winning = both[0].status === "fulfilled" ? input : undefined;
-      if (winning)
+      const winning = both[0].status === "fulfilled" ? input : second;
         assert.equal(
           (await f.call("driver", "daily.refill.record", winning)).replayed,
           true,

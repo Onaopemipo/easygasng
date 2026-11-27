@@ -459,3 +459,12 @@ test("DAY05 revoked privileges, foreign driver/branch, premature photo, unfinish
     await f.db.close?.();
   }
 });
+
+test('DAY06 existing trip handover requires real reconciliation, then reuses the vehicle without rewriting earlier metered history',async()=>{
+ const {phonePaymentFixture}=await import('./helpers/phone-order-payment-fixture');const p=await phonePaymentFixture();const f=await setup(p.db,p);try{
+ const trip=await p.start();const load=await p.run('inventory','bulk.load.issue',{tripId:trip.id,meterId:p.meter.id,grams:6000,meterReadingGrams:100000,orderIds:[],reason:'Synthetic earlier load'});await p.run('driver','bulk.load.acknowledge',{loadId:load.id,version:1,returnGrams:6000,meterReadingGrams:100000,reason:'Synthetic earlier weight confirmed'});
+ const start={driverId:f.actors.driver.id,vehicleId:p.vehicle.id,openingKg:20};await assert.rejects(()=>f.run('owner','daily.start',start),/Reconcile.*custody/);
+ await p.run('driver','bulk.return.declare',{loadId:load.id,version:2,returnGrams:6000,reason:'Synthetic actual earlier load returned'});await p.run('inventory','bulk.return.receive',{loadId:load.id,version:3,returnGrams:6000,reason:'Synthetic actual earlier return received'});
+ const before=await one(f.db,'SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1',[load.id]);const day=await f.run('owner','daily.start',start);assert.equal((await f.summary()).trip_id,trip.id);const order=await f.make();await f.assign(order);const c=await f.arrive(order);await f.run('driver','daily.refill.record',{orderId:order.id,version:c.tracking_version,readings:[{beforeKg:8,afterKg:14}]});const driver=await actor(f.db,f.actors.driver.token);await f.db.transaction(tx=>attachDeliveryPhoto(tx,driver,order.id,Buffer.from([1,2,3,4,5,6,7,8,9,10,11,12]),'Synthetic daily refill evidence',true,new Date().toISOString()));await f.run('driver','driver.complete',{orderId:order.id,version:c.tracking_version,handover:true});await f.run('owner','daily.close',{runId:day.id,version:Number((await f.summary()).version),kg:14,endOdometer:125});assert.deepEqual((await one(f.db,'SELECT to_jsonb(l) snapshot FROM bulk_lpg_loads l WHERE id=$1',[load.id]))?.snapshot,before?.snapshot);assert.equal(Number((await one(f.db,"SELECT grams FROM gas_stock WHERE branch_id='lagos'"))?.grams),494000);
+ }finally{await f.db.close?.();}
+});
