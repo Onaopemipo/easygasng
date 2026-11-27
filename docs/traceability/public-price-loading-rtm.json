@@ -17,7 +17,9 @@
       "securityControls": "Public canonical settings only; private session/cart hydration remains separate; unavailable prices never invented.",
       "testIds": [
         "PRICE-SSR",
-        "PRICE-UI"
+        "PRICE-UI",
+        "PRICE-LOADER",
+        "PRICE-HOME"
       ],
       "acceptanceGate": "PLOAD-G1",
       "status": "VERIFIED_COMPLETE",
@@ -25,10 +27,27 @@
         "docs/public-price-loading/evidence/tests.txt",
         "docs/public-price-loading/evidence/web-types.txt",
         "docs/public-price-loading/evidence/build.txt",
-        "docs/public-price-loading/evidence/before-ssr.json"
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
       ],
-      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
-      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+      "reason": "19 scoped tests, web types/build, exact510-file hosted source verification and actual browser initial/navigation/reload price checks passed.",
+      "outstandingWork": "None in approved price-loading scope. Ordinary route-level page loading remains distinct from the removed repeated price spinners; no whole-app/mobile/production readiness claim.",
+      "negativeTests": [
+        "Other-branch price response rejected",
+        "Older version cannot replace newer cache",
+        "Cache excludes user/token/quote fields",
+        "Failed refresh retains figures and retry works",
+        "Old quote rejected by canonical checkout without stock reservation"
+      ]
     },
     {
       "id": "PLOAD-02",
@@ -47,7 +66,8 @@
       "testIds": [
         "PRICE-CACHE",
         "PRICE-BRANCH",
-        "PRICE-RETRY"
+        "PRICE-RETRY",
+        "PRICE-UI-RETRY"
       ],
       "acceptanceGate": "PLOAD-G2",
       "status": "VERIFIED_COMPLETE",
@@ -55,10 +75,27 @@
         "docs/public-price-loading/evidence/tests.txt",
         "docs/public-price-loading/evidence/web-types.txt",
         "docs/public-price-loading/evidence/build.txt",
-        "docs/public-price-loading/evidence/before-ssr.json"
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
       ],
-      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
-      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+      "reason": "19 scoped tests, web types/build, exact510-file hosted source verification and actual browser initial/navigation/reload price checks passed.",
+      "outstandingWork": "None in approved price-loading scope. Ordinary route-level page loading remains distinct from the removed repeated price spinners; no whole-app/mobile/production readiness claim.",
+      "negativeTests": [
+        "Other-branch price response rejected",
+        "Older version cannot replace newer cache",
+        "Cache excludes user/token/quote fields",
+        "Failed refresh retains figures and retry works",
+        "Old quote rejected by canonical checkout without stock reservation"
+      ]
     },
     {
       "id": "PLOAD-03",
@@ -75,29 +112,145 @@
       "securityControls": "Gas price/fee/policy from one scoped SQL snapshot; existing backend payment/version/coverage controls remain. No setting mutation or migration.",
       "testIds": [
         "PRICE-API",
-        "PRICE-DEPLOY"
+        "PRICE-DEPLOY",
+        "PRICE-CHECKOUT"
       ],
       "acceptanceGate": "PLOAD-G3",
-      "status": "IMPLEMENTED_UNVERIFIED",
+      "status": "VERIFIED_COMPLETE",
       "evidence": [
         "docs/public-price-loading/evidence/tests.txt",
         "docs/public-price-loading/evidence/web-types.txt",
         "docs/public-price-loading/evidence/build.txt",
-        "docs/public-price-loading/evidence/before-ssr.json"
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
       ],
-      "reason": "18 targeted tests, web types and build pass; final hosted browser/source gate pending.",
-      "outstandingWork": "Exact-source demo rollout and hosted first-response/navigation verification pending."
+      "reason": "19 scoped tests, web types/build, exact510-file hosted source verification and actual browser initial/navigation/reload price checks passed.",
+      "outstandingWork": "None in approved price-loading scope. Ordinary route-level page loading remains distinct from the removed repeated price spinners; no whole-app/mobile/production readiness claim.",
+      "negativeTests": [
+        "Other-branch price response rejected",
+        "Older version cannot replace newer cache",
+        "Cache excludes user/token/quote fields",
+        "Failed refresh retains figures and retry works",
+        "Old quote rejected by canonical checkout without stock reservation"
+      ]
     }
   ],
   "coverage": {
     "requirements": 3,
-    "verified": 2,
+    "verified": 3,
     "gates": 3,
-    "gatesPassed": 2,
-    "excluded": 0
+    "gatesPassed": 3,
+    "excluded": 0,
+    "implemented": 3,
+    "criticalRequirements": 2,
+    "criticalVerified": 2,
+    "routes": 5,
+    "routesWithExecutedEvidence": 5
   },
   "productionDecision": "Existing production NO-GO and unrelated holds preserved",
   "changeLog": [
-    "Approved scope: early single loading state for gas price/flat fee; same-branch continuity and canonical checkout verification retained."
+    "Approved scope: early single loading state for gas price/flat fee; same-branch continuity and canonical checkout verification retained.",
+    "cf0031a published to existing demo only;510 source hashes match. Actual initial HTML now includes both figures (previously absent). Navigation and reload retain the pair; browser errors0.19 targeted checks pass; root18-case mirror/type checks pass before additional test-only assertions. No settings/order/payment mutation, migration or new native binary."
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "status": "VERIFIED_COMPLETE",
+      "scope": "Initial response plus actual browser navigation/reload price card"
+    },
+    {
+      "path": "/gas-order",
+      "status": "VERIFIED_COMPLETE",
+      "scope": "Shared full gas form price card server-rendered; bounded price rendering only"
+    },
+    {
+      "path": "/api/catalogue",
+      "status": "VERIFIED_COMPLETE",
+      "scope": "Canonical public catalogue SQL and payload test"
+    },
+    {
+      "path": "/api/gas.catalogue",
+      "status": "VERIFIED_COMPLETE",
+      "scope": "Hosted canonical branch price/fee snapshot GET"
+    },
+    {
+      "path": "/api/checkout",
+      "status": "VERIFIED_COMPLETE",
+      "scope": "Real stale-version handler denial/stock preservation and hosted unauthenticated401; no hosted purchase"
+    }
+  ],
+  "gates": [
+    {
+      "id": "PLOAD-G1",
+      "requirement": "PLOAD-01",
+      "status": "PASSED",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
+      ]
+    },
+    {
+      "id": "PLOAD-G2",
+      "requirement": "PLOAD-02",
+      "status": "PASSED",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
+      ]
+    },
+    {
+      "id": "PLOAD-G3",
+      "requirement": "PLOAD-03",
+      "status": "PASSED",
+      "evidence": [
+        "docs/public-price-loading/evidence/tests.txt",
+        "docs/public-price-loading/evidence/web-types.txt",
+        "docs/public-price-loading/evidence/build.txt",
+        "docs/public-price-loading/evidence/before-ssr.json",
+        "docs/public-price-loading/evidence/candidate-ssr.json",
+        "docs/public-price-loading/evidence/stable-verification.json",
+        "docs/public-price-loading/evidence/deployment.json",
+        "docs/public-price-loading/evidence/source-verification.json",
+        "docs/public-price-loading/evidence/home.jpg",
+        "docs/public-price-loading/evidence/return-home-dom.txt",
+        "docs/public-price-loading/evidence/reload-dom.txt",
+        "docs/public-price-loading/evidence/browser-errors.json",
+        "docs/public-price-loading/evidence/root-tests.txt",
+        "docs/public-price-loading/evidence/root-types.txt"
+      ]
+    }
   ]
 }

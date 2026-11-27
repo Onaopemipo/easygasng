@@ -99,6 +99,11 @@ test("PRICE-SSR real compact price card contains both canonical figures and no l
   assert.match(html, /₦1,800\/kg/);
   assert.match(html, /₦5,000/);
   assert.doesNotMatch(html, /Loading gas price|Loading delivery fee/);
+  const full = server.renderToString(
+    R.createElement(ssr.default, { catalogue: catalogue(gas()), user: null }),
+  );
+  assert.match(full, /₦1,800/);
+  assert.doesNotMatch(full, /Loading gas price/);
 });
 test("PRICE-UI seeded mount and navigation remount do not fetch or flash; stale refresh keeps figures and applies the latest pair", async () => {
   const previous = (globalThis as any).window;
@@ -231,4 +236,56 @@ test("PRICE-HOME server-fed home bypasses cart hydration loader and avoids dupli
     page,
     /dispatch\("testimonials.public", null\).catch\(\(\) => \[\]\)/,
   );
+});
+
+test("PRICE-UI-RETRY a failed background refresh keeps both figures visible and explicit retry replaces them together", async () => {
+  const m = await bundle("failure", req),
+    previous = (globalThis as any).window;
+  let tree: any,
+    calls = 0;
+  (globalThis as any).window = {
+    addEventListener() {},
+    removeEventListener() {},
+    location: { hash: "" },
+  };
+  (globalThis as any).priceQA = {
+    api: async () => {
+      calls++;
+      throw Error("Synthetic network unavailable");
+    },
+  };
+  try {
+    const g = { ...gas(10), fetchedAt: Date.now() - 61000 };
+    await act(async () => {
+      tree = create(
+        React.createElement(m.default, {
+          catalogue: catalogue(g),
+          user: null,
+          compact: true,
+        }),
+      );
+    });
+    assert.equal(calls, 1);
+    assert.match(text(tree), /₦1,800\/kg/);
+    assert.match(text(tree), /₦5,000/);
+    assert.match(text(tree), /Synthetic network unavailable/);
+    assert.doesNotMatch(text(tree), /Loading gas price/);
+    (globalThis as any).priceQA.api = async () => {
+      calls++;
+      return { ...gas(11), priceKobo: 195000, deliveryKobo: 475000 };
+    };
+    const retry = tree.root
+      .findAllByType("button")
+      .find((n: any) => n.children.join("") === "Retry prices");
+    assert.ok(retry);
+    await act(async () => retry.props.onClick());
+    assert.equal(calls, 2);
+    assert.match(text(tree), /₦1,950\/kg/);
+    assert.match(text(tree), /₦4,750/);
+    assert.doesNotMatch(text(tree), /Synthetic network unavailable/);
+  } finally {
+    if (tree) await act(async () => tree.unmount());
+    (globalThis as any).window = previous;
+    delete (globalThis as any).priceQA;
+  }
 });

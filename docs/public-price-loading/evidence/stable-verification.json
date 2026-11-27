@@ -1,0 +1,27 @@
+{
+  "url": "https://easygas-client-demo.vercel.app",
+  "elapsedSeconds": 2.302,
+  "visibleGasPrice": true,
+  "visibleFlatDelivery": true,
+  "priceContext": "secure and home delivery \u20a61,800/kg Gas price \u20a65,000 Flat delivery",
+  "separatePriceLoader": false,
+  "/api/status": {
+    "status": 200,
+    "body": {
+      "status": "ready",
+      "scope": "demo"
+    }
+  },
+  "/api/gas.catalogue?branchId=lagos": {
+    "status": 200,
+    "branchId": "lagos",
+    "priceKobo": 180000,
+    "deliveryKobo": 500000,
+    "priceVersion": 3,
+    "feeVersion": 2
+  },
+  "unauthenticatedCheckout": {
+    "status": 401,
+    "error": "UNAUTHENTICATED"
+  }
+}

@@ -1,3 +1,4 @@
+import { sameNativeQuote } from "../packages/business-rules/src/mobile-next-checkout";
 import test from "node:test";
 import assert from "node:assert/strict";
 import { createPublicGasCache } from "../packages/business-rules/src/public-gas-cache";
@@ -142,6 +143,10 @@ test("PRICE-CHECKOUT cached presentation cannot bypass a new canonical price ver
   try {
     const lines = [{ capacityKg: 6, kg: 6 }],
       q = await f.call("customer", "gas.quote", { lines, locationId: "lekki" });
+    assert.equal(
+      sameNativeQuote({ ...q, fetchedAt: 1 }, { ...q, fetchedAt: 2 }),
+      true,
+    );
     const before = (
       await f.db.query(
         "SELECT grams,reserved_grams FROM gas_stock WHERE branch_id='lagos'",
