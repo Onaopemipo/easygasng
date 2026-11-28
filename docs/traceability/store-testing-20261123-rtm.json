@@ -40,7 +40,8 @@
         "scripts/verify-ios-refresh-20261123.py",
         "docs/ios-testflight-refresh-20261124/store-acceptance.md",
         "scripts/verify-ios-refresh-20261125.py",
-        "scripts/verify-ios-refresh-20261129.py"
+        "scripts/verify-ios-refresh-20261129.py",
+        "tests/ios-release-native-dependencies.test.ts"
       ],
       "testIds": [
         "PR-07",
@@ -101,11 +102,14 @@
         "docs/ios-testflight-refresh-20261129/native-export.txt",
         "docs/ios-testflight-refresh-20261129/source-verification.txt",
         "docs/ios-testflight-refresh-20261129/preflight-validation.txt",
-        "docs/ios-testflight-refresh-20261129/api-status.json"
+        "docs/ios-testflight-refresh-20261129/api-status.json",
+        "docs/ios-testflight-refresh-20261129/dependency-review.json",
+        "docs/ios-testflight-refresh-20261129/expo-doctor.txt",
+        "docs/ios-testflight-refresh-20261129/build6-held-doctor.txt"
       ],
       "acceptanceGate": "STORE23-G01",
       "status": "VERIFIED_COMPLETE",
-      "reason": "197 current native/shared/configuration files match inspected EAS archive.28 release/security/component checks, native types/export and seven source/configuration checks pass. Existing HTTPS API/project/identity and approved encryption/dependency hashes retained.",
+      "reason": "197 inspected upload hashes,30 release/security/component checks, native types/export and source guards pass after explicit asset peer/constants deduplication and invalid config-field repair. Doctor18/20 retains two SDK/static-analysis diagnostics in denominator. Cryptography unchanged under reviewed dependency delta.",
       "testResult": "PASS",
       "outstandingWork": "None for bounded frozen source/configuration; signed artifact, TestFlight processing and wider physical/provider gates remain separate.",
       "previousVerifiedIosBuild3": {
@@ -582,7 +586,7 @@
       "id": "STORE23-G01",
       "description": "Verify source, approved API and build configuration",
       "status": "PASS",
-      "reason": "197 current native/shared/configuration files match inspected EAS archive.28 release/security/component checks, native types/export and seven source/configuration checks pass. Existing HTTPS API/project/identity and approved encryption/dependency hashes retained."
+      "reason": "197 inspected upload hashes,30 release/security/component checks, native types/export and source guards pass after explicit asset peer/constants deduplication and invalid config-field repair. Doctor18/20 retains two SDK/static-analysis diagnostics in denominator. Cryptography unchanged under reviewed dependency delta."
     },
     {
       "id": "STORE23-G02",
@@ -675,6 +679,10 @@
     {
       "date": "2026-11-29",
       "change": "29 November: user authorised new iOS-only signed build/TestFlight upload containing all current daily-scale, assignment, photo/sync and sign-out/map/ordering fixes; preserve existing app/API/internal testers, Android history and all unrelated production holds. Reopened the same four iOS requirements/gates; retain all six stable IDs."
+    },
+    {
+      "date": "2026-11-29",
+      "change": "Build6 finished but was not submitted after cloud diagnostics. Existing asset58.0.21 declared directly, constants unified58.0.16 and invalid config field removed; local-only network safeguards retained.30 checks pass, doctor18/20 with two retained diagnostics; cryptographic implementation/dependencies unchanged."
     }
   ],
   "iosRefresh20261123": {
@@ -742,11 +750,12 @@
     "excluded": 0
   },
   "iosRefresh20261129": {
-    "status": "BUILDING",
+    "status": "REBUILDING_AFTER_NATIVE_PEER_REPAIR",
     "androidChanged": false,
     "evidence": "docs/ios-testflight-refresh-20261129/preflight.json",
     "buildId": "56c65487-68dc-4aab-abae-9cd498f5783f",
     "buildNumber": "6",
-    "packagingCommit": "ee4bfeceebfc609270f8038a8eebf8580e6f89f5"
+    "packagingCommit": "ee4bfeceebfc609270f8038a8eebf8580e6f89f5",
+    "supersededBuildNumber": "6"
   }
 }

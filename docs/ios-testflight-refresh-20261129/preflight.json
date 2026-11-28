@@ -1,6 +1,6 @@
 {
   "date": "2026-11-29",
-  "status": "BUILDING",
+  "status": "PREFLIGHT_PASSED_AFTER_NATIVE_DEPENDENCY_REPAIR",
   "userAuthorised": true,
   "sourceBaseCommit": "5b13beb",
   "sourceFiles": {
@@ -79,7 +79,7 @@
     "apps/mobile/TrackingSummary.tsx": "83b93e268f8e23b19f65b743bcddf66526fee84a8ba293a56026896588c94a13",
     "apps/mobile/VehicleManifest.tsx": "ecb94936a823cfe87b042bf387ebcd0813d207d0814618944fa1c9c8c22680e0",
     "apps/mobile/Workflows.tsx": "1e8cf05c2bb156b4cda402712fc3dc441d67911cd82268ea6af2beef976fdc66",
-    "apps/mobile/app.config.js": "db8edaef0a0bcc09eb9bd2d4316f380ecab390bd9026b913173c90fa93c47562",
+    "apps/mobile/app.config.js": "f8089c368562b0158499deb188549d150444ad72e9ce8de1e7d238cd9375ea92",
     "apps/mobile/app.json": "6951e05fc2e0d8e7ba4e7fc07f791c95dad8541230a5b77a47f7d5038e73eaad",
     "apps/mobile/assets/LICENSE-lucide.txt": "3c57143f22dac950efebf84002e360bba5458c7b90fe583b0667aaaef1a7256e",
     "apps/mobile/assets/app-icon.png": "e73389bf9ce1e0cff8d7b0f72320c37ca9a3ea06c42ffd499618bc321b9e909b",
@@ -104,8 +104,8 @@
     "apps/mobile/metro.config.cjs": "9c7b0ffd94c891934694d9e4073f0e1a10628e55a78b682efdb4b6482232ba49",
     "apps/mobile/mobile-next-icons.json": "e245b65a0a1ac1721d285f29f895528fc4ad4d2a77d5c4e35bc4176062149e19",
     "apps/mobile/offline.ts": "1656f2ecbb09d788ae5ec8ef7fe5131066ff44c1a5d59f529e5f88fe7a331960",
-    "apps/mobile/package-lock.json": "d14cd4f499acbfbf0479c33e7e326641c9807b3e0a5a26241857e2559c2b71bf",
-    "apps/mobile/package.json": "038fabb55d2093af7780e7df4391972e48e6c33a334fee7d4df989d67736e223",
+    "apps/mobile/package-lock.json": "2770f40b24b08ded4c742fa4542ac18538b220f9654bd1d92ac02c133a8da521",
+    "apps/mobile/package.json": "e99a148b9c7c1300a55e86cc4eabb5fa4ed1e80798bbe9d8ffab59a4c14e126a",
     "apps/mobile/plugins/with-local-android-network.js": "f837a45455a608656f3df5ea081126213e45db502d4991d05952c778bac7ff58",
     "apps/mobile/plugins/with-workmanager-room.js": "94d63740e3057341ebe8329630b11a6190dd0e18d17ffa3bbc83dacced5269aa",
     "apps/mobile/surfaces.tsx": "13f6ed10399a1b27a23a42659c683e04de26eb771998de8af3f3624d570e7da2",
@@ -202,7 +202,7 @@
     "packages/business-rules/src/trip-recovery.ts": "6bbc0f63489c9f9fea02c4066994ce44834768ed0e11706bbc2f772f4c394af1",
     "packages/business-rules/src/user-branch.ts": "a763ec35d6bdee91eee06753d69de4684849ea1f9b9064723ed2a3e084b73cd5"
   },
-  "sourceManifestSha256": "077ad6ddefb6f43f860bc86ab02040fc00a3035d15267c3e6315e6b7e6ad2f6d",
+  "sourceManifestSha256": "bd86d031e62aa8157e0c9e7c9c644c09fa0303e55b916b7973c618aa0c124cff",
   "apiOrigin": "https://easygas-client-demo.vercel.app",
   "expoProjectId": "1c2f8055-9c7b-4d6e-bc43-a531544da41b",
   "bundleIdentifier": "com.easygasng.customer",
@@ -211,12 +211,12 @@
   "profile": "production",
   "priorBuildNumber": "5",
   "version": "0.1.0",
-  "expectedNextBuildNumber": "6",
+  "expectedNextBuildNumber": "7",
   "testGroupId": "2ee5b345-71af-4aa0-85d4-816ce27dbb58",
   "testerScope": "Same two existing internal testers; no access expansion",
-  "encryption": "Unchanged field-crypto and dependency manifest/lock versus build5; retain earlier approved classification and stored Apple exemption",
+  "encryption": "Prior approved classification retained under focused dependency review: field crypto and tweetnacl/expo-crypto/secure-store unchanged; existing asset/constants direct selection deduplicated.",
   "preflightTests": {
-    "passed": 28,
+    "passed": 30,
     "failed": 0,
     "skipped": 0,
     "nativeTypecheck": "PASS",
@@ -229,8 +229,23 @@
     "normalEntry": "index.ts"
   },
   "productionDecision": "Existing production NO-GO, physical/signed-device/offline/provider/import/retain-all holds preserved; this is internal distribution only",
-  "buildId": "56c65487-68dc-4aab-abae-9cd498f5783f",
-  "buildNumber": "6",
-  "packagingCommit": "ee4bfeceebfc609270f8038a8eebf8580e6f89f5",
-  "buildDashboard": "https://expo.dev/accounts/onaopemipo/projects/easygas-energy/builds/56c65487-68dc-4aab-abae-9cd498f5783f"
+  "supersededBuilds": [
+    {
+      "buildId": "56c65487-68dc-4aab-abae-9cd498f5783f",
+      "buildNumber": "6",
+      "packagingCommit": "ee4bfeceebfc609270f8038a8eebf8580e6f89f5",
+      "status": "FINISHED_NOT_SUBMITTED",
+      "reason": "Held after cloud native peer/duplicate/config diagnostics; superseded by focused repair"
+    }
+  ],
+  "dependencyReview": "docs/ios-testflight-refresh-20261129/dependency-review.json",
+  "diagnostics": {
+    "expoDoctor": {
+      "total": 20,
+      "passed": 18,
+      "failed": 2,
+      "excluded": 0
+    },
+    "remaining": "Dynamic/static config analysis and pinned SDK alignment recommendations explicitly retained; no whole-app readiness claim."
+  }
 }

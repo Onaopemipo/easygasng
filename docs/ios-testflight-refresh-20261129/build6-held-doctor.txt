@@ -1,0 +1,73 @@
+Start phase: RUN_EXPO_DOCTOR
+Running "expo doctor"
+Running 20 checks on your project...
+15/20 checks passed. 5 checks failed. Possible issues detected:
+Use the --verbose flag to see more details about passed checks.
+
+✖ Check Expo config (app.json/ app.config.js) schema
+Error validating fields in /Users/expo/workingdir/build/apps/mobile/app.json:
+ Field: android.usesCleartextTraffic - Additional property "usesCleartextTraffic" is not allowed.
+Advice:
+Resolve schema errors in your app config. Learn more: https://docs.expo.dev/workflow/configuration/
+
+✖ Check Expo config for common issues
+You have an app.json file in your project, but your app.config.js is not using the values from it.
+Advice:
+Remove the static app.json, or use its values in your dynamic app.config.js. Learn more: https://docs.expo.dev/workflow/configuration
+
+✖ Check that required peer dependencies are installed
+Missing peer dependency: expo-asset
+Required by: expo-audio
+Advice:
+Install missing required peer dependency with "npx expo install expo-asset"
+Your app may crash outside of Expo Go without this dependency. Native module peer dependencies must be installed directly.
+
+✖ Check that no duplicate dependencies are installed
+Your project contains duplicate native module dependencies, which should be de-duplicated.
+Native builds may only contain one version of any given native module, and having multiple versions of a single Native module installed may lead to unexpected build errors.
+Found duplicates for expo-constants:
+  ├─ expo-constants@58.0.14 (at: node_modules/expo-constants)
+  ├─ expo-constants@58.0.16 (at: node_modules/expo-asset/node_modules/expo-constants)
+  └─ expo-constants@58.0.16 (at: node_modules/expo-notifications/node_modules/expo-constants)
+Advice:
+Resolve your dependency issues and deduplicate your dependencies. Learn more: https://expo.fyi/resolving-dependency-issues
+
+✖ Check that packages match versions required by installed Expo SDK
+
+⚠️ Minor version mismatches
+package                         expected  found    
+expo                            ~58.1.0   58.0.22  
+react-native-safe-area-context  ~5.11.1   5.10.1   
+
+🔧 Patch version mismatches
+package                         expected  found    
+expo-constants                  ~58.0.16  58.0.14  
+expo-crypto                     ~58.0.9   58.0.7   
+expo-file-system                ~58.0.15  58.0.13  
+expo-font                       ~58.0.12  58.0.11  
+expo-location                   ~58.0.23  58.0.20  
+expo-notifications              ~58.1.10  58.1.9   
+expo-print                      ~58.0.9   58.0.8   
+expo-secure-store               ~58.0.3   58.0.2   
+expo-sharing                    ~58.0.24  58.0.21  
+expo-task-manager               ~58.0.14  58.0.13  
+
+Changelogs:
+- expo-constants → https://github.com/expo/expo/blob/sdk-58/packages/expo-constants/CHANGELOG.md
+- expo-crypto → https://github.com/expo/expo/blob/sdk-58/packages/expo-crypto/CHANGELOG.md
+- expo-file-system → https://github.com/expo/expo/blob/sdk-58/packages/expo-file-system/CHANGELOG.md
+- expo-font → https://github.com/expo/expo/blob/sdk-58/packages/expo-font/CHANGELOG.md
+- expo-location → https://github.com/expo/expo/blob/sdk-58/packages/expo-location/CHANGELOG.md
+- expo-notifications → https://github.com/expo/expo/blob/sdk-58/packages/expo-notifications/CHANGELOG.md
+- expo-print → https://github.com/expo/expo/blob/sdk-58/packages/expo-print/CHANGELOG.md
+- expo-secure-store → https://github.com/expo/expo/blob/sdk-58/packages/expo-secure-store/CHANGELOG.md
+- expo-sharing → https://github.com/expo/expo/blob/sdk-58/packages/expo-sharing/CHANGELOG.md
+- expo-task-manager → https://github.com/expo/expo/blob/sdk-58/packages/expo-task-manager/CHANGELOG.md
+
+12 packages out of date.
+Advice:
+Use 'npx expo install --check' to review and upgrade your dependencies.
+To ignore specific packages, add them to "expo.install.exclude" in package.json. Learn more: https://expo.fyi/dependency-validation
+5 checks failed, indicating possible issues with the project.
+Command "expo doctor" failed.
+End phase: RUN_EXPO_DOCTOR
