@@ -1,0 +1,50 @@
+✔ ANALYTICS-LOAD: one GTM bootstrap uses the supplied existing GA4 destination without duplicate config or page events (0.764292ms)
+✔ ANALYTICS-PRIVACY: consent defaults closed and private, malformed, query/token/hash URLs cannot initialise Google tracking (4.034625ms)
+✔ ANALYTICS-REVOKE: withdrawal disables the stream and clears only this integration's analytics cookies (0.349041ms)
+✔ ANALYTICS-NAV: active analytics leaves the document before private navigation while untracked workspaces retain client routing (0.134167ms)
+✔ ANALYTICS-CONFIG: local/preview defaults off, production defaults on and explicit disable is the rollback switch (0.071542ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ HOME-COLD/WARM actual route fallback shows one cold loader, then the complete saved public Home during navigation without a page loader (6.278ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ HOME-ROUTES a warm public snapshot is never substituted for account, auth, order, admin or other routes (2.251875ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ HOME-REFRESH actual Site catalogue state restores the public Home on mount, retains it on refresh failure and replaces it only when fresh data succeeds (1.4575ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ HOME-LATE cancelled old catalogue requests cannot overwrite a newer server-fed homepage (0.6335ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ HOME-ANALYTICS actual link preserves public Home SPA continuity but retains hard navigation for private and token/query destinations (1.644958ms)
+✔ HOME-CACHE only public catalogue fields survive; session/profile/cart/address/form state and browser storage are not retained (0.38525ms)
+✔ HOME-UPDATES repeat publication does not loop subscribers, fresh server content replaces the snapshot and malformed reads cannot erase it (0.094ms)
+✔ HOME-PRIVACY only a same-origin plain public→Home link avoids a hard reload; private/query/hash/credential/external transitions retain isolation (0.2845ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ PRICE-SSR real compact price card contains both canonical figures and no loading state before JavaScript effects (28.06225ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ PRICE-UI seeded mount and navigation remount do not fetch or flash; stale refresh keeps figures and applies the latest pair (18.1715ms)
+✔ PRICE-LOADER missing initial pricing uses exactly one paired loader and one shared request until both figures arrive (5.140375ms)
+✔ PRICE-HOME server-fed home bypasses cart hydration loader and avoids duplicate homepage catalogue request; testimonials fail independently (0.686291ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ PRICE-UI-RETRY a failed background refresh keeps both figures visible and explicit retry replaces them together (22.82ms)
+✔ PRICE-CACHE fresh public price pairs survive remounts, expire together after60s and never cache identity/quotes (0.536916ms)
+✔ PRICE-BRANCH concurrent reads deduplicate only within the same branch; out-of-order old versions cannot overwrite newer prices (0.309541ms)
+✔ PRICE-RETRY a failed refresh retains the last loaded pair and releases the request for an explicit retry; invalid payload cannot become a price (0.146458ms)
+✔ PRICE-API public catalogue reads gas price/fee/policy once, before product reads, and reuses the same fee snapshot (1087.695792ms)
+✔ PRICE-CHECKOUT cached presentation cannot bypass a new canonical price version or reserve stock using an old quote (886.896792ms)
+ℹ tests 23
+ℹ suites 0
+ℹ pass 23
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3026.5865

@@ -18,15 +18,32 @@
       ],
       "securityControls": "Memory-only canonical public catalogue; no identity/cart/form/address/session data and no protected-page snapshot.",
       "testIds": [
-        "HOME-WARM",
-        "HOME-COLD",
-        "HOME-ROUTES"
+        "HOME-COLD/WARM",
+        "HOME-ROUTES",
+        "HOME-CACHE",
+        "HOME-UPDATES"
       ],
       "acceptanceGate": "HOMEKEEP-G1",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "evidence": [],
-      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
-      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/home-continuity/README.md",
+        "docs/home-continuity/evidence/focused-tests.txt",
+        "docs/home-continuity/evidence/browser-verification.json",
+        "docs/home-continuity/evidence/release.json"
+      ],
+      "reason": "23 focused checks, root23 checks, types/build, all514 deployment source hashes and real hosted retained\u2192fresh Home transition passed.",
+      "outstandingWork": "None for bounded requirement. Full reloads are cold; wider production NO-GO and device/provider gates remain separate.",
+      "routes": [
+        "/"
+      ],
+      "uiReference": "User-reported full-page loader on return to Home",
+      "testFiles": [
+        "tests/home-continuity.test.ts",
+        "tests/home-continuity-ui.test.ts",
+        "tests/public-price-loading.test.ts",
+        "tests/public-price-loading-ui.test.ts",
+        "tests/google-analytics.test.ts"
+      ]
     },
     {
       "id": "HOMEKEEP-02",
@@ -43,13 +60,29 @@
       "securityControls": "Existing quote/checkout, role/session and server route guards remain authoritative. Refresh failure is labelled.",
       "testIds": [
         "HOME-REFRESH",
-        "HOME-RESTORE"
+        "HOME-LATE"
       ],
       "acceptanceGate": "HOMEKEEP-G2",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "evidence": [],
-      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
-      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/home-continuity/README.md",
+        "docs/home-continuity/evidence/focused-tests.txt",
+        "docs/home-continuity/evidence/browser-verification.json",
+        "docs/home-continuity/evidence/release.json"
+      ],
+      "reason": "23 focused checks, root23 checks, types/build, all514 deployment source hashes and real hosted retained\u2192fresh Home transition passed.",
+      "outstandingWork": "None for bounded requirement. Full reloads are cold; wider production NO-GO and device/provider gates remain separate.",
+      "routes": [
+        "/"
+      ],
+      "uiReference": "User-reported full-page loader on return to Home",
+      "testFiles": [
+        "tests/home-continuity.test.ts",
+        "tests/home-continuity-ui.test.ts",
+        "tests/public-price-loading.test.ts",
+        "tests/public-price-loading-ui.test.ts",
+        "tests/google-analytics.test.ts"
+      ]
     },
     {
       "id": "HOMEKEEP-03",
@@ -67,24 +100,74 @@
       "securityControls": "Only same-origin plain public\u2192Home navigation may remain client-side; private/query/hash/cross-origin transitions retain existing analytics isolation. Prior NO-GO remains.",
       "testIds": [
         "HOME-PRIVACY",
+        "HOME-ANALYTICS",
         "HOME-DEPLOY"
       ],
       "acceptanceGate": "HOMEKEEP-G3",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "evidence": [],
-      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
-      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+      "status": "VERIFIED_COMPLETE",
+      "evidence": [
+        "docs/home-continuity/README.md",
+        "docs/home-continuity/evidence/focused-tests.txt",
+        "docs/home-continuity/evidence/browser-verification.json",
+        "docs/home-continuity/evidence/release.json"
+      ],
+      "reason": "23 focused checks, root23 checks, types/build, all514 deployment source hashes and real hosted retained\u2192fresh Home transition passed.",
+      "outstandingWork": "None for bounded requirement. Full reloads are cold; wider production NO-GO and device/provider gates remain separate.",
+      "routes": [
+        "public\u2192/",
+        "protected/query/hash/external navigation boundaries"
+      ],
+      "uiReference": "User-reported full-page loader on return to Home",
+      "testFiles": [
+        "tests/home-continuity.test.ts",
+        "tests/home-continuity-ui.test.ts",
+        "tests/public-price-loading.test.ts",
+        "tests/public-price-loading-ui.test.ts",
+        "tests/google-analytics.test.ts"
+      ],
+      "critical": true
     }
   ],
   "coverage": {
     "requirements": 3,
-    "verified": 0,
+    "implemented": 3,
+    "verified": 3,
+    "criticalRequirements": 1,
+    "criticalVerified": 1,
+    "routes": 1,
+    "routesVerified": 1,
     "gates": 3,
-    "gatesPassed": 0,
+    "gatesPassed": 3,
     "excluded": 0
   },
   "productionDecision": "Existing production NO-GO and unrelated holds preserved",
   "changeLog": [
-    "Approved follow-up: retain already loaded public Home during navigation/server refresh. First visits and protected-page loading remain explicit; no private state caching."
-  ]
+    "Approved follow-up: retain already loaded public Home during navigation/server refresh. First visits and protected-page loading remain explicit; no private state caching.",
+    "Verified application82a1427; all3 requirements/gates retained. Normal hosted transition and renderer failure tests; no native/schema/operational changes."
+  ],
+  "acceptanceGates": [
+    {
+      "id": "HOMEKEEP-G1",
+      "status": "PASS",
+      "evidence": "docs/home-continuity/evidence/browser-verification.json",
+      "scope": "Actual hosted retained page during pending Home response, then fresh page without loader"
+    },
+    {
+      "id": "HOMEKEEP-G2",
+      "status": "PASS",
+      "evidence": "docs/home-continuity/evidence/focused-tests.txt",
+      "scope": "Refresh failure/replacement and cancelled old response renderer checks"
+    },
+    {
+      "id": "HOMEKEEP-G3",
+      "status": "PASS",
+      "evidence": "docs/home-continuity/evidence/deployed-source.json",
+      "scope": "Negative privacy/navigation checks, preserved checkout denial, source-verified demo rollout"
+    }
+  ],
+  "matrixValidation": {
+    "test": "tests/home-continuity-traceability.test.ts",
+    "evidence": "docs/home-continuity/evidence/matrix-validation.txt",
+    "result": "1 passed,0 failed"
+  }
 }
