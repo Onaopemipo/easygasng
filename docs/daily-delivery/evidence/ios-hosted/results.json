@@ -1,0 +1,198 @@
+{
+  "testId": "DIO-HOSTED-IOS",
+  "startedDate": "2026-11-28",
+  "completedDate": "2026-11-29",
+  "surface": "EasyGas First Sign-In QA / iOS26.5 / Expo Go58, normal index.ts \u2192 App sign-in",
+  "reference": "EG-2026-2CC5FA2F",
+  "secondaryNavigationTest": {
+    "reference": "EG-2026-66AD8D91",
+    "acceptedAndKeptOpen": true,
+    "retiredWithoutSupply": true,
+    "finalState": "cancelled",
+    "note": "Synthetic navigation-only fixture; retired via normal failure/cancellation transitions and wallet refund, no real gas or payment"
+  },
+  "branch": "qa-ios-e78ea9b3",
+  "deployment": {
+    "id": "dpl_7DrsEXcvd7HVS6Ndw3cJmLWawAjq",
+    "readyState": "READY",
+    "applicationCommit": "16160a1"
+  },
+  "synthetic": true,
+  "externalPaymentOrMessage": false,
+  "nativeSteps": {
+    "normalSignIn": true,
+    "reassignedToTodayDriver": true,
+    "automaticReservationGrams": 12500,
+    "accepted": true,
+    "departed": true,
+    "arrived": true,
+    "beforeKg": 8,
+    "afterKg": 20.5,
+    "suppliedGrams": 12500,
+    "encryptedQueueBeforeUpload": 1,
+    "nativeMultipartUploadStatus": 200,
+    "completionEnabledAfterProofAndHandover": true,
+    "nativeCompleteStatus": 200,
+    "visibleFinalHeading": "Delivery Completed",
+    "serverOrderStatus": "delivered",
+    "customerOrderStatus": "delivered",
+    "driverHistoryWithProof": true,
+    "noMeterOrLoadSteps": true
+  },
+  "stock": {
+    "openingGrams": 25000,
+    "suppliedGrams": 12500,
+    "physicalBranchAfterSupplyGrams": 87500,
+    "committedAfterCompletionGrams": 0,
+    "closingGrams": 12500,
+    "varianceGrams": 0,
+    "dayState": "closed"
+  },
+  "photo": {
+    "count": 1,
+    "id": "88abdb42-48d7-4c74-8f0b-d0b756aab4d2",
+    "capturedAt": "2026-11-28T14:21:55.634Z",
+    "description": "SYNTHETIC DEMO TEST \u2014 12.5 kg simulator refill proof, not a real delivery",
+    "consentRecorded": true,
+    "accessChecks": [
+      {
+        "role": "owner",
+        "status": 200,
+        "cacheControl": "private, no-store"
+      },
+      {
+        "role": "today",
+        "status": 200,
+        "cacheControl": "private, no-store"
+      },
+      {
+        "role": "customer",
+        "status": 200,
+        "cacheControl": "private, no-store"
+      },
+      {
+        "role": "previous",
+        "status": 404,
+        "cacheControl": "public, max-age=0, must-revalidate"
+      },
+      {
+        "role": "anonymous",
+        "status": 401,
+        "cacheControl": "public, max-age=0, must-revalidate"
+      }
+    ]
+  },
+  "auditCounts": {
+    "dispatch.assignToday": 1,
+    "daily.order_reserved": 1,
+    "dispatch.respond": 1,
+    "daily.refill.record": 1,
+    "delivery.completed": 1
+  },
+  "duplicateCompletionStockUnchanged": true,
+  "negativeChecks": [
+    {
+      "name": "probe-before-refill completion",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "Upload an authorised proof photo for this delivery attempt before completion."
+    },
+    {
+      "name": "incorrect gas quantity",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "These readings show 1 kg added; this customer paid for 12.5 kg. Check the actual readings or contact the office. Delivery is not completed."
+    },
+    {
+      "name": "previous driver proof access",
+      "status": 404,
+      "code": "INVALID_REQUEST",
+      "error": "Order not found."
+    },
+    {
+      "name": "probe-before-refill no mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "probe-before-photo completion",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "Upload an authorised proof photo for this delivery attempt before completion."
+    },
+    {
+      "name": "photo without consent",
+      "status": 400,
+      "error": "Record customer consent before taking or uploading a photo."
+    },
+    {
+      "name": "previous driver proof access",
+      "status": 404,
+      "code": "INVALID_REQUEST",
+      "error": "Order not found."
+    },
+    {
+      "name": "probe-before-photo no mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate completion with new identity",
+      "status": 409,
+      "error": "Verified arrival at the current assigned visit is required."
+    }
+  ],
+  "preservation": {
+    "originalOrdersChecked": 32,
+    "changedOrders": [],
+    "stockDifferences": [],
+    "dayDifferences": [],
+    "otherBranchStockHashesMatch": true,
+    "lagosDayFiguresMatch": true,
+    "lagosSettingsMatch": true,
+    "scope": "Original latest100 orders, other-branch stock, Lagos daily records and settings; isolated QA excluded"
+  },
+  "cleanup": {
+    "testDriverAccessSuspended": true,
+    "testAreaHidden": true,
+    "testDayClosed": true,
+    "syntheticHistoryRetained": true,
+    "knownApiSessionsRevoked": [
+      "customer",
+      "previous already revoked",
+      "today already revoked",
+      "owner current verifier session"
+    ]
+  },
+  "simulatorAdaptation": {
+    "galleryPolicyOnDeployedDemo": false,
+    "localAdapterGalleryFlag": true,
+    "onlyGeneratedDriverAllowed": true,
+    "businessWritesUnchangedToDeployedHandlers": true,
+    "productionPolicyChanged": false,
+    "physicalCameraTested": false,
+    "userAssistedSystemPicker": true,
+    "adapterStopped": true,
+    "normalDemoOriginRestored": true
+  },
+  "repairs": [
+    "Order-list next-action buttons open current status/refill-photo phase directly; alert selection establishes Orders context.",
+    "Accepted-order notices no longer appear over another selected delivery.",
+    "Successful field sync uses a success notice rather than a retry error.",
+    "Pending-photo copy changes to server-verified feedback only when canonical daily proof is ready and the encrypted queue is empty."
+  ],
+  "finalVerification": {
+    "focusedComponentTests": 14,
+    "focusedComponentFailures": 0,
+    "earlierDailyCanonicalRegressionTests": 19,
+    "earlierDailyCanonicalRegressionFailures": 0,
+    "nativeTypecheckExitCode": 0,
+    "finalNativeSyncMessage": "Delivery records are up to date.",
+    "newSignedBinary": false,
+    "newHostedRuntimeDeployment": false
+  },
+  "limitations": [
+    "Simulator gallery acceptance does not verify a physical camera or physical scale.",
+    "The local test-driver-only adapter adapted gallery approval; all upload/delivery/state authority remained on the existing demo.",
+    "Final proof-copy repair was verified with the actual native component renderer; final normal app sync feedback was additionally observed on iOS after the end-to-end completion.",
+    "Signed-device/TestFlight and full offline acceptance remain in parent DAY-05; original production NO-GO and unrelated holds preserved."
+  ]
+}

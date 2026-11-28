@@ -44,6 +44,7 @@ export default function DriverAssignmentAlerts({
   showSettings,
   onReview,
   onRefresh,
+  selectedOrderId,
 }: {
   api: CustomerAPI;
   user: any;
@@ -55,6 +56,7 @@ export default function DriverAssignmentAlerts({
   showSettings: boolean;
   onReview: (order: any) => void;
   onRefresh: () => Promise<void>;
+  selectedOrderId?: string | null;
 }) {
   const { colors } = useTheme();
   const player = useAudioPlayer(require("./assets/driver-assignment.wav"));
@@ -424,6 +426,7 @@ export default function DriverAssignmentAlerts({
         </Card>
       )}
       {notice &&
+      (!selectedOrderId || selectedOrderId === acceptedVisit.current?.orderId) &&
       orders.some(
         (order) =>
           order.id === acceptedVisit.current?.orderId &&

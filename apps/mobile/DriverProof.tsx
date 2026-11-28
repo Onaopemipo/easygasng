@@ -11,11 +11,13 @@ export default function DriverProof({
   userId,
   order,
   galleryApproved,
+  proofVerified = false,
   onQueued,
 }: {
   userId: string;
   order: any;
   galleryApproved: boolean;
+  proofVerified?: boolean;
   onQueued: () => void;
 }) {
   const { colors } = useTheme();
@@ -157,7 +159,9 @@ export default function DriverProof({
           accessibilityRole="alert"
           style={{ color: colors.text }}
         >
-          {message}
+          {proofVerified && message.startsWith("Pending Sync:")
+            ? "Proof photo verified by the server. Ready to complete delivery."
+            : message}
         </Text>
       )}
     </Card>

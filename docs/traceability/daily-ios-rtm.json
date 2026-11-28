@@ -1,6 +1,6 @@
 {
   "phase": "iOS daily scale delivery acceptance \u201428 November2026",
-  "scope": "Expo Go58 on EasyGas First Sign-In QA,iOS26.5. Existing DriverWorkspace and actual native encrypted proof SDK; disposable loopback canonical API fixture. No hosted customer delivery or physical gas evidence fabricated.",
+  "scope": "Expo Go58 on EasyGas First Sign-In QA,iOS26.5. Existing DriverWorkspace and actual native encrypted proof SDK; disposable loopback canonical API fixture. No hosted customer delivery or physical gas evidence fabricated. Continuation: normal Expo Go sign-in against existing shared demo in a fresh labelled QA branch; original loopback acceptance preserved.",
   "parentRequirement": "DAY-05",
   "requirements": [
     {
@@ -278,17 +278,70 @@
         "Wrong actor/branch/current attempt and mismatching supplied quantity rejected by canonical API",
         "No double gas debit at completion; no repeated refill record"
       ]
+    },
+    {
+      "id": "DIO-05",
+      "requirement": "Actual iOS normal sign-in against the deployed demo: accept reassigned daily order, scale refill, consented native photo upload and server-confirmed completion",
+      "implementationFiles": [
+        "apps/mobile/App.tsx",
+        "apps/mobile/DriverWorkspace.tsx",
+        "apps/mobile/DailyRefill.tsx",
+        "apps/mobile/DriverProof.tsx",
+        "apps/mobile/DriverPhoto.tsx",
+        "apps/mobile/DriverAssignmentAlerts.tsx"
+      ],
+      "dataSource": "Existing deployed demo canonical orders, daily allocation/refill, current attempt, private photos, stock and audit",
+      "securityControl": "Separate labelled synthetic branch/day/customer/drivers; normal restricted driver sign-in; current attempt/paid quantity/consent/photo/operation identity controls retained Simulator gallery-only read flag is adapted locally for the generated QA driver after canonical actor/branch verification; all business writes go unchanged to deployed handlers. Production camera/gallery policy is unchanged.",
+      "testFiles": [
+        "scripts/verify-daily-assignment-hosted.mjs",
+        "scripts/ios-hosted-gallery-adapter.mjs",
+        "tests/assignment-acceptance-components.test.ts",
+        "tests/ios-proof-feedback.test.ts",
+        "tests/ios-hosted-traceability.test.ts"
+      ],
+      "testIds": [
+        "DIO-HOSTED-IOS",
+        "DIO-PROOF-FEEDBACK",
+        "ACCEPT-UI-POPUP",
+        "DIO-HOSTED-MATRIX"
+      ],
+      "evidence": [
+        "docs/daily-delivery/evidence/ios-hosted/01-reassigned-alert.png",
+        "docs/daily-delivery/evidence/ios-hosted/03-scale-readings.png",
+        "docs/daily-delivery/evidence/ios-hosted/05-acceptance-stays-open-ax.txt",
+        "docs/daily-delivery/evidence/ios-hosted/06-direct-photo-stage-ax.txt",
+        "docs/daily-delivery/evidence/ios-hosted/results.json",
+        "docs/daily-delivery/evidence/ios-hosted/native-requests.json",
+        "docs/daily-delivery/evidence/ios-hosted/10-delivery-completed.png",
+        "docs/daily-delivery/evidence/ios-hosted/11-final-sync-feedback-ax.txt",
+        "docs/daily-delivery/evidence/ios-hosted/runtime-verification.json",
+        "docs/daily-delivery/evidence/ios-hosted/final-components.txt",
+        "docs/daily-delivery/evidence/ios-hosted/matrix-validation.txt",
+        "docs/daily-delivery/evidence/ios-hosted/11-final-sync-observation.txt"
+      ],
+      "acceptanceGate": "DIO-G-05",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual Expo Go normal sign-in and native acceptance/departure/arrival/12.5kg scale/encrypted gallery/photo upload/server-confirmed Delivered passed against demo. Private photo, exactly-once stock/audit, negative gates, zero-variance close and 32 original records/stock/settings preservation passed. Final feedback repair passed actual iOS empty sync and native component tests.",
+      "outstandingWork": "None for bounded simulator/demo acceptance. Gallery-only local test adapter and one user-assisted picker tap are explicit. Final proof-copy repair used actual component renderer after the positive native journey; signed-device/physical-camera/full-offline acceptance remains open in DAY-05.",
+      "uiReference": "User-requested native iOS reassigned-order acceptance, refill, photo and Delivered journey",
+      "routes": [
+        "native DriverWorkspace",
+        "/api/dispatch.assignToday",
+        "/api/daily.refill.record",
+        "/api/media",
+        "/api/driver.complete"
+      ]
     }
   ],
   "productionDecision": "NO-GO \u2014 original production/provider/import/retention/native physical and signed-device holds remain",
   "coverage": {
-    "requirements": 4,
-    "implemented": 4,
-    "verified": 4,
+    "requirements": 5,
+    "implemented": 5,
+    "verified": 5,
     "partial": 0,
     "excluded": 0,
     "gates": 4,
-    "gatesPassed": 4
+    "gatesPassed": 5
   },
   "gates": [
     {
@@ -310,6 +363,12 @@
       "id": "DIO-G-04",
       "requirement": "DIO-04",
       "status": "PASSED"
+    },
+    {
+      "id": "DIO-G-05",
+      "requirement": "DIO-05",
+      "status": "PASSED",
+      "evidence": "docs/daily-delivery/evidence/ios-hosted/results.json"
     }
   ],
   "limits": [
@@ -321,5 +380,14 @@
     "reproduced-native-gaps.txt retains the two pre-repair renderer failures.",
     "workspace-components.txt retains a broad native-next harness compile failure on unrelated react-native-maps host shims. That broad suite is not claimed passed; focused real Work components and actual iOS screens were executed.",
     "ios-export.txt retains an interrupted root-level npx invocation; final export uses the installed mobile SDK and normal entry."
-  ]
+  ],
+  "changeLog": [
+    "Added DIO-05/G05 for user-requested hosted native full journey; retain DIO01\u201304 and wider signed-device/physical/offline holds.",
+    "iOS row action now opens current status/refill-photo stage directly and establishes Orders context. Accepted notice is scoped to the selected order; second assignment acceptance retested. Simulator gallery adapter is explicitly recorded, with unchanged deployed camera-only policy.",
+    "29 November: full native hosted journey completed; success sync no longer creates a retry error, and server-verified/empty-queue proof replaces stale Pending Sync copy. 14 focused checks and native types pass; all32 baseline order snapshots and original gas/Lagos records/settings matched. QA closed/hidden/suspended, own native logout200, adapter stopped and normal demo guest restored. No signed binary/runtime deployment."
+  ],
+  "matrixValidation": {
+    "test": "tests/ios-hosted-traceability.test.ts",
+    "evidence": "docs/daily-delivery/evidence/ios-hosted/matrix-validation.txt"
+  }
 }

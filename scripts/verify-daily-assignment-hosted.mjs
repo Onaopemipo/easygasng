@@ -7,8 +7,13 @@ const root = process.argv[2];
 assert(root?.endsWith("/Easygas Smart Solution"));
 const mode = process.argv[3] ?? "prepare",
   base = "https://easygas-client-demo.vercel.app",
-  dir = path.join(root, ".data/hosted-daily-flow"),
+  run = process.argv[4] ?? "web",
+  dir = path.join(
+    root,
+    run === "ios" ? ".data/hosted-daily-flow-ios" : ".data/hosted-daily-flow",
+  ),
   file = path.join(dir, "state.json");
+assert(["web", "ios"].includes(run));
 await fs.mkdir(dir, { recursive: true });
 let s;
 try {
@@ -16,8 +21,12 @@ try {
 } catch (e) {
   if (e.code !== "ENOENT") throw e;
   s = {
-    branch: "qa-daily-" + randomUUID().slice(0, 8),
-    tag: "SANDBOX ONLY — Daily flow QA",
+    branch:
+      (run === "ios" ? "qa-ios-" : "qa-daily-") + randomUUID().slice(0, 8),
+    tag:
+      run === "ios"
+        ? "SANDBOX ONLY — iOS Daily flow QA"
+        : "SANDBOX ONLY — Daily flow QA",
     actors: {},
     steps: [],
     keys: {},
@@ -372,6 +381,120 @@ if (mode === "prepare") {
   assert.equal(o.daily_run, null);
   await save();
   console.log("READY " + s.reference + " in " + s.branch);
+} else if (mode === "reassign") {
+  await step("reassign-today", async () => {
+    const order = (await call("owner", "orders?id=" + s.orderId))[0];
+    const day = (
+      await call("owner", "daily.summary?branch=" + s.branch)
+    ).runs.find((x) => x.id === s.runId);
+    await call("owner", "dispatch.assignToday", {
+      orderId: order.id,
+      version: order.tracking_version,
+      runId: day.id,
+      operationKey: key("reassign-today"),
+    });
+  });
+  const o = (await call("owner", "orders?id=" + s.orderId))[0];
+  assert.equal(o.driver_id, s.actors.today.id);
+  assert.equal(Number(o.daily_run.grams), 12500);
+  console.log(
+    "PASS reassigned to today's driver and automatically reserved 12500 g",
+  );
+} else if (mode === "secondary-assignment") {
+  await step("secondary-wallet", async () => {
+    const q = await call("owner", "credit.request", {
+      branchId: s.branch,
+      customerId: s.actors.customer.id,
+      amountKobo: 1000000,
+      receiptReference: "SYNTHETIC-NAV-" + s.branch,
+      reason: s.tag + " synthetic navigation retest funding",
+    });
+    await call("owner", "credit.decide", {
+      id: q.id,
+      decision: "approved",
+      reason: s.tag + " synthetic navigation retest; no money received",
+    });
+  });
+  await step("secondary-order", async () => {
+    const lines = [{ capacityKg: 6, kg: 3 }],
+      q = await call("customer", "gas.quote", {
+        branchId: s.branch,
+        locationId: s.locationId,
+        lines,
+      });
+    const o = await call("customer", "checkout", {
+      items: [],
+      gasLines: lines,
+      pricing: {
+        priceVersion: q.priceVersion,
+        feeVersion: q.feeVersion,
+        policyVersion: q.policyVersion,
+        totalKobo: q.subtotalKobo + q.deliveryKobo,
+      },
+      address: {
+        name: s.tag + " navigation retest",
+        phone: "08012345678",
+        street: "12 Synthetic QA Street",
+        zone: s.tag,
+        locationId: s.locationId,
+      },
+      date: new Intl.DateTimeFormat("en-CA", {
+        timeZone: "Africa/Lagos",
+      }).format(new Date()),
+      window: "14:00–18:00",
+      paymentMethod: "wallet",
+      idempotencyKey: key("secondary-checkout"),
+    });
+    s.secondaryId = o.id;
+    s.secondaryReference = o.reference;
+  });
+  await step("secondary-assign", async () => {
+    for (const status of ["accepted", "preparing", "assigned"]) {
+      const o = (await call("owner", "orders?id=" + s.secondaryId))[0];
+      if (o.status === status) continue;
+      await call("owner", "order.transition", {
+        id: o.id,
+        version: o.tracking_version,
+        status,
+        ...(status === "assigned" ? { driverId: s.actors.today.id } : {}),
+        operationKey: key("secondary-" + status),
+      });
+    }
+  });
+  console.log("READY secondary navigation retest " + s.secondaryReference);
+} else if (mode === "cancel-secondary") {
+  await step("retire-secondary-assignment", async () => {
+    const o = (await call("owner", "orders?id=" + s.secondaryId))[0];
+    if (o.status === "assigned")
+      await call("owner", "order.transition", {
+        id: o.id,
+        version: o.tracking_version,
+        status: "delivery_failed",
+        failureReason: "other",
+        note:
+          s.tag +
+          " synthetic navigation-only test completed; no delivery attempted or gas supplied",
+        operationKey: key("retire-secondary"),
+      });
+  });
+  await step("cancel-secondary", async () => {
+    const o = (await call("owner", "orders?id=" + s.secondaryId))[0];
+    await call("owner", "order.transition", {
+      id: o.id,
+      version: o.tracking_version,
+      status: "cancelled",
+      note: s.tag + " navigation retest complete; no gas supplied",
+      operationKey: key("cancel-secondary"),
+    });
+  });
+} else if (mode === "native-check") {
+  const snapshot = await call("today", "driver.snapshot");
+  s.nativeSnapshot = {
+    galleryApproved: snapshot.galleryApproved,
+    keys: Object.keys(snapshot),
+  };
+  await save();
+  console.log(JSON.stringify(s.nativeSnapshot));
 } else if (mode === "checkpoint") {
   const o = (await call("owner", "orders?id=" + s.orderId))[0],
     day = (await call("owner", "daily.summary?branch=" + s.branch)).runs.find(

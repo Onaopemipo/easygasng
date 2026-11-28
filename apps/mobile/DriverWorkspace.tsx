@@ -133,6 +133,7 @@ export default function DriverWorkspace({
     "all",
   );
   const [lastSync, setLastSync] = useState<string | null>(null);
+  const [syncNotice, setSyncNotice] = useState("");
   const [revoked, setRevoked] = useState(false);
   const [page, setPage] = useState("home"),
     [selected, setSelected] = useState<string | null>(null),
@@ -368,9 +369,16 @@ export default function DriverWorkspace({
     return () => handler.remove();
   }, [page, selected, phase, historyRow, showFilters]);
 
-  function open(o: any) {
+  function open(o: any, continueWork = false) {
+    setSyncNotice("");
+    setPage("orders");
+    setHistoryRow(null);
     setSelected(o.id);
-    setPhase("detail");
+    setPhase(
+      continueWork && o.status === "out_for_delivery"
+        ? o.attempt?.state === "arrived" ? "proof" : "status"
+        : "detail",
+    );
     setFailureNotes("");
     setCode("");
     setHandover(false);
@@ -379,6 +387,7 @@ export default function DriverWorkspace({
   }
   async function run(action: string, input: any) {
     if (!order || actionBusy.current) return;
+    setSyncNotice("");
     actionBusy.current = true;
     setBusy(true);
     setError("");
@@ -437,6 +446,7 @@ export default function DriverWorkspace({
   async function sync() {
     setBusy(true);
     setError("");
+    setSyncNotice("");
     try {
       const result = await syncDriverFieldQueue(
         user.id,
@@ -445,10 +455,11 @@ export default function DriverWorkspace({
       );
       await refresh();
       if (!result.conflicts.length) setLastSync(new Date().toISOString());
-      setError(
-        result.conflicts[0] ??
-          `${result.sent} pending records verified by the server. Refresh the order before continuing.`,
-      );
+      setError(result.conflicts[0] ?? "");
+      if (!result.conflicts.length)
+        setSyncNotice(
+          result.sent ? "Delivery records verified by the server. You can continue." : "Delivery records are up to date.",
+        );
     } catch (e: any) {
       setError(e.message);
     } finally {
@@ -617,7 +628,7 @@ export default function DriverWorkspace({
                   snapshot.responses.find((r: any) => r.order_id === o.id)
                     ?.decision,
                 )}
-                onPress={() => open(o)}
+                onPress={() => open(o, true)}
               />
             </View>
           </DriverPanel>
@@ -685,6 +696,7 @@ export default function DriverWorkspace({
     );
   }
   const go = (destination: string) => {
+    setSyncNotice("");
     setSelected(null);
     setHistoryRow(null);
     setCompleted(null);
@@ -790,6 +802,7 @@ export default function DriverWorkspace({
               }}
             />
           )}
+          {connected && !revoked && !!syncNotice && <Copy>{syncNotice}</Copy>}
           {revoked ? (
             <Card>
               <Title>Driver access unavailable</Title>
@@ -1101,6 +1114,7 @@ export default function DriverWorkspace({
                         userId={user.id}
                         order={order}
                         galleryApproved={snapshot.galleryApproved}
+                        proofVerified={order.daily_run?.photo_ready === true && queue === 0}
                         onQueued={() =>
                           setQueue((n) => (n === null ? null : n + 1))
                         }
@@ -1490,6 +1504,7 @@ export default function DriverWorkspace({
             showSettings={page === "profile" && !selected && !historyRow}
             onReview={open}
             onRefresh={refresh}
+            selectedOrderId={selected}
           />
           {!revoked && ((queue ?? 0) > 0 || (legacy ?? 0) > 0) && (
             <Card>
