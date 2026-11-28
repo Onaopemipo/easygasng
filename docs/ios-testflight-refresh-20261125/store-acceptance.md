@@ -1,0 +1,7 @@
+# Authenticated Apple TestFlight acceptance — 25 November 2026
+
+- **IOS25-08 / STORE23-R05:** EAS submission `1b8682cb-6c6f-40e9-81e4-96b39900dc6f` is FINISHED for exact build `d607c741-82dc-4da1-9683-0c3388b9ded6`. Apple application `6838122026`, version **0.1.0 (5)**, Apple build `9b544835-6cc7-4474-b73e-29760f4d4bbc`: **VALID / IN_BETA_TESTING**, not expired. The exact EAS build/submission IDs match Apple's readback. [Stored Apple observation](apple-status.json), [submission and tester evidence](submission.json).
+- **IOS25-09 / STORE23-R05:** Existing **EasyGas Internal QA** group `2ee5b345-71af-4aa0-85d4-816ce27dbb58` contains the exact new build. The same two existing internal tester IDs were checked before and after; group all-future-build access remains OFF. What to Test notes read back exactly in `en-US`. No testers, groups or credentials created.
+- **IOS25-03 / STORE23-R01:** Encryption implementation, dependency manifest and lock hashes match signed build4. The existing owner-approved third-party/no-France classification remains applicable; Apple's prior stored exemption value was carried forward. No new encryption legal assumption made from the OS alone.
+
+Observation uses the existing authenticated EAS-resolved Apple API credential with official Expo Apple models; no current browser screenshot or installed-device runtime test is claimed. Original production NO-GO, provider, physical, native feature, accessibility, actual-import and retain-all decisions remain unchanged.

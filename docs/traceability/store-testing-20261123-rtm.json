@@ -6,7 +6,9 @@
     "User explicitly authorised new Android/iOS test binaries and test-store uploads, superseding earlier no-new-mobile-binary instruction only within this phase.",
     "User first selected live backend, then approved existing website backend after discovery showed only hosted synthetic demo API is configured.",
     "User requested a new iOS-only build and TestFlight upload after approving native Mobile Next redesign and Android/provider repairs. Android build2 historical acceptance retained; no new Android build authorised in this continuation.",
-    "24 November: user explicitly authorised a new iOS-only latest-source build and TestFlight upload, superseding the previous no-new-binary constraint for iOS only. Reuse approved testing API and existing internal testers; preserve Android history and all unrelated acceptance holds."
+    "24 November: user explicitly authorised a new iOS-only latest-source build and TestFlight upload, superseding the previous no-new-binary constraint for iOS only. Reuse approved testing API and existing internal testers; preserve Android history and all unrelated acceptance holds.",
+    "25 November: user authorised a new iOS-only latest-source build and TestFlight upload, including current uncommitted ordering/driver changes. Preserve Android and earlier iOS evidence, existing internal tester access and commercial production NO-GO.",
+    "29 November: user authorised new iOS-only signed build/TestFlight upload containing all current daily-scale, assignment, photo/sync and sign-out/map/ordering fixes; preserve existing app/API/internal testers, Android history and all unrelated production holds."
   ],
   "requirements": [
     {
@@ -24,7 +26,9 @@
         "apps/mobile/app.config.js",
         "apps/mobile/app.json",
         "apps/mobile/assets/app-icon.png",
-        "docs/ios-testflight-refresh-20261124/README.md"
+        "docs/ios-testflight-refresh-20261124/README.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
@@ -33,13 +37,19 @@
         "tests/customer-traceability.test.ts",
         "scripts/verify-ios-icon-20261124.mjs",
         "scripts/verify-ios-refresh-20261123.py",
-        "docs/ios-testflight-refresh-20261124/store-acceptance.md"
+        "docs/ios-testflight-refresh-20261124/store-acceptance.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "testIds": [
         "PR-07",
         "IOS24-U01",
         "IOS24-U02",
-        "IOS24-U03"
+        "IOS24-U03",
+        "IOS25-01",
+        "IOS25-02",
+        "IOS25-03",
+        "IOS25-04",
+        "IOS25-05"
       ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
@@ -65,16 +75,41 @@
         "docs/ios-testflight-refresh-20261124/submission.json",
         "docs/ios-testflight-refresh-20261124/store-acceptance.md",
         "docs/ios-testflight-refresh-20261124/store-acceptance.txt",
-        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md"
+        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "docs/ios-testflight-refresh-20261125/preflight.json",
+        "docs/ios-testflight-refresh-20261125/preflight-validation.txt",
+        "docs/ios-testflight-refresh-20261125/native-types.txt",
+        "docs/ios-testflight-refresh-20261125/native-export.txt",
+        "docs/ios-testflight-refresh-20261125/source-verification.txt",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.json",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261125/icon-verification.json",
+        "docs/ios-testflight-refresh-20261125/icon-verification.txt",
+        "docs/ios-testflight-refresh-20261125/bundle-features.json",
+        "docs/ios-testflight-refresh-20261125/submission.json",
+        "docs/ios-testflight-refresh-20261125/apple-status.json",
+        "docs/ios-testflight-refresh-20261125/store-acceptance.md",
+        "docs/ios-testflight-refresh-20261125/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/final-validation.txt",
+        "docs/ios-testflight-refresh-20261125/traceability-validation.txt"
       ],
       "acceptanceGate": "STORE23-G01",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Current native/shared source manifest matches packaging a2ef477; approved API/project/identity and 11 preflight checks plus native types pass. Application CI 1,273 web and 3 native dependency checks passed.",
-      "testResult": "PASS \u2014 Current native/shared source manifest matches packaging a2ef477; approved API/project/identity and 11 preflight checks plus native types pass. Application CI 1,273 web and 3 native dependency checks passed.",
-      "outstandingWork": "None for bounded iOS internal distribution. Installed-device/launcher/provider/lifecycle/physical/accessibility and full production acceptance remain in existing matrices.",
+      "status": "PARTIAL",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending.",
+      "testResult": "PENDING",
+      "outstandingWork": "Freeze exact latest native/shared/config source, test release configuration, signed IPA verification, TestFlight processing and unchanged tester group/notes.",
       "previousVerifiedIosBuild3": {
         "status": "VERIFIED_COMPLETE",
         "reason": "Current iOS refresh preflight verified: approved HTTPS demo API/project guard, exact app/team identity, source b062123 with1219/1219CI. Earlier build2 artifact evidence retained."
+      },
+      "previousVerifiedIosBuild4": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Current native/shared source manifest matches packaging a2ef477; approved API/project/identity and 11 preflight checks plus native types pass. Application CI 1,273 web and 3 native dependency checks passed."
+      },
+      "previousVerifiedIosBuild5": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Frozen current native/shared source including uncommitted changes matches all 186 inspected EAS archive hashes; exact packaging commit and approved HTTPS API/project/identity verified. Ten release/dependency/traceability checks, native types, iOS export and source checks pass. Prior encryption/dependency hashes match build4."
       }
     },
     {
@@ -132,7 +167,9 @@
         "apps/mobile/app.json",
         "apps/mobile/assets/app-icon.png",
         "apps/mobile/app.config.js",
-        "docs/ios-testflight-refresh-20261124/README.md"
+        "docs/ios-testflight-refresh-20261124/README.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
@@ -142,7 +179,8 @@
         "scripts/verify-store-artifacts-20261123.py",
         "scripts/verify-ios-refresh-20261123.py",
         "scripts/verify-ios-icon-20261124.mjs",
-        "docs/ios-testflight-refresh-20261124/store-acceptance.md"
+        "docs/ios-testflight-refresh-20261124/store-acceptance.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "testIds": [
         "STORE23-I01",
@@ -156,7 +194,9 @@
         "IOS23-A06",
         "IOS23-A07",
         "IOS23-A08",
-        "IOS24-ICON"
+        "IOS24-ICON",
+        "IOS25-06",
+        "IOS25-07"
       ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
@@ -182,13 +222,30 @@
         "docs/ios-testflight-refresh-20261124/submission.json",
         "docs/ios-testflight-refresh-20261124/store-acceptance.md",
         "docs/ios-testflight-refresh-20261124/store-acceptance.txt",
-        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md"
+        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "docs/ios-testflight-refresh-20261125/preflight.json",
+        "docs/ios-testflight-refresh-20261125/preflight-validation.txt",
+        "docs/ios-testflight-refresh-20261125/native-types.txt",
+        "docs/ios-testflight-refresh-20261125/native-export.txt",
+        "docs/ios-testflight-refresh-20261125/source-verification.txt",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.json",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261125/icon-verification.json",
+        "docs/ios-testflight-refresh-20261125/icon-verification.txt",
+        "docs/ios-testflight-refresh-20261125/bundle-features.json",
+        "docs/ios-testflight-refresh-20261125/submission.json",
+        "docs/ios-testflight-refresh-20261125/apple-status.json",
+        "docs/ios-testflight-refresh-20261125/store-acceptance.md",
+        "docs/ios-testflight-refresh-20261125/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/final-validation.txt",
+        "docs/ios-testflight-refresh-20261125/traceability-validation.txt"
       ],
       "acceptanceGate": "STORE23-G03",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Exact signed iOS 0.1.0 (4) archive passes eight signing/team/bundle/device/API/orientation/scheme/architecture checks; packaged iPhone/iPad icons match approved artwork.",
-      "testResult": "PASS \u2014 Exact signed iOS 0.1.0 (4) archive passes eight signing/team/bundle/device/API/orientation/scheme/architecture checks; packaged iPhone/iPad icons match approved artwork.",
-      "outstandingWork": "None for bounded iOS internal distribution. Installed-device/launcher/provider/lifecycle/physical/accessibility and full production acceptance remain in existing matrices.",
+      "status": "PARTIAL",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending.",
+      "testResult": "PENDING",
+      "outstandingWork": "Freeze exact latest native/shared/config source, test release configuration, signed IPA verification, TestFlight processing and unchanged tester group/notes.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 actual device IPA codesign/team/App Store profile/iPhone+iPad/version/API verified"
@@ -196,6 +253,14 @@
       "previousVerifiedIosBuild3": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 new iOS0.1.0 build3 FINISHED; exact device IPA passes8 signature/team/bundle/App Store profile/version/iPhone+iPad/API/orientation/URL-scheme/architecture checks."
+      },
+      "previousVerifiedIosBuild4": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Exact signed iOS 0.1.0 (4) archive passes eight signing/team/bundle/device/API/orientation/scheme/architecture checks; packaged iPhone/iPad icons match approved artwork."
+      },
+      "previousVerifiedIosBuild5": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Exact signed iOS 0.1.0 (5) IPA matches build/packaging source; eight signing/team/bundle/device/API/orientation/scheme/architecture checks and packaged iPhone/iPad icon verification pass. Latest feature strings present in signed bundle."
       }
     },
     {
@@ -252,7 +317,9 @@
         "apps/mobile/eas.json",
         "apps/mobile/assets/app-icon.png",
         "apps/mobile/app.config.js",
-        "docs/ios-testflight-refresh-20261124/README.md"
+        "docs/ios-testflight-refresh-20261124/README.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
@@ -263,7 +330,8 @@
         "docs/ios-testflight-refresh-20261123/store-acceptance.md",
         "scripts/verify-ios-icon-20261124.mjs",
         "scripts/verify-ios-refresh-20261123.py",
-        "docs/ios-testflight-refresh-20261124/store-acceptance.md"
+        "docs/ios-testflight-refresh-20261124/store-acceptance.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "testIds": [
         "STORE23-U02",
@@ -272,7 +340,9 @@
         "IOS23-U03",
         "IOS24-U01",
         "IOS24-U02",
-        "IOS24-U03"
+        "IOS24-U03",
+        "IOS25-08",
+        "IOS25-09"
       ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
@@ -304,13 +374,30 @@
         "docs/ios-testflight-refresh-20261124/submission.json",
         "docs/ios-testflight-refresh-20261124/store-acceptance.md",
         "docs/ios-testflight-refresh-20261124/store-acceptance.txt",
-        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md"
+        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "docs/ios-testflight-refresh-20261125/preflight.json",
+        "docs/ios-testflight-refresh-20261125/preflight-validation.txt",
+        "docs/ios-testflight-refresh-20261125/native-types.txt",
+        "docs/ios-testflight-refresh-20261125/native-export.txt",
+        "docs/ios-testflight-refresh-20261125/source-verification.txt",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.json",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261125/icon-verification.json",
+        "docs/ios-testflight-refresh-20261125/icon-verification.txt",
+        "docs/ios-testflight-refresh-20261125/bundle-features.json",
+        "docs/ios-testflight-refresh-20261125/submission.json",
+        "docs/ios-testflight-refresh-20261125/apple-status.json",
+        "docs/ios-testflight-refresh-20261125/store-acceptance.md",
+        "docs/ios-testflight-refresh-20261125/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/final-validation.txt",
+        "docs/ios-testflight-refresh-20261125/traceability-validation.txt"
       ],
       "acceptanceGate": "STORE23-G05",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Exact EAS submission finished; Apple build4 VALID / IN_BETA_TESTING in the same internal group with unchanged two tester IDs and saved notes. Prior approved encryption classification retained after unchanged-source comparison.",
-      "testResult": "PASS \u2014 Exact EAS submission finished; Apple build4 VALID / IN_BETA_TESTING in the same internal group with unchanged two tester IDs and saved notes. Prior approved encryption classification retained after unchanged-source comparison.",
-      "outstandingWork": "None for bounded iOS internal distribution. Installed-device/launcher/provider/lifecycle/physical/accessibility and full production acceptance remain in existing matrices.",
+      "status": "PARTIAL",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending.",
+      "testResult": "PENDING",
+      "outstandingWork": "Freeze exact latest native/shared/config source, test release configuration, signed IPA verification, TestFlight processing and unchanged tester group/notes.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 exact Apple build2 processed, user-approved encryption/no-France declaration saved; same two AfriMarket internal testers added, group build status Testing, What to Test Saved."
@@ -318,6 +405,14 @@
       "previousVerifiedIosBuild3": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
+      },
+      "previousVerifiedIosBuild4": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Exact EAS submission finished; Apple build4 VALID / IN_BETA_TESTING in the same internal group with unchanged two tester IDs and saved notes. Prior approved encryption classification retained after unchanged-source comparison."
+      },
+      "previousVerifiedIosBuild5": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Exact EAS submission FINISHED; Apple build5 VALID/IN_BETA_TESTING in the existing EasyGas Internal QA group, same two tester IDs and saved notes. Previously approved encryption classification retained after unchanged-source comparison."
       }
     },
     {
@@ -335,7 +430,9 @@
         "docs/store-testing-20261123/WHAT-TO-TEST.md",
         "apps/mobile/assets/app-icon.png",
         "apps/mobile/app.config.js",
-        "docs/ios-testflight-refresh-20261124/README.md"
+        "docs/ios-testflight-refresh-20261124/README.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "dataSource": "Authenticated Expo project/build/submission records, Play Console/App Store Connect, actual artifact metadata and approved API status",
       "securityControl": "Existing role/branch/recent-password/business/safety controls retained; HTTPS only, matching signing identities, no signing secrets/OTP in source, no public production rollout.",
@@ -347,7 +444,8 @@
         "docs/ios-testflight-refresh-20261123/store-acceptance.md",
         "scripts/verify-ios-icon-20261124.mjs",
         "scripts/verify-ios-refresh-20261123.py",
-        "docs/ios-testflight-refresh-20261124/store-acceptance.md"
+        "docs/ios-testflight-refresh-20261124/store-acceptance.md",
+        "scripts/verify-ios-refresh-20261125.py"
       ],
       "testIds": [
         "STORE23-A01",
@@ -359,7 +457,17 @@
         "IOS23-U03",
         "IOS24-U01",
         "IOS24-U02",
-        "IOS24-U03"
+        "IOS24-U03",
+        "IOS25-01",
+        "IOS25-02",
+        "IOS25-03",
+        "IOS25-04",
+        "IOS25-05",
+        "IOS25-06",
+        "IOS25-07",
+        "IOS25-08",
+        "IOS25-09",
+        "IOS25-10"
       ],
       "negativeTests": [
         "Production configuration rejects insecure/local API origins and unconfirmed identifiers"
@@ -391,13 +499,30 @@
         "docs/ios-testflight-refresh-20261124/submission.json",
         "docs/ios-testflight-refresh-20261124/store-acceptance.md",
         "docs/ios-testflight-refresh-20261124/store-acceptance.txt",
-        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md"
+        "docs/ios-testflight-refresh-20261124/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/README.md",
+        "docs/ios-testflight-refresh-20261125/preflight.json",
+        "docs/ios-testflight-refresh-20261125/preflight-validation.txt",
+        "docs/ios-testflight-refresh-20261125/native-types.txt",
+        "docs/ios-testflight-refresh-20261125/native-export.txt",
+        "docs/ios-testflight-refresh-20261125/source-verification.txt",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.json",
+        "docs/ios-testflight-refresh-20261125/artifact-verification.txt",
+        "docs/ios-testflight-refresh-20261125/icon-verification.json",
+        "docs/ios-testflight-refresh-20261125/icon-verification.txt",
+        "docs/ios-testflight-refresh-20261125/bundle-features.json",
+        "docs/ios-testflight-refresh-20261125/submission.json",
+        "docs/ios-testflight-refresh-20261125/apple-status.json",
+        "docs/ios-testflight-refresh-20261125/store-acceptance.md",
+        "docs/ios-testflight-refresh-20261125/WHAT-TO-TEST.md",
+        "docs/ios-testflight-refresh-20261125/final-validation.txt",
+        "docs/ios-testflight-refresh-20261125/traceability-validation.txt"
       ],
       "acceptanceGate": "STORE23-G06",
-      "status": "VERIFIED_COMPLETE",
-      "reason": "Actual source/artifact hashes, API readback, existing group membership, saved test notes and explicit installed/production boundaries recorded. No Android/public rollout or original acceptance hold removed.",
-      "testResult": "PASS \u2014 Actual source/artifact hashes, API readback, existing group membership, saved test notes and explicit installed/production boundaries recorded. No Android/public rollout or original acceptance hold removed.",
-      "outstandingWork": "None for bounded iOS internal distribution. Installed-device/launcher/provider/lifecycle/physical/accessibility and full production acceptance remain in existing matrices.",
+      "status": "PARTIAL",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending.",
+      "testResult": "PENDING",
+      "outstandingWork": "Freeze exact latest native/shared/config source, test release configuration, signed IPA verification, TestFlight processing and unchanged tester group/notes.",
       "previousVerifiedBuild2": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 immutable source/artifact hashes, signing/version/API readback, actual store processing/testing status and explicit acceptance limits recorded. Prior production NO-GO and all unrelated holds preserved."
@@ -405,6 +530,14 @@
       "previousVerifiedIosBuild3": {
         "status": "VERIFIED_COMPLETE",
         "reason": "PASS \u2014 exact iOS 0.1.0 (3) submission finished, Apple processed/compliance cleared, What to Test Saved and existing two-tester internal group shows Testing; no Android change or broader acceptance inferred."
+      },
+      "previousVerifiedIosBuild4": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Actual source/artifact hashes, API readback, existing group membership, saved test notes and explicit installed/production boundaries recorded. No Android/public rollout or original acceptance hold removed."
+      },
+      "previousVerifiedIosBuild5": {
+        "status": "VERIFIED_COMPLETE",
+        "reason": "Current source/artifact hashes, exact EAS/Apple IDs, tester-group readback and notes recorded in dated report and manual. All six stable requirements/gates and historical evidence retained; no Android/public rollout or original acceptance hold removed."
       }
     }
   ],
@@ -412,8 +545,8 @@
     {
       "id": "STORE23-G01",
       "description": "Verify source, approved API and build configuration",
-      "status": "PASS",
-      "reason": "Current native/shared source manifest matches packaging a2ef477; approved API/project/identity and 11 preflight checks plus native types pass. Application CI 1,273 web and 3 native dependency checks passed."
+      "status": "PENDING",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending."
     },
     {
       "id": "STORE23-G02",
@@ -424,8 +557,8 @@
     {
       "id": "STORE23-G03",
       "description": "Produce a signed device iOS archive for TestFlight",
-      "status": "PASS",
-      "reason": "Exact signed iOS 0.1.0 (4) archive passes eight signing/team/bundle/device/API/orientation/scheme/architecture checks; packaged iPhone/iPad icons match approved artwork."
+      "status": "PENDING",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending."
     },
     {
       "id": "STORE23-G04",
@@ -436,20 +569,20 @@
     {
       "id": "STORE23-G05",
       "description": "Upload iOS build and verify TestFlight processing",
-      "status": "PASS",
-      "reason": "Exact EAS submission finished; Apple build4 VALID / IN_BETA_TESTING in the same internal group with unchanged two tester IDs and saved notes. Prior approved encryption classification retained after unchanged-source comparison."
+      "status": "PENDING",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending."
     },
     {
       "id": "STORE23-G06",
       "description": "Record artifact and hosted testing evidence while preserving original release holds",
-      "status": "PASS",
-      "reason": "Actual source/artifact hashes, API readback, existing group membership, saved test notes and explicit installed/production boundaries recorded. No Android/public rollout or original acceptance hold removed."
+      "status": "PENDING",
+      "reason": "Latest iOS refresh authorised and registered; release source/archive/Apple acceptance pending."
     }
   ],
   "coverage": {
     "total": 6,
-    "verified": 6,
-    "partial": 0,
+    "verified": 2,
+    "partial": 4,
     "blocked": 0,
     "notImplemented": 0,
     "excluded": 0
@@ -494,6 +627,18 @@
     {
       "date": "2026-11-24",
       "change": "Completed latest-source iOS-only build4: 11 preflight checks/native types, eight signed IPA checks, packaged icon comparison and three authenticated store acceptance checks pass. Apple VALID/IN_BETA_TESTING, exact existing group and same two tester IDs; notes saved. Browser session expired; existing EAS-resolved Apple API credentials completed bounded actions without new login/key/access grant. Android/build3 history and all original production/native/physical/provider/import/retain-all holds retained. Six stable requirements/gates pass, zero exclusions."
+    },
+    {
+      "date": "2026-11-25",
+      "change": "25 November: user authorised a new iOS-only latest-source build and TestFlight upload, including current uncommitted ordering/driver changes. Preserve Android and earlier iOS evidence, existing internal tester access and commercial production NO-GO. R01/R03/R05/R06 reopened; all six IDs/gates retained."
+    },
+    {
+      "date": "2026-11-25",
+      "change": "Completed iOS-only build5 from exact frozen current source including uncommitted changes. Ten release/dependency checks/native types/iOS export/source checks, eight signed IPA checks, packaged icons and authenticated Apple checks pass. Exact build VALID/IN_BETA_TESTING in unchanged two-tester group; notes saved. Six stable distribution requirements/gates pass; Android/build2/3/4 history and original NO-GO/physical/provider/import/retain-all holds preserved."
+    },
+    {
+      "date": "2026-11-29",
+      "change": "29 November: user authorised new iOS-only signed build/TestFlight upload containing all current daily-scale, assignment, photo/sync and sign-out/map/ordering fixes; preserve existing app/API/internal testers, Android history and all unrelated production holds. Reopened the same four iOS requirements/gates; retain all six stable IDs."
     }
   ],
   "iosRefresh20261123": {
@@ -521,5 +666,48 @@
     "internalTesters": 2,
     "testNotes": "Saved"
   },
-  "lastUpdated": "2026-11-24"
+  "lastUpdated": "2026-11-29",
+  "iosRefresh20261125": {
+    "status": "TESTFLIGHT_INTERNAL_TESTING",
+    "androidChanged": false,
+    "evidence": "docs/ios-testflight-refresh-20261125/preflight.json",
+    "buildId": "d607c741-82dc-4da1-9683-0c3388b9ded6",
+    "buildNumber": "5",
+    "packagingCommit": "82857386ea7fcee529814818c9f01e4c97f6ded6",
+    "applicationSourceManifestSha256": "f7914eca44383c8782a195d9d3b01e97fb7b3a6d7ec5bab6e4d0f5b978b36918",
+    "submissionId": "1b8682cb-6c6f-40e9-81e4-96b39900dc6f",
+    "appleBuildId": "9b544835-6cc7-4474-b73e-29760f4d4bbc",
+    "internalTesters": 2,
+    "testNotes": "Saved"
+  },
+  "distributionCoverage": {
+    "implementation": {
+      "mapped": 6,
+      "applicable": 6
+    },
+    "verification": {
+      "verified": 6,
+      "applicable": 6
+    },
+    "critical": {
+      "verified": 0,
+      "applicable": 0,
+      "reason": "This bounded distribution matrix uses P1 requirements; critical application/security acceptance remains in original matrices."
+    },
+    "routes": {
+      "verified": 2,
+      "applicable": 2,
+      "scope": "Distribution destinations only: current TestFlight5 and historical unchanged Google Play2; not whole-app route acceptance."
+    },
+    "gates": {
+      "passed": 6,
+      "applicable": 6
+    },
+    "excluded": 0
+  },
+  "iosRefresh20261129": {
+    "status": "PREFLIGHT",
+    "androidChanged": false,
+    "evidence": "docs/ios-testflight-refresh-20261129/preflight.json"
+  }
 }
