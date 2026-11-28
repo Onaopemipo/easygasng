@@ -1,0 +1,172 @@
+{
+  "testId": "DAYASSIGN-HOSTED-E2E",
+  "date": "2026-11-28",
+  "environment": "existing synthetic client demo",
+  "surface": "Actual deployed browser Admin and responsive Driver workspace; signed iOS app not retested in this phase",
+  "deployment": {
+    "id": "dpl_7DrsEXcvd7HVS6Ndw3cJmLWawAjq",
+    "readyState": "READY",
+    "applicationCommit": "16160a1"
+  },
+  "reference": "EG-2026-FB8DDC69",
+  "branch": "qa-daily-18930820",
+  "synthetic": true,
+  "externalPaymentsOrMessages": false,
+  "steps": {
+    "reassignedToTodayDriver": true,
+    "automaticReservationGrams": 12500,
+    "modalRemainedOpen": true,
+    "nextAction": "Awaiting driver start",
+    "driverAccepted": true,
+    "startedDelivery": true,
+    "arrived": true,
+    "beforeKg": 8,
+    "afterKg": 20.5,
+    "suppliedGrams": 12500,
+    "photoUploaded": true,
+    "completed": "delivered",
+    "driverHistoryVerified": true,
+    "customerStatus": "delivered",
+    "legacyMeterOrLoadStepsRequired": false
+  },
+  "stock": {
+    "openingGrams": 25000,
+    "suppliedGrams": 12500,
+    "orderCommittedAfterDeliveryGrams": 0,
+    "branchPhysicalAfterDeliveryGrams": 87500,
+    "closingGrams": 12500,
+    "varianceGrams": 0,
+    "dayState": "closed"
+  },
+  "photoAccess": [
+    {
+      "role": "owner",
+      "status": 200,
+      "cacheControl": "private, no-store"
+    },
+    {
+      "role": "today",
+      "status": 200,
+      "cacheControl": "private, no-store"
+    },
+    {
+      "role": "customer",
+      "status": 200,
+      "cacheControl": "private, no-store"
+    },
+    {
+      "role": "previous",
+      "status": 404,
+      "cacheControl": "public, max-age=0, must-revalidate"
+    },
+    {
+      "role": "anonymous",
+      "status": 401,
+      "cacheControl": "public, max-age=0, must-revalidate"
+    }
+  ],
+  "negativeChecks": [
+    {
+      "name": "probe-before-refill completion",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "Upload an authorised proof photo for this delivery attempt before completion."
+    },
+    {
+      "name": "incorrect gas quantity",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "These readings show 1 kg added; this customer paid for 12.5 kg. Check the actual readings or contact the office. Delivery is not completed."
+    },
+    {
+      "name": "previous driver proof access",
+      "status": 404,
+      "code": "INVALID_REQUEST",
+      "error": "Order not found."
+    },
+    {
+      "name": "probe-before-refill no mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "probe-before-photo completion",
+      "status": 409,
+      "code": "INVALID_REQUEST",
+      "error": "Upload an authorised proof photo for this delivery attempt before completion."
+    },
+    {
+      "name": "photo without consent",
+      "status": 400,
+      "error": "Record customer consent before taking or uploading a photo."
+    },
+    {
+      "name": "previous driver proof access",
+      "status": 404,
+      "code": "INVALID_REQUEST",
+      "error": "Order not found."
+    },
+    {
+      "name": "probe-before-photo no mutation",
+      "status": "PASS"
+    },
+    {
+      "name": "duplicate completion with new identity",
+      "status": 409,
+      "error": "Verified arrival at the current assigned visit is required."
+    }
+  ],
+  "auditCounts": {
+    "dispatch.assignToday": 1,
+    "daily.order_reserved": 1,
+    "daily.refill.record": 1,
+    "delivery.completed": 1
+  },
+  "duplicateCompletionStockUnchanged": true,
+  "preservation": {
+    "originalOrdersChecked": 31,
+    "exactOrderMatches": 30,
+    "lagosSettingsMatch": true,
+    "physicalBranchGasUnchanged": true,
+    "openingAddedSuppliedClosingGasUnchanged": true,
+    "strictSnapshotComparison": "DIFFERENT \u2014 separate original Lagos order/day reservation observed; retained without rollback",
+    "observedDifference": {
+      "orderStatusAndDriverPaymentTotalUnchanged": true,
+      "orderTrackingVersion": [
+        4,
+        5
+      ],
+      "lagosDayCommittedGrams": [
+        12500,
+        18500
+      ],
+      "lagosReservedStockGrams": [
+        85000,
+        79000
+      ],
+      "auditActions": [
+        "dispatch.assignToday",
+        "daily.order_reserved"
+      ],
+      "at": "2026-11-28T13:31:21.936Z",
+      "syntheticDeliveryCompletedAt": "2026-11-28T13:29:51.913Z",
+      "attribution": "Observed concurrent difference; not attributed to a particular person/session. Test API inputs targeted only the QA branch/order. No claim of an unchanged database snapshot."
+    }
+  },
+  "cleanup": {
+    "testDriverAccessSuspended": true,
+    "testAreaHidden": true,
+    "testDayClosed": true,
+    "syntheticHistoryRetained": true,
+    "knownApiSessionsRevoked": [
+      "customer",
+      "previous already revoked",
+      "today already revoked",
+      "owner current verifier session"
+    ]
+  },
+  "limitations": [
+    "No physical refill or calibration evidence was manufactured; scale readings and photo clearly labelled synthetic.",
+    "No new signed-native/TestFlight or offline/physical camera acceptance in this browser test.",
+    "Two prior broader Dispatch test failures and original production NO-GO remain."
+  ]
+}

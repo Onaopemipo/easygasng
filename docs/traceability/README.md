@@ -498,3 +498,5 @@ Public gas price/flat fee loading verified —28 November2026: [PLOAD matrix](pu
 Retained homepage navigation —28 November2026: [HOMEKEEP matrix](home-continuity-rtm.md). Preserve the public Home while a fresh response loads; no identity or protected-page cache, previous production holds retained.
 
 One-step daily assignment: [matrix](daily-assignment-rtm.md). Direct reassignment and atomic daily reservation, preserving all existing daily/production gates.
+
+One-step daily assignment hosted continuation —28 November2026: [DAYASSIGN matrix](daily-assignment-rtm.md) now retains4/4 bounded verified requirements/gates. Actual existing-demo Admin/Driver flow completed with12.5kg, consented photo, customer Delivered and zero-variance QA day closure. [Evidence](../daily-assignment/hosted-evidence/README.md) explicitly records concurrent Lagos reservation drift; no unchanged-database claim, new runtime deployment or signed-native acceptance. Original production NO-GO and two broader Dispatch baseline failures remain.

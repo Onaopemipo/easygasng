@@ -1,0 +1,112 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- alert: Home
+- complementary "Assigned work navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin/deliveries
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Assigned work":
+    - region "Delivery & Services":
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+  - generic "SANDBOX ONLY — Daily flow QA qa-daily-18930820":
+    - generic: SANDBOX ONLY — Daily flow QA qa-daily-18930820
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: SANDBOX ONLY — Daily flow QA Today driver, Driver"':
+    - /url: /account
+    - generic: S
+    - strong: SANDBOX ONLY — Daily flow QA Today driver
+    - generic: Driver
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "1"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: S
+    - strong: SANDBOX ONLY — Daily flow QA Today driver
+    - generic: Driver
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Deliveries
+  - text: EASYGAS · DRIVER WORKSPACE
+  - heading "Orders" [level=1]
+  - paragraph: Review and manage your assigned deliveries.
+  - button "Refresh":
+    - text: Refresh
+  - navigation "Driver workspace":
+    - button "Home":
+      - text: Home
+    - button "Orders" [pressed]:
+      - text: Orders
+    - button "History":
+      - text: History
+    - button "Profile":
+      - text: Profile
+  - button "Back to orders"
+  - heading "EG-2026-FB8DDC69" [level=2]:
+    - text: EG-2026-FB8DDC69
+  - paragraph: At destination
+  - paragraph:
+    - text: SANDBOX ONLY — Daily flow QA Refill customer
+  - paragraph:
+    - text: 12 Synthetic QA Street, SANDBOX ONLY — Daily flow QA
+  - paragraph:
+    - text: 2026-11-28 · 14:00–18:00
+  - paragraph:
+    - text: 12.5 kg gas · 12.5 kg cylinder
+  - paragraph:
+    - text: Updated 28 Nov 2026, 14:28 WAT
+  - region "Record scale refill":
+    - heading "Weigh and refill" [level=3]
+    - paragraph:
+      - text: Customer paid for
+      - strong: 12.5 kg
+      - text: . Weigh each cylinder before and after filling on the same scale. The difference is the gas supplied.
+    - group "Cylinder 1":
+      - generic: Cylinder 1
+      - text: Weight before filling (kg)
+      - spinbutton "Cylinder 1 weight before filling (kg)"
+      - text: Weight after filling (kg)
+      - spinbutton "Cylinder 1 weight after filling (kg)"
+    - status: "Gas added: 0 kg · Paid quantity: 12.5 kg"
+    - button "Add another cylinder"
+    - button "Save scale readings"
+  - heading "Proof of delivery" [level=3]
+  - paragraph: Photograph the delivered items with customer consent. Avoid faces and home interiors. Uploading proof does not complete delivery.
+  - text: Proof photo *
+  - generic: (required)
+  - button "Proof photo (required)" [disabled]
+  - text: Proof description *
+  - generic: (required)
+  - textbox "Proof description (required)" [disabled]
+  - checkbox "Customer consented to this evidence photo." [disabled]
+  - generic: Customer consented to this evidence photo.
+  - button "Upload proof photo" [disabled]
+  - heading "Complete refill" [level=3]
+  - paragraph: Record the supplied gas amount and upload a photo of the completed refill. No customer handover code is needed.
+  - checkbox "All items and the full gas quantity were physically handed over." [disabled]
+  - generic: All items and the full gas quantity were physically handed over.
+  - button "Complete refill" [disabled]
+  - generic "Delivery problem or dispatch help"
+  - option "customer unavailable" [selected]
+  - option "invalid address"
+  - option "verification failure"
+  - option "quantity mismatch"
+  - option "damaged unsafe cylinder"
+  - option "driver unavailable"
+  - option "vehicle problem"
+  - option "payment arrangement issue"
+  - option "gps outage"
+  - option "failed handover"
+  - option "other"
+- text: EasyGas Business · NGN · Africa/Lagos

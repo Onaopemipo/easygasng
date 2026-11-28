@@ -164,18 +164,61 @@
       ],
       "uiReference": "User screenshot: order driver differs from active delivery-day driver, leaving reserve button disabled",
       "critical": true
+    },
+    {
+      "id": "DAYASSIGN-04",
+      "priority": "P1",
+      "requirement": "Execute full deployed demo flow from reassignment/automatic reservation through driver acceptance, scale refill, consented photo upload and delivery completion",
+      "implementationFiles": [
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/lib/driver-workspace.ts",
+        "apps/web/lib/delivery-photos.ts",
+        "apps/web/components/driver-experience.tsx",
+        "apps/web/components/driver-delivery-controls.tsx"
+      ],
+      "authoritativeData": [
+        "Existing demo deployed endpoints",
+        "Current-attempt photo and daily refill records",
+        "Canonical order/payment/stock/audit records"
+      ],
+      "securityControls": "Separate labelled synthetic branch/day; preserve existing records and real opening/closing figures; test negative premature completion/old-driver access; no external payment/message or fabricated real evidence.",
+      "routes": [
+        "/admin/orders",
+        "/driver",
+        "/api/media",
+        "/api/driver.complete"
+      ],
+      "testFiles": [
+        "scripts/verify-daily-assignment-hosted.mjs",
+        "tests/daily-assignment-traceability.test.ts"
+      ],
+      "testIds": [
+        "DAYASSIGN-HOSTED-E2E"
+      ],
+      "evidence": [
+        "docs/daily-assignment/hosted-evidence/results.json",
+        "docs/daily-assignment/hosted-evidence/verification.txt",
+        "docs/daily-assignment/hosted-evidence/02-reassigned.jpg",
+        "docs/daily-assignment/hosted-evidence/08-delivered.jpg"
+      ],
+      "acceptanceGate": "DAYASSIGN-G4",
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Actual deployed UI completed all requested steps; authoritative API stock/history/photo/audit and negative checks passed. Separate Lagos reservation drift explicitly retained in evidence; no unchanged-snapshot claim.",
+      "outstandingWork": "None for this bounded hosted browser flow. Signed-native/physical/offline acceptance, two historical broader Dispatch failures and existing production NO-GO remain separate.",
+      "uiReference": "User-requested full hosted Admin \u2192 Driver \u2192 Delivered flow"
     }
   ],
   "coverage": {
-    "requirements": 3,
-    "implemented": 3,
-    "verified": 3,
+    "requirements": 4,
+    "implemented": 4,
+    "verified": 4,
     "criticalRequirements": 1,
     "criticalVerified": 1,
-    "routes": 4,
-    "routesVerified": 4,
-    "gates": 3,
-    "gatesPassed": 3,
+    "routes": 7,
+    "routesVerified": 7,
+    "gates": 4,
+    "gatesPassed": 4,
     "excluded": 0,
     "broaderDispatchRegression": {
       "total": 18,
@@ -193,7 +236,9 @@
   "changeLog": [
     "User approved direct Reassign to today\u2019s driver in order modal and automatic reservation with assignment; daily opening/closing measured weight requirements retained.",
     "Regression repair: exclude only display fetchedAt from same-visit quote hash; prices/versions/stock/visit checks remain. Two baseline Dispatch audit/preparation expectation failures preserved and documented; not excluded from broader test counts.",
-    "Verified source16160a1; demo dpl_7DrsEXcvd7HVS6Ndw3cJmLWawAjq. No schema/native/measurement changes. Existing holds and baseline failures preserved."
+    "Verified source16160a1; demo dpl_7DrsEXcvd7HVS6Ndw3cJmLWawAjq. No schema/native/measurement changes. Existing holds and baseline failures preserved.",
+    "User requested full deployed demo acceptance; DAYASSIGN-04/G4 added without replacing earlier local acceptance or dropping wider holds.",
+    "Hosted synthetic EG-2026-FB8DDC69 full-flow PASS; closed QA day/disabled test area/suspended generated drivers. Strict original snapshot differs by a separate Lagos6kg reservation; original measured gas/settings unchanged, drift retained without rollback. No application source change or new deployment/native binary."
   ],
   "acceptanceGates": [
     {
@@ -213,6 +258,12 @@
       "status": "PASS",
       "evidence": "docs/daily-assignment/evidence/release.json",
       "scope": "Protected role/branch/release/payment/physical-handover negatives and source-verified active demo"
+    },
+    {
+      "id": "DAYASSIGN-G4",
+      "status": "PASS",
+      "evidence": "docs/daily-assignment/hosted-evidence/results.json",
+      "scope": "Actual hosted full UI flow, authoritative completion/stock/photo privacy/audit, negative gates and isolated-test cleanup; concurrent Lagos reservation drift recorded explicitly"
     }
   ],
   "matrixValidation": {
