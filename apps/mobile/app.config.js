@@ -93,6 +93,5 @@ module.exports = {
   android: {
     ...base.expo.android,
     ...(localDemo ? { package: base.expo.android.package + ".local" } : {}),
-    usesCleartextTraffic: !production,
   },
 };

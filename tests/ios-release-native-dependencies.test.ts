@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFileSync} from 'node:fs';import {createRequire} from 'node:module';import path from 'node:path';import vm from 'node:vm';
+const mobile=path.resolve('apps/mobile'),req=createRequire(path.join(mobile,'package.json'));
+test('IOS29-PEERS signed-native audio has explicit asset dependency and one matching native constants implementation',()=>{
+ const p=JSON.parse(readFileSync(path.join(mobile,'package.json'),'utf8')),lock=JSON.parse(readFileSync(path.join(mobile,'package-lock.json'),'utf8'));assert.equal(p.dependencies['expo-asset'],'58.0.21');assert.equal(p.dependencies['expo-constants'],'58.0.16');assert.equal(req('expo-asset/package.json').version,'58.0.21');assert.equal(req('expo-constants/package.json').version,'58.0.16');assert.deepEqual(Object.keys(lock.packages).filter(x=>x.endsWith('/expo-constants')),['node_modules/expo-constants']);
+});
+test('IOS29-NETWORK local-only Android cleartext plugin retains explicit enablement and removes stale permission outside local mode',()=>{
+ const code=readFileSync(path.join(mobile,'plugins/with-local-android-network.js'),'utf8');const sandbox:any={module:{exports:{}},require:(name:string)=>{assert.equal(name,'expo/config-plugins');return {AndroidConfig:{Manifest:{getMainApplicationOrThrow:(m:any)=>m.manifest.application[0]}},withAndroidManifest:(_:any,cb:any)=>cb({modResults:{manifest:{application:[{$:{'android:usesCleartextTraffic':'true'}}]}}})}}};vm.runInNewContext(code,sandbox);const plugin=sandbox.module.exports;
+ assert.equal(plugin({}, {enabled:true}).modResults.manifest.application[0].$['android:usesCleartextTraffic'],'true');assert.equal('android:usesCleartextTraffic' in plugin({}, {enabled:false}).modResults.manifest.application[0].$,false);
+});

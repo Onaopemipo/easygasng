@@ -1,0 +1,70 @@
+{
+  "reason": "Cloud preflight found a missing direct expo-asset peer, duplicate expo-constants, and unsupported android.usesCleartextTraffic app-config field. Build6 held and not submitted.",
+  "changes": [
+    {
+      "path": "",
+      "before": "0.1.0",
+      "after": "0.1.0"
+    },
+    {
+      "path": "node_modules/expo-asset/node_modules/@expo/env",
+      "before": "2.6.0",
+      "after": null
+    },
+    {
+      "path": "node_modules/expo-asset/node_modules/expo-constants",
+      "before": "58.0.16",
+      "after": null
+    },
+    {
+      "path": "node_modules/expo-constants",
+      "before": "58.0.14",
+      "after": "58.0.16"
+    },
+    {
+      "path": "node_modules/expo-constants/node_modules/@expo/env",
+      "before": null,
+      "after": "2.6.0"
+    },
+    {
+      "path": "node_modules/expo-notifications/node_modules/@expo/env",
+      "before": "2.6.0",
+      "after": null
+    },
+    {
+      "path": "node_modules/expo-notifications/node_modules/expo-constants",
+      "before": "58.0.16",
+      "after": null
+    }
+  ],
+  "directAssetVersion": "58.0.21",
+  "directConstantsVersion": "58.0.16",
+  "assetVersionAlreadyInBuild5Lock": true,
+  "constantsVersionAlreadyInBuild5Lock": true,
+  "cryptoPackagesUnchanged": [
+    "node_modules/tweetnacl",
+    "node_modules/expo-crypto",
+    "node_modules/expo-secure-store"
+  ],
+  "cryptoImplementationUnchanged": true,
+  "encryptionClassification": "Retain prior approved standard third-party/no-France classification: cryptographic implementation, tweetnacl, expo-crypto and secure-store entries unchanged; only existing asset/constants direct declaration and deduplication/support nesting changed.",
+  "networkSafeguard": "Removed invalid unused config property; existing with-local-android-network plugin continues explicit local-only enablement and removal otherwise.",
+  "baselineSourceCommit": "ee4bfeceebfc609270f8038a8eebf8580e6f89f5",
+  "cryptoEntryHashes": {
+    "node_modules/tweetnacl": "3d016822fcdb58e705967573d82c9311ef1e425d8a47e10af5425319624c5d28",
+    "node_modules/expo-crypto": "88063c7afd51283cf7dbdeaa0caca4fdbc0930f249693b8aaef53d69e4539fae",
+    "node_modules/expo-secure-store": "366f4c87c3e8683c30c0ccf41c2281ea4043a05a1948c44ac3b0715aab06593e"
+  },
+  "remainingDiagnostics": {
+    "expoDoctor": {
+      "total": 20,
+      "passed": 18,
+      "failed": 2,
+      "excluded": 0
+    },
+    "open": [
+      "Dynamic/static app-config comparison warning; manual review confirms base.expo spread and app identity/configuration gates pass.",
+      "Newer Expo SDK58 minor/patch alignment recommendations retained; no unrelated SDK migration in this tested fix release."
+    ]
+  }
+}
