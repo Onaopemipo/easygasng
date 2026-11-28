@@ -138,6 +138,123 @@ export async function settleDaily(
   });
   return true;
 }
+/** Caller holds the order lock and supplies the intended canonical driver. Runs in its assignment transaction. */
+export async function attachDailyOrder(tx: SQL, user: Actor, o: any) {
+  const existing = await dailyAllocation(tx, o.id);
+  if (existing) {
+    if (existing.run_state !== "active" || existing.driver_id !== o.driver_id)
+      throw new AppError(
+        409,
+        "This order belongs to another delivery day. Refresh the order.",
+      );
+    return {
+      ok: true,
+      message: "This order is already reserved on today’s vehicle.",
+    };
+  }
+  const r = await one(
+    tx,
+    "SELECT * FROM daily_delivery_runs WHERE branch_id=$1 AND state='active' FOR UPDATE",
+    [o.branch_id],
+  );
+  if (!r)
+    throw new AppError(
+      409,
+      "Start the delivery day with the actual opening gas weight first.",
+    );
+  if (o.driver_id !== r.driver_id)
+    throw new AppError(
+      409,
+      "This order has a different driver. Reassign it to today’s driver before reserving gas.",
+    );
+  if (
+    (await one(
+      tx,
+      "SELECT order_id FROM order_items WHERE order_id=$1 LIMIT 1",
+      [o.id],
+    )) ||
+    (await one(
+      tx,
+      "SELECT order_id FROM bulk_lpg_allocations WHERE order_id=$1 AND state IN ('allocated','dispensed')",
+      [o.id],
+    )) ||
+    (await one(
+      tx,
+      "SELECT id FROM delivery_attempts WHERE order_id=$1 AND state IN ('picked_up','arrived','completed') LIMIT 1",
+      [o.id],
+    ))
+  )
+    throw new AppError(
+      409,
+      "This order has an existing physical handover. Resolve its earlier custody in Dispatch before using daily delivery.",
+    );
+
+  // Earlier daily startup reserved gas for unassigned queue entries. Restore their
+  // ordinary branch reservations without changing physical gas or payments.
+  const pending = (
+    await tx.query(
+      "SELECT a.id,a.order_id,a.grams FROM daily_delivery_allocations a JOIN orders o ON o.id=a.order_id WHERE a.run_id=$1 AND a.state='allocated' AND a.supplied_grams=0 AND o.driver_id IS NULL AND o.status IN ('placed','accepted','preparing') FOR UPDATE OF a,o",
+      [r.id],
+    )
+  ).rows;
+  const released = pending.reduce((n, a) => n + Number(a.grams), 0);
+  if (released) {
+    const stock = await one(
+      tx,
+      "UPDATE gas_stock SET reserved_grams=reserved_grams+$1 WHERE branch_id=$2 AND grams-reserved_grams>=$1 RETURNING branch_id",
+      [released, r.branch_id],
+    );
+    if (!stock)
+      throw new AppError(
+        409,
+        "Recorded branch stock cannot cover the queued orders separately from the vehicle. Review stock before changing reservations.",
+      );
+    for (const a of pending) {
+      await tx.query(
+        "UPDATE daily_delivery_allocations SET state='released' WHERE id=$1",
+        [a.id],
+      );
+      await audit(
+        tx,
+        user,
+        "daily.queued_order_unlinked",
+        a.order_id,
+        "success",
+        {
+          runId: r.id,
+          grams: Number(a.grams),
+          reason:
+            "Keep unassigned queued orders as ordinary branch reservations",
+        },
+      );
+    }
+    await tx.query(
+      "UPDATE daily_delivery_runs SET committed_grams=committed_grams-$1,version=version+1 WHERE id=$2",
+      [released, r.id],
+    );
+  }
+  const quantity = Number(
+    (await one(
+      tx,
+      "SELECT COALESCE(sum(grams),0) n FROM order_gas_lines WHERE order_id=$1",
+      [o.id],
+    ))!.n,
+  );
+  if (!quantity) throw new AppError(409, "This order contains no gas refill.");
+  const run = await takeDaily(tx, o.branch_id, quantity, o.driver_id);
+  if (!run)
+    throw new AppError(
+      409,
+      "Today’s vehicle has insufficient uncommitted gas. Record an actual additional load within its capacity, then reserve this order again.",
+    );
+  await allocateDaily(tx, user, o.id, run, quantity, true);
+  await fulfilmentReady(tx, o);
+  return {
+    ok: true,
+    message:
+      "Gas reserved on today’s vehicle. The driver can accept and start this delivery.",
+  };
+}
 export async function dailyDelivery(
   tx: SQL,
   user: Actor,
@@ -318,122 +435,9 @@ export async function dailyDelivery(
         409,
         "Refresh this order. Only an assigned order that has not started delivery can join the delivery day.",
       );
-    const existing = await dailyAllocation(tx, o.id);
-    if (existing) {
-      if (existing.run_state !== "active" || existing.driver_id !== o.driver_id)
-        throw new AppError(
-          409,
-          "This order belongs to another delivery day. Refresh the order.",
-        );
-      return {
-        ok: true,
-        message: "This order is already reserved on today’s vehicle.",
-      };
-    }
-    const r = await one(
-      tx,
-      "SELECT * FROM daily_delivery_runs WHERE branch_id=$1 AND state='active' FOR UPDATE",
-      [o.branch_id],
-    );
-    if (!r)
-      throw new AppError(
-        409,
-        "Start the delivery day with the actual opening gas weight first.",
-      );
-    if (o.driver_id !== r.driver_id)
-      throw new AppError(
-        409,
-        "This order has a different driver. Reassign it to today’s driver before reserving gas.",
-      );
-    if (
-      (await one(
-        tx,
-        "SELECT order_id FROM order_items WHERE order_id=$1 LIMIT 1",
-        [o.id],
-      )) ||
-      (await one(
-        tx,
-        "SELECT order_id FROM bulk_lpg_allocations WHERE order_id=$1 AND state IN ('allocated','dispensed')",
-        [o.id],
-      )) ||
-      (await one(
-        tx,
-        "SELECT id FROM delivery_attempts WHERE order_id=$1 AND state IN ('picked_up','arrived','completed') LIMIT 1",
-        [o.id],
-      ))
-    )
-      throw new AppError(
-        409,
-        "This order has an existing physical handover. Resolve its earlier custody in Dispatch before using daily delivery.",
-      );
-
-    // Earlier daily startup reserved gas for unassigned queue entries. Restore their
-    // ordinary branch reservations without changing physical gas or payments.
-    const pending = (
-      await tx.query(
-        "SELECT a.id,a.order_id,a.grams FROM daily_delivery_allocations a JOIN orders o ON o.id=a.order_id WHERE a.run_id=$1 AND a.state='allocated' AND a.supplied_grams=0 AND o.driver_id IS NULL AND o.status IN ('placed','accepted','preparing') FOR UPDATE OF a,o",
-        [r.id],
-      )
-    ).rows;
-    const released = pending.reduce((n, a) => n + Number(a.grams), 0);
-    if (released) {
-      const stock = await one(
-        tx,
-        "UPDATE gas_stock SET reserved_grams=reserved_grams+$1 WHERE branch_id=$2 AND grams-reserved_grams>=$1 RETURNING branch_id",
-        [released, r.branch_id],
-      );
-      if (!stock)
-        throw new AppError(
-          409,
-          "Recorded branch stock cannot cover the queued orders separately from the vehicle. Review stock before changing reservations.",
-        );
-      for (const a of pending) {
-        await tx.query(
-          "UPDATE daily_delivery_allocations SET state='released' WHERE id=$1",
-          [a.id],
-        );
-        await audit(
-          tx,
-          user,
-          "daily.queued_order_unlinked",
-          a.order_id,
-          "success",
-          {
-            runId: r.id,
-            grams: Number(a.grams),
-            reason:
-              "Keep unassigned queued orders as ordinary branch reservations",
-          },
-        );
-      }
-      await tx.query(
-        "UPDATE daily_delivery_runs SET committed_grams=committed_grams-$1,version=version+1 WHERE id=$2",
-        [released, r.id],
-      );
-    }
-    const quantity = Number(
-      (await one(
-        tx,
-        "SELECT COALESCE(sum(grams),0) n FROM order_gas_lines WHERE order_id=$1",
-        [o.id],
-      ))!.n,
-    );
-    if (!quantity)
-      throw new AppError(409, "This order contains no gas refill.");
-    const run = await takeDaily(tx, o.branch_id, quantity, o.driver_id);
-    if (!run)
-      throw new AppError(
-        409,
-        "Today’s vehicle has insufficient uncommitted gas. Record an actual additional load within its capacity, then reserve this order again.",
-      );
-    await allocateDaily(tx, user, o.id, run, quantity, true);
-    await fulfilmentReady(tx, o);
-    return {
-      ok: true,
-      message:
-        "Gas reserved on today’s vehicle. The driver can accept and start this delivery.",
-    };
+    return attachDailyOrder(tx, user, o);
   }
+
   if (action === "daily.start") {
     const d = z
       .object({

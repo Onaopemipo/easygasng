@@ -89,6 +89,7 @@ export const staffPrivileges: readonly Privilege[] = [
       "dispatch.candidates",
       "dispatch.assign",
       "dispatch.reassign",
+      "dispatch.assignToday",
     ],
     routes: ["deliveries", "drivers"],
   },

@@ -1,0 +1,69 @@
+(node:86234) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+✔ DDI-S024: unavailable drivers cannot receive a legacy manual assignment (1232.64575ms)
+✔ DDI-S024B: enhanced manual assignment rejects unavailable drivers before trip or route selection (791.292208ms)
+✔ DDI-READ01: scoped counts include every matching record and pagination never changes totals (863.13775ms)
+✔ DDI-READ02: dispatch reads reject customer/driver access and cross-branch filters (739.820459ms)
+✔ DDI-READ03: empty-date dashboard reports actual zeros and unknown contact (739.997541ms)
+✔ DDI-CONTACT01: foreground contact is independently measured, scoped and expires without changing availability (744.324083ms)
+✔ DDI-PAY01: unverified payment and revoked COD exception block canonical assignment with no attempt (807.125959ms)
+✔ DDI-S031: expired authorisation prevents driver acknowledgement without a response (794.556791ms)
+✖ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (98.86475ms)
+✔ DDI-S016: Lagos date boundaries and contact freshness never use upload time or future observations (0.85425ms)
+✖ DDI-READ04: literal search and status filters share scope and hide private order internals (767.054083ms)
+✔ DDI-KPI01: completed counts use actual Lagos delivery date rather than scheduled date (745.500167ms)
+✔ DDI-MASS01: vehicle mass is read once from custody and never added to inclusive branch stock (777.672417ms)
+✔ DDI-DECLINE01: declined assignments surface in exceptions and replay retains one response (783.733834ms)
+✔ DDI-S084: production assignment stays disabled without both explicit release approvals (800.800875ms)
+✔ DDI-PAY02: legacy invoice-less fulfilment uses the shared net-payment authority after an approved refund (818.400125ms)
+✔ DDI-S060: missing serialized cylinder allocation blocks dispatch before a delivery attempt (741.308667ms)
+(node:86301) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DASSIGN-REFRESH: actual readiness hook clears failed/stale snapshots and ignores late results after order/version changes (7.545667ms)
+ℹ tests 18
+ℹ suites 0
+ℹ pass 16
+ℹ fail 2
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 12919.742334
+
+✖ failing tests:
+
+test at tests/dispatch-centre-safety.test.ts:1:6763
+✖ DDI-AUDIT01: grouped navigation, customer/technician apps and financial orchestrator retain reviewed hashes (98.86475ms)
+  AssertionError [ERR_ASSERTION]: apps/mobile/TechnicianWorkspace.tsx
+  + actual - expected
+  
+  + '415ccaa01153bbdb17b1c2c1c9d59c09d91a999aedcf4adb10eac898b29b6518'
+  - 'b538131d4f079c375baa8af13508711c4a53ff5cca95fa809682b7b33db78766'
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/daily-delivery/git-worktree/tests/dispatch-centre-safety.test.ts:318:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '415ccaa01153bbdb17b1c2c1c9d59c09d91a999aedcf4adb10eac898b29b6518',
+    expected: 'b538131d4f079c375baa8af13508711c4a53ff5cca95fa809682b7b33db78766',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }
+
+test at tests/dispatch-centre-safety.test.ts:1:10793
+✖ DDI-READ04: literal search and status filters share scope and hide private order internals (767.054083ms)
+  AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+  
+  1 !== 0
+  
+      at TestContext.<anonymous> (/Users/philipog/Documents/ChatGPT/Easygas Smart Solution/.data/daily-delivery/git-worktree/tests/dispatch-centre-safety.test.ts:347:12)
+      at async Test.run (node:internal/test_runner/test:1389:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:960:7) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: 1,
+    expected: 0,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

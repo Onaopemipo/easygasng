@@ -1,0 +1,204 @@
+- note: Client demo · Synthetic test data · No real orders, payments or messages
+- complementary "Business workspace navigation":
+  - link "EasyGas workspace home":
+    - /url: /admin
+    - img "EasyGas Energy Solutions"
+  - button "Collapse sidebar" [expanded]:
+  - navigation "Administration":
+    - region "Overview":
+      - link "Dashboard":
+        - /url: /admin
+        - generic: Dashboard
+    - region "Sales & Customers":
+      - button "Sales & Customers" [expanded]:
+        - generic: Sales & Customers
+      - link "Orders":
+        - /url: /admin/orders
+        - generic: Orders
+      - link "Retail POS":
+        - /url: /admin/pos
+        - generic: Retail POS
+      - link "Customers":
+        - /url: /admin/customers
+        - generic: Customers
+      - link "Support Desk":
+        - /url: /admin/support
+        - generic: Support Desk
+    - region "Products & Stock":
+      - button "Products & Stock" [expanded]:
+        - generic: Products & Stock
+      - link "Products":
+        - /url: /admin/products
+        - generic: Products
+      - link "Inventory, 7 Physical product and bulk gas balances at or below configured thresholds":
+        - /url: /admin/inventory
+        - generic: Inventory
+        - generic: "7"
+      - link "Cylinders":
+        - /url: /admin/cylinders
+        - generic: Cylinders
+      - link "Product & Service Bundles":
+        - /url: /admin/bundles
+        - generic: Product & Service Bundles
+    - region "Delivery & Services":
+      - button "Delivery & Services" [expanded]:
+        - generic: Delivery & Services
+      - link "Deliveries":
+        - /url: /admin/deliveries
+        - generic: Deliveries
+      - link "Service Bookings":
+        - /url: /admin/bookings
+        - generic: Service Bookings
+      - link "Professional Services":
+        - /url: /admin/services
+        - generic: Professional Services
+      - link "Technicians":
+        - /url: /admin/technicians
+        - generic: Technicians
+      - link "Drivers":
+        - /url: /admin/drivers
+        - generic: Drivers
+      - link "Quotations":
+        - /url: /admin/quotations
+        - generic: Quotations
+    - region "Finance & Performance":
+      - button "Finance & Performance" [expanded]:
+        - generic: Finance & Performance
+      - link "Wallet & Payments":
+        - /url: /admin/finance
+        - generic: Wallet & Payments
+      - link "Financial Reconciliation":
+        - /url: /admin/reconciliation
+        - generic: Financial Reconciliation
+      - link "Credits & Refunds":
+        - /url: /admin/credits
+        - generic: Credits & Refunds
+      - link "Reports & Analytics":
+        - /url: /admin/reports
+        - generic: Reports & Analytics
+    - region "Growth & Engagement":
+      - button "Growth & Engagement" [expanded]:
+        - generic: Growth & Engagement
+      - link "Campaigns":
+        - /url: /admin/campaigns
+        - generic: Campaigns
+      - link "Recommendations":
+        - /url: /admin/recommendations
+        - generic: Recommendations
+      - link "Customer Testimonials":
+        - /url: /admin/testimonials
+        - generic: Customer Testimonials
+    - region "Administration & Control":
+      - button "Administration & Control" [expanded]:
+        - generic: Administration & Control
+      - link "Staff Management":
+        - /url: /admin/staff
+        - generic: Staff Management
+      - link "Approval Centre":
+        - /url: /admin/approvals
+        - generic: Approval Centre
+      - link "Settings":
+        - /url: /admin/settings
+        - generic: Settings
+      - link "Operations Centre":
+        - /url: /admin/operations
+        - generic: Operations Centre
+      - link "Operational Incidents":
+        - /url: /admin/incidents
+        - generic: Operational Incidents
+      - link "Customer Policies":
+        - /url: /admin/policies
+        - generic: Customer Policies
+      - link "Audit History":
+        - /url: /admin/audit
+        - generic: Audit History
+      - link "Launch Readiness":
+        - /url: /admin/readiness
+        - generic: Launch Readiness
+  - generic "Lagos":
+    - generic: Lagos
+  - link "Customer Website":
+    - /url: /
+    - generic: Customer Website
+  - 'link "Your profile: owner, Admin"':
+    - /url: /account
+    - generic: o
+    - strong: owner
+    - generic: Admin
+  - button "Sign Out":
+    - generic: Sign Out
+- banner:
+  - searchbox "Search permitted business records"
+  - button "Switch to dark mode":
+  - button "Refresh information":
+  - button "View notifications":
+    - generic: "1"
+  - link "Help":
+    - /url: /help
+  - generic "Account menu":
+    - generic: o
+    - strong: owner
+    - generic: Admin
+- main:
+  - text: Workspace
+  - generic: /
+  - text: Orders
+  - heading "Your orders, in one place." [level=1]
+  - paragraph: Records are limited to your account permissions and branch scope.
+  - button "New phone order"
+  - heading "Orders" [level=2]
+  - textbox "Search records":
+    - /placeholder: Search records…
+  - table:
+    - rowgroup:
+      - row "Reference Customer Amount Status Payment":
+        - columnheader "Reference"
+        - columnheader "Customer"
+        - columnheader "Amount"
+        - columnheader "Status"
+        - columnheader "Payment"
+        - columnheader
+    - rowgroup:
+      - row "EG-2026-543E6D58 customer ₦27,500 assigned verified Details":
+        - cell "EG-2026-543E6D58":
+          - strong: EG-2026-543E6D58
+        - cell "customer"
+        - cell "₦27,500"
+        - cell "assigned":
+          - generic: assigned
+        - cell "verified"
+        - cell "Details":
+          - button "Details":
+            - text: Details
+  - dialog "EG-2026-543E6D58":
+    - heading "EG-2026-543E6D58" [level=2]
+    - button "Close dialog":
+    - generic: assigned
+    - generic: ₦27,500
+    - button "Refresh order"
+    - navigation "Order details":
+      - button "Overview" [pressed]
+      - button "Items"
+      - button "Payment"
+      - button "History"
+    - heading "Customer" [level=3]
+    - strong: customer
+    - paragraph: "08012345678"
+    - paragraph: 12 Synthetic Street, Lekki
+    - heading "Delivery" [level=3]
+    - strong: 29 Nov 2026 · 14:00–18:00
+    - paragraph: Lagos time
+    - paragraph: "Driver: Today driver"
+    - generic: 12.5 kg gas
+    - generic: "Payment: verified"
+    - status:
+      - generic: Daily vehicle gas is reserved for this order. The driver accepts and starts delivery in their app. Refresh this order to see their progress.
+    - button "Extra order for this visit"
+    - button "Awaiting driver start" [disabled]
+    - combobox "More order actions":
+      - option "More actions…" [selected]
+      - option "Extra order for this visit"
+      - option "Other status changes"
+- text: EasyGas Business · NGN · Africa/Lagos
+- button "Open Next.js Dev Tools":
+- alert

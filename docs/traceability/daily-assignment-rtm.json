@@ -1,0 +1,144 @@
+{
+  "phase": "One-step daily assignment",
+  "date": "2026-11-28",
+  "requirements": [
+    {
+      "id": "DAYASSIGN-01",
+      "priority": "P1",
+      "requirement": "Offer direct reassignment to the current daily driver inside the order modal; keep it open and show resulting next action",
+      "implementationFiles": [
+        "apps/web/components/daily-delivery.tsx",
+        "apps/web/components/admin-order-details.tsx"
+      ],
+      "authoritativeData": [
+        "orders/tracking_version",
+        "active daily_delivery_runs and allocations",
+        "current delivery attempt",
+        "canonical verified payment/branch stock"
+      ],
+      "securityControls": "Same existing Dispatch privilege and owner/manager branch controls; atomic DB transaction, stable operation identity, fresh run/order versions, no physical handover migration or stock creation.",
+      "routes": [
+        "/admin/orders",
+        "/api/dispatch.assignToday",
+        "/api/order.transition",
+        "/api/dispatch.reassign"
+      ],
+      "testFiles": [
+        "tests/daily-assignment.test.ts",
+        "tests/daily-assignment-postgres.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/same-visit-orders.test.ts",
+        "tests/admin-order-modal.test.ts"
+      ],
+      "evidence": [
+        "docs/daily-assignment/README.md",
+        "docs/daily-assignment/evidence/regression.txt",
+        "docs/daily-assignment/evidence/security.txt",
+        "docs/daily-assignment/evidence/postgres.txt",
+        "docs/daily-assignment/evidence/browser-verification.json"
+      ],
+      "acceptanceGate": "DAYASSIGN-G1",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
+      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+    },
+    {
+      "id": "DAYASSIGN-02",
+      "priority": "P1",
+      "requirement": "Assign/reassign and reserve daily gas atomically using current order/run versions, with no separate reservation/password form",
+      "implementationFiles": [
+        "apps/web/lib/driver-operations.ts",
+        "apps/web/lib/tanker-orders.ts",
+        "apps/web/lib/daily-delivery.ts",
+        "apps/web/lib/dispatch-centre.ts"
+      ],
+      "authoritativeData": [
+        "orders/tracking_version",
+        "active daily_delivery_runs and allocations",
+        "current delivery attempt",
+        "canonical verified payment/branch stock"
+      ],
+      "securityControls": "Same existing Dispatch privilege and owner/manager branch controls; atomic DB transaction, stable operation identity, fresh run/order versions, no physical handover migration or stock creation.",
+      "routes": [
+        "/admin/orders",
+        "/api/dispatch.assignToday",
+        "/api/order.transition",
+        "/api/dispatch.reassign"
+      ],
+      "testFiles": [
+        "tests/daily-assignment.test.ts",
+        "tests/daily-assignment-postgres.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/same-visit-orders.test.ts",
+        "tests/admin-order-modal.test.ts"
+      ],
+      "evidence": [
+        "docs/daily-assignment/README.md",
+        "docs/daily-assignment/evidence/regression.txt",
+        "docs/daily-assignment/evidence/security.txt",
+        "docs/daily-assignment/evidence/postgres.txt",
+        "docs/daily-assignment/evidence/browser-verification.json"
+      ],
+      "acceptanceGate": "DAYASSIGN-G2",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
+      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+    },
+    {
+      "id": "DAYASSIGN-03",
+      "priority": "P0",
+      "requirement": "Preserve role/branch/release/idempotency/paid-order/stock/physical-handover protections; verify concurrent retries and demo rollout",
+      "implementationFiles": [
+        "apps/web/lib/service.ts",
+        "packages/business-rules/src/staff-privileges.ts",
+        "apps/web/lib/same-visit-orders.ts"
+      ],
+      "authoritativeData": [
+        "orders/tracking_version",
+        "active daily_delivery_runs and allocations",
+        "current delivery attempt",
+        "canonical verified payment/branch stock"
+      ],
+      "securityControls": "Same existing Dispatch privilege and owner/manager branch controls; atomic DB transaction, stable operation identity, fresh run/order versions, no physical handover migration or stock creation.",
+      "routes": [
+        "/admin/orders",
+        "/api/dispatch.assignToday",
+        "/api/order.transition",
+        "/api/dispatch.reassign"
+      ],
+      "testFiles": [
+        "tests/daily-assignment.test.ts",
+        "tests/daily-assignment-postgres.test.ts",
+        "tests/daily-delivery-components.test.ts",
+        "tests/daily-delivery.test.ts",
+        "tests/same-visit-orders.test.ts",
+        "tests/admin-order-modal.test.ts"
+      ],
+      "evidence": [
+        "docs/daily-assignment/README.md",
+        "docs/daily-assignment/evidence/regression.txt",
+        "docs/daily-assignment/evidence/security.txt",
+        "docs/daily-assignment/evidence/postgres.txt",
+        "docs/daily-assignment/evidence/browser-verification.json"
+      ],
+      "acceptanceGate": "DAYASSIGN-G3",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
+      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+    }
+  ],
+  "coverage": {
+    "requirements": 3,
+    "verified": 0,
+    "gates": 3,
+    "gatesPassed": 0,
+    "excluded": 0
+  },
+  "productionDecision": "Existing production NO-GO and unrelated work preserved",
+  "changeLog": [
+    "User approved direct Reassign to today\u2019s driver in order modal and automatic reservation with assignment; daily opening/closing measured weight requirements retained.",
+    "Regression repair: exclude only display fetchedAt from same-visit quote hash; prices/versions/stock/visit checks remain. Two baseline Dispatch audit/preparation expectation failures preserved and documented; not excluded from broader test counts."
+  ]
+}

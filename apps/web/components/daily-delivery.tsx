@@ -101,40 +101,65 @@ export default function DailyDelivery({
       Number(run.committed_grams) / 1000 +
       Number(run.queued_grams ?? 0) / 1000
     : 0;
+  async function assignToday() {
+    if (pending.current || !run || !order) return;
+    const input = {
+      orderId: order.id,
+      runId: run.id,
+      version: Number(order.tracking_version),
+    };
+    const signature = JSON.stringify(["dispatch.assignToday", input]);
+    if (operation.current.signature !== signature)
+      operation.current = { signature, key: crypto.randomUUID() };
+    pending.current = true;
+    setBusy(true);
+    setError("");
+    try {
+      const result = await api("dispatch.assignToday", {
+        ...input,
+        operationKey: operation.current.key,
+      });
+      setMessage(result.message);
+      setRevision((x) => x + 1);
+      onChange();
+    } catch (err: any) {
+      setError(err.message);
+      setRevision((x) => x + 1);
+    } finally {
+      pending.current = false;
+      setBusy(false);
+    }
+  }
   async function submit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (pending.current) return;
     const form = e.currentTarget,
       f = new FormData(form),
       action = run
-        ? attachOrder
-          ? "daily.order.attach"
-          : mode === "add"
-            ? "daily.add"
-            : "daily.close"
+        ? mode === "add"
+          ? "daily.add"
+          : "daily.close"
         : "daily.start";
-    const input: any = attachOrder
-      ? { orderId: order.id, version: Number(order.tracking_version) }
-      : run
-        ? {
-            runId: run.id,
-            version: Number(run.version),
-            kg: Number(f.get("kg")),
-            reason: String(f.get("reason") || ""),
-            ...(action === "daily.close"
-              ? {
-                  carryForward: f.get("carryForward") === "on",
-                  endOdometer: Number(f.get("odometer")),
-                }
-              : {}),
-          }
-        : {
-            driverId: f.get("driver"),
-            vehicleId: f.get("vehicle"),
-            openingKg: Number(f.get("kg")),
-            startOdometer: Number(f.get("odometer")),
-            scaleReference: String(f.get("scale") || ""),
-          };
+    const input: any = run
+      ? {
+          runId: run.id,
+          version: Number(run.version),
+          kg: Number(f.get("kg")),
+          reason: String(f.get("reason") || ""),
+          ...(action === "daily.close"
+            ? {
+                carryForward: f.get("carryForward") === "on",
+                endOdometer: Number(f.get("odometer")),
+              }
+            : {}),
+        }
+      : {
+          driverId: f.get("driver"),
+          vehicleId: f.get("vehicle"),
+          openingKg: Number(f.get("kg")),
+          startOdometer: Number(f.get("odometer")),
+          scaleReference: String(f.get("scale") || ""),
+        };
     if (!run) {
       const chosen = vehicles.find((v: any) => v.id === input.vehicleId);
       if (!chosen || input.openingKg > Number(chosen.capacity_grams) / 1000) {
@@ -172,7 +197,11 @@ export default function DailyDelivery({
     }
   }
   return (
-    <section className="stack panel" aria-label="Today’s delivery day">
+    <section
+      className="stack panel"
+      aria-label="Today’s delivery day"
+      data-submit-pending={busy ? "true" : undefined}
+    >
       <h2>Today’s deliveries</h2>
       <button
         className="button secondary"
@@ -258,9 +287,40 @@ export default function DailyDelivery({
         order.status === "out_for_delivery" && (
           <Notice message="This delivery already started before daily setup. Contact Dispatch to resolve the existing physical handover; do not create a second load." />
         )}
-      {data && options && (!run || mode || attachOrder) && (
+      {attachOrder && (
+        <section className="stack" aria-label="Assign today’s driver">
+          <p>
+            Assigning this order reserves its {orderKg} kg on today’s vehicle in
+            the same step. The driver can then accept and start delivery.
+          </p>
+          <button
+            className="button"
+            type="button"
+            disabled={
+              busy || cannotWrite || !data.enabled || availableKg < orderKg
+            }
+            onClick={() => void assignToday()}
+          >
+            {busy
+              ? "Assigning and reserving gas…"
+              : order.driver_id !== run.driver_id
+                ? "Reassign to today’s driver"
+                : "Continue with today’s driver"}
+          </button>
+          {availableKg < orderKg && (
+            <Notice
+              type="error"
+              message={`Today’s vehicle needs ${Math.round((orderKg - availableKg) * 1000) / 1000} kg more available gas. Record an actual additional load using Add gas, then try again.`}
+            />
+          )}
+          {!data.enabled && (
+            <Notice message="Field operations are awaiting release approval." />
+          )}
+        </section>
+      )}
+      {data && options && (!run || mode) && (
         <form
-          key={`${run?.id ?? "start"}:${mode}:${attachOrder ? order.id : ""}`}
+          key={`${run?.id ?? "start"}:${mode}`}
           onSubmit={submit}
           className="stack"
         >
@@ -273,11 +333,9 @@ export default function DailyDelivery({
           <h3>
             {!run
               ? "Start delivery day"
-              : attachOrder
-                ? "Reserve gas for this order"
-                : mode === "add"
-                  ? "Additional gas loaded"
-                  : "Closing reconciliation"}
+              : mode === "add"
+                ? "Additional gas loaded"
+                : "Closing reconciliation"}
           </h3>
           <fieldset
             disabled={busy || cannotWrite || !data.enabled}
@@ -332,7 +390,7 @@ export default function DailyDelivery({
                 )}
               </>
             )}
-            {!attachOrder && (
+            {
               <label>
                 {!run
                   ? "Opening gas-only weight (kg)"
@@ -352,7 +410,7 @@ export default function DailyDelivery({
                   required
                 />
               </label>
-            )}
+            }
             {run && mode === "close" && (
               <>
                 <p>
@@ -400,30 +458,16 @@ export default function DailyDelivery({
                 required
               />
             </label>
-            <button
-              className="button"
-              disabled={
-                attachOrder &&
-                (order.driver_id !== run.driver_id || availableKg < orderKg)
-              }
-            >
+            <button className="button">
               {busy
                 ? "Saving…"
                 : !run
                   ? "Start day"
-                  : attachOrder
-                    ? "Reserve gas for this order"
-                    : mode === "add"
-                      ? "Record additional gas"
-                      : "Confirm and close day"}
+                  : mode === "add"
+                    ? "Record additional gas"
+                    : "Confirm and close day"}
             </button>
-            {attachOrder && availableKg < orderKg && (
-              <Notice
-                type="error"
-                message={`Record at least ${Math.round((orderKg - availableKg) * 1000) / 1000} kg of actual additional gas using Add gas, within the vehicle capacity. Do not change measurements to fit an order.`}
-              />
-            )}
-            {run && !attachOrder && (
+            {run && (
               <button
                 type="button"
                 className="button secondary"

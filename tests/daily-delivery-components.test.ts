@@ -434,18 +434,13 @@ test("DAY-UI-SETUP capacity is visible and invalid opening weights never reauthe
     assert(
       !t.root.findAllByType("input").some((n: any) => n.props.name === "kg"),
     );
-    await act(async () =>
-      t.root
-        .findByType("form")
-        .props.onSubmit({ preventDefault() {}, currentTarget: form }),
-    );
-    const request = requests.find((r) => r[0] === "daily.order.attach");
+    assert.equal(t.root.findAllByType("form").length, 0);
+    assert.equal(t.root.findAllByType("input").filter((n:any)=>n.props.name === "password").length, 0);
+    await act(async () => t.root.findAllByType("button").find((b:any)=>b.children.join("") === "Continue with today’s driver").props.onClick());
+    const request = requests.find((r) => r[0] === "dispatch.assignToday");
     assert(request);
-    assert.deepEqual(Object.keys(request[1]).sort(), [
-      "operationKey",
-      "orderId",
-      "version",
-    ]);
+    assert.deepEqual(Object.keys(request[1]).sort(), ["operationKey", "orderId", "runId", "version"]);
+    assert.equal(request[1].runId, "RUN");
     assert.equal(request[1].version, 7);
     assert(requests.some((r) => r[0] === "changed"));
   } finally {
@@ -603,4 +598,23 @@ test("DAY-IOS-WORKSPACE daily home and Work overview/actions omit meter, inspect
   } finally {
     if (t) await act(async () => t.unmount());
   }
+});
+
+test('DAYASSIGN-UI direct mismatched-driver action has no password/reservation form, prevents double taps, reuses retry key and refreshes the open order',async()=>{
+ let t:any,saved=0,finish:any;const requests:any[]=[];let attempt=0;
+ (globalThis as any).dailyAPI=async(action:string,input:any)=>{
+  requests.push([action,input]);
+  if(action.startsWith('daily.summary'))return {enabled:true,runs:[{id:'RUN',state:'active',driver_id:'TODAY',driver_name:'Today driver',label:'Daily vehicle',opening_grams:25000,added_grams:0,supplied_grams:0,committed_grams:12500}]};
+  if(action.startsWith('dispatch.vehicle.options'))return {drivers:[],vehicles:[]};
+  if(action==='dispatch.assignToday'){attempt++;if(attempt===1)return new Promise((_,reject)=>finish=()=>reject(Error('Synthetic connection lost')));return {message:'Assigned and gas reserved'};}
+  throw Error('Unexpected request '+action);
+ };
+ try{
+ await act(async()=>{t=create(React.createElement(Day,{user:{id:'OWNER',role:'owner',branchId:'lagos'},branch:'lagos',order:{id:'ORDER',status:'assigned',driver_id:'OTHER',tracking_version:9,gas_lines:[{grams:12500}]},onChange:()=>saved++}));});
+ const button=()=>t.root.findAllByType('button').find((b:any)=>b.children.join('')==='Reassign to today’s driver'||b.children.join('')==='Assigning and reserving gas…');
+ assert.equal(button().props.disabled,false);assert.equal(t.root.findAllByType('form').length,0);assert.equal(t.root.findAllByType('input').length,0);
+ await act(async()=>{void button().props.onClick();void button().props.onClick();});assert.equal(requests.filter(x=>x[0]==='dispatch.assignToday').length,1);assert.equal(button().props.disabled,true);
+ await act(async()=>finish());assert.match(text(t),/Synthetic connection lost/);assert.equal(saved,0);
+ await act(async()=>button().props.onClick());const writes=requests.filter(x=>x[0]==='dispatch.assignToday');assert.equal(writes.length,2);assert.equal(writes[0][1].operationKey,writes[1][1].operationKey);assert.deepEqual({...writes[1][1],operationKey:undefined},{orderId:'ORDER',runId:'RUN',version:9,operationKey:undefined});assert.equal(saved,1);assert(!requests.some(x=>x[0]==='reauth'||x[0]==='daily.order.attach'));
+ }finally{if(t)await act(async()=>t.unmount());delete (globalThis as any).dailyAPI;}
 });

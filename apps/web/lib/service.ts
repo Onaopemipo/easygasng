@@ -574,6 +574,7 @@ export async function dispatch(
           "trip.sync",
           "dispatch.assign",
           "dispatch.reassign",
+          "dispatch.assignToday",
           "dispatch.respond",
           "fleet.vehicle.create",
           "doorstep.propose",
@@ -586,7 +587,7 @@ export async function dispatch(
           "Field operations require operational release approval. Read-only history remains available.",
         );
       if (
-        ["dispatch.assign", "dispatch.reassign"].includes(action) &&
+        ["dispatch.assign", "dispatch.reassign", "dispatch.assignToday"].includes(action) &&
         (process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED === "false" ||
           (process.env.NODE_ENV === "production" &&
             process.env.EASYGAS_TRACKING_MUTATIONS_ENABLED !== "true"))

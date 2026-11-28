@@ -130,7 +130,8 @@ export async function sameVisitOrders(
     window: visit.parent.delivery_window,
     items: lines.items,
     gasLines: lines.gasLines ?? [],
-    quote: q,
+    // Catalogue freshness is display metadata, not a price or visit change.
+    quote: { ...q, fetchedAt: undefined },
     deliveryKobo: 0,
     totalKobo,
     stockPlan,

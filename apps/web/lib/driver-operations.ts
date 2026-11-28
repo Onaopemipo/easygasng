@@ -1,3 +1,4 @@
+import { attachDailyOrder, dailyAllocation } from "./daily-delivery";
 import { operationNoteSchema } from "./operation-notes";
 import { assignmentResponseReason } from "./assignment-response";
 import { vehiclePayload } from "./vehicle-manifest-schema";
@@ -301,6 +302,39 @@ export async function driverOperations(
         .sort((a, b) => b.remainingGrams - a.remainingGrams);
     }
     return { orders, drivers, autoAssignmentEnabled: false };
+  }
+  if (action === "dispatch.assignToday") {
+    allow(user, ["owner", "manager"]);
+    const d = z.object({ orderId: uid, runId: uid, version: z.number().int().nonnegative() }).strict().parse(input);
+    const o = await one(tx, "SELECT * FROM orders WHERE id=$1 FOR UPDATE", [d.orderId]);
+    if (!o) throw new AppError(404, "Order not found.");
+    allow(user, ["owner", "manager"], o.branch_id);
+    if (Number(o.tracking_version) !== d.version || !["placed", "accepted", "preparing", "assigned"].includes(o.status))
+      throw new AppError(409, "This order changed or delivery has started. Refresh before assigning.");
+    const run = await one(tx, "SELECT * FROM daily_delivery_runs WHERE branch_id=$1 AND state='active' FOR UPDATE", [o.branch_id]);
+    if (!run || run.id !== d.runId) throw new AppError(409, "Today’s delivery day changed. Refresh the order before assigning.");
+    if (await one(tx, "SELECT order_id FROM order_items WHERE order_id=$1 LIMIT 1", [o.id]) ||
+        await one(tx, "SELECT order_id FROM bulk_lpg_allocations WHERE order_id=$1 AND state IN ('allocated','dispensed')", [o.id]))
+      throw new AppError(409, "Use the existing product or LPG handover workflow for this order.");
+    const reason = "Office assigned today’s delivery driver and reserved the order gas";
+    if (o.status === "assigned" && o.driver_id === run.driver_id) {
+      const prior = await one(tx, "SELECT * FROM delivery_attempts WHERE order_id=$1 ORDER BY assignment_version DESC LIMIT 1 FOR UPDATE", [o.id]);
+      if (!prior || prior.state !== "assigned" || prior.picked_up_at)
+        throw new AppError(409, "This delivery has already started. Refresh the order.");
+      await attachDailyOrder(tx, user, o);
+      await fulfilmentReady(tx, o);
+      await tx.query("INSERT INTO order_events(id,order_id,status,actor_id,note) VALUES($1,$2,'assigned',$3,$4)", [id(), o.id, user.id, reason]);
+    } else {
+      await driverOperations(tx, user, o.status === "assigned" ? "dispatch.reassign" : "dispatch.assign", {
+        orderId: o.id, driverId: run.driver_id, version: d.version, reason,
+        ...(o.status !== "assigned" ? { prepare: true } : {}),
+      });
+    }
+    const allocation = await dailyAllocation(tx, o.id);
+    if (!allocation || allocation.run_id !== run.id || allocation.driver_id !== run.driver_id || allocation.state !== "allocated")
+      throw new AppError(409, "Gas could not be reserved on today’s vehicle. Refresh the order and try again.");
+    await audit(tx, user, action, o.id, "success", { previousDriver: o.driver_id, driverId: run.driver_id, runId: run.id, grams: Number(allocation.grams) });
+    return { ok: true, driverId: run.driver_id, runId: run.id, message: "Assigned to today’s driver and gas reserved. The driver can accept and start delivery." };
   }
   if (["dispatch.assign", "dispatch.reassign"].includes(action)) {
     allow(user, ["owner", "manager"]);

@@ -125,8 +125,13 @@ export async function dispatchCentre(
       "SELECT driver_id,parent_order_id FROM order_visit_links WHERE order_id=$1",
       [order.id],
     );
+    const dailyDriver = gasLines.length && !(await one(tx, "SELECT order_id FROM order_items WHERE order_id=$1 LIMIT 1", [order.id]))
+      ? await one(tx, "SELECT driver_id FROM daily_delivery_runs WHERE branch_id=$1 AND state='active'", [order.branch_id])
+      : null;
     for (const driver of drivers) {
       const readiness = await probe(tx, async () => {
+        if (dailyDriver && driver.id !== dailyDriver.driver_id)
+          throw new AppError(409, "Choose today’s delivery driver to reserve gas on the active vehicle.");
         const issues: AssignmentIssue[] = [];
         if (driver.id === order.driver_id)
           issues.push(assignmentIssue("DRIVER_ALREADY_ASSIGNED"));

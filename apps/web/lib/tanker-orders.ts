@@ -1,4 +1,10 @@
-import { availableDaily, takeDaily, allocateDaily, dailyAllocation } from "./daily-delivery";
+import {
+  availableDaily,
+  takeDaily,
+  allocateDaily,
+  dailyAllocation,
+  attachDailyOrder,
+} from "./daily-delivery";
 import { AppError, id, type Actor } from "./auth";
 import { one, type SQL } from "./db";
 
@@ -10,7 +16,8 @@ export async function availableTanker(
   driver?: string,
   lock = false,
 ) {
-  const daily=await availableDaily(tx,branch,grams,driver,lock);if(daily)return daily;
+  const daily = await availableDaily(tx, branch, grams, driver, lock);
+  if (daily) return daily;
   return one(
     tx,
     `SELECT l.*,t.driver_id FROM bulk_lpg_loads l
@@ -31,7 +38,8 @@ export async function takeTankerBuffer(
   grams: number,
   driver?: string,
 ) {
-  const daily=await takeDaily(tx,branch,grams,driver);if(daily)return daily;
+  const daily = await takeDaily(tx, branch, grams, driver);
+  if (daily) return daily;
   const tank = await availableTanker(tx, branch, grams, driver, true);
   if (!tank) return;
   await tx.query(
@@ -49,7 +57,15 @@ export async function recordTankerAllocation(
   grams: number,
   releaseDuplicateOrderReservation: boolean,
 ) {
-  if(tank.daily_run_id)return allocateDaily(tx,user,orderId,tank,grams,releaseDuplicateOrderReservation);
+  if (tank.daily_run_id)
+    return allocateDaily(
+      tx,
+      user,
+      orderId,
+      tank,
+      grams,
+      releaseDuplicateOrderReservation,
+    );
   if (releaseDuplicateOrderReservation) {
     const released = await one(
       tx,
@@ -110,7 +126,18 @@ export async function reserveTankerForAssignment(
     ))!.n,
   );
   if (!grams) return;
-  const assignedDaily=await dailyAllocation(tx,order.id);if(assignedDaily){if(assignedDaily.driver_id!==driverId||assignedDaily.run_state!=="active")throw new AppError(409,"This order belongs to another delivery day. Contact the office.");return;}
+  const assignedDaily = await dailyAllocation(tx, order.id);
+  if (assignedDaily) {
+    if (
+      assignedDaily.driver_id !== driverId ||
+      assignedDaily.run_state !== "active"
+    )
+      throw new AppError(
+        409,
+        "This order belongs to another delivery day. Contact the office.",
+      );
+    return;
+  }
   const prior = await one(
     tx,
     "SELECT a.*,t.driver_id FROM bulk_lpg_allocations a JOIN bulk_lpg_loads l ON l.id=a.load_id JOIN driver_trips t ON t.id=l.trip_id WHERE a.order_id=$1 AND a.state IN ('allocated','dispensed')",
@@ -122,6 +149,22 @@ export async function reserveTankerForAssignment(
         409,
         "This order’s gas is on another tanker. Select that tanker’s driver or reconcile its gas custody first.",
       );
+    return;
+  }
+  // Daily gas-only assignment must either reserve completely or roll back. Never
+  // silently leave a running-day order assigned without its gas allocation.
+  const daily = await one(
+    tx,
+    "SELECT id FROM daily_delivery_runs WHERE branch_id=$1 AND state='active'",
+    [order.branch_id],
+  );
+  const products = await one(
+    tx,
+    "SELECT order_id FROM order_items WHERE order_id=$1 LIMIT 1",
+    [order.id],
+  );
+  if (daily && !products) {
+    await attachDailyOrder(tx, user, { ...order, driver_id: driverId });
     return;
   }
   const tank = await takeTankerBuffer(tx, order.branch_id, grams, driverId);

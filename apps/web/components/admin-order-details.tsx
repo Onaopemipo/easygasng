@@ -766,7 +766,7 @@ export function OrderStatusAction({
       {status === "out_for_delivery" && lpgActions.length > 0 && (
         <section className="stack" aria-label="Resolve vehicle gas readiness">
           <p>
-            Set up the delivery day or reserve gas on today’s vehicle without
+            Set up the delivery day or assign today’s driver with gas reserved, without
             closing this order.
           </p>
           <div className="aord-footer">
