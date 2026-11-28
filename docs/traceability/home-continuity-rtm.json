@@ -1,0 +1,90 @@
+{
+  "phase": "Retained homepage content \u201428 November2026",
+  "requirements": [
+    {
+      "id": "HOMEKEEP-01",
+      "priority": "P1",
+      "requirement": "Retain the loaded public homepage during a Home transition instead of displaying the full-page loader",
+      "implementationFiles": [
+        "apps/web/app/loading.tsx",
+        "apps/web/components/home-transition-fallback.tsx",
+        "apps/web/components/public-home-cache.ts",
+        "packages/business-rules/src/public-home-cache.ts"
+      ],
+      "authoritativeData": [
+        "Existing anonymous public catalogue response",
+        "Current pathname",
+        "Fresh server Home payload and canonical checkout"
+      ],
+      "securityControls": "Memory-only canonical public catalogue; no identity/cart/form/address/session data and no protected-page snapshot.",
+      "testIds": [
+        "HOME-WARM",
+        "HOME-COLD",
+        "HOME-ROUTES"
+      ],
+      "acceptanceGate": "HOMEKEEP-G1",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "evidence": [],
+      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
+      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+    },
+    {
+      "id": "HOMEKEEP-02",
+      "priority": "P1",
+      "requirement": "Keep Home visible if refresh fails and accept fresh canonical data without erasing already loaded content",
+      "implementationFiles": [
+        "apps/web/components/site.tsx"
+      ],
+      "authoritativeData": [
+        "Existing anonymous public catalogue response",
+        "Current pathname",
+        "Fresh server Home payload and canonical checkout"
+      ],
+      "securityControls": "Existing quote/checkout, role/session and server route guards remain authoritative. Refresh failure is labelled.",
+      "testIds": [
+        "HOME-REFRESH",
+        "HOME-RESTORE"
+      ],
+      "acceptanceGate": "HOMEKEEP-G2",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "evidence": [],
+      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
+      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+    },
+    {
+      "id": "HOMEKEEP-03",
+      "priority": "P1",
+      "requirement": "Preserve continuity with analytics enabled without weakening private navigation boundaries, and verify the demo rollout",
+      "implementationFiles": [
+        "apps/web/components/workspace-link.tsx",
+        "packages/business-rules/src/home-navigation.ts"
+      ],
+      "authoritativeData": [
+        "Existing anonymous public catalogue response",
+        "Current pathname",
+        "Fresh server Home payload and canonical checkout"
+      ],
+      "securityControls": "Only same-origin plain public\u2192Home navigation may remain client-side; private/query/hash/cross-origin transitions retain existing analytics isolation. Prior NO-GO remains.",
+      "testIds": [
+        "HOME-PRIVACY",
+        "HOME-DEPLOY"
+      ],
+      "acceptanceGate": "HOMEKEEP-G3",
+      "status": "IMPLEMENTED_UNVERIFIED",
+      "evidence": [],
+      "reason": "Implementation in progress; executing tests and slow-transition acceptance.",
+      "outstandingWork": "Renderer/security/build and deployed browser/source checks pending."
+    }
+  ],
+  "coverage": {
+    "requirements": 3,
+    "verified": 0,
+    "gates": 3,
+    "gatesPassed": 0,
+    "excluded": 0
+  },
+  "productionDecision": "Existing production NO-GO and unrelated holds preserved",
+  "changeLog": [
+    "Approved follow-up: retain already loaded public Home during navigation/server refresh. First visits and protected-page loading remain explicit; no private state caching."
+  ]
+}

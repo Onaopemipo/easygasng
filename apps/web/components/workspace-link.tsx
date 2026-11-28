@@ -6,6 +6,7 @@ import React, {
   useRef,
   type ComponentProps,
 } from "react";
+import { retainedPublicHomeNavigation } from "../../../packages/business-rules/src/home-navigation";
 import { analyticsLoaded, stopAnalytics } from "../lib/analytics-browser";
 
 // Null means a public/customer surface outside the administration shell.
@@ -43,10 +44,10 @@ export default function WorkspaceLink(props: ComponentProps<typeof Link>) {
             event.preventDefault();
           },
         });
-        if (!prevented && analyticsLoaded()) {
+        const destination = navigationTarget.current || href;
+        if (!prevented && analyticsLoaded() && !retainedPublicHomeNavigation(window.location.href, destination)) {
           event.preventDefault();
           stopAnalytics(window);
-          const destination = navigationTarget.current || href;
           window.location.assign(destination);
         }
       }}

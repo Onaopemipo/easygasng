@@ -1,2 +1,1 @@
-import { PageLoadingFallback } from "../components/easygas-loader";
-export default PageLoadingFallback;
+export {default} from "../components/home-transition-fallback";

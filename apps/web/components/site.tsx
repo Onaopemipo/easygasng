@@ -1,4 +1,5 @@
 "use client";
+import { publicHomeCache } from "./public-home-cache";
 import { analyticsNavigate } from "../lib/analytics-browser";
 import { CheckoutPaymentMethods } from "./checkout-payment-methods";
 import { SaveCheckoutDetails } from "./save-checkout-details";
@@ -112,20 +113,24 @@ export default function Site({
   initialUser?: any;
   initialCatalogue?: any;
 }) {
-  const [catalogue, setCatalogue] = useState<any>(initialCatalogue),
+  const pathname = usePathname();
+  const [catalogue, setCatalogue] = useState<any>(() => initialCatalogue ?? (pathname === "/" ? publicHomeCache.read() : null)),
     [user, setUser] = useState<any>(initialUser),
     [cart, setCart] = useState<CartItem[]>([]),
     [ready, setReady] = useState(false),
     [toast, setToast] = useState(""),
     [error, setError] = useState("");
-  const pathname = usePathname(),
-    router = useRouter();
+  const router = useRouter();
+  const [homeRefreshError, setHomeRefreshError] = useState("");
   useEffect(() => {
-    if (pathname === "/" && initialCatalogue) { setCatalogue(initialCatalogue); setError(""); return; }
+    if (pathname === "/" && catalogue) publicHomeCache.remember(catalogue);
+  }, [pathname, catalogue]);
+  useEffect(() => {
+    if (pathname === "/" && initialCatalogue) { setCatalogue(initialCatalogue); setError(""); setHomeRefreshError(""); return; }
     let live = true;
     api(pathname === "/" ? "catalogue?view=homepage" : "catalogue")
-      .then(value => { if (live) setCatalogue(value); })
-      .catch((e) => { if (live) setError(e.message); });
+      .then(value => { if (live) { setCatalogue(value); setHomeRefreshError(""); } })
+      .catch((e) => { if (live) { if (pathname === "/" && catalogue) setHomeRefreshError(e.message); else setError(e.message); } });
     return () => { live = false; };
   }, [pathname === "/", initialCatalogue]);
   // Hydrate once per mount, independently of catalogue/navigation refreshes.
@@ -312,7 +317,10 @@ export default function Site({
           ) : !catalogue ? (
             <Loading page />
           ) : pathname === "/" ? (
-            <Home />
+            <>
+              {homeRefreshError && <div className="container"><Notice type="error" message={"Showing your loaded homepage. We could not refresh it: " + homeRefreshError}/><button className="button secondary" onClick={() => location.reload()}>Retry homepage refresh</button></div>}
+              <Home />
+            </>
           ) : [
               "/policies",
               "/privacy",

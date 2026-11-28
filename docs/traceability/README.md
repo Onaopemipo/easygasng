@@ -494,3 +494,5 @@ Expo Go sign-out repaired —28 November2026: [MSO matrix](mobile-signout-rtm.md
 Public gas/flat delivery price loading —28 November2026: [PLOAD matrix](public-price-loading-rtm.md). Early server-rendered prices, one fallback loader, branch-scoped continuity and unchanged checkout authority. Previous holds preserved.
 
 Public gas price/flat fee loading verified —28 November2026: [PLOAD matrix](public-price-loading-rtm.md) records3/3 bounded requirements/gates and2/2 critical controls. Both figures are in the first homepage HTML; actual home/navigation/reload checks pass,19 regressions and web types/build pass,510 source hashes match Readycf0031a on the existing demo. Normal page transitions and original production/mobile holds remain separate.
+
+Retained homepage navigation —28 November2026: [HOMEKEEP matrix](home-continuity-rtm.md). Preserve the public Home while a fresh response loads; no identity or protected-page cache, previous production holds retained.
