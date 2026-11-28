@@ -36,12 +36,22 @@
         "docs/daily-assignment/evidence/regression.txt",
         "docs/daily-assignment/evidence/security.txt",
         "docs/daily-assignment/evidence/postgres.txt",
-        "docs/daily-assignment/evidence/browser-verification.json"
+        "docs/daily-assignment/evidence/browser-verification.json",
+        "docs/daily-assignment/evidence/browser-database.json",
+        "docs/daily-assignment/evidence/root-regression.txt",
+        "docs/daily-assignment/evidence/deployed-source.json",
+        "docs/daily-assignment/evidence/stable-verification.json",
+        "docs/daily-assignment/evidence/release.json"
       ],
       "acceptanceGate": "DAYASSIGN-G1",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
-      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Targeted44/44, final security6/6, PostgreSQL2/2, root46/46, types/build and actual one-click browser/modal/database acceptance passed. Source-verified demo promoted; hosted anonymous401 checks passed.",
+      "outstandingWork": "None for bounded active-day assignment. Two pre-existing broader Dispatch audit/preparation-expectation checks remain in their broader denominator; prior production NO-GO/provider/device/physical gates unchanged.",
+      "testIds": [
+        "DAYASSIGN-UI",
+        "DAYASSIGN-BROWSER"
+      ],
+      "uiReference": "User screenshot: order driver differs from active delivery-day driver, leaving reserve button disabled"
     },
     {
       "id": "DAYASSIGN-02",
@@ -51,7 +61,9 @@
         "apps/web/lib/driver-operations.ts",
         "apps/web/lib/tanker-orders.ts",
         "apps/web/lib/daily-delivery.ts",
-        "apps/web/lib/dispatch-centre.ts"
+        "apps/web/lib/dispatch-centre.ts",
+        "apps/web/lib/order-tracking.ts",
+        "apps/web/lib/business-operation.ts"
       ],
       "authoritativeData": [
         "orders/tracking_version",
@@ -79,12 +91,24 @@
         "docs/daily-assignment/evidence/regression.txt",
         "docs/daily-assignment/evidence/security.txt",
         "docs/daily-assignment/evidence/postgres.txt",
-        "docs/daily-assignment/evidence/browser-verification.json"
+        "docs/daily-assignment/evidence/browser-verification.json",
+        "docs/daily-assignment/evidence/browser-database.json",
+        "docs/daily-assignment/evidence/root-regression.txt",
+        "docs/daily-assignment/evidence/deployed-source.json",
+        "docs/daily-assignment/evidence/stable-verification.json",
+        "docs/daily-assignment/evidence/release.json"
       ],
       "acceptanceGate": "DAYASSIGN-G2",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
-      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Targeted44/44, final security6/6, PostgreSQL2/2, root46/46, types/build and actual one-click browser/modal/database acceptance passed. Source-verified demo promoted; hosted anonymous401 checks passed.",
+      "outstandingWork": "None for bounded active-day assignment. Two pre-existing broader Dispatch audit/preparation-expectation checks remain in their broader denominator; prior production NO-GO/provider/device/physical gates unchanged.",
+      "testIds": [
+        "DAYASSIGN-ATOMIC",
+        "DAYASSIGN-CAPACITY",
+        "DAYASSIGN-RECOVER",
+        "DAYASSIGN-PG"
+      ],
+      "uiReference": "User screenshot: order driver differs from active delivery-day driver, leaving reserve button disabled"
     },
     {
       "id": "DAYASSIGN-03",
@@ -121,24 +145,78 @@
         "docs/daily-assignment/evidence/regression.txt",
         "docs/daily-assignment/evidence/security.txt",
         "docs/daily-assignment/evidence/postgres.txt",
-        "docs/daily-assignment/evidence/browser-verification.json"
+        "docs/daily-assignment/evidence/browser-verification.json",
+        "docs/daily-assignment/evidence/browser-database.json",
+        "docs/daily-assignment/evidence/root-regression.txt",
+        "docs/daily-assignment/evidence/deployed-source.json",
+        "docs/daily-assignment/evidence/stable-verification.json",
+        "docs/daily-assignment/evidence/release.json"
       ],
       "acceptanceGate": "DAYASSIGN-G3",
-      "status": "IMPLEMENTED_UNVERIFIED",
-      "reason": "Local API/renderer/browser/real PostgreSQL verified; demo rollout pending.",
-      "outstandingWork": "Push/source-verified demo rollout, hosted anonymous security and root-mirror checks."
+      "status": "VERIFIED_COMPLETE",
+      "reason": "Targeted44/44, final security6/6, PostgreSQL2/2, root46/46, types/build and actual one-click browser/modal/database acceptance passed. Source-verified demo promoted; hosted anonymous401 checks passed.",
+      "outstandingWork": "None for bounded active-day assignment. Two pre-existing broader Dispatch audit/preparation-expectation checks remain in their broader denominator; prior production NO-GO/provider/device/physical gates unchanged.",
+      "testIds": [
+        "DAYASSIGN-DENY",
+        "DAYASSIGN-GUARDS",
+        "DAYASSIGN-PAYMENT",
+        "DAYASSIGN-DEPLOY"
+      ],
+      "uiReference": "User screenshot: order driver differs from active delivery-day driver, leaving reserve button disabled",
+      "critical": true
     }
   ],
   "coverage": {
     "requirements": 3,
-    "verified": 0,
+    "implemented": 3,
+    "verified": 3,
+    "criticalRequirements": 1,
+    "criticalVerified": 1,
+    "routes": 4,
+    "routesVerified": 4,
     "gates": 3,
-    "gatesPassed": 0,
-    "excluded": 0
+    "gatesPassed": 3,
+    "excluded": 0,
+    "broaderDispatchRegression": {
+      "total": 18,
+      "passed": 16,
+      "failed": 2,
+      "excluded": 0,
+      "baselineFailures": [
+        "DDI-AUDIT01",
+        "DDI-READ04"
+      ],
+      "baselineCommit": "2a7d8fe"
+    }
   },
   "productionDecision": "Existing production NO-GO and unrelated work preserved",
   "changeLog": [
     "User approved direct Reassign to today\u2019s driver in order modal and automatic reservation with assignment; daily opening/closing measured weight requirements retained.",
-    "Regression repair: exclude only display fetchedAt from same-visit quote hash; prices/versions/stock/visit checks remain. Two baseline Dispatch audit/preparation expectation failures preserved and documented; not excluded from broader test counts."
-  ]
+    "Regression repair: exclude only display fetchedAt from same-visit quote hash; prices/versions/stock/visit checks remain. Two baseline Dispatch audit/preparation expectation failures preserved and documented; not excluded from broader test counts.",
+    "Verified source16160a1; demo dpl_7DrsEXcvd7HVS6Ndw3cJmLWawAjq. No schema/native/measurement changes. Existing holds and baseline failures preserved."
+  ],
+  "acceptanceGates": [
+    {
+      "id": "DAYASSIGN-G1",
+      "status": "PASS",
+      "evidence": "docs/daily-assignment/evidence/browser-verification.json",
+      "scope": "One click changed driver, reserved12.5kg, kept modal open and showed next action with no separate form"
+    },
+    {
+      "id": "DAYASSIGN-G2",
+      "status": "PASS",
+      "evidence": "docs/daily-assignment/evidence/postgres.txt",
+      "scope": "Atomic assignment, retries, concurrent reservations, capacity rollback and stock conservation"
+    },
+    {
+      "id": "DAYASSIGN-G3",
+      "status": "PASS",
+      "evidence": "docs/daily-assignment/evidence/release.json",
+      "scope": "Protected role/branch/release/payment/physical-handover negatives and source-verified active demo"
+    }
+  ],
+  "matrixValidation": {
+    "test": "tests/daily-assignment-traceability.test.ts",
+    "evidence": "docs/daily-assignment/evidence/matrix-validation.txt"
+  }
 }

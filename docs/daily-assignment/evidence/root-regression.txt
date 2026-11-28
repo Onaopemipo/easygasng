@@ -1,0 +1,66 @@
+✔ AORD-SUMMARY: completed order opens one summary dialog with four tabs, no forms, hidden IDs, prep actions or mounted history/invoice (8.077625ms)
+✔ AORD-ACTIONS: status and role determine available workflows; paid/assigned orders cannot offer additions, finance cannot update delivery and only provisional customers expose messaging (0.1935ms)
+✔ AORD-FORMS: status form shows only relevant fields, communications keep context IDs hidden and private history excludes messaging forms (3.401333ms)
+✔ AORD-HISTORY: timeline retains original notes with eight bounded records and lazy visit evidence (1.167166ms)
+✔ AORD-SCOPE: canonical staff provisional flag is scoped, absent from customer payloads and cannot expose another customer's order (1174.887667ms)
+✔ AORD-REFILL-FORM: tanker refill completion requests full supply/photo handover without a customer code or cylinder serial registration (3.685042ms)
+✔ AORD-PRODUCT-FORM: physical product completion retains the required six-digit customer code and full handover (1.55875ms)
+✔ DAY-MODAL: daily office actions wait for driver start, scale supply and current photo without offering unusable pickup actions (5.812958ms)
+✔ DAY-MODAL-SETUP: unlinked assigned orders and old load deep links show only daily setup; actual legacy custody is read-only guidance (3.815834ms)
+✔ DAYASSIGN-ATOMIC direct reassign changes driver, revokes old acceptance and reserves exact paid gas once; retry replays without reauth (1245.69375ms)
+✔ DAYASSIGN-DENY role, branch, stale run/order, unavailable driver and started delivery leave assignment and stock unchanged (922.215042ms)
+✔ DAYASSIGN-CAPACITY normal assignment reserves automatically and a second over-capacity order rolls back completely (917.513ms)
+✔ DAYASSIGN-RECOVER same-driver older order attaches in one action and ordinary dispatch.reassign also reserves automatically (947.183125ms)
+✔ DAYASSIGN-GUARDS current-day choices, missing identity, revoked Dispatch privilege and release switches prevent bypass (910.44875ms)
+✔ DAYASSIGN-PAYMENT a phone order with no verified payment/profile cannot be assigned or reserve daily gas (1006.452542ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI office defaults, loading, stale branch/actor reads and denied recovery are explicit (9.099625ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI web scale retry preserves readings and operation key, prevents double taps and supports multiple cylinders (4.011666ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI actual native refill submits before/after kg, preserves failure and refreshes proof stage on success (2.780625ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI live day refresh keeps the same closing form, updates supply totals, freezes writes on read failure and resets only for a different run (5.999042ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-UI-SETUP capacity is visible and invalid opening weights never reauthenticate; existing order reservation uses the active day (11.737292ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-IOS-READY a newly reserved daily order reruns readiness at the same order version without requesting old bulk load evidence (0.834ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-IOS-WORK daily read loading/failure never mounts legacy meter/load forms, retries show daily vehicle and departure is one tap (1.199416ms)
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+react-test-renderer is deprecated. See https://react.dev/warnings/react-test-renderer
+✔ DAY-IOS-WORKSPACE daily home and Work overview/actions omit meter, inspected pickup, customer code and driver reconciliation shortcuts (2.079834ms)
+✔ DAYASSIGN-UI direct mismatched-driver action has no password/reservation form, prevents double taps, reuses retry key and refreshes the open order (4.451291ms)
+✔ DAY01 full paid refill → actual scale stock debit → consented current photo → delivery → office net-weight close (1289.947792ms)
+✔ DAY02 unassigned orders stay in the queue; assignments attach once; arriving new orders/midday gas and cancellation conserve stock (1089.138375ms)
+✔ DAY03 wrong driver/branch, non-Admin variance, stale version, bad/mismatching weights, duplicate day and bypass trip end are denied (1002.742958ms)
+✔ DAY04 daily same-visit phone extra remains fee-free, unassigned until verified payment and reserves daily gas once (1110.362417ms)
+✔ DAY05 revoked privileges, foreign driver/branch, premature photo, unfinished supply, disabled operations and multiple cylinders (952.612ms)
+✔ DAY06 existing trip handover requires real reconciliation, then reuses the vehicle without rewriting earlier metered history (1086.374958ms)
+✔ DAY07 startup reports actual vehicle capacity, prioritises assigned orders and leaves the unassigned queue untouched (887.235625ms)
+✔ DAY08 existing assigned order joins the active day, repairs premature queue reservations, preserves real weights and completes without a meter load (962.712ms)
+✔ PRICE-CACHE fresh public price pairs survive remounts, expire together after60s and never cache identity/quotes (0.530792ms)
+✔ PRICE-BRANCH concurrent reads deduplicate only within the same branch; out-of-order old versions cannot overwrite newer prices (0.298375ms)
+✔ PRICE-RETRY a failed refresh retains the last loaded pair and releases the request for an explicit retry; invalid payload cannot become a price (0.12975ms)
+✔ PRICE-API public catalogue reads gas price/fee/policy once, before product reads, and reuses the same fee snapshot (975.03725ms)
+✔ PRICE-CHECKOUT cached presentation cannot bypass a new canonical price version or reserve stock using an old quote (822.881209ms)
+✔ VISIT-CREATE: an active driver takes a separate fee-free order on the same visit, retaining original totals and idempotency (1375.045167ms)
+✔ VISIT-GAS: ready busy drivers can receive same-visit gas without a customer cylinder gate (1183.643208ms)
+✔ VISIT-NEG: roles, revoked privileges, client scope/fee overrides, closed visits and stale price/visit are rejected (990.780042ms)
+✔ VISIT-CAPACITY: one visit consumes one stop while gas/vehicle demand and normal delivery fees stay authoritative (1044.924917ms)
+✔ VISIT-JOURNEY: an extra order placed at the customer shares the active trip, has independent proof/payment and reconciles both deliveries before trip end (1229.490208ms)
+✔ VISIT-STOCK: missing or unacknowledged custody, stale load quotes and insufficient mass cannot promise an extra order (963.570917ms)
+✔ VISIT-CANCEL: cancellation returns an unpicked extra reservation to vehicle custody exactly once; protected parent, immutable links and role revocations remain (983.499375ms)
+✔ VISIT-LPG: an extra gas order uses acknowledged buffer once, still requires its own acknowledgement, metering and proof without cylinder registration (1137.046083ms)
+✔ VISIT-SERIAL: extra empty cylinders retain exact acknowledged vehicle serials through allocation and customer handover (1104.226042ms)
+ℹ tests 46
+ℹ suites 0
+ℹ pass 46
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 30029.979667
